@@ -1,0 +1,36 @@
+1) Buffering:
+Esto que mandaste de las capas lo entendi perfectamente, pero queria saber
+como se va a administrar el buffer.
+El buffer tiene bloques de tamaño fijo adentro? Y si es asi, el tamaño del
+bloque quien lo define?
+
+[Aleee] El diseño del Buffer es parte de la reslución del TP. Aún no se vio
+ese tema en la cátedra, así que deberán esperar un poco.
+Lo que es fácil de explicar es que el buffer es como una caja en la que
+metés cosas y luego las buscás. Esto se hace antes de ir al almacén (el
+archivo de disco). Cómo administrar la información almacenada es el punto
+principal del diseño del buffer. Recuerden que pueden ir en él datos de
+usuario o de sistema (es decir de índices, de la ejecución propia del
+demonio, etc.).
+
+
+2) Carpeta IN:
+En el enunciado dice que va a haber un archivo "Comandos.7506".
+En el IN, ¿se va a poder meter unicamente UN solo archivo con este unico
+nombre? o se va a poder ingresar varios archivos?
+
+[Aleee] En principio sí. Puede haber más archivos, pero sólo se procesará el
+que se llame de esa forma. Para procesar varios archivos, se los renombrará.
+Seguramente pueden pensar en otras formas de trabajo, pero no queremos
+quitar tiempo en esta parte del TP.
+
+
+3) Archivo de comandos de carpeta IN:
+Para esta entrega vamos a tener que tener listo el parseo del archivo que
+esta en IN o unicamente hay que copiar el contenido y generar un archivo en
+el OUT?
+
+[Aleee] Unicamente generen el archivo en OUT con el contenido del archivo de
+comandos y el resto de la funcionalidad de interfaz con el usuario.
+Recuerden que ya debe tener la estructura de directorios y la presentación
+requerida (un makefile generado por ustedes).
