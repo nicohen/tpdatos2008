@@ -6,5 +6,8 @@ FileInfo::FileInfo(char* fileName){
 }
 
 FileInfo::~FileInfo(){
-	
+	free(_name);
+	if (_file!=NULL){
+		fclose(_file);
+	}
 }
