@@ -7,9 +7,12 @@ Demon::Demon(int sleepTime, int bufferSize, bool vervose){
 }
 
 void Demon::run(void){
+	FileInfo *input;
 	for(int i=0;i<10;i++){
 		printf("Hello from Hell!\n");
-		sleep(_sleepTime);		
+		input= new FileInfo("IN/pablo.txt");
+		delete input;
+		sleep(_sleepTime);
 	}
 }
 

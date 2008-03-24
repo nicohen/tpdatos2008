@@ -3,6 +3,7 @@
 
 #include "stdio.h"
 #include "Utils.h"
+#include "FileManager.h"
 
 class FileInfo{
 
@@ -15,17 +16,17 @@ class FileInfo{
 	virtual ~FileInfo();
 	
 	// GETERS y SETERS NECESARIOS
-	char* getFileName(void){return _name;};
-	void setFile(FILE* file){_file = file;};
-	FILE* getFile(void){return _file;};
+	//char* getFileName(void){return _name;};
+	//void setFile(FILE* file){_file = file;};
+	//FILE* getFile(void){return _file;};
 	
 	void open(char* mode);
 	void close(void);
-	int read(void* place,int size);
+	int read(void* place, int size);
 	void write(void* source, int size);
 	void create(char* mode);
 	void delet(void);
-	void flush();
+	//void flush();
 };
 
 #endif /*FILEINFO_H_*/
