@@ -4,12 +4,12 @@
 #include "FileInfo.h"
 #include "stdio.h"
 
-class FileManager{
-	public:
-		FileManager();
+namespace FileManager{
 		FILE* Open(char* fileName, char* mode);
+		int Read(void* dest, int count, FILE* source);
+		void Write(void* source, int count, FILE* dest);
+		void Delete(char* fileName);
 		void Close(FILE* file);
-		virtual ~FileManager();
-};
+}
 
 #endif /*FILEMANAGER_H_*/
