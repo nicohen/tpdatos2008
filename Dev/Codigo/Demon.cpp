@@ -7,12 +7,18 @@ Demon::Demon(int sleepTime, int bufferSize, bool vervose){
 }
 
 void Demon::run(void){
-	FileInfo *input;
+	FileManager::FileInfo *input;
 	for(int i=0;i<10;i++){
-		printf("Hello from Hell!\n");
-		input= new FileInfo("IN/pablo.txt");
-		delete input;
-		sleep(_sleepTime);
+		input= new FileManager::FileInfo("In/pablo.txt");
+		try{
+			input->open();
+			printf("A file was found!\n");
+			input->close();
+		}catch(FileManager::IOException e){
+			printf("file not found!\n");
+			sleep(_sleepTime);			
+		}
+		delete input;		
 	}
 }
 

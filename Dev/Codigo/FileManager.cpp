@@ -1,21 +1,21 @@
 #include "FileManager.h"
 
-FILE* FileManager::Open(char* fileName, char* mode){
-	return fopen(fileName,mode);
+void FileManager::Open(FileInfo *fileInfo, char* mode){
+	fileInfo->setFile(fopen(fileInfo->getFileName(),mode));
 }
 
-void FileManager::Close(FILE* file){
-	fclose(file);
+void FileManager::Close(FileInfo *fileInfo){
+	fclose(fileInfo->getFile());
 }
 
-int FileManager::Read(void* dest,int count,FILE* source){
-	return fread(dest,1,count,source);
+int FileManager::Read(void* dest,int count,FileInfo *fileInfo){
+	return fread(dest,1,count,fileInfo->getFile());
 }
 
-void FileManager::Delete(char* fileName){
-	remove(fileName);
+void FileManager::Delete(FileInfo *fileInfo){
+	remove(fileInfo->getFileName());
 }
 
-void FileManager::Write(void* source, int count, FILE* dest){
-	fwrite(source, 1, count, dest);
+void FileManager::Write(void* source, int count, FileInfo *fileInfo){
+	fwrite(source, 1, count, fileInfo->getFile());
 }

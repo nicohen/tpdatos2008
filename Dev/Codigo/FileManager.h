@@ -5,11 +5,12 @@
 #include "stdio.h"
 
 namespace FileManager{
-		FILE* Open(char* fileName, char* mode);
-		int Read(void* dest, int count, FILE* source);
-		void Write(void* source, int count, FILE* dest);
-		void Delete(char* fileName);
-		void Close(FILE* file);
+		class FileInfo;
+		void Open(FileInfo* fileInfo, char* mode);
+		int Read(void* dest, int count, FileInfo* fileInfo);
+		void Write(void* source, int count, FileInfo* fileInfo);
+		void Delete(FileInfo* fileInfo);
+		void Close(FileInfo* fileInfo);
 }
 
 #endif /*FILEMANAGER_H_*/
