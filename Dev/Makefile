@@ -1,15 +1,30 @@
+#Esto es un comentario
+
+#TARGET es una variable que se va a usar mas abajo. Indica el nombre del archivo que se va a ejecutar 
 TARGET = AlmacenX
 
-OBJ =
+#Una variable que no se usa
+#OBJ =
 
+#Es la ruta para llegar a los archivos que estan en el codigo
 CODE_PATH= Codigo/
 
-#MAIN_CLASS= $(CODE_PATH)main_nahuel.cpp
+#Define el archivo que contiene el main.
 MAIN_CLASS= $(CODE_PATH)main.cpp
 
-$(TARGET): $(CODE_PATH)SecondaryIndex.h $(CODE_PATH)SecondaryIndex.cpp $(CODE_PATH)Utils.h    $(CODE_PATH)Utils.cpp    $(CODE_PATH)IOException.h    $(CODE_PATH)IOException.cpp    $(CODE_PATH)FileManager.h    $(CODE_PATH)FileManager.cpp    $(CODE_PATH)FileInfo.h    $(CODE_PATH)FileInfo.cpp    $(CODE_PATH)Demon.h    $(CODE_PATH)Demon.cpp    $(CODE_PATH)main.cpp
-	g++ -Wall $(CODE_PATH)Utils.cpp $(CODE_PATH)SecondaryIndex.cpp $(CODE_PATH)IOException.cpp $(CODE_PATH)FileManager.cpp $(CODE_PATH)FileInfo.cpp $(CODE_PATH)Demon.cpp $(MAIN_CLASS) -o $(TARGET)
+#Si se quiere arrancar usando un "main" propio, crear el archivo con la funcion main adentro y decomentar la linea que corresponda
+#MAIN_CLASS= $(CODE_PATH)main_nahuel.cpp
+#MAIN_CLASS= $(CODE_PATH)main_nico.cpp
+#MAIN_CLASS= $(CODE_PATH)main_pablo.cpp
 
+#Lo que esta antes de ":" es una etiqueta. A la derecha de ":" van todos (.h y .cpp) los archivos que se van a usar.
+$(TARGET): $(MAIN_CLASS) $(CODE_PATH)SecondaryIndex.h $(CODE_PATH)SecondaryIndex.cpp $(CODE_PATH)Utils.h    $(CODE_PATH)Utils.cpp    $(CODE_PATH)IOException.h    $(CODE_PATH)IOException.cpp    $(CODE_PATH)FileManager.h    $(CODE_PATH)FileManager.cpp    $(CODE_PATH)FileInfo.h    $(CODE_PATH)FileInfo.cpp    $(CODE_PATH)Demon.h    $(CODE_PATH)Demon.cpp
+#Aca se le da la instrucción al compilador para que compile todos los cpp
+	g++ -Wall $(MAIN_CLASS) $(CODE_PATH)Utils.cpp $(CODE_PATH)SecondaryIndex.cpp $(CODE_PATH)IOException.cpp $(CODE_PATH)FileManager.cpp $(CODE_PATH)FileInfo.cpp $(CODE_PATH)Demon.cpp  -o $(TARGET)
+
+#El eclipse ejecuta el makefile usando "make all". Y "All" apunta a TARGET. Por lo tanto se ejecuta lo que dice en la etiqueta TARGET
 all: $(TARGET)
+
+#Sirve para limpiar. Para ejecutar la limpieza hay que ejecutar "make clean"
 clean:
 	rm -f $(TARGET)
