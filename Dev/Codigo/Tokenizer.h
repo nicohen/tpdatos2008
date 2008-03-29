@@ -5,7 +5,7 @@
 #import "Token.h"
 #include "IOException.h"
 
-namespace Parcers{
+namespace Parsing{
 	class Tokenizer{
 		
 		private:

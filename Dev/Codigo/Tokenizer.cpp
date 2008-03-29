@@ -4,7 +4,7 @@
 #include "Utils.h"
 #include "IOException.h"
 
-namespace Parcers{
+namespace Parsing{
 
 	Tokenizer::Tokenizer(FileManager::FileInfo* fileInfo, char delimiters[], int delimitersSize) throw (FileManager::IOException) {
 		_delimitersSize= delimitersSize;

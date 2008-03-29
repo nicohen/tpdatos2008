@@ -17,12 +17,12 @@ Demon::Demon(int sleepTime, int bufferSize, bool vervose){
 void Demon::run(void){
 	FileManager::FileManager* fileManager = new FileManager::FileManager();
 	FileManager::FileInfo *input;
-	Parcers::Tokenizer *tokenizer;
-	Parcers::Token *token;
+	Parsing::Tokenizer *tokenizer;
+	Parsing::Token *token;
 	for(int i=0;i<10;i++){
 		input = fileManager->CreateFileInfo("In/pablo.txt");
 		try{
-			tokenizer = new Parcers::Tokenizer(input," ",1);
+			tokenizer = new Parsing::Tokenizer(input," ",1);
 				token = tokenizer->getNextToken(false);
 				while (token!=NULL){
 					printf(token->getContent());

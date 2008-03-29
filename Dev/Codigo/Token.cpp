@@ -1,6 +1,6 @@
 #include "Token.h"
 
-namespace Parcers{
+namespace Parsing{
 
 	Token::Token(char* content, int type){
 		_content= content;
