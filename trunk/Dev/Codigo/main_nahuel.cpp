@@ -12,7 +12,7 @@
 #include <exception>
 using namespace std;
 
-class MyException: public exception
+class AssertionException: public exception
 {
 private:
 	virtual const char* what() const throw()
@@ -26,7 +26,7 @@ public:
 		return _msg;
 	}
 	
-	MyException(char* aMsg){
+	AssertionException(char* aMsg){
 		_msg=cloneStr(aMsg);	
 	}
   
@@ -35,13 +35,13 @@ public:
 void Assert_Equals_str(char* expected, char* actual,char* aFailMessage){
 	if(strcmp(expected,actual)!=0){
 		printf("Expected: \"%s\",But Was: \"%s\"", expected, actual);
-		throw new MyException(aFailMessage);
+		throw new AssertionException(aFailMessage);
 	}
 }
 
 void Assert_True(bool anExpr,char* aFailMessage){
 	if(!anExpr){
-		throw new MyException(aFailMessage);
+		throw new AssertionException(aFailMessage);
 	}
 }
 
@@ -49,7 +49,7 @@ void (*testFunction)() = NULL;
 void handleTest(void (*testFunction)(),bool* generalTests){	
 	try{
 		(*testFunction)();
-	}catch(MyException* ex){
+	}catch(AssertionException* ex){
 		printf("[TestFail] msg= %s \n", ex->getMsg());
 		*generalTests=false;
 	}
@@ -71,11 +71,12 @@ void testCreation(){
 
 void testCreateStatement(){
 	CreateStatement* vvCreateStatement=NULL;
+	//int pepe=0;
 	vvCreateStatement=new CreateStatement();
 	vvCreateStatement->setFileName("datos.dat");
-	//Assert_True(strcmp(vvCreateStatement->getFileName(),"datos.dat"),"getFileName");
-	//Assert_Equals_str(vvCreateStatement->getFileName(),"datos.dat","getFileName");
-	Assert_Equals_str("datos.dats","datos.dat","getFileName");
+	vvCreateStatement->addSecondaryField(new Field());
+	Assert_Equals_str(vvCreateStatement->getFileName(),"datos.dat","getFileName");
+	delete(vvCreateStatement);
 }
 
 

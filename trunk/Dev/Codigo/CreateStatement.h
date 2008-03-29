@@ -7,6 +7,10 @@ class CreateStatement
 {
 private:
 	char* _name;
+	std::vector<Field*>* _secondaryFields;
+	SecondaryIndex* _secondaryIndex;
+	int _dataBlockSize;
+	int _indexSize;
 public:
 	CreateStatement();
 	char* getFileName();
@@ -15,6 +19,10 @@ public:
 	int getIndexSize();
 	SecondaryIndex* getSecondaryIndex();
 	
+	void addSecondaryField(Field* aField);
+	void setSecondaryIndex(SecondaryIndex* aSecondaryIndex);
+	void setDataBlockSize(int size);
+	void setIndexSize(int size);
 	void setFileName(char* aName);
 	virtual ~CreateStatement();
 };
