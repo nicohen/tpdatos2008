@@ -30,11 +30,15 @@ namespace FileManager{
 		}
 	}
 	
-	int FileInfo::read(void* place, int size) throw (IOException){
+	void FileInfo::read(void* place, int size) throw (IOException){
+		int count;
 		if (_file == NULL){
 			throw IOException();
 		}
-		return _fileManager->Read(place,size,this);	
+		count = _fileManager->Read(place,size,this);
+		if (count==0){
+			throw IOException();
+		}
 	}
 	
 	void FileInfo::create(void) throw (IOException){

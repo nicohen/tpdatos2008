@@ -3,6 +3,7 @@
 
 #import "FileInfo.h"
 #import "Token.h"
+#include "IOException.h"
 
 namespace Parcers{
 	class Tokenizer{
@@ -10,10 +11,12 @@ namespace Parcers{
 		private:
 		char _actual;
 		char* _delimiters;
+		int _delimitersSize;
 		FileManager::FileInfo* _fileInfo;
+		bool isInList(char item, char* list, int listSize);
 		
 		public:
-		Tokenizer(FileManager::FileInfo* fileInfo, char delimiters[]);
+		Tokenizer(FileManager::FileInfo* fileInfo, char delimiters[], int delimitersSize) throw (FileManager::IOException);
 		Token* getNextToken(bool ignoreDelimiters);
 		virtual ~Tokenizer();
 	};
