@@ -7,14 +7,16 @@
 #include "IOException.h"
 
 namespace FileManager{
+	class FileManager;
 	class FileInfo{
 	
 		private:
 		char* _name;
 		FILE* _file;
+		FileManager* _fileManager;
 		
 		public:
-		FileInfo(char* fileName);
+		FileInfo(FileManager* fileManager, char* fileName);
 		virtual ~FileInfo();
 		
 		//GETERS y SETERS NECESARIOS
