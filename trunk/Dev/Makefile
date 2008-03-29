@@ -10,8 +10,8 @@ TARGET = AlmacenX
 CODE_PATH= Codigo/
  
 #Archivos que estan en producción
-GLOBAL_CPP_H=  $(CODE_PATH)Statement.h $(CODE_PATH)OutPutter.h  $(CODE_PATH)Field.h $(CODE_PATH)CreateStatement.h   $(CODE_PATH)StringType.h   $(CODE_PATH)DataType.h   $(CODE_PATH)IntType.h   $(CODE_PATH)Utils.h   $(CODE_PATH)SecondaryIndex.h   $(CODE_PATH)IOException.h   $(CODE_PATH)FileManager.h   $(CODE_PATH)FileInfo.h   $(CODE_PATH)Demon.h   $(CODE_PATH)Token.h   $(CODE_PATH)Tokenizer.h
-GLOBAL_CPP=	$(CODE_PATH)Statement.cpp $(CODE_PATH)OutPutter.cpp $(CODE_PATH)Field.cpp $(CODE_PATH)CreateStatement.cpp $(CODE_PATH)StringType.cpp $(CODE_PATH)DataType.cpp $(CODE_PATH)IntType.cpp $(CODE_PATH)Utils.cpp $(CODE_PATH)SecondaryIndex.cpp $(CODE_PATH)IOException.cpp $(CODE_PATH)FileManager.cpp $(CODE_PATH)FileInfo.cpp $(CODE_PATH)Demon.cpp $(CODE_PATH)Token.cpp $(CODE_PATH)Tokenizer.cpp
+GLOBAL_CPP_H=$(CODE_PATH)StatementParser.h  $(CODE_PATH)Statement.h $(CODE_PATH)OutPutter.h  $(CODE_PATH)Field.h $(CODE_PATH)CreateStatement.h   $(CODE_PATH)StringType.h   $(CODE_PATH)DataType.h   $(CODE_PATH)IntType.h   $(CODE_PATH)Utils.h   $(CODE_PATH)SecondaryIndex.h   $(CODE_PATH)IOException.h   $(CODE_PATH)FileManager.h   $(CODE_PATH)FileInfo.h   $(CODE_PATH)Demon.h   $(CODE_PATH)Token.h   $(CODE_PATH)Tokenizer.h
+GLOBAL_CPP=$(CODE_PATH)StatementParser.cpp  $(CODE_PATH)Statement.cpp $(CODE_PATH)OutPutter.cpp $(CODE_PATH)Field.cpp $(CODE_PATH)CreateStatement.cpp $(CODE_PATH)StringType.cpp $(CODE_PATH)DataType.cpp $(CODE_PATH)IntType.cpp $(CODE_PATH)Utils.cpp $(CODE_PATH)SecondaryIndex.cpp $(CODE_PATH)IOException.cpp $(CODE_PATH)FileManager.cpp $(CODE_PATH)FileInfo.cpp $(CODE_PATH)Demon.cpp $(CODE_PATH)Token.cpp $(CODE_PATH)Tokenizer.cpp
 
 #Si se quiere arrancar usando un "main" propio, crear el archivo con la funcion main adentro y decomentar la linea que corresponda
 MAIN_CLASS= $(CODE_PATH)main.cpp
@@ -38,7 +38,7 @@ pablo: $(MAIN_PABLO) $(GLOBAL_CPP_H)
 	g++ -Wall $(MAIN_PABLO) $(GLOBAL_CPP) -o $(TARGET)	
 
 
-nahuel: $(MAIN_NAHUEL) $(GLOBAL_CPP_H)
+nahuel: $(MAIN_NAHUEL)  $(GLOBAL_CPP_H)
 	g++ -Wall $(MAIN_NAHUEL)   $(GLOBAL_CPP) -o $(TARGET)	
 
 nicolas: $(MAIN_NICOLAS) $(GLOBAL_CPP_H)
