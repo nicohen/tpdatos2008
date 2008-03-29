@@ -4,13 +4,8 @@
 
 using namespace std;
 
-CreateStatement::CreateStatement()
-{
+CreateStatement::CreateStatement(char* fileName):Statement(fileName){
 	_secondaryFields=new vector<Field*>();
-}
-
-char* CreateStatement::getFileName(){
-	return _name;	
 }
 
 int CreateStatement::getDataBlockSize(){
@@ -45,13 +40,6 @@ void CreateStatement::setIndexSize(int size){
 	_indexSize=size;
 }
 
-/*
- * El parametro aName será clonado
- * */
-void CreateStatement::setFileName(char* aName){
-	_name=cloneStr(aName);
-}
-
 
 void cleanSecondaryFields(vector<Field*>* secondaryFields){
 	vector<Field*>::iterator iter;
@@ -61,18 +49,16 @@ void cleanSecondaryFields(vector<Field*>* secondaryFields){
 		delete ((Field*)*iter);
 	}
 	secondaryFields->clear();
-/*for (Iter = myVector.begin(); Iter != myVector.end(); Iter++ )
- {
-      cout << " " << *Iter;
- }*/
+}
+
+void CreateStatement::execute(void* anIDataManager, OutPutter* anOutputter){
+	
 }
 
 CreateStatement::~CreateStatement()
 {
 	//ToDo: RECORRER Y MATAR CADA UNO DE LOS ELEMENTOS DEL ARRAY
-	free(this->_name);
 	delete(this->_secondaryIndex);	
 	cleanSecondaryFields(this->_secondaryFields);
 	delete(this->_secondaryFields);
-	//this->_secondaryFields
 }

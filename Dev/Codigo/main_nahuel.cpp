@@ -33,8 +33,16 @@ public:
 };
 
 void Assert_Equals_str(char* expected, char* actual,char* aFailMessage){
-	if(strcmp(expected,actual)!=0){
-		printf("Expected: \"%s\",But Was: \"%s\"", expected, actual);
+	char* vvActual=actual;
+	char* vvExpected=expected;
+	if(vvExpected==0){
+		vvExpected="";
+	}
+	if(vvActual==0){
+		vvActual="";
+	}
+	if(strcmp(vvExpected,vvActual)!=0){
+		printf("Expected: \"%s\",But Was: \"%s\"", vvExpected, vvActual);
 		throw new AssertionException(aFailMessage);
 	}
 }
@@ -63,29 +71,28 @@ void testCreation(){
 	Field *vvField=NULL;
 	vvField=new Field();
 	vvField->getType();
-	vvCreateStatement=new CreateStatement();	
+	vvCreateStatement=new CreateStatement("Test.Test");	
 	vvIntType=new IntType();
 	vvStringType=new StringType();
 	vvSecondaryIndex= new SecondaryIndex();
+	
+	delete(vvCreateStatement);
 }
 
 void testCreateStatement(){
 	CreateStatement* vvCreateStatement=NULL;
 	//int pepe=0;
-	vvCreateStatement=new CreateStatement();
-	vvCreateStatement->setFileName("datos.dat");
+	vvCreateStatement=new CreateStatement("datos.dat");
 	vvCreateStatement->addSecondaryField(new Field());
-	Assert_Equals_str(vvCreateStatement->getFileName(),"datos.dat","getFileName");
+	Assert_Equals_str(vvCreateStatement->getFileNamess(),"datos.dat","getFileName");
 	delete(vvCreateStatement);
 }
-
-
 
 int main(int argc, char **argv) {
 	bool generalTests=true;
 	handleTest(&testCreation,&generalTests);
 	handleTest(&testCreateStatement,&generalTests);
-	printf("%i",strcmp("datos.dat","datos.dat"));
+	
 	
 	if(!generalTests){
 		printf("---¡¡¡¡--FAILS--!!!!--\n");

@@ -1,30 +1,36 @@
 #ifndef CREATESTATEMENT_H_
 #define CREATESTATEMENT_H_
 #include "SecondaryIndex.h"
+#include "Statement.h"
 #include "Field.h"
 #include <vector>
-class CreateStatement
+class CreateStatement: public Statement
 {
 private:
-	char* _name;
 	std::vector<Field*>* _secondaryFields;
 	SecondaryIndex* _secondaryIndex;
 	int _dataBlockSize;
 	int _indexSize;
 public:
-	CreateStatement();
-	char* getFileName();
+	//Constructores y destructores 
+	CreateStatement(char* fileName);
+	virtual ~CreateStatement();
+		
+	//Getters
 	std::vector<Field*>* getSecondaryFields();
 	int getDataBlockSize();
 	int getIndexSize();
 	SecondaryIndex* getSecondaryIndex();
 	
-	void addSecondaryField(Field* aField);
+	//Setters
 	void setSecondaryIndex(SecondaryIndex* aSecondaryIndex);
 	void setDataBlockSize(int size);
 	void setIndexSize(int size);
-	void setFileName(char* aName);
-	virtual ~CreateStatement();
+	
+	//Otros metodos
+	void addSecondaryField(Field* aField);
+	virtual void execute(void* anIDataManager, OutPutter* anOutputter);
+	
 };
 
 
