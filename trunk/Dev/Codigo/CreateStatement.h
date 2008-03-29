@@ -1,18 +1,17 @@
 #ifndef CREATESTATEMENT_H_
 #define CREATESTATEMENT_H_
-
+#include "SecondaryIndex.h"
+#include "Field.h"
+#include <vector>
 class CreateStatement
 {
 public:
 	CreateStatement();
 	char* getFileName();
-//	int[] getSecondaryFields();
-	int getFileType();
+	std::vector<Field*>* getSecondaryFields();
 	int getDataBlockSize();
 	int getIndexSize();
-	
-//	SecondaryIndex* getSecondaryIndex();	
-	
+	SecondaryIndex* getSecondaryIndex();		
 	virtual ~CreateStatement();
 };
 
