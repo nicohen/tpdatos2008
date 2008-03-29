@@ -52,7 +52,7 @@ void cleanSecondaryFields(vector<Field*>* secondaryFields){
 }
 
 void CreateStatement::execute(void* anIDataManager, OutPutter* anOutputter){
-	
+	anOutputter->printLine("Sé ejecutó la instrucción CreateStatement");
 }
 
 CreateStatement::~CreateStatement()
