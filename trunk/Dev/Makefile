@@ -10,12 +10,12 @@ TARGET = AlmacenX
 CODE_PATH= Codigo/
  
 #Archivos que estan en producción
-GLOBAL_CPP_H=  $(CODE_PATH)Field.h $(CODE_PATH)CreateStatement.h $(CODE_PATH)StringType.cpp $(CODE_PATH)StringType.h $(CODE_PATH)DataType.cpp $(CODE_PATH)DataType.h $(CODE_PATH)IntType.h $(CODE_PATH)IntType.cpp $(CODE_PATH)SecondaryIndex.h $(CODE_PATH)SecondaryIndex.cpp $(CODE_PATH)Utils.h    $(CODE_PATH)Utils.cpp    $(CODE_PATH)IOException.h    $(CODE_PATH)IOException.cpp    $(CODE_PATH)FileManager.h    $(CODE_PATH)FileManager.cpp    $(CODE_PATH)FileInfo.h    $(CODE_PATH)FileInfo.cpp    $(CODE_PATH)Demon.h    $(CODE_PATH)Demon.cpp
-GLOBAL_CPP=$(CODE_PATH)Field.cpp $(CODE_PATH)CreateStatement.cpp $(CODE_PATH)StringType.cpp $(CODE_PATH)DataType.cpp $(CODE_PATH)IntType.cpp $(CODE_PATH)Utils.cpp $(CODE_PATH)SecondaryIndex.cpp $(CODE_PATH)IOException.cpp $(CODE_PATH)FileManager.cpp $(CODE_PATH)FileInfo.cpp $(CODE_PATH)Demon.cpp
+GLOBAL_CPP_H= $(CODE_PATH)Field.h $(CODE_PATH)CreateStatement.h   $(CODE_PATH)StringType.h   $(CODE_PATH)DataType.h   $(CODE_PATH)IntType.h   $(CODE_PATH)Utils.h   $(CODE_PATH)SecondaryIndex.h   $(CODE_PATH)IOException.h   $(CODE_PATH)FileManager.h   $(CODE_PATH)FileInfo.h   $(CODE_PATH)Demon.h   $(CODE_PATH)Token.h   $(CODE_PATH)Tokenizer.h
+GLOBAL_CPP=	$(CODE_PATH)Field.cpp $(CODE_PATH)CreateStatement.cpp $(CODE_PATH)StringType.cpp $(CODE_PATH)DataType.cpp $(CODE_PATH)IntType.cpp $(CODE_PATH)Utils.cpp $(CODE_PATH)SecondaryIndex.cpp $(CODE_PATH)IOException.cpp $(CODE_PATH)FileManager.cpp $(CODE_PATH)FileInfo.cpp $(CODE_PATH)Demon.cpp $(CODE_PATH)Token.cpp $(CODE_PATH)Tokenizer.cpp
 
 #Si se quiere arrancar usando un "main" propio, crear el archivo con la funcion main adentro y decomentar la linea que corresponda
 MAIN_CLASS= $(CODE_PATH)main.cpp
-MAIN_PABLO= $(CODE_PATH)main_pablo.cpp
+MAIN_PABLO= $(CODE_PATH)main.cpp
 MAIN_NAHUEL= $(CODE_PATH)main_nahuel.cpp
 MAIN_NICOLAS= $(CODE_PATH)main_nico.cpp
 
