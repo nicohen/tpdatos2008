@@ -6,12 +6,12 @@ class CreateStatement
 public:
 	CreateStatement();
 	char* getFileName();
-	int[] getSecondaryFields();
+//	int[] getSecondaryFields();
 	int getFileType();
 	int getDataBlockSize();
 	int getIndexSize();
 	
-	SecondaryIndex* getSecondaryIndex();	
+//	SecondaryIndex* getSecondaryIndex();	
 	
 	virtual ~CreateStatement();
 };

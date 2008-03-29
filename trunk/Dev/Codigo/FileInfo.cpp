@@ -2,28 +2,29 @@
 
 namespace FileManager{
 
-	FileInfo::FileInfo(char* fileName){
+	FileInfo::FileInfo(FileManager* fileManager, char* fileName){
 		_file= NULL;
 		_name= cloneStr(fileName);
+		_fileManager = fileManager;
 	}
 	
 	FileInfo::~FileInfo(){
 		free(_name);
 		if (_file!=NULL){
-			FileManager::Close(this);
+			_fileManager->Close(this);
 			_file=NULL;
 		}
 	}
 	
 	void FileInfo::close(void) throw (IOException){
 		if (_file!=NULL){
-			FileManager::Close(this);
+			_fileManager->Close(this);
 			_file=NULL;
 		}
 	}
 	
 	void FileInfo::open(void) throw (IOException){
-		FileManager::Open(this,"r+b");
+		_fileManager->Open(this,"r+b");
 		if (_file == NULL){
 			throw IOException();
 		}
@@ -33,11 +34,11 @@ namespace FileManager{
 		if (_file == NULL){
 			throw IOException();
 		}
-		return FileManager::Read(place,size,this);	
+		return _fileManager->Read(place,size,this);	
 	}
 	
 	void FileInfo::create(void) throw (IOException){
-		FileManager::Open(this,"w+b");
+		_fileManager->Open(this,"w+b");
 		if (_file == NULL){
 			throw IOException();
 		}
@@ -45,16 +46,16 @@ namespace FileManager{
 	
 	void FileInfo::delet(void) throw (IOException){
 		if (_file!=NULL){
-			FileManager::Close(this);
+			_fileManager->Close(this);
 			_file=NULL;
 		}
-		FileManager::Delete(this);
+		_fileManager->Delete(this);
 	}
 	
 	void FileInfo::write(void* source, int size) throw (IOException){
 		if (_file == NULL){
 			throw IOException();
 		}
-		FileManager::Write(source,size,this);
+		_fileManager->Write(source,size,this);
 	}
 }

@@ -6,6 +6,7 @@
 #include "time.h"
 #include "unistd.h"
 #include "FileInfo.h"
+#include "FileManager.h"
 
 class Demon{
 	
@@ -13,9 +14,10 @@ class Demon{
 	int _sleepTime;
 	int _bufferSize;
 	bool _vervose;
+	FileManager::FileManager* _fileManager;
 	
 	public:
-	Demon(int st, int bs, bool v);
+	Demon(FileManager::FileManager* fileManager, int st, int bs, bool v);
 	void run(void);
 	virtual ~Demon();
 	
