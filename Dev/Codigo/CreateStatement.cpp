@@ -1,9 +1,14 @@
 #include "CreateStatement.h"
+#include "Utils.h"
 
 using namespace std;
 
 CreateStatement::CreateStatement()
 {
+}
+
+void CreateStatement::setFileName(char* aName){
+	_name=cloneStr(aName);
 }
 
 char* CreateStatement::getFileName(){
