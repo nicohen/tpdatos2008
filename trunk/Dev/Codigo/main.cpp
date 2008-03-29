@@ -5,7 +5,6 @@
 #import "FileManager.h"
 
 int main(int argc, char **argv) {
-	FileManager::FileManager* fileManager = NULL;
 	int sleepTime;
 	int bufferSize;
 	Demon *demon;
@@ -33,11 +32,8 @@ int main(int argc, char **argv) {
 	if ((argc==4)&&(strcmp("-d",argv[3])==0)){
 		verbose = true;
 	}
-	printf("%d %d %s\n",sleepTime,bufferSize,verbose?"true":"false");
-	fileManager= new FileManager::FileManager();
-	demon = new Demon(fileManager,sleepTime,bufferSize,verbose);
+	demon = new Demon(sleepTime,bufferSize,verbose);
 	demon->run();
 	delete demon;
-	delete fileManager;
 	return 0;
 }

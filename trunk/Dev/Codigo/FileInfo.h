@@ -26,7 +26,7 @@ namespace FileManager{
 		
 		void open(void) throw (IOException);
 		void close(void) throw (IOException);
-		int read(void* place, int size) throw (IOException);
+		void read(void* place, int size) throw (IOException);
 		void write(void* source, int size) throw (IOException);
 		void create(void) throw (IOException);
 		void delet(void) throw (IOException);
