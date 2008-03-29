@@ -6,12 +6,13 @@ OutPutter::OutPutter(FileManager::FileInfo* _fileInfo, bool _verboise){
 }
 
 OutPutter::~OutPutter(){
+	free(this->fileInfo);
 }
 
-void OutPutter::print(char* _message) {
+void OutPutter::printLine(char* _message) {
 	if (this->verboise) {
-		printf(_message);
+		cout<<_message<<endl;
 	} else {
-		
+		this->fileInfo->write(_message,strlen(_message));
 	}
 }

@@ -3,6 +3,7 @@
 
 #include "FileInfo.h"
 #include "stdio.h"
+#include "iostream.h"
 
 class OutPutter{
 
@@ -14,6 +15,6 @@ class OutPutter{
 	OutPutter(FileManager::FileInfo* _fileInfo, bool _verboise);
 	virtual ~OutPutter();
 	
-	void print(char* _msg);	
+	void printLine(char* _msg);	
 };
 #endif /*OUTPUTTER_*/
