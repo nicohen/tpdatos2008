@@ -7,9 +7,10 @@
 
 namespace Parsing{
 
-	Tokenizer::Tokenizer(FileManager::FileInfo* fileInfo, char delimiters[], int delimitersSize, char* keyWords[], int keyWorsSize) throw (FileManager::IOException){
+	Tokenizer::Tokenizer(FileManager::FileInfo* fileInfo, char stringIndicator, char delimiters[], int delimitersSize, char* keyWords[], int keyWorsSize) throw (FileManager::IOException){
 		_delimitersSize= delimitersSize;
 		_fileInfo= fileInfo;
+		_sIndicator= stringIndicator;
 		_delimiters= delimiters;
 		_delimitersSize= delimitersSize;
 		_keyWords= keyWords;
@@ -19,14 +20,21 @@ namespace Parsing{
 	}
 
 	Token* Tokenizer::getNextToken(bool ignoreDelimiters){
+		bool isInString=false;
 		char buffer[128];
 		int type=OTHER;
 		char *content;
-		int i=1;
+		int i=0;
 		if (_actual==0){
 			return NULL;
 		}
-		buffer[0]=_actual;
+		if (_actual==_sIndicator){
+			type=STRING;
+			isInString= true;
+		}else{
+			buffer[i]=_actual;
+			i++;
+		}
 		if (!ignoreDelimiters && this->isDelimiter(_actual)){
 			try{
 				buffer[1]=0;
@@ -38,19 +46,34 @@ namespace Parsing{
 		}else{
 			try{
 				_fileInfo->read(&_actual,1);
-				while (!this->isDelimiter(_actual)){
-					buffer[i]=_actual;
-					i++;
+				while ((isInString && (_actual!=_sIndicator))||(!isInString && !this->isDelimiter(_actual))){
+					if (_actual==_sIndicator){
+						isInString= false;
+					}else{
+						buffer[i]=_actual;
+						i++;
+					}
 					_fileInfo->read(&_actual,1);
 				}	
 			}catch (FileManager::IOException e){
 				_actual=0;
 			}
+			if (_actual==_sIndicator){
+				try{
+					_fileInfo->read(&_actual,1);
+				}catch (FileManager::IOException e){
+				_actual=0;
+				}
+			}
 			buffer[i]=0;
 		}
 		content = cloneStr(buffer);
-		if (isKeyWord(content)){
-			type=KEYWORD;
+		if (type!=STRING && type!=DELIMITER){
+			if (isNumeric(content)){
+				type=NUMBER;
+			}else if (isKeyWord(content)){
+				type=KEYWORD;
+			}
 		}
 		return new Token(content,type);
 	}

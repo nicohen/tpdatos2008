@@ -5,5 +5,6 @@
 #include "stdlib.h"
 
 char* cloneStr(char* source);
+bool isNumeric(char* word);
 
 #endif /*UTILS_H_*/
