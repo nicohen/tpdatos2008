@@ -9,9 +9,15 @@ OutPutter::~OutPutter(){
 	free(this->fileInfo);
 }
 
+void OutPutter::trace(char* message){
+	if (this->verboise) {
+		printf("Debug: %s\n",message);
+	}
+}
+
 void OutPutter::printLine(char* _message) {
 	if (this->verboise) {
-		cout<<_message<<endl;
+		printf("%s\n",_message);
 	} else {
 		this->fileInfo->write(_message,strlen(_message));
 	}
