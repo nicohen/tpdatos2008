@@ -7,13 +7,14 @@
 class OutPutter{
 
 	private:
-	FileManager::FileInfo* fileInfo;
-	bool verboise;
+	FileManager::FileInfo* _fileInfo;
+	bool _verboise;
 	
 	public:
-	OutPutter(FileManager::FileInfo* _fileInfo, bool _verboise);
+	OutPutter(FileManager::FileInfo* aFileInfo, bool verboise);
 	virtual ~OutPutter();
-	void trace(char* message);
-	void printLine(char* _msg);	
+	void debug(char* aMessage);
+	void error(char* aMessage);
+	void printLine(char* aMessage);	
 };
 #endif /*OUTPUTTER_*/
