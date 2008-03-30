@@ -12,13 +12,21 @@ namespace Parsing{
 		char _actual;
 		char* _delimiters;
 		int _delimitersSize;
+		char** _keyWords;
+		int _keyWordsSize;
+		
 		FileManager::FileInfo* _fileInfo;
-		bool isInList(char item, char* list, int listSize);
+		bool isDelimiter(char item);
+		bool isKeyWord(char* item);
 		
 		public:
-		Tokenizer(FileManager::FileInfo* fileInfo, char delimiters[], int delimitersSize) throw (FileManager::IOException);
+		Tokenizer(FileManager::FileInfo *fileInfo, char delimiters[], int delimitersSize, char* keyWords[], int keyWorsSize) throw (FileManager::IOException);
 		Token* getNextToken(bool ignoreDelimiters);
 		virtual ~Tokenizer();
+		static const int DELIMITER =0;
+		static const int KEYWORD =1;
+		static const int OTHER= 2;
+		
 	};
 }
 #endif /*TOKENIZER_H_*/
