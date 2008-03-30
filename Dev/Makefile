@@ -38,8 +38,8 @@ pablo: $(MAIN_PABLO) $(GLOBAL_CPP_H)
 	g++ -Wall $(MAIN_PABLO) $(GLOBAL_CPP) -o $(TARGET)	
 
 
-nahuel: $(MAIN_NAHUEL)  $(GLOBAL_CPP_H)
-	g++ -Wall $(MAIN_NAHUEL)   $(GLOBAL_CPP) -o $(TARGET)	
+nahuel: $(MAIN_NAHUEL) $(CODE_PATH)StructureType.h  $(GLOBAL_CPP_H)
+	g++ -Wall $(MAIN_NAHUEL) $(CODE_PATH)StructureType.cpp  $(GLOBAL_CPP) -o $(TARGET)	
 
 nicolas: $(MAIN_NICOLAS) $(GLOBAL_CPP_H)
 	g++ -Wall $(MAIN_NICOLAS) $(GLOBAL_CPP) -o $(TARGET)		

@@ -3,7 +3,7 @@
 
 #include "DataType.h"
 
-class IntType:DataType
+class IntType:public DataType
 {
 public:
 	IntType();

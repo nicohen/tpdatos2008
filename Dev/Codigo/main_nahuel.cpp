@@ -12,58 +12,131 @@
 #include <exception>
 using namespace std;
 
-class AssertionException: public exception
-{
+class Assertion{
 private:
-	virtual const char* what() const throw()
-	{
-		return _msg;
-	}
-	char* _msg;
+	bool _passed;
 public:
-	
-	char* getMsg(){
-		return _msg;
+	Assertion(){
+		_passed=true;
 	}
 	
-	AssertionException(char* aMsg){
-		_msg=cloneStr(aMsg);	
+	bool evaluate(){
+		return _passed;
 	}
-  
+	
+	virtual void printFailMessage()=0;
+	
+	void reportAssertionFailed(){
+		this->_passed=false;
+	}
+	
+	virtual ~Assertion(){
+		
+	}
 };
 
-void Assert_Equals_str(char* expected, char* actual,char* aFailMessage){
-	char* vvActual=actual;
-	char* vvExpected=expected;
-	if(vvExpected==0){
-		vvExpected="";
-	}
-	if(vvActual==0){
-		vvActual="";
-	}
-	if(strcmp(vvExpected,vvActual)!=0){
-		printf("Expected: \"%s\",But Was: \"%s\"", vvExpected, vvActual);
-		throw new AssertionException(aFailMessage);
-	}
-}
+class EqualsAssertion:public Assertion{
 
-void Assert_True(bool anExpr,char* aFailMessage){
-	if(!anExpr){
-		throw new AssertionException(aFailMessage);
+private:
+	char* _expected;
+	char* _actual;
+public:
+	
+	EqualsAssertion(char* expected, char* actual){
+		_actual=actual;
+		_expected=expected;
+		if(_expected==0){
+			_expected="";
+		}
+		if(_actual==0){
+			_actual="";
+		}
+		if(strcmp(_expected,_actual)!=0){
+			this->reportAssertionFailed();
+		}
 	}
-}
-
-void (*testFunction)() = NULL;
-void handleTest(void (*testFunction)(),bool* generalTests){	
-	try{
-		(*testFunction)();
-	}catch(AssertionException* ex){
-		printf("[TestFail] msg= %s \n", ex->getMsg());
-		*generalTests=false;
+	
+	
+	virtual void printFailMessage(){
+		if(!this->evaluate()){
+			printf("Expected: \"%s\",But Was: \"%s\"", this->_expected, this->_actual);	
+		}		
 	}
-}
+	
+	virtual ~EqualsAssertion(){
+		
+	}
+};
 
-void testCreation(){
+class TrueAssertion:public Assertion{
+
+private:
+public:
+	
+	TrueAssertion(bool expr){
+		if(!expr){
+			reportAssertionFailed();
+		}
+	}
+	
+	
+	virtual void printFailMessage(){
+		if(!this->evaluate()){
+			printf("Expected \"true\" but was \"false\"");	
+		}		
+	}
+	
+	virtual ~TrueAssertion(){
+		
+	}
+};
+
+class TestCase
+{
+public:
+	bool _rest;
+	char* _testName;
+	int* _failedTests;
+	TestCase(char* testName,int* failedTests){
+		_rest=true;
+		_testName=cloneStr(testName);
+		_failedTests=failedTests;
+		printTestStart();
+	}
+	
+	void printTestStart(){
+		printf("testing %s... \n",_testName);	
+	}
+	void printTestEnd(){
+		if(this->_rest==true){
+			printf("--->passed\n");
+		}else{
+			printf(">>>>FAILED\n");	
+		}	
+	}
+	
+	void reportAssertion(Assertion* assertion ){
+		if( assertion->evaluate()==false){
+			(*_failedTests)++;
+			this->_rest=false;
+			printf("    ");
+			assertion->printFailMessage();
+			printf("\n");
+		}		
+		delete(assertion);		
+	}
+	
+	bool getResult(){
+		return this->_rest;		
+	}
+		
+	virtual ~TestCase(){
+		printTestEnd();
+		delete(_testName);
+	}
+};
+
+void testCreation(TestCase* test){
 	SecondaryIndex* vvSecondaryIndex=NULL;
 	IntType* vvIntType=NULL;
 	StringType* vvStringType=NULL;
@@ -76,30 +149,43 @@ void testCreation(){
 	vvStringType=new StringType();
 	vvSecondaryIndex= new SecondaryIndex();
 	
+	delete(vvCreateStatement);	
+}
+
+void testCreateStatement(TestCase* test){
+	CreateStatement* vvCreateStatement=NULL;
+	vvCreateStatement=new CreateStatement("datos.dat");
+	vvCreateStatement->addSecondaryField(new Field());
+	test->reportAssertion(new EqualsAssertion("datos.dat",vvCreateStatement->getFileNamess()));
 	delete(vvCreateStatement);
 }
 
-void testCreateStatement(){
+void testCompleteInstantiation(TestCase* test){
 	CreateStatement* vvCreateStatement=NULL;
-	//int pepe=0;
 	vvCreateStatement=new CreateStatement("datos.dat");
-	vvCreateStatement->addSecondaryField(new Field());
-	Assert_Equals_str(vvCreateStatement->getFileNamess(),"datos.dat","getFileName");
-	delete(vvCreateStatement);
+	test->reportAssertion(new EqualsAssertion("datos.dat",vvCreateStatement->getFileNamess()));
+	delete(vvCreateStatement);	
 }
 
 int main(int argc, char **argv) {
-	bool generalTests=true;
-	handleTest(&testCreation,&generalTests);
-	handleTest(&testCreateStatement,&generalTests);
+	int failedTests=0;
 	
+	TestCase* test1=new TestCase("testCreateStatement",&failedTests);
+	testCreateStatement(test1);
+	delete test1;
+	TestCase* test2=new TestCase("testCreation",&failedTests);	
+	testCreation(test2);
+	delete test2;
+	TestCase* test3=new TestCase("testCompleteInstantiation",&failedTests);	
+	testCompleteInstantiation(test3);
+	delete test3;
 	
-	if(!generalTests){
-		printf("---¡¡¡¡--FAILS--!!!!--\n");
+	if(failedTests>0){
+		printf(">FAILED TESTS!!!! Count: %i\n",failedTests);
 	}else{
-		printf("----OK---\n");		
+		printf(">Tests OK\n");		
 	}
-	
+		
 	printf("Hola desde el main de nahuel");	
 	return 0;
 }
