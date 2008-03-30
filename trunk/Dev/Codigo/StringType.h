@@ -1,7 +1,9 @@
 #ifndef STRINGTYPE_H_
 #define STRINGTYPE_H_
 
-class StringType
+#include "DataType.h"
+
+class StringType: public DataType
 {
 public:
 	StringType();

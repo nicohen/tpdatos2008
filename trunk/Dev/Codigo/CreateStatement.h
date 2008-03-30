@@ -10,6 +10,7 @@ using namespace std;
 class CreateStatement: public Statement
 {
 private:
+	int _fileType;
 	std::vector<Field*>* _secondaryFields;
 	SecondaryIndex* _secondaryIndex;
 	int _dataBlockSize;
@@ -24,12 +25,14 @@ public:
 	int getDataBlockSize();
 	int getIndexSize();
 	SecondaryIndex* getSecondaryIndex();
+	int getFileType();
+	int getSecondaryFieldCount();
 	
 	//Setters
 	void setSecondaryIndex(SecondaryIndex* aSecondaryIndex);
 	void setDataBlockSize(int size);
 	void setIndexSize(int size);
-	
+	void setFileType(int fileType);
 	//Otros metodos
 	void addSecondaryField(Field* aField);
 	virtual void execute(void* anIDataManager, OutPutter* anOutputter);

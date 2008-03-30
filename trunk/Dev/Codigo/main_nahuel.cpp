@@ -8,6 +8,8 @@
 #import "CreateStatement.h"
 #import "Field.h"
 #import "Utils.h"
+#import "StructureType.h"
+
 
 #include <exception>
 using namespace std;
@@ -116,7 +118,7 @@ public:
 	}
 	
 	void reportAssertion(Assertion* assertion ){
-		if( assertion->evaluate()==false){
+		if(assertion->evaluate()==false){
 			(*_failedTests)++;
 			this->_rest=false;
 			printf("    ");
@@ -143,7 +145,7 @@ void testCreation(TestCase* test){
 	CreateStatement* vvCreateStatement=NULL;
 	Field *vvField=NULL;
 	vvField=new Field();
-	vvField->getType();
+	
 	vvCreateStatement=new CreateStatement("Test.Test");	
 	vvIntType=new IntType();
 	vvStringType=new StringType();
@@ -152,39 +154,125 @@ void testCreation(TestCase* test){
 	delete(vvCreateStatement);	
 }
 
-void testCreateStatement(TestCase* test){
+void testCreateStatement_SimpleInstantiation(TestCase* test){
 	CreateStatement* vvCreateStatement=NULL;
 	vvCreateStatement=new CreateStatement("datos.dat");
-	vvCreateStatement->addSecondaryField(new Field());
+	
+	//Verifico
+	test->reportAssertion(new TrueAssertion(vvCreateStatement->getSecondaryFieldCount()==0));
+	test->reportAssertion(new TrueAssertion(vvCreateStatement->getSecondaryIndex()==NULL));
+	test->reportAssertion(new TrueAssertion(vvCreateStatement->getIndexSize()==0));
+	test->reportAssertion(new TrueAssertion(vvCreateStatement->getDataBlockSize()==0));
+	test->reportAssertion(new TrueAssertion(vvCreateStatement->getFileType()==0));	
 	test->reportAssertion(new EqualsAssertion("datos.dat",vvCreateStatement->getFileNamess()));
 	delete(vvCreateStatement);
 }
 
-void testCompleteInstantiation(TestCase* test){
+void testCreateStatement_CompleteInstantiation(TestCase* test){
 	CreateStatement* vvCreateStatement=NULL;
-	vvCreateStatement=new CreateStatement("datos.dat");
+	SecondaryIndex* vvSecondaryIndex=NULL;
+	Field* vvSecondaryField=NULL;
+		
+	vvCreateStatement=new CreateStatement("datos.dat");	
+	vvCreateStatement->setFileType(1);
+	vvCreateStatement->setDataBlockSize(30);
+	vvCreateStatement->setIndexSize(55);
+	
+	//Creo y seteo un indice secundario
+	vvSecondaryIndex=new SecondaryIndex();
+	vvCreateStatement->setSecondaryIndex(vvSecondaryIndex);//Testear aparte	
+	
+	//Creo y agrego un campo secundario
+	vvSecondaryField=new Field();
+	vvCreateStatement->addSecondaryField(vvSecondaryField);	
+	
+	//Verifico
+	test->reportAssertion(new TrueAssertion(vvCreateStatement->getSecondaryFieldCount()==1));
+	test->reportAssertion(new TrueAssertion(vvCreateStatement->getSecondaryIndex()==vvSecondaryIndex));
+	test->reportAssertion(new TrueAssertion(vvCreateStatement->getIndexSize()==55));
+	test->reportAssertion(new TrueAssertion(vvCreateStatement->getDataBlockSize()==30));
+	test->reportAssertion(new TrueAssertion(vvCreateStatement->getFileType()==1));	
 	test->reportAssertion(new EqualsAssertion("datos.dat",vvCreateStatement->getFileNamess()));
 	delete(vvCreateStatement);	
+}
+
+void testDataType_StructureType(TestCase* test){
+	IntType* vvType=NULL;
+	StringType* vvType2=NULL;
+	StructureType* vvType3=NULL;
+	vvType=new IntType();	
+	vvType2=new StringType();	
+	vvType3=new StructureType();	
+	
+	vvType3->addType(vvType);
+	vvType3->addType(vvType2);
+	
+	delete(vvType3);
+}
+
+void testField_Simple(TestCase* test){
+	Field* vvField=NULL;
+	vvField=new Field();
+	IntType* vvType=NULL;
+	StringType* vvType2=NULL;
+	StructureType* vvType3=NULL;
+	
+	test->reportAssertion(new TrueAssertion(vvField->isMandatory()==false));
+	
+	vvField->setIsMandatory(true);
+	test->reportAssertion(new TrueAssertion(vvField->isMandatory()));
+	
+	test->reportAssertion(new TrueAssertion(vvField->isPolyvalent()==false));
+	vvField->setIsPolyvalent(true);
+	test->reportAssertion(new TrueAssertion(vvField->isPolyvalent()));
+	
+	vvType=new IntType();	
+	vvType2=new StringType();	
+	vvType3=new StructureType();	
+	
+	vvType3->addType(vvType);
+	vvType3->addType(vvType2);
+	
+	test->reportAssertion(new TrueAssertion(vvField->getDataType()==NULL));
+	vvField->setDataType(vvType3);
+	test->reportAssertion(new TrueAssertion(vvField->getDataType()==vvType3));
+	
+	delete(vvField);
 }
 
 int main(int argc, char **argv) {
 	int failedTests=0;
 	
-	TestCase* test1=new TestCase("testCreateStatement",&failedTests);
-	testCreateStatement(test1);
+	TestCase* test1=new TestCase("testCreateStatement_SimpleInstantiation",&failedTests);
+	testCreateStatement_SimpleInstantiation(test1);
 	delete test1;
 	TestCase* test2=new TestCase("testCreation",&failedTests);	
 	testCreation(test2);
 	delete test2;
-	TestCase* test3=new TestCase("testCompleteInstantiation",&failedTests);	
-	testCompleteInstantiation(test3);
+	
+	TestCase* test3=new TestCase("testCreateStatement_CompleteInstantiation",&failedTests);	
+	testCreateStatement_CompleteInstantiation(test3);
 	delete test3;
 	
+	TestCase* test4=new TestCase("testDataType_StructureType",&failedTests);	
+	testDataType_StructureType(test4);
+	delete test4;
+	
+	TestCase* test5=new TestCase("testField_Simple",&failedTests);	
+	testField_Simple(test5);
+	delete test5;
+	
+	
+	
+	
+	
+	printf(":::Tests:::.......................\n");
 	if(failedTests>0){
-		printf(">FAILED TESTS!!!! Count: %i\n",failedTests);
+		printf("!!!!!!FAILED %i TEST/S !!!!!!!!!!\n",failedTests);
 	}else{
-		printf(">Tests OK\n");		
+		printf("Ok\n");		
 	}
+	printf("..................................\n");
 		
 	printf("Hola desde el main de nahuel");	
 	return 0;

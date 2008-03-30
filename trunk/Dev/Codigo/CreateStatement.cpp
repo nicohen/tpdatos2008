@@ -4,6 +4,19 @@
 
 using namespace std;
 
+//Getters
+int CreateStatement::getFileType(){
+	return this->_fileType;
+}
+int CreateStatement::getSecondaryFieldCount(){
+	return this->_secondaryFields->size();
+	
+}
+//Setters
+void CreateStatement::setFileType(int fileType){
+	this->_fileType=fileType;
+}
+
 CreateStatement::CreateStatement(char* fileName):Statement(fileName){
 	_secondaryFields=new vector<Field*>();
 }
