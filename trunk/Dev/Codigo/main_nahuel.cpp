@@ -172,7 +172,10 @@ void testCreateStatement_CompleteInstantiation(TestCase* test){
 	CreateStatement* vvCreateStatement=NULL;
 	SecondaryIndex* vvSecondaryIndex=NULL;
 	Field* vvSecondaryField=NULL;
-		
+	IntType* vvType=NULL;
+	StringType* vvType2=NULL;
+	StructureType* vvType3=NULL;
+	
 	vvCreateStatement=new CreateStatement("datos.dat");	
 	vvCreateStatement->setFileType(1);
 	vvCreateStatement->setDataBlockSize(30);
@@ -184,6 +187,14 @@ void testCreateStatement_CompleteInstantiation(TestCase* test){
 	
 	//Creo y agrego un campo secundario
 	vvSecondaryField=new Field();
+	
+	vvSecondaryField->setIsMandatory(true);
+	vvSecondaryField->setIsPolyvalent(true);
+	
+	vvType=new IntType();	
+	vvType2=new StringType();	
+	vvType3=new StructureType();
+	
 	vvCreateStatement->addSecondaryField(vvSecondaryField);	
 	
 	//Verifico
