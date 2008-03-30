@@ -4,15 +4,17 @@
 #include "Tokenizer.h"
 #include "Statement.h"
 #include "CreateStatement.h"
+#include "OutPutter.h"
 
 class StatementParser
 {
 private: 
 	Parsing::Tokenizer* _tokenizer;
+	OutPutter* _outPutter;
 	int _statementCount;
 public:
 	//constructores y destructores
-	StatementParser(Parsing::Tokenizer* tokenizer);
+	StatementParser(Parsing::Tokenizer* tokenizer,OutPutter* outputter);
 	virtual ~StatementParser();
 	
 	//otros metodos
