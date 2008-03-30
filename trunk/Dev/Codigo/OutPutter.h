@@ -2,8 +2,7 @@
 #define OUTPUTTER_
 
 #include "FileInfo.h"
-#include "stdio.h"
-#include "iostream.h"
+#include <stdio.h>
 
 class OutPutter{
 
@@ -14,7 +13,7 @@ class OutPutter{
 	public:
 	OutPutter(FileManager::FileInfo* _fileInfo, bool _verboise);
 	virtual ~OutPutter();
-	
+	void trace(char* message);
 	void printLine(char* _msg);	
 };
 #endif /*OUTPUTTER_*/
