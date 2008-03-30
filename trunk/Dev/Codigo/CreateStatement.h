@@ -4,6 +4,9 @@
 #include "Statement.h"
 #include "Field.h"
 #include <vector>
+
+using namespace std;
+
 class CreateStatement: public Statement
 {
 private:
@@ -17,7 +20,7 @@ public:
 	virtual ~CreateStatement();
 		
 	//Getters
-	std::vector<Field*>* getSecondaryFields();
+	vector<Field*>* getSecondaryFields();
 	int getDataBlockSize();
 	int getIndexSize();
 	SecondaryIndex* getSecondaryIndex();
@@ -30,6 +33,10 @@ public:
 	//Otros metodos
 	void addSecondaryField(Field* aField);
 	virtual void execute(void* anIDataManager, OutPutter* anOutputter);
+private:
+	//Otros metodos
+	void clearSecondaryFields(vector<Field*>* secondaryFields);
+	
 	
 };
 

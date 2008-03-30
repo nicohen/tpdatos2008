@@ -41,11 +41,11 @@ void CreateStatement::setIndexSize(int size){
 }
 
 
-void cleanSecondaryFields(vector<Field*>* secondaryFields){
+void CreateStatement::clearSecondaryFields(vector<Field*>* secondaryFields){
 	vector<Field*>::iterator iter;
 	for (iter = secondaryFields->begin(); iter != secondaryFields->end(); iter++ )
 	{
-		printf("is mandatory: %i \n",((Field*)*iter)->isMandatory());
+		//printf("is mandatory: %i \n",((Field*)*iter)->isMandatory());
 		delete ((Field*)*iter);
 	}
 	secondaryFields->clear();
@@ -57,8 +57,7 @@ void CreateStatement::execute(void* anIDataManager, OutPutter* anOutputter){
 
 CreateStatement::~CreateStatement()
 {
-	//ToDo: RECORRER Y MATAR CADA UNO DE LOS ELEMENTOS DEL ARRAY
 	delete(this->_secondaryIndex);	
-	cleanSecondaryFields(this->_secondaryFields);
+	clearSecondaryFields(this->_secondaryFields);
 	delete(this->_secondaryFields);
 }
