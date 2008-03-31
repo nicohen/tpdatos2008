@@ -64,8 +64,13 @@ void CreateStatement::clearSecondaryFields(vector<Field*>* secondaryFields){
 	secondaryFields->clear();
 }
 
-void CreateStatement::execute(void* anIDataManager, OutPutter* anOutputter){
-	anOutputter->printLine("Sé ejecutó la instrucción CreateStatement");
+void CreateStatement::writeStatementQuery(OutPutter* outPutter){
+	
+}
+
+StatementResult* CreateStatement::execute(DataManager* dataManager){
+	//Obtiene el resultado utilizando el DataManager
+	return new StatementResult();
 }
 
 CreateStatement::~CreateStatement()

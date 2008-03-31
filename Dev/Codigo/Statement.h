@@ -1,15 +1,20 @@
 #ifndef STATEMENT_H_
 #define STATEMENT_H_
 #include "OutPutter.h"
+#include "StatementResult.h"
+#include "DataManager.h"
+
+class StatementResult;
 class Statement
 {
 private:
 	char* _fileName;
 public:
 	Statement(char* fileName);
-	virtual void execute(void* anIDataManager, OutPutter* anOutputter) = 0;
 	virtual char* getFileNamess();
 	//virtual char* getFileName();
+	virtual void writeStatementQuery(OutPutter* outPutter)=0;
+	virtual StatementResult* execute(DataManager* dataManager) = 0;
 	virtual ~Statement();
 };
 
