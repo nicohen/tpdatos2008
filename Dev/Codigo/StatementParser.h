@@ -12,6 +12,14 @@ private:
 	Parsing::Tokenizer* _tokenizer;
 	OutPutter* _outPutter;
 	int _statementCount;
+	Statement* parseCreateStatemet();
+	Statement* parseAddStatemet();
+	Statement* parseConsultStatemet();
+	Statement* parseRemoveStatemet();
+	Statement* parseDeleteStatemet();
+	Statement* parseStatsStatemet();
+	Statement* parseEndStatemet();
+	Statement* parseActualizeStatemet();
 public:
 	//constructores y destructores
 	StatementParser(Parsing::Tokenizer* tokenizer,OutPutter* outputter);

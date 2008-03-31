@@ -5,11 +5,12 @@
 #include "unistd.h"
 #include "FileInfo.h"
 #include "FileManager.h"
+#include "OutPutter.h"
 
-Demon::Demon(int sleepTime, int bufferSize, bool vervose){
+Demon::Demon(int sleepTime, int bufferSize, bool verbose){
 	_sleepTime= sleepTime;
 	_bufferSize= bufferSize;
-	_vervose= vervose;
+	_verbose = verbose;
 }
 
 void Demon::run(void){
