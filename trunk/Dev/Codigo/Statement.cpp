@@ -17,3 +17,8 @@ Statement::~Statement()
 {
 	free(this->_fileName);
 }
+
+
+
+	
+
