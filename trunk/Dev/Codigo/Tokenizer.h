@@ -9,7 +9,7 @@ namespace Parsing{
 	class Tokenizer{
 		
 		private:
-		char _actual;
+		char _current;
 		char* _delimiters;
 		int _delimitersSize;
 		char** _keyWords;

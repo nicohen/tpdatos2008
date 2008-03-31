@@ -16,7 +16,7 @@ namespace Parsing{
 		_keyWords= keyWords;
 		_keyWordsSize= keyWorsSize;
 		fileInfo->open();
-		fileInfo->read(&_actual,1);
+		fileInfo->read(&_current,1);
 	}
 
 	Token* Tokenizer::getNextToken(bool ignoreDelimiters){
@@ -25,44 +25,44 @@ namespace Parsing{
 		int type=OTHER;
 		char *content;
 		int i=0;
-		if (_actual==0){
+		if (_current==0){
 			return NULL;
 		}
-		if (_actual==_sIndicator){
+		if (_current==_sIndicator){
 			type=STRING;
 			isInString= true;
 		}else{
-			buffer[i]=_actual;
+			buffer[i]=_current;
 			i++;
 		}
-		if (!ignoreDelimiters && this->isDelimiter(_actual)){
+		if (!ignoreDelimiters && this->isDelimiter(_current)){
 			try{
 				buffer[1]=0;
 				type=DELIMITER;
-				_fileInfo->read(&_actual,1);
+				_fileInfo->read(&_current,1);
 			}catch (FileManager::IOException e){
-				_actual=0;
+				_current=0;
 			}
 		}else{
 			try{
-				_fileInfo->read(&_actual,1);
-				while ((isInString && (_actual!=_sIndicator))||(!isInString && !this->isDelimiter(_actual))){
-					if (_actual==_sIndicator){
+				_fileInfo->read(&_current,1);
+				while ((isInString && (_current!=_sIndicator))||(!isInString && !this->isDelimiter(_current))){
+					if (_current==_sIndicator){
 						isInString= false;
 					}else{
-						buffer[i]=_actual;
+						buffer[i]=_current;
 						i++;
 					}
-					_fileInfo->read(&_actual,1);
+					_fileInfo->read(&_current,1);
 				}	
 			}catch (FileManager::IOException e){
-				_actual=0;
+				_current=0;
 			}
-			if (_actual==_sIndicator){
+			if (_current==_sIndicator){
 				try{
-					_fileInfo->read(&_actual,1);
+					_fileInfo->read(&_current,1);
 				}catch (FileManager::IOException e){
-				_actual=0;
+				_current=0;
 				}
 			}
 			buffer[i]=0;
