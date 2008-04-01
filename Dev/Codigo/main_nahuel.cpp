@@ -13,7 +13,7 @@
 #import "DataValue.h"
 #import "IntValue.h"
 #import "StructureValue.h"
-//#import "StringValue.h"
+#import "StringValue.h"
 
 
 #include <exception>
@@ -346,11 +346,18 @@ void test_StructureValue(TestCase* test){
 	
 	vvStructure2=new StructureValue();
 	vvStructure2->addValue(new IntValue(145));
+	vvStructure2->addValue(new IntValue(11));
+	vvStructure2->addValue(new StringValue(""));
 	
 	test->reportAssertion(new TrueAssertion((vvStructure1->getType()->equals(vvStructure1->getType()))));
 	
 	test->reportAssertion(new TrueAssertion(!(vvStructure2->getType()->equals(vvStructure1->getType()))));
 	test->reportAssertion(new TrueAssertion(!(vvStructure1->getType()->equals(vvStructure2->getType()))));
+	
+	vvStructure1->addValue(new  StringValue("a"));
+	
+	test->reportAssertion(new TrueAssertion((vvStructure2->getType()->equals(vvStructure1->getType()))));
+	test->reportAssertion(new TrueAssertion((vvStructure1->getType()->equals(vvStructure2->getType()))));
 	
 	delete(vvStructure1);	
 }
