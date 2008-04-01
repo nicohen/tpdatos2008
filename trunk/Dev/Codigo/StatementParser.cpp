@@ -13,38 +13,77 @@ StatementParser::StatementParser(Parsing::Tokenizer* tokenizer,OutPutter* output
 	this->_outPutter=outputter;
 }
 
+vector<Field*>* StatementParser::parseFields(){
+	std::vector<Field*>* fields=new vector<Field*>();
+	Parsing::Token* token =	_tokenizer->getNextToken(false);
+	if ((token==NULL) || (token->getType()!=Parsing::Tokenizer::DELIMITER) || (strcmp(token->getContent(),"[")==0)){
+		delete fields;
+		return NULL;
+	}
+	delete token;
+	token =	_tokenizer->getNextToken(false);
+	while ((token!=NULL)&&(token->getType()!=Parsing::Tokenizer::DELIMITER) || (strcmp(token->getContent(),"]")!=0)){
+		if (token->getType()==Parsing::Tokenizer::KEYWORD){
+			if (strcmp(token->getContent(),"string")==0){
+				new Field();
+			}else if (strcmp(token->getContent(),"int")==0){
+				new Field();
+			}
+		}else{
+		}
+	}
+	return fields;
+}
+
+int StatementParser::parseFileType(void){
+	int fileType;
+	Parsing::Token* token =	_tokenizer->getNextToken(false);
+	if ((token==NULL) || (token->getType()!=Parsing::Tokenizer::KEYWORD)){
+		fileType= Statement::OTHER;
+	}else{
+		if (strcmp(token->getContent(),"secuencial")==0){ 
+			fileType=Statement::SECUENCIAL;
+		}else if (strcmp(token->getContent(),"hash")==0){ 
+			fileType=Statement::HASH;
+		}else if (strcmp(token->getContent(),"indexado")==0){ 
+			fileType=Statement::INDEXADO;
+		}else if (strcmp(token->getContent(),"secIndexado")==0){ 
+			fileType=Statement::SECINDEXADO;
+		}else{
+			fileType=Statement::OTHER;
+		}
+	}
+	delete token;
+	return fileType;
+}
+
 Statement* StatementParser::parseCreateStatemet(){
 	CreateStatement* vvCreateStatement=NULL;
 	char* fileName;
 	int fileType;
 	// VALIDO ESPACIO
 	Parsing::Token* token =	_tokenizer->getNextToken(false);
-	if ((token!=NULL)&&(strcmp(token->getContent()," ")!=0)){
-		return getNext();
+	if ((token==NULL)||(strcmp(token->getContent()," ")!=0)){
+		// Y ACA?
 	}
 	// VALIDO NOMBRE DEL ARCHIVO DE DATOS
 	token =	_tokenizer->getNextToken(false);
-	if ((token!=NULL) && (token->getType()!=Parsing::Tokenizer::STRING) && (strlen(token->getContent())>0)){
-		return getNext();
+	if ((token==NULL) || (token->getType()!=Parsing::Tokenizer::STRING) || (strlen(token->getContent())==0)){
+		// Y ACA?
 	}else{
 		fileName= cloneStr(token->getContent());
 	}
 	// VALIDO EL ;
 	token =	_tokenizer->getNextToken(false);
-	if ((token!=NULL)&&(token->getType()!=Parsing::Tokenizer::DELIMITER)&&(strcmp(token->getContent(),";")!=0)){
+	if ((token==NULL)||(token->getType()!=Parsing::Tokenizer::DELIMITER)||(strcmp(token->getContent(),";")!=0)){
 		free(fileName);
-		return getNext();
+		// Y ACA?
 	}
 	// VALIDO EL TIPO DE DATO
-	token =	_tokenizer->getNextToken(false);
-	if ((token!=NULL) && (token->getType()!=Parsing::Tokenizer::KEYWORD)){
+	fileType = parseFileType();
+	if (fileType==0){
 		free(fileName);
-		return getNext();
-	}else{
-		/**
-		 * TODO QUE CARAJO ES FILETYPE?
-		 */ 
-		fileType=1;
+		// Y ACA?
 	}
 	return vvCreateStatement;
 }
