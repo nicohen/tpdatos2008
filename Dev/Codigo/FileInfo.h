@@ -25,6 +25,7 @@ namespace FileManager{
 		FILE* getFile(void){return _file;};
 		
 		void open(void) throw (IOException);
+		void open(char* openMode) throw (IOException);
 		void close(void) throw (IOException);
 		void read(void* place, int size) throw (IOException);
 		void write(void* source, int size) throw (IOException);
