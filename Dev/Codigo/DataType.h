@@ -11,7 +11,6 @@ public:
 	virtual bool equals(DataType* other)=0;
 	virtual int getUniqueIdentifier()=0;
 	virtual ~DataType();
-	
 };
 
 #endif /*DATATYPE_H_*/
