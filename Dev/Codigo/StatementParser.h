@@ -5,6 +5,9 @@
 #include "Statement.h"
 #include "CreateStatement.h"
 #include "OutPutter.h"
+#include "StructureType.h"
+#include "Field.h"
+#include <vector>
 
 class StatementParser
 {
@@ -12,6 +15,10 @@ private:
 	Parsing::Tokenizer* _tokenizer;
 	OutPutter* _outPutter;
 	int _statementCount;
+	
+	int parseFileType();
+	vector<Field*>* parseFields();
+	StructureType* parseDataType();
 	Statement* parseCreateStatemet();
 	Statement* parseAddStatemet();
 	Statement* parseConsultStatemet();
