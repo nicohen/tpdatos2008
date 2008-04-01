@@ -14,6 +14,7 @@ StatementParser::StatementParser(Parsing::Tokenizer* tokenizer,OutPutter* output
 }
 
 vector<Field*>* StatementParser::parseFields(){
+	Field *field=NULL;
 	std::vector<Field*>* fields=new vector<Field*>();
 	Parsing::Token* token =	_tokenizer->getNextToken(false);
 	if ((token==NULL) || (token->getType()!=Parsing::Tokenizer::DELIMITER) || (strcmp(token->getContent(),"[")==0)){
@@ -25,9 +26,15 @@ vector<Field*>* StatementParser::parseFields(){
 	while ((token!=NULL)&&(token->getType()!=Parsing::Tokenizer::DELIMITER) || (strcmp(token->getContent(),"]")!=0)){
 		if (token->getType()==Parsing::Tokenizer::KEYWORD){
 			if (strcmp(token->getContent(),"string")==0){
-				new Field();
+				field= new Field();
+				field->setDataType(new StringType());
+				fields->push_back(field);
 			}else if (strcmp(token->getContent(),"int")==0){
-				new Field();
+				field= new Field();
+				field->setDataType(new IntType());
+				fields->push_back(field);
+			}else{
+				// Y ACA?
 			}
 		}else{
 		}
