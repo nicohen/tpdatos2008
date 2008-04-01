@@ -11,6 +11,8 @@ private:
 	DataType* _dataType;
 public:
 	Field();
+
+	virtual ~Field();
 	//Getters
 	bool isMandatory();
 	bool isPolyvalent();
@@ -21,7 +23,9 @@ public:
 	void setIsPolyvalent(bool isPolyvalent);
 	void setDataType(DataType* aDataType);
 	
-	virtual ~Field();
+	//Otros metodos
+	bool validate();
+	
 };
 
 #endif /*FIELD_H_*/

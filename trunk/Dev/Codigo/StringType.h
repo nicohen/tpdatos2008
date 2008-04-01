@@ -7,8 +7,11 @@ class StringType: public DataType
 {
 public:
 	StringType();
-	virtual bool isInstanceOf(void* anObject);
 	virtual ~StringType();
+	//Otros
+	virtual bool isInstanceOf(void* anObject);
+	virtual bool equals(DataType* other);
+	virtual int getUniqueIdentifier();
 };
 
 #endif /*STRINGTYPE_H_*/
