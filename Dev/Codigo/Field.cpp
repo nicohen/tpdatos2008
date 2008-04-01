@@ -36,4 +36,10 @@ void Field::setDataType(DataType* aDataType){
 	this->_dataType=aDataType;	
 }
 
+//otros
+
+bool Field::validate(){
+	return true;
+}
+
 

@@ -12,11 +12,15 @@ private:
 	vector<DataType*>* _dataTypes;
 public:
 	StructureType();
-	
-	void addType(DataType* aType);
-	
-	virtual bool isInstanceOf(void* anObject);
 	virtual ~StructureType();
+	
+	//Otros
+	void addType(DataType* aType);
+	virtual bool isInstanceOf(void* anObject);
+	virtual bool equals(DataType* other);
+	virtual int getUniqueIdentifier();
+	int getCount();
+	
 };
 
 #endif /*STRUCTURETYPE_H_*/

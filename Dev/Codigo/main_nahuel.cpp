@@ -10,6 +10,11 @@
 #import "Utils.h"
 #import "StructureType.h"
 
+#import "DataValue.h"
+#import "IntValue.h"
+#import "StructureValue.h"
+//#import "StringValue.h"
+
 
 #include <exception>
 using namespace std;
@@ -251,6 +256,105 @@ void testField_Simple(TestCase* test){
 	delete(vvField);
 }
 
+void test_DataTypesEqualsWithSimpleTypes(TestCase* test){
+	DataType* vvInt1=NULL;
+	DataType* vvInt2=NULL;
+	DataType* vvStr1=NULL;
+	DataType* vvStr2=NULL;
+	vvInt1=new IntType();
+	vvInt2=new IntType();
+	vvStr1=new StringType();
+	vvStr2=new StringType();
+	test->reportAssertion(new TrueAssertion(vvInt1->equals(vvInt2)));
+	test->reportAssertion(new TrueAssertion(!(vvInt1->equals(vvStr1))));
+	test->reportAssertion(new TrueAssertion(!(vvStr1->equals(vvInt1))));
+	test->reportAssertion(new TrueAssertion(vvStr1->equals(vvStr2)));
+	delete(vvInt1);
+	delete(vvInt2);
+	delete(vvStr1);
+	delete(vvStr2);
+}
+
+void test_DataTypesEqualsWithStructureTypes(TestCase* test){
+	StructureType* vvStruct1=NULL;
+	StructureType* vvStruct2=NULL;
+	StructureType* vvStruct3=NULL;
+	StructureType* vvStruct4=NULL;
+	
+	vvStruct1=new StructureType();
+	vvStruct1->addType(new IntType());
+	vvStruct1->addType(new IntType());
+		
+	vvStruct2=new StructureType();
+	vvStruct2->addType(new IntType());
+	vvStruct2->addType(new IntType());
+	
+	vvStruct3=new StructureType();
+	vvStruct3->addType(new IntType());
+	vvStruct3->addType(new StringType());
+	
+	vvStruct4=new StructureType();
+	vvStruct4->addType(new IntType());
+	vvStruct4->addType(new IntType());
+	vvStruct4->addType(new StringType());
+	
+	test->reportAssertion(new TrueAssertion(vvStruct1->equals(vvStruct2)));
+	test->reportAssertion(new TrueAssertion(vvStruct2->equals(vvStruct1)));
+	
+	test->reportAssertion(new TrueAssertion(!(vvStruct1->equals(vvStruct3))));
+	test->reportAssertion(new TrueAssertion(!(vvStruct3->equals(vvStruct1))));
+	
+	test->reportAssertion(new TrueAssertion(!(vvStruct2->equals(vvStruct4))));
+	test->reportAssertion(new TrueAssertion(!(vvStruct4->equals(vvStruct2))));
+	
+	vvStruct2->addType(new StringType());
+	
+	test->reportAssertion(new TrueAssertion((vvStruct2->equals(vvStruct4))));
+	test->reportAssertion(new TrueAssertion((vvStruct4->equals(vvStruct2))));
+
+	delete(vvStruct4);
+	delete(vvStruct3);
+	delete(vvStruct2);
+	delete(vvStruct1);
+}
+
+void test_intValue(TestCase* test){
+	IntValue* vvInt1=NULL;
+	IntValue* vvInt2=NULL;
+	DataType* vvIntType1=NULL;
+	DataType* vvIntType2=NULL;
+	vvInt1=new IntValue(10);
+	vvInt2=new IntValue(15);
+	
+	vvIntType1=vvInt1->getType();
+	vvIntType2=vvInt2->getType();
+	
+	test->reportAssertion(new TrueAssertion((vvIntType1->equals(vvIntType2))));
+	
+	delete(vvInt1);
+	delete(vvInt2);
+	delete(vvIntType1);
+	delete(vvIntType2);
+}
+
+void test_StructureValue(TestCase* test){
+	StructureValue* vvStructure1=0;
+	StructureValue* vvStructure2=0;
+	vvStructure1=new StructureValue();
+	vvStructure1->addValue(new IntValue(15));
+	vvStructure1->addValue(new IntValue(15));
+	
+	vvStructure2=new StructureValue();
+	vvStructure2->addValue(new IntValue(145));
+	
+	test->reportAssertion(new TrueAssertion((vvStructure1->getType()->equals(vvStructure1->getType()))));
+	
+	test->reportAssertion(new TrueAssertion(!(vvStructure2->getType()->equals(vvStructure1->getType()))));
+	test->reportAssertion(new TrueAssertion(!(vvStructure1->getType()->equals(vvStructure2->getType()))));
+	
+	delete(vvStructure1);	
+}
+
 int main(int argc, char **argv) {
 	int failedTests=0;
 	
@@ -272,6 +376,24 @@ int main(int argc, char **argv) {
 	TestCase* test5=new TestCase("testField_Simple",&failedTests);	
 	testField_Simple(test5);
 	delete test5;
+	
+	
+	TestCase* test6=new TestCase("test_DataTypesEqualsWithSimpleTypes",&failedTests);	
+	test_DataTypesEqualsWithSimpleTypes(test6);
+	delete test6;
+	
+	TestCase* test6bis=new TestCase("test_DataTypesEqualsWithStructureTypes",&failedTests);	
+	test_DataTypesEqualsWithStructureTypes(test6bis);
+	delete test6bis;
+	
+	TestCase* test7=new TestCase("test_intValue",&failedTests);	
+	test_intValue(test7);
+	delete test7;
+	
+	TestCase* test7bis=new TestCase("test_StructureValue",&failedTests);	
+	test_StructureValue(test7bis);
+	delete test7bis;
+	
 	
 	
 	
