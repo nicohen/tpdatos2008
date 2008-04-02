@@ -17,7 +17,7 @@ void Demon::run(void){
 	FileManager::FileManager* fileManager = new FileManager::FileManager();
 	FileManager::FileInfo* inputFile = NULL;
 	OutPutter::OutPutter* outPutter = NULL;
-	while(1) {
+	for(int i=1;;i++) {
 		try{
 			printf("Iteracion: %i\n",i);
 			inputFile = fileManager->CreateFileInfo("In/Comandos.7506");
