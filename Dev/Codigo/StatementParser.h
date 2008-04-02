@@ -8,8 +8,14 @@
 #include "StructureType.h"
 #include "Field.h"
 #include "DataType.h"
+#include "Token.h"
+#include "StringType.h"
+#include "IntType.h"
+#include "KillDaemonException.h"
+#include "StatementParserException.h"
 #include <vector>
 
+using namespace Parsing;
 class StatementParser
 {
 private: 
@@ -29,13 +35,12 @@ private:
 	Statement* parseEndStatemet();
 	Statement* parseActualizeStatemet();
 	
-	/*Field* parseField(Token* currentToken);*/
-	/*DataType* parseType(Token* currentToken);*/
 public:
 	//constructores y destructores
 	StatementParser(Parsing::ITokenizer* tokenizer,OutPutter* outputter);
 	virtual ~StatementParser();
-	
+	Field* parseField(Token* currentToken);
+	DataType* parseType(Token* currentToken);
 	//otros metodos
 	Statement* getNext();//Devuelve el proximo Statement
 };
