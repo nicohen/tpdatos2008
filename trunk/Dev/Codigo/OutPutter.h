@@ -12,15 +12,12 @@ class OutPutter{
 	bool _verbose;
 	
 	public:
-	OutPutter(FileManager::FileInfo* aFileInfoIn, bool verbose);
+	OutPutter(FileManager::FileManager* aFileManager, FileManager::FileInfo* aFileInfoIn, bool verbose);
 	virtual ~OutPutter();
 	bool getVerbose();
-	void setVerbose(bool verbose);
-	FileManager::FileInfo* getFileInfoIn();
+	FileManager::FileInfo* getInputFile();
 	void debug(char* aMessage);
 	void error(char* aMessage);
 	void printLine(char* aMessage);	
-	void printLine(char* aMessage, bool verbose);
-	void moveInputFile();
 };
 #endif /*OUTPUTTER_*/
