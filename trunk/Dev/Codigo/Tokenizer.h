@@ -4,11 +4,17 @@
 #import "FileInfo.h"
 #import "Token.h"
 #include "IOException.h"
+#include "ITokenizer.h"
+#include <vector>
+
+using namespace std;
 
 namespace Parsing{
-	class Tokenizer{
+	
+	class Tokenizer:public ITokenizer{
 		
 		private:
+		vector<Token*>* _readTokens;
 		char _current;
 		char* _delimiters;
 		int _delimitersSize;
@@ -20,15 +26,16 @@ namespace Parsing{
 		bool isDelimiter(char item);
 		bool isKeyWord(char* item);
 		
+		//Métodos necesarios para el manejo de la lista de tokens 
+		Token* addToReadTokens(Token* token);
+		void clearReadTokens();
+		
 		public:
 		Tokenizer(FileManager::FileInfo *fileInfo, char stringIndicator, char delimiters[], int delimitersSize, char* keyWords[], int keyWorsSize) throw (FileManager::IOException);
-		Token* getNextToken(bool ignoreDelimiters);
+		virtual Token* getNextToken(bool ignoreDelimiters);
+		int getTokenReadCount();
 		virtual ~Tokenizer();
-		static const int DELIMITER =0;
-		static const int KEYWORD =1;
-		static const int STRING= 2;
-		static const int NUMBER= 3;
-		static const int OTHER= 4;
+		
 		
 	};
 }

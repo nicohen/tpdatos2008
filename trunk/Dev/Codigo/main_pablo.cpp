@@ -19,7 +19,8 @@ int main(int argc, char **argv) {
 		token = tokenizer->getNextToken(false);
 		while (token!=NULL){
 			printf("(%d)%s ",token->getType(),token->getContent());
-			delete(token);
+			//Ya no harian falta eliminarlos
+			//delete(token);
 			token = tokenizer->getNextToken(false);
 		}
 		delete(tokenizer);

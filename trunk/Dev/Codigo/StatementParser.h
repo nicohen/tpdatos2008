@@ -1,7 +1,7 @@
 #ifndef STATEMENTPARSER_H_
 #define STATEMENTPARSER_H_
 
-#include "Tokenizer.h"
+#include "ITokenizer.h"
 #include "Statement.h"
 #include "CreateStatement.h"
 #include "OutPutter.h"
@@ -12,7 +12,7 @@
 class StatementParser
 {
 private: 
-	Parsing::Tokenizer* _tokenizer;
+	Parsing::ITokenizer* _tokenizer;
 	OutPutter* _outPutter;
 	int _statementCount;
 	
@@ -29,7 +29,7 @@ private:
 	Statement* parseActualizeStatemet();
 public:
 	//constructores y destructores
-	StatementParser(Parsing::Tokenizer* tokenizer,OutPutter* outputter);
+	StatementParser(Parsing::ITokenizer* tokenizer,OutPutter* outputter);
 	virtual ~StatementParser();
 	
 	//otros metodos
