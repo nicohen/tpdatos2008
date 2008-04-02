@@ -9,7 +9,7 @@ using namespace std;
 OutPutter::OutPutter(FileManager::FileInfo* aFileInfoIn, bool verbose) {
 	this->_fileInfoIn = aFileInfoIn;
 	FileManager::FileManager* fileManager = new FileManager::FileManager();	
-	char* fileNameOut = "/home/nicohen/workspace/Datos/AlmacenX/Out/Comandos.7506";
+	char* fileNameOut = "Out/Comandos.7506";
 	this->_fileInfoOut = new FileManager::FileInfo(fileManager,fileNameOut);
 	this->_verbose = verbose; 
 }
@@ -60,7 +60,6 @@ void OutPutter::printLine(char* message) {
 	if (getVerbose()) {
 		printf("%s\n",message);
 	} else {
-		printf("cucu");
 		time_t rawtime;
 		struct tm * timeinfo;
 		char* charMsg;
@@ -91,8 +90,8 @@ void OutPutter::moveInputFile() {
 	 * 4) ¿¿¿ Borrar el archivo del IN ???
 	 * 5) Cerrar el archivo del OUT */
 	
-	ifstream in("/home/nicohen/workspace/Datos/AlmacenX/In/Comandos.7506");
-	ofstream out("/home/nicohen/workspace/Datos/AlmacenX/Out/Comandos.7506");
+	ifstream in("In/Comandos.7506");
+	ofstream out("Out/Comandos.7506");
 	out<<in.rdbuf();
 	in.close();
 	out.close();

@@ -10,7 +10,7 @@ int main(int argc, char **argv) {
 	FileManager::FileInfo* fileInfo = NULL;
 	OutPutter* outPut = NULL;
 	bool verbose = true;
-	char* fileName = "/home/nicohen/workspace/Datos/AlmacenX/In/Comandos.7506";
+	char* fileName = "In/Comandos.7506";
 	
 	fileManager = new FileManager::FileManager();
 	fileInfo = new FileManager::FileInfo(fileManager, fileName);
