@@ -17,13 +17,14 @@ int main(int argc, char **argv) {
 	outPut = new OutPutter(fileInfo, verbose);
 	
 	outPut->printLine("Inicio escritura de archivo");
-	outPut->moveInputFile();
+//	outPut->moveInputFile();
 	outPut->printLine("Archivo copiado correctamente");
 	outPut->printLine("Todas las cosas que puedan salir al archivo OUT",false);
 	outPut->printLine("Fin escritura de archivo");
 
 	fileManager->Close(fileInfo);
 	
+	free(fileName);
 	delete fileManager;
 	delete outPut;
 	
