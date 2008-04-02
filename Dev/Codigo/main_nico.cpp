@@ -9,18 +9,16 @@ int main(int argc, char **argv) {
 	FileManager::FileManager* fileManager = NULL;
 	FileManager::FileInfo* fileInfo = NULL;
 	OutPutter* outPut = NULL;
-	bool verbose = true;
 	char* fileName = "In/Comandos.7506";
 	
 	fileManager = new FileManager::FileManager();
-	fileInfo = new FileManager::FileInfo(fileManager, fileName);
-	outPut = new OutPutter(fileInfo, verbose);
-	
-	outPut->printLine("Inicio escritura de archivo");
-//	outPut->moveInputFile();
-	outPut->printLine("Archivo copiado correctamente");
-	outPut->printLine("Todas las cosas que puedan salir al archivo OUT",false);
-	outPut->printLine("Fin escritura de archivo");
+	fileInfo = fileManager->CreateFileInfo(fileName);
+	outPut = new OutPutter(fileManager, fileInfo, true);
+	outPut->debug("Inicio escritura de archivo");
+	outPut->debug("Archivo copiado correctamente");
+	outPut->printLine("Todas las cosas que puedan salir al archivo OUT");
+	outPut->printLine("Mas cosas...");
+	outPut->debug("Fin escritura de archivo");
 
 	fileManager->Close(fileInfo);
 	

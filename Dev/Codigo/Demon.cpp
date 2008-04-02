@@ -15,17 +15,34 @@ Demon::Demon(int sleepTime, int bufferSize, bool verbose){
 
 void Demon::run(void){
 	FileManager::FileManager* fileManager = new FileManager::FileManager();
-	FileManager::FileInfo *input;
-	for(int i=0;i<10;i++){
-		input = fileManager->CreateFileInfo("In/Comandos.7506");
+	FileManager::FileInfo* inputFile = NULL;
+	OutPutter::OutPutter* outPutter = NULL;
+	while(1) {
 		try{
-			input->open();
-			input->close();
-		}catch(FileManager::IOException e){
+			printf("Iteracion: %i\n",i);
+			inputFile = fileManager->CreateFileInfo("In/Comandos.7506");
+			
+			inputFile->open();
+			
+			outPutter = new OutPutter(fileManager, inputFile, true);
+			outPutter->debug("Inicio escritura de archivo");
+			outPutter->debug("Archivo copiado correctamente");
+			outPutter->printLine("Todas las cosas que puedan salir al archivo OUT");
+			outPutter->printLine("Mas cosas...");
+			outPutter->debug("Fin escritura de archivo");
+
+			inputFile->delet();
+			
+			delete outPutter;
+			delete inputFile;
+
+			inputFile->close();
+
+		} catch(FileManager::IOException e){
 			printf("file not found!\n");
-			sleep(_sleepTime);			
 		}
-		delete input;		
+		sleep(_sleepTime);
+
 	}
 	delete fileManager;
 }
