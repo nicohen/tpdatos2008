@@ -9,16 +9,43 @@ using namespace std;
 OutPutter::OutPutter(FileManager::FileInfo* aFileInfoIn, bool verbose) {
 	this->_fileInfoIn = aFileInfoIn;
 	FileManager::FileManager* fileManager = new FileManager::FileManager();	
-	char* fileNameOut = "Out/Comandos.7506";
+
+	string strBuffer;
+	time_t rawtime;
+	struct tm* timeinfo;
+	char buffer[80];
+	char* fileNameOut;
+	
+	time(&rawtime);
+	timeinfo = localtime(&rawtime);
+	strftime(buffer,80,"%Y-%m-%d %H:%M:%S",timeinfo);
+
+	strBuffer.append("Out/[");
+	strBuffer.append(buffer);
+	strBuffer.append("] Comandos.7506");
+
+	fileNameOut = (char*) malloc(strlen(strBuffer.c_str()));
+	strcpy(fileNameOut,strBuffer.c_str());
+
+	ifstream in("In/Comandos.7506");
+	ofstream out(fileNameOut);
+	out<<in.rdbuf();
+
 	this->_fileInfoOut = new FileManager::FileInfo(fileManager,fileNameOut);
-	this->_verbose = verbose; 
+	
+	this->_fileInfoIn->close();
+	this->_fileInfoOut->close();
+	
+	this->_verbose = verbose;
+	
+	free(fileNameOut);
 }
 
 OutPutter::~OutPutter(){
-	free(this->_fileInfoIn);
+//	free(this->_fileInfoIn);
 	delete this->_fileInfoIn;
 	if (this->_fileInfoOut != NULL) {
-		free(this->_fileInfoOut);
+//		free(this->_fileInfoOut);
 		delete this->_fileInfoOut;
 	}
 }
@@ -61,38 +88,29 @@ void OutPutter::printLine(char* message) {
 		printf("%s\n",message);
 	} else {
 		time_t rawtime;
-		struct tm * timeinfo;
-		char* charMsg;
+		struct tm* timeinfo;
+		char buffer[80];
 		string stringMessage;
+		char* charMsg;
 		
 		time(&rawtime);
 		timeinfo = localtime(&rawtime);
-
+		strftime(buffer,80,"%Y-%m-%d %H:%M:%S",timeinfo);
+		
 		this->_fileInfoOut->open("ab");
 
 		stringMessage.append("[");
-		//Aca abajo me esta haciendo un ENTER demás
-		stringMessage.append(asctime(timeinfo));
+		stringMessage.append(buffer);
 		stringMessage.append("] ");
 		stringMessage.append(message);
-		charMsg = (char*) malloc(sizeof(stringMessage));
+		
+		charMsg = (char*) malloc(strlen(stringMessage.c_str()));
 		strcpy(charMsg,stringMessage.c_str());
 		
 		this->_fileInfoOut->write(charMsg,strlen(charMsg));
 		this->_fileInfoOut->close();
-	}
-}
 
-void OutPutter::moveInputFile() {
-	/* 1) Verificar que existe el archivo en el IN
-	 * 2) Crearlo en el OUT
-	 * 3) Copiar el contenido del IN al OUT
-	 * 4) ¿¿¿ Borrar el archivo del IN ???
-	 * 5) Cerrar el archivo del OUT */
-	
-	ifstream in("In/Comandos.7506");
-	ofstream out("Out/Comandos.7506");
-	out<<in.rdbuf();
-	in.close();
-	out.close();
+		free(charMsg);
+
+	}
 }
