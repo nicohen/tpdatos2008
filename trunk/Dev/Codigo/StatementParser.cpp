@@ -1,10 +1,4 @@
 #include "StatementParser.h"
-#include "DataType.h"
-#include "StringType.h"
-#include "IntType.h"
-#include "StructureType.h"
-#include "Token.h"
-#include "Field.h"
 
 using namespace Parsing;
 StatementParser::StatementParser(Parsing::ITokenizer* tokenizer,OutPutter* outputter)
@@ -15,17 +9,10 @@ StatementParser::StatementParser(Parsing::ITokenizer* tokenizer,OutPutter* outpu
 }
 
 void StatementParser::parseFields(CreateStatement* statement){
-	Field *field=NULL;
 	Parsing::Token* token =	NULL;
-	/*//TODO: llamar al debug
+	//TODO: llamar al debug
 	printf("Inicio del parseo de los campos\n");
-	Parsing::Token* token =	_tokenizer->getNextToken(false);
-	if ((token==NULL) || (token->getType()!=Parsing::ITokenizer::DELIMITER) || (strcmp(token->getContent(),"[")==0)){
-		//TODO: llamar al debug
-		printf("Se esperaba un \"[\".\n");
-		return;
-	}
-	*/
+	
 		
 	// PARSEO EL CORCHETE
 	printf("PARSEO EL \"[\"\n");
@@ -50,23 +37,26 @@ void StatementParser::parseFields(CreateStatement* statement){
 	 
 	 */
 	
-	/*token =	_tokenizer->getNextToken(false);
+	token =	_tokenizer->getNextToken(false);
 	while ((token!=NULL) && (strcmp(token->getContent(),"]")!=0)){
-		if((strcmp(token->getContent(),",")==0){
+		if((strcmp(token->getContent(),",")==0)){
 		}else{
-			statement->addSecondaryField(this->parseField(token)));
+			statement->addSecondaryField(this->parseField(token));
 		}
 		token =	_tokenizer->getNextToken(false);
-	}*/
+	}
 	return;
 }
-/*
+
 Field* StatementParser::parseField(Token* currentToken){
+	Field* field=NULL;
 	if (strcmp(currentToken->getContent(),"string")==0 || strcmp(currentToken->getContent(),"int") || strcmp(currentToken->getContent(),"|")){
 		field= new Field();
-		statement->addSecondaryField(field);
-		field->setDataType(this->parseType(token));		
+		field->setDataType(this->parseType(currentToken));
+		return field;
 	}
+	//TODO: LAnzar una excepcion
+	return NULL;
 }
 
 DataType* StatementParser::parseType(Token* currentToken){
@@ -81,7 +71,7 @@ DataType* StatementParser::parseType(Token* currentToken){
 		//TODO: LANZAR UN EXCEPCION
 		printf("Se espera");
 	}
-}*/
+}
 
 /*Field* StatementParser::ParseField(){
 	
@@ -201,10 +191,10 @@ Statement* StatementParser::parseEndStatemet(){
 Statement* StatementParser::parseActualizeStatemet(){
 
 }
-	
+
 Statement* StatementParser::getNext(){
-	printf("Statement* StatementParser::getNext(){\n.");
 	Parsing::Token* token =	_tokenizer->getNextToken(false);
+	printf("Statement* StatementParser::getNext(){\n.");
 	printf("Primer token: %s\n.",token->getContent());
 	if (token==NULL){
 		printf("Primer token null\n.");
@@ -212,48 +202,55 @@ Statement* StatementParser::getNext(){
 		return NULL;
 	}
 	printf("VALIDA EL COMIENZO DEL STATEMENT\n.");
-	// VALIDA EL COMIENZO DEL STATEMENT
-	if ((token->getType()!=_tokenizer->KEYWORD)){
-		
-		//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
-		printf("Se esperaba KEYWORD pero vino: %i\n. valor: \"%s\".\n",token->getType(),token->getContent());
-		return NULL;
-		/*do{
-			token= _tokenizer->getNextToken(false);
-		}while ((token!=NULL) && (token->getType()!=_tokenizer->DELIMITER) && (strcmp(token->getContent(),"\n")));
-		return getNext();*/
-	}else{
-		printf("Identificando el tipo de statement.\n");
-		// IDENTIFICA EL TIPO DE STATEMENT Y DERIVO AL METODO CORRECTO
-		if (strcmp(token->getContent(),"CREAR")==0){
-			return parseCreateStatemet();
+	try{
+		// VALIDA EL COMIENZO DEL STATEMENT
+		if ((token->getType()!=_tokenizer->KEYWORD)){
+			
+			//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
+			printf("Se esperaba KEYWORD pero vino: %i\n. valor: \"%s\".\n",token->getType(),token->getContent());
+			return NULL;
+			/*do{
+				token= _tokenizer->getNextToken(false);
+			}while ((token!=NULL) && (token->getType()!=_tokenizer->DELIMITER) && (strcmp(token->getContent(),"\n")));
+			return getNext();*/
+		}else{
+			printf("Identificando el tipo de statement.\n");
+			// IDENTIFICA EL TIPO DE STATEMENT Y DERIVO AL METODO CORRECTO
+			if (strcmp(token->getContent(),"CREAR")==0){
+				return parseCreateStatemet();
+			}
+			if (strcmp(token->getContent(),"INGRESAR")==0){
+				printf("__INGRESAR\n;");
+				return parseAddStatemet();
+			}
+			if (strcmp(token->getContent(),"CONSULTAR")==0){
+				return parseConsultStatemet();
+			}
+			if (strcmp(token->getContent(),"QUITAR")==0){
+				return parseRemoveStatemet();
+			}
+			if (strcmp(token->getContent(),"ELIMINAR")==0){
+				return parseDeleteStatemet();
+			}
+			if (strcmp(token->getContent(),"ESTADISTICA")==0){
+				return parseStatsStatemet();
+			}
+			if (strcmp(token->getContent(),"FINALIZAR")==0){
+				throw new KillDaemonException();
+			}
+			if (strcmp(token->getContent(),"ACTUALIZAR")==0){
+				return parseActualizeStatemet();
+			}
+			printf("Tipo de statement desconocido\n.");
+			//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
+			return NULL;
 		}
-		if (strcmp(token->getContent(),"INGRESAR")==0){
-			printf("__INGRESAR\n;");
-			return parseAddStatemet();
-		}
-		if (strcmp(token->getContent(),"CONSULTAR")==0){
-			return parseConsultStatemet();
-		}
-		if (strcmp(token->getContent(),"QUITAR")==0){
-			return parseRemoveStatemet();
-		}
-		if (strcmp(token->getContent(),"ELIMINAR")==0){
-			return parseDeleteStatemet();
-		}
-		if (strcmp(token->getContent(),"ESTADISTICA")==0){
-			return parseStatsStatemet();
-		}
-		if (strcmp(token->getContent(),"FINALIZAR")==0){
-			return parseEndStatemet();
-		}
-		if (strcmp(token->getContent(),"ACTUALIZAR")==0){
-			return parseActualizeStatemet();
-		}
-		printf("Tipo de statement desconocido\n.");
-		//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
-		return NULL;
+	}catch(StatementParserException* e){
+		//TODO: Llamar al tokenizer y decirle que vaya hasta el proximo \n
+		printf("La linea es incorrecta. Será omitida\n");
+		//this->_tokenizer->
 	}
+	
 	//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
 	
 	/*CreateStatement de ejemplo*********************/

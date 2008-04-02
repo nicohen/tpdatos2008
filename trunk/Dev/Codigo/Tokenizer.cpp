@@ -21,7 +21,29 @@ namespace Parsing{
 		
 		this->_readTokens=new vector<Token*>();
 	}
-
+	
+	/*
+	Token* Tokenizer::getNextLineToken(){
+		char buffer[128];
+		int type=OTHER;
+		char *content;
+		int i=0;
+		
+		try{
+			if(_current=='\n'){
+				_fileInfo->read(&_current,1);
+			}
+			while (_current!='\n'){
+				buffer[i]=_current;
+				i++;
+				_fileInfo->read(&_current,1);
+			}
+		}catch (FileManager::IOException e){
+			_current=0;
+		}
+		return this->addToReadTokens(new Token(content,type));
+	}
+*/
 	Token* Tokenizer::getNextToken(bool ignoreDelimiters){
 		bool isInString=false;
 		char buffer[128];
