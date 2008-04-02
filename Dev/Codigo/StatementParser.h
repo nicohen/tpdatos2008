@@ -7,6 +7,7 @@
 #include "OutPutter.h"
 #include "StructureType.h"
 #include "Field.h"
+#include "DataType.h"
 #include <vector>
 
 class StatementParser
@@ -27,6 +28,9 @@ private:
 	Statement* parseStatsStatemet();
 	Statement* parseEndStatemet();
 	Statement* parseActualizeStatemet();
+	
+	/*Field* parseField(Token* currentToken);*/
+	/*DataType* parseType(Token* currentToken);*/
 public:
 	//constructores y destructores
 	StatementParser(Parsing::ITokenizer* tokenizer,OutPutter* outputter);

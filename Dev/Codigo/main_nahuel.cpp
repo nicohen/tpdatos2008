@@ -98,7 +98,6 @@ public:
 		_message=message;
 	}
 	
-	
 	virtual void printFailMessage(){
 		if(!this->evaluate()){
 			printf("Expected \"true\" but was \"false\". Msg: \"%s\"",_message);	
@@ -192,7 +191,7 @@ void testCreateStatement_CompleteInstantiation(TestCase* test){
 	IntType* vvType=NULL;
 	StringType* vvType2=NULL;
 	StructureType* vvType3=NULL;
-	
+    
 	vvCreateStatement=new CreateStatement("datos.dat");	
 	vvCreateStatement->setFileType(1);
 	vvCreateStatement->setDataBlockSize(30);
@@ -400,10 +399,11 @@ void test_ParserCreateStatementParsing(TestCase* test){
 	StatementParser* vvStPars=NULL;
 	Statement* vvFirstStatement=NULL;
 	CreateStatement* vvExpectedFirstStatement=NULL;
-	char SEPARATORS[]= {' ','\n'};
-	char* KEYW[]= {"CREAR","CONSULTAR"};
+	//char delimiters[]= {' ',';','[',']','\n'};
+	char delimiters[]= {' ','[',']',';',',','\n','|'};
+	char* keywords[]= {"CREAR","CONSULTAR","hash"};
 	vvFileInfo = vvFileManager->CreateFileInfo("In/Comandos.7506");
-	vvTokz= new Tokenizer(vvFileInfo,'\'',SEPARATORS,3,KEYW ,2);	
+	vvTokz= new Tokenizer(vvFileInfo,'\'',delimiters,7,keywords ,3);	
 	vvStPars=new StatementParser(vvTokz,NULL);	
 	vvFirstStatement=vvStPars->getNext();
 	//vvExpectedFirstStatement=dynamic_cast<CreateStatement *>(vvFirstStatement);
@@ -412,6 +412,7 @@ void test_ParserCreateStatementParsing(TestCase* test){
 	test->reportAssertion(new TrueAssertion(NULL!=vvExpectedFirstStatement,"El statement no es del tipo CreateStatement"));
 	test->reportAssertion(new EqualsAssertion("datos.dat",vvExpectedFirstStatement->getFileName()));
 	//vvExpectedFirstStatement->getFileName()
+	test->reportAssertion(new TrueAssertion(0==vvExpectedFirstStatement->getSecondaryFields()->size(),"Se esperaban 0 campos"));
 	
 	
 	vvFileInfo->close();
