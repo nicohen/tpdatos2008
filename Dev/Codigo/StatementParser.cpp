@@ -13,13 +13,12 @@ StatementParser::StatementParser(Parsing::ITokenizer* tokenizer,OutPutter* outpu
 	this->_outPutter=outputter;
 }
 
-vector<Field*>* StatementParser::parseFields(){
+void StatementParser::parseFields(CreateStatement* statement){
 	Field *field=NULL;
-	std::vector<Field*>* fields=new vector<Field*>();
+	
 	Parsing::Token* token =	_tokenizer->getNextToken(false);
 	if ((token==NULL) || (token->getType()!=Parsing::ITokenizer::DELIMITER) || (strcmp(token->getContent(),"[")==0)){
-		delete fields;
-		return NULL;
+		return;
 	}
 	//ya no hace falta eliminar tokens. Se eliminan solos
 	//delete token;
@@ -29,21 +28,21 @@ vector<Field*>* StatementParser::parseFields(){
 			if (strcmp(token->getContent(),"string")==0){
 				field= new Field();
 				field->setDataType(new StringType());
-				fields->push_back(field);
+				statement->addSecondaryField(field);
 			}else if (strcmp(token->getContent(),"int")==0){
 				field= new Field();
 				field->setDataType(new IntType());
-				fields->push_back(field);
+				statement->addSecondaryField(field);
 			}else{
 				// Y ACA?
 			}
 		}else{
 		}
 	}
-	return fields;
+	return;
 }
 
-int StatementParser::parseFileType(void){
+int StatementParser::parseFileType(){
 	int fileType;
 	Parsing::Token* token =	_tokenizer->getNextToken(false);
 	if ((token==NULL) || (token->getType()!=Parsing::ITokenizer::KEYWORD)){
@@ -61,40 +60,58 @@ int StatementParser::parseFileType(void){
 			fileType=Statement::OTHER;
 		}
 	}
-	//ya no hace falta eliminar tokens. Se eliminan solos
-	//delete token;
 	return fileType;
 }
 
 Statement* StatementParser::parseCreateStatemet(){
-	CreateStatement* vvCreateStatement=NULL;
-	char* fileName;
-	int fileType;
-	// VALIDO ESPACIO
+	CreateStatement* createStatement=NULL;
+	printf("Statement* StatementParser::parseCreateStatemet(){\n");
+
+	// PARSEO ESPACIO
+	printf("PARSEO ESPACIO\n");
 	Parsing::Token* token =	_tokenizer->getNextToken(false);
 	if ((token==NULL)||(strcmp(token->getContent()," ")!=0)){
-		// Y ACA?
+		//TODO: loggear un error ERROR: "Se esperaba espacio"
+		printf("Se esperaba espacio.");
 	}
-	// VALIDO NOMBRE DEL ARCHIVO DE DATOS
-	token =	_tokenizer->getNextToken(false);
-	if ((token==NULL) || (token->getType()!=Parsing::ITokenizer::STRING) || (strlen(token->getContent())==0)){
-		// Y ACA?
+	// PARSEO NOMBRE DEL ARCHIVO DE DATOS
+	printf("PARSEO NOMBRE DEL ARCHIVO DE DATOS\n");
+	token =	_tokenizer->getNextToken(true);
+	if((token==NULL) || (token->getType()!=Parsing::ITokenizer::STRING) || (strlen(token->getContent())==0)){
+		//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
+		printf("Se esperaba el nombre del archivo de datos (literal de cadena) pero vino: %s.",token->getContent());
 	}else{
-		fileName= cloneStr(token->getContent());
+		createStatement=new CreateStatement(token->getContent());		
 	}
-	// VALIDO EL ;
-	token =	_tokenizer->getNextToken(false);
+	// PARSEO EL ";"
+	printf("PARSEO EL \";\"\n");
+	token =	_tokenizer->getNextToken(true);
 	if ((token==NULL)||(token->getType()!=Parsing::ITokenizer::DELIMITER)||(strcmp(token->getContent(),";")!=0)){
-		free(fileName);
-		// Y ACA?
+		//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
+		printf("Se esperaba ;.\n");	
 	}
-	// VALIDO EL TIPO DE DATO
-	fileType = parseFileType();
-	if (fileType==0){
-		free(fileName);
-		// Y ACA?
+	
+	// PARSEO EL TIPO DE ARCHIVO
+	createStatement->setFileType(parseFileType());
+	
+	// PARSEO EL CORCHETE
+	printf("PARSEO EL \"[\"\n");
+	token =	_tokenizer->getNextToken(true);
+	if ((token==NULL)||(token->getType()!=Parsing::ITokenizer::DELIMITER)||(strcmp(token->getContent(),"[")!=0)){
+		//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
+		printf("Se esperaba \"[\";.\n");		
 	}
-	return vvCreateStatement;
+	
+	// PARSEO LOS CAMPOS
+	token =	_tokenizer->getNextToken(true);
+	if ((token==NULL)||(token->getType()!=Parsing::ITokenizer::DELIMITER)||(strcmp(token->getContent(),"[")!=0)){
+		//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
+		printf("Se esperaba \"[\";.\n");		
+	}
+		
+		
+	printf("Fin parseo del create statement\n");
+	return createStatement;
 }
 
 Statement* StatementParser::parseAddStatemet(){
@@ -126,49 +143,61 @@ Statement* StatementParser::parseActualizeStatemet(){
 }
 	
 Statement* StatementParser::getNext(){
+	printf("Statement* StatementParser::getNext(){\n.");
 	Parsing::Token* token =	_tokenizer->getNextToken(false);
+	printf("Primer token: %s\n.",token->getContent());
 	if (token==NULL){
 		printf("Primer token null\n.");
+		//TODO: archivo vacio
 		return NULL;
 	}
+	printf("VALIDA EL COMIENZO DEL STATEMENT\n.");
 	// VALIDA EL COMIENZO DEL STATEMENT
 	if ((token->getType()!=_tokenizer->KEYWORD)){
-		do{
-			//ya no hace falta eliminar tokens. Se eliminan solos
-			//delete token;
+		
+		//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
+		printf("Se esperaba KEYWORD pero vino: %i\n. valor: \"%s\".\n",token->getType(),token->getContent());
+		return NULL;
+		/*do{
 			token= _tokenizer->getNextToken(false);
 		}while ((token!=NULL) && (token->getType()!=_tokenizer->DELIMITER) && (strcmp(token->getContent(),"\n")));
-		//delete token;
-		// BUSCA EL SIGUIENTE SIN ERRORES
-		return getNext();
+		return getNext();*/
+	}else{
+		printf("Identificando el tipo de statement.\n");
+		// IDENTIFICA EL TIPO DE STATEMENT Y DERIVO AL METODO CORRECTO
+		if (strcmp(token->getContent(),"CREAR")==0){
+			return parseCreateStatemet();
+		}
+		if (strcmp(token->getContent(),"INGRESAR")==0){
+			printf("__INGRESAR\n;");
+			return parseAddStatemet();
+		}
+		if (strcmp(token->getContent(),"CONSULTAR")==0){
+			return parseConsultStatemet();
+		}
+		if (strcmp(token->getContent(),"QUITAR")==0){
+			return parseRemoveStatemet();
+		}
+		if (strcmp(token->getContent(),"ELIMINAR")==0){
+			return parseDeleteStatemet();
+		}
+		if (strcmp(token->getContent(),"ESTADISTICA")==0){
+			return parseStatsStatemet();
+		}
+		if (strcmp(token->getContent(),"FINALIZAR")==0){
+			return parseEndStatemet();
+		}
+		if (strcmp(token->getContent(),"ACTUALIZAR")==0){
+			return parseActualizeStatemet();
+		}
+		printf("Tipo de statement desconocido\n.");
+		//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
+		return NULL;
 	}
-	// IDENTIFICA EL TIPO DE STATEMENT Y DERIVO AL METODO CORRECTO
-	if (strcmp(token->getContent(),"CREAR")){
-		return parseCreateStatemet();
-	}
-	if (strcmp(token->getContent(),"INGRESAR")){
-		return parseAddStatemet();
-	}
-	if (strcmp(token->getContent(),"CONSULTAR")){
-		return parseConsultStatemet();
-	}
-	if (strcmp(token->getContent(),"QUITAR")){
-		return parseRemoveStatemet();
-	}
-	if (strcmp(token->getContent(),"ELIMINAR")){
-		return parseDeleteStatemet();
-	}
-	if (strcmp(token->getContent(),"ESTADISTICA")){
-		return parseStatsStatemet();
-	}
-	if (strcmp(token->getContent(),"FINALIZAR")){
-		return parseEndStatemet();
-	}
-	if (strcmp(token->getContent(),"ACTUALIZAR")){
-		return parseActualizeStatemet();
-	}
+	//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
 	
 	/*CreateStatement de ejemplo*********************/
+	/*
 	CreateStatement* vvCreateStatement=NULL;
 	SecondaryIndex* vvSecondaryIndex=NULL;
 	Field* vvSecondaryField=NULL;
@@ -205,6 +234,7 @@ Statement* StatementParser::getNext(){
 	}else{
 		return 0;		
 	}
+	*/
 }
 
 StatementParser::~StatementParser()

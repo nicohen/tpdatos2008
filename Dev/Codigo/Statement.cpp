@@ -9,7 +9,7 @@ Statement::Statement(char* fileName)
 	_fileName=cloneStr(fileName);
 }
 
-char* Statement::getFileNamess(){
+char* Statement::getFileName(){
 	return _fileName;	
 }
 
