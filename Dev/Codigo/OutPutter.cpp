@@ -6,37 +6,9 @@
 
 using namespace std;
 
-OutPutter::OutPutter(FileManager::FileManager* aFileManager, FileManager::FileInfo* aFileInfoIn, bool verbose) {
-	this->_fileInfoIn = aFileInfoIn;
-
-	string strBuffer;
-	time_t rawtime;
-	struct tm* timeinfo;
-	char buffer[80];
-	char* fileNameOut;
-	
-	time(&rawtime);
-	timeinfo = localtime(&rawtime);
-	strftime(buffer,80,"%Y-%m-%d %H:%M:%S",timeinfo);
-
-	strBuffer.append("Out/[");
-	strBuffer.append(buffer);
-	strBuffer.append("] Comandos.7506");
-
-	fileNameOut = (char*) malloc(strlen(strBuffer.c_str()));
-	strcpy(fileNameOut,strBuffer.c_str());
-
-	ifstream in("In/Comandos.7506");
-	ofstream out(fileNameOut);
-	out<<in.rdbuf();
-
-	this->_fileInfoOut = aFileManager->CreateFileInfo(fileNameOut);
-	
-	this->_fileInfoOut->close();
-	
+OutPutter::OutPutter(FileManager::FileManager* aFileManager, bool verbose) {
+	this->_fileManager = aFileManager;
 	this->_verbose = verbose;
-	
-	free(fileNameOut);
 }
 
 OutPutter::~OutPutter(){
@@ -44,12 +16,41 @@ OutPutter::~OutPutter(){
 		delete this->_fileInfoOut;
 }
 
-bool OutPutter::getVerbose() {
-	return this->_verbose;
+void OutPutter::writeOutputFile(FileManager::FileInfo* inputFile) {
+	string strBuffer;
+	time_t rawtime;
+	struct tm* timeinfo;
+	char buffer[80];
+	char* fileNameOut;
+
+	//Crea el time y lo formatea 
+	time(&rawtime);
+	timeinfo = localtime(&rawtime);
+	strftime(buffer,80,"%Y-%m-%d %H:%M:%S",timeinfo);
+
+	//Realiza un append del nombre de la carpeta formateado
+	strBuffer.append("Out/[");
+	strBuffer.append(buffer);
+	strBuffer.append("] Comandos.7506");
+
+	fileNameOut = (char*) malloc(strlen(strBuffer.c_str()));
+	strcpy(fileNameOut,strBuffer.c_str());
+
+	//Copia el archivo de la carpeta In en la carpeta Out
+	ifstream in(inputFile->getFileName());
+	ofstream out(fileNameOut);
+	out<<in.rdbuf();
+
+	//Crea el fileInfoOut
+	this->_fileInfoOut = this->_fileManager->CreateFileInfo(fileNameOut);
+	this->_fileInfoOut->close();
+	
+	free(fileNameOut);
+
 }
 
-FileManager::FileInfo* OutPutter::getInputFile() {
-	return this->_fileInfoIn;
+bool OutPutter::getVerbose() {
+	return this->_verbose;
 }
 
 void OutPutter::debug(char* message){

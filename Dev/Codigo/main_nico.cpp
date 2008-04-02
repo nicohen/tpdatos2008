@@ -13,7 +13,7 @@ int main(int argc, char **argv) {
 	
 	fileManager = new FileManager::FileManager();
 	fileInfo = fileManager->CreateFileInfo(fileName);
-	outPut = new OutPutter(fileManager, fileInfo, true);
+	outPut = new OutPutter(fileManager, true);
 	outPut->debug("Inicio escritura de archivo");
 	outPut->debug("Archivo copiado correctamente");
 	outPut->printLine("Todas las cosas que puedan salir al archivo OUT");
