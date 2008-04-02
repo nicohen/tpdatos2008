@@ -25,7 +25,7 @@ void StructureType::addType(DataType* aType){
 }
 
 int StructureType::getCount(){
-	this->_dataTypes->size();
+	return this->_dataTypes->size();
 }
 
 bool StructureType::equals(DataType* other){

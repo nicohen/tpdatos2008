@@ -5,6 +5,7 @@
 #include "string.h"
 #include "IOException.h"
 
+using namespace std;
 namespace Parsing{
 
 	Tokenizer::Tokenizer(FileManager::FileInfo* fileInfo, char stringIndicator, char delimiters[], int delimitersSize, char* keyWords[], int keyWorsSize) throw (FileManager::IOException){
@@ -17,6 +18,8 @@ namespace Parsing{
 		_keyWordsSize= keyWorsSize;
 		fileInfo->open();
 		fileInfo->read(&_current,1);
+		
+		this->_readTokens=new vector<Token*>();
 	}
 
 	Token* Tokenizer::getNextToken(bool ignoreDelimiters){
@@ -75,7 +78,8 @@ namespace Parsing{
 				type=KEYWORD;
 			}
 		}
-		return new Token(content,type);
+
+		return this->addToReadTokens(new Token(content,type));
 	}
 
 	bool Tokenizer::isDelimiter(char item){
@@ -95,6 +99,27 @@ namespace Parsing{
 	}
 
 	Tokenizer::~Tokenizer(){
+		printf("~Tokenizer\n");
 		_fileInfo->close();
+		this->clearReadTokens();
+		delete(this->_readTokens);
+	}
+	
+	Token* Tokenizer::addToReadTokens(Token* token){
+		this->_readTokens->push_back(token);
+		return token;
+	}
+	
+	int Tokenizer::getTokenReadCount(){
+		return this->_readTokens->size();
+	}
+	
+	void Tokenizer::clearReadTokens(){
+		vector<Token*>::iterator iter;
+		for (iter = this->_readTokens->begin(); iter != this->_readTokens->end(); iter++ )
+		{
+			delete ((Token*)*iter);
+		}
+		this->_readTokens->clear();
 	}
 }

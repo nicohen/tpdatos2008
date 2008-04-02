@@ -15,9 +15,13 @@
 #import "StructureValue.h"
 #import "StringValue.h"
 
+#import "Tokenizer.h"
+#import "StatementParser.h"
+
 
 #include <exception>
 using namespace std;
+using namespace Parsing;
 
 class Assertion{
 private:
@@ -362,6 +366,53 @@ void test_StructureValue(TestCase* test){
 	delete(vvStructure1);	
 }
 
+void test_TokenizerCreation(TestCase* test){
+	FileManager::FileManager* vvFileManager = new FileManager::FileManager();
+	FileManager::FileInfo *vvFileInfo;
+	Tokenizer* vvTokz=NULL;		
+	char SEPARATORS[]= {' ','!','\n'};
+	char* KEYW[]= {"Hello","CONSULTAR"};
+	vvFileInfo = vvFileManager->CreateFileInfo("In/Comandos_test.7506");
+	
+	vvTokz= new Tokenizer(vvFileInfo,'\'',SEPARATORS,3,KEYW ,2);
+	test->reportAssertion(new TrueAssertion(0==vvTokz->getTokenReadCount()));
+	vvTokz->getNextToken(false);
+	test->reportAssertion(new TrueAssertion(1==vvTokz->getTokenReadCount()));
+	vvFileInfo->close();
+	delete(vvTokz);
+	delete(vvFileInfo);
+	delete(vvFileManager);
+}
+
+void test_ParserCreateStatementParsing(TestCase* test){
+	FileManager::FileManager* vvFileManager = new FileManager::FileManager();
+	FileManager::FileInfo *vvFileInfo;
+	Tokenizer* vvTokz=NULL;
+	StatementParser* vvStPars=NULL;
+	Statement* vvFirstStatement=NULL;
+	CreateStatement* vvExpectedFirstStatement=NULL;
+	char SEPARATORS[]= {' ','!','\n'};
+	char* KEYW[]= {"Hello","CONSULTAR"};
+	vvFileInfo = vvFileManager->CreateFileInfo("In/Comandos_test.7506");
+	vvTokz= new Tokenizer(vvFileInfo,'\'',SEPARATORS,3,KEYW ,2);
+	
+	vvStPars=new StatementParser(vvTokz,NULL);
+	
+	vvFirstStatement=vvStPars->getNext();
+	vvExpectedFirstStatement=dynamic_cast<CreateStatement *>(vvFirstStatement);
+	test->reportAssertion(new TrueAssertion(NULL!=vvFirstStatement));
+	test->reportAssertion(new TrueAssertion(NULL!=vvExpectedFirstStatement));
+	
+	
+	vvFileInfo->close();
+	delete(vvStPars);
+	delete(vvTokz);
+	delete(vvFileInfo);
+	delete(vvFileManager);
+}
+
+
+
 int main(int argc, char **argv) {
 	int failedTests=0;
 	
@@ -401,7 +452,13 @@ int main(int argc, char **argv) {
 	test_StructureValue(test7bis);
 	delete test7bis;
 	
+	TestCase* test8=new TestCase("test_TokenizerCreation",&failedTests);	
+	test_TokenizerCreation(test8);
+	delete test8;
 	
+	TestCase* test9=new TestCase("test_ParserCreateStatementParsing",&failedTests);	
+	test_ParserCreateStatementParsing(test9);
+	delete test9;
 	
 	
 	printf(":::Tests:::.......................\n");

@@ -6,7 +6,7 @@
 #include "Token.h"
 
 using namespace Parsing;
-StatementParser::StatementParser(Parsing::Tokenizer* tokenizer,OutPutter* outputter)
+StatementParser::StatementParser(Parsing::ITokenizer* tokenizer,OutPutter* outputter)
 {
 	this->_statementCount=0;
 	this->_tokenizer=tokenizer;
@@ -17,14 +17,15 @@ vector<Field*>* StatementParser::parseFields(){
 	Field *field=NULL;
 	std::vector<Field*>* fields=new vector<Field*>();
 	Parsing::Token* token =	_tokenizer->getNextToken(false);
-	if ((token==NULL) || (token->getType()!=Parsing::Tokenizer::DELIMITER) || (strcmp(token->getContent(),"[")==0)){
+	if ((token==NULL) || (token->getType()!=Parsing::ITokenizer::DELIMITER) || (strcmp(token->getContent(),"[")==0)){
 		delete fields;
 		return NULL;
 	}
-	delete token;
+	//ya no hace falta eliminar tokens. Se eliminan solos
+	//delete token;
 	token =	_tokenizer->getNextToken(false);
-	while ((token!=NULL)&&(token->getType()!=Parsing::Tokenizer::DELIMITER) || (strcmp(token->getContent(),"]")!=0)){
-		if (token->getType()==Parsing::Tokenizer::KEYWORD){
+	while ((token!=NULL)&&(token->getType()!=Parsing::ITokenizer::DELIMITER) || (strcmp(token->getContent(),"]")!=0)){
+		if (token->getType()==Parsing::ITokenizer::KEYWORD){
 			if (strcmp(token->getContent(),"string")==0){
 				field= new Field();
 				field->setDataType(new StringType());
@@ -45,7 +46,7 @@ vector<Field*>* StatementParser::parseFields(){
 int StatementParser::parseFileType(void){
 	int fileType;
 	Parsing::Token* token =	_tokenizer->getNextToken(false);
-	if ((token==NULL) || (token->getType()!=Parsing::Tokenizer::KEYWORD)){
+	if ((token==NULL) || (token->getType()!=Parsing::ITokenizer::KEYWORD)){
 		fileType= Statement::OTHER;
 	}else{
 		if (strcmp(token->getContent(),"secuencial")==0){ 
@@ -60,7 +61,8 @@ int StatementParser::parseFileType(void){
 			fileType=Statement::OTHER;
 		}
 	}
-	delete token;
+	//ya no hace falta eliminar tokens. Se eliminan solos
+	//delete token;
 	return fileType;
 }
 
@@ -75,14 +77,14 @@ Statement* StatementParser::parseCreateStatemet(){
 	}
 	// VALIDO NOMBRE DEL ARCHIVO DE DATOS
 	token =	_tokenizer->getNextToken(false);
-	if ((token==NULL) || (token->getType()!=Parsing::Tokenizer::STRING) || (strlen(token->getContent())==0)){
+	if ((token==NULL) || (token->getType()!=Parsing::ITokenizer::STRING) || (strlen(token->getContent())==0)){
 		// Y ACA?
 	}else{
 		fileName= cloneStr(token->getContent());
 	}
 	// VALIDO EL ;
 	token =	_tokenizer->getNextToken(false);
-	if ((token==NULL)||(token->getType()!=Parsing::Tokenizer::DELIMITER)||(strcmp(token->getContent(),";")!=0)){
+	if ((token==NULL)||(token->getType()!=Parsing::ITokenizer::DELIMITER)||(strcmp(token->getContent(),";")!=0)){
 		free(fileName);
 		// Y ACA?
 	}
@@ -126,19 +128,21 @@ Statement* StatementParser::parseActualizeStatemet(){
 Statement* StatementParser::getNext(){
 	Parsing::Token* token =	_tokenizer->getNextToken(false);
 	if (token==NULL){
+		printf("Primer token null\n.");
 		return NULL;
 	}
 	// VALIDA EL COMIENZO DEL STATEMENT
 	if ((token->getType()!=_tokenizer->KEYWORD)){
 		do{
-			delete token;
+			//ya no hace falta eliminar tokens. Se eliminan solos
+			//delete token;
 			token= _tokenizer->getNextToken(false);
 		}while ((token!=NULL) && (token->getType()!=_tokenizer->DELIMITER) && (strcmp(token->getContent(),"\n")));
-		delete token;
+		//delete token;
 		// BUSCA EL SIGUIENTE SIN ERRORES
 		return getNext();
 	}
-	// IDENTIFICA EL TIPO DE STATEMENT Y DERIBO AL METODO CORRECTO
+	// IDENTIFICA EL TIPO DE STATEMENT Y DERIVO AL METODO CORRECTO
 	if (strcmp(token->getContent(),"CREAR")){
 		return parseCreateStatemet();
 	}
@@ -163,7 +167,8 @@ Statement* StatementParser::getNext(){
 	if (strcmp(token->getContent(),"ACTUALIZAR")){
 		return parseActualizeStatemet();
 	}
-	/***************************************/
+	
+	/*CreateStatement de ejemplo*********************/
 	CreateStatement* vvCreateStatement=NULL;
 	SecondaryIndex* vvSecondaryIndex=NULL;
 	Field* vvSecondaryField=NULL;
@@ -194,7 +199,7 @@ Statement* StatementParser::getNext(){
 	
 	vvCreateStatement->addSecondaryField(vvSecondaryField);	
 	
-	if(this->_statementCount>3){
+	if(this->_statementCount<3){
 		this->_statementCount++;
 		return vvCreateStatement;
 	}else{
