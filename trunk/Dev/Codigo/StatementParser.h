@@ -17,7 +17,7 @@ private:
 	int _statementCount;
 	
 	int parseFileType();
-	vector<Field*>* parseFields();
+	void parseFields(CreateStatement* statement);
 	StructureType* parseDataType();
 	Statement* parseCreateStatemet();
 	Statement* parseAddStatemet();
