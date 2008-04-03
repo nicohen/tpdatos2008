@@ -13,6 +13,7 @@ namespace Parsing{
 			ITokenizer() throw (FileManager::IOException);
 			virtual ~ITokenizer();
 			virtual Token* getNextToken(bool ignoreDelimiters)=0;
+			virtual void moveToNextLine()=0;
 			
 			static const int DELIMITER =0;
 			static const int KEYWORD =1;
