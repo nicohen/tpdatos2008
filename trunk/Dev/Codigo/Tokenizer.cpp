@@ -22,10 +22,22 @@ namespace Parsing{
 		this->_readTokens=new vector<Token*>();
 	}
 	
-	void Tokenizer::moveToNextLine(){
-		while (_current!='\n'){
-			_fileInfo->read(&_current,1);
+	void Tokenizer::moveToNextLine(bool stopOnTheFirstChar){
+		try{
+			if(stopOnTheFirstChar && _current=='\n'){
+				_fileInfo->read(&_current,1);
+				return;
+			}
+			while (_current!=0 && _current!='\n'){
+				_fileInfo->read(&_current,1);
+			}
+			if(_current=='\n'){
+				_fileInfo->read(&_current,1);	
+			}
+		}catch (FileManager::IOException e){
+			_current=0;
 		}
+		return;		
 	}
 	/*
 	Token* Tokenizer::getNextLineToken(){

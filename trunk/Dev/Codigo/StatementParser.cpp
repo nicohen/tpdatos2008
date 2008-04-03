@@ -161,6 +161,7 @@ Statement* StatementParser::parseCreateStatement(){
 	this->parseFields(createStatement);	
 		
 	printf("Fin parseo del create statement\n");
+	this->_tokenizer->moveToNextLine(true);
 	return createStatement;
 }
 
@@ -209,10 +210,6 @@ Statement* StatementParser::getNext(){
 			//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
 			printf("Se esperaba KEYWORD pero vino: %i\n. valor: \"%s\".\n",token->getType(),token->getContent());
 			return NULL;
-			/*do{
-				token= _tokenizer->getNextToken(false);
-			}while ((token!=NULL) && (token->getType()!=_tokenizer->DELIMITER) && (strcmp(token->getContent(),"\n")));
-			return getNext();*/
 		}else{
 			printf("Identificando el tipo de statement.\n");
 			// IDENTIFICA EL TIPO DE STATEMENT Y DERIVO AL METODO CORRECTO
@@ -249,15 +246,18 @@ Statement* StatementParser::getNext(){
 				return parseUpdateStatement();
 			}
 			throw new StatementParserException("Tipo de statement desconocido\n");
-			printf("Tipo de statement desconocido\n.");
 			//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
+			printf("Tipo de statement desconocido\n.");			
 			return NULL;
 		}
 	}catch(StatementParserException* e){
 		//TODO: Llamar al tokenizer y decirle que vaya hasta el proximo \n
 		printf("La linea es incorrecta. Se continuará parseando la proxima linea.\n");
-		this->_tokenizer->moveToNextLine();
+		printf("Pasando a la linea siguiente.\n");
+		this->_tokenizer->moveToNextLine(true);
 	}
+	
+	
 	
 	//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
 	

@@ -23,6 +23,8 @@
 using namespace std;
 using namespace Parsing;
 
+bool verbose = false;
+
 class Assertion{
 private:
 	bool _passed;
@@ -405,6 +407,7 @@ void test_ParserCreateStatementParsing(TestCase* test){
 	vvFileInfo = vvFileManager->CreateFileInfo("In/Comandos.7506");
 	vvTokz= new Tokenizer(vvFileInfo,'\'',delimiters,7,keywords ,12);	
 	vvStPars=new StatementParser(vvTokz,NULL);	
+	vvFirstStatement=vvStPars->getNext();
 	vvFirstStatement=vvStPars->getNext();
 	//vvExpectedFirstStatement=dynamic_cast<CreateStatement *>(vvFirstStatement);
 	vvExpectedFirstStatement=(CreateStatement *)(vvFirstStatement);
