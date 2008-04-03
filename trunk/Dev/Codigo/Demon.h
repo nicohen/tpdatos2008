@@ -8,11 +8,10 @@ class Demon {
 	private:
 	int _sleepTime;
 	int _bufferSize;
-	bool _verbose;
 	bool _finishDaemon;
 	
 	public:
-	Demon(int st, int bs, bool v);
+	Demon(int st, int bs);
 	void run(void);
 	void debug(char* msg);
 	void processInputStatements(BufferedDataManager* bufferedDataManager, OutPutter* outPutter, FileManager::FileInfo* inputFile);

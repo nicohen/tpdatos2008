@@ -1,5 +1,6 @@
 #include "Utils.h"
 #include "string.h"
+#include "stdio.h"
 
 char* cloneStr(char* source){
 	int len=0;
@@ -10,7 +11,14 @@ char* cloneStr(char* source){
 	memcpy(clon,source,len+1);
 	return clon; 
 }
- 
+
+void DEBUG(char* words){
+	extern bool verbose;
+	if (verbose){
+		printf("%s\n",words);
+	}
+}
+
 bool isNumeric(char* word){
 	int i=0;
 	int size =strlen(word);
