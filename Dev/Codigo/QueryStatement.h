@@ -4,11 +4,11 @@
 #include "Statement.h"
 #include "OutPutter.h"
 
-class QueryStatemet : public Statement{
+class QueryStatement : public Statement{
 public:
 	//Constructores y destructores 
-	QueryStatemet(char* filename);
-	virtual ~QueryStatemet();
+	QueryStatement(char* filename);
+	virtual ~QueryStatement();
 	
 	virtual void execute(void* anIDataManager, OutPutter* anOutputter);
 };

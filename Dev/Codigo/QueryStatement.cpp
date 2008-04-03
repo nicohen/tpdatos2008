@@ -1,13 +1,13 @@
-#include "QueryStatemet.h"
+#include "QueryStatement.h"
 #include "Utils.h"
 
-QueryStatemet::QueryStatemet(char* filename):Statement(filename){
+QueryStatement::QueryStatement(char* filename):Statement(filename){
 }
 
 
-void QueryStatemet::execute(void* anIDataManager, OutPutter* anOutputter){
+void QueryStatement::execute(void* anIDataManager, OutPutter* anOutputter){
 	anOutputter->printLine("Sé ejecutó la instrucción ConsultStatemet");
 }
 
-QueryStatemet::~QueryStatemet(){
+QueryStatemet::~QueryStatement(){
 }
