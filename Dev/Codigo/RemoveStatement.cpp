@@ -5,8 +5,12 @@ RemoveStatement::RemoveStatement(char* filename):Statement(filename){
 }
 
 
-void RemoveStatement::execute(void* anIDataManager, OutPutter* anOutputter){
-	anOutputter->printLine("Sé ejecutó la instrucción RemoveStatement");
+StatementResult* RemoveStatement::execute(DataManager* anIDataManager){
+	return new StatementResult();
+}
+
+void RemoveStatement::writeStatementQuery(OutPutter* anOutPutter) {
+		anOutputter->printLine("Sé ejecutó la instrucción RemoveStatement");	
 }
 
 RemoveStatement::~RemoveStatement(){

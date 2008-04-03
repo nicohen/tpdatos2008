@@ -2,7 +2,6 @@
 #define QUERYSTATEMENT_H_
 
 #include "Statement.h"
-#include "OutPutter.h"
 
 class QueryStatement : public Statement{
 public:
@@ -10,7 +9,8 @@ public:
 	QueryStatement(char* filename);
 	virtual ~QueryStatement();
 	
-	virtual void execute(void* anIDataManager, OutPutter* anOutputter);
+	virtual StatementResult* execute(DataManager* anIDataManager);
+	virtual void writeStatementQuery(OutPutter* outPutter);
 };
 
 #endif /*QUERYSTATEMENT_H_*/

@@ -5,8 +5,12 @@ StatsStatement::StatsStatement(char* filename):Statement(filename){
 }
 
 
-void StatsStatement::execute(void* anIDataManager, OutPutter* anOutputter){
-	anOutputter->printLine("Sé ejecutó la instrucción ConsultStatemet");
+StatementResult* StatsStatement::execute(DataManager* anIDataManager){
+	return new StatementResult();
+}
+
+void StatsStatement::writeStatementQuery(OutPutter* anOutPutter) {
+	anOutputter->printLine("Sé ejecutó la instrucción StatsStatemet");	
 }
 
 StatsStatement::~StatsStatement(){

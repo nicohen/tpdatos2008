@@ -5,8 +5,12 @@ UpdateStatement::UpdateStatement(char* filename):Statement(filename){
 }
 
 
-void UpdateStatement::execute(void* anIDataManager, OutPutter* anOutputter){
-	anOutputter->printLine("Sé ejecutó la instrucción UpdateStatement");
+StatementResult* UpdateStatement::execute(DataManager* anIDataManager){
+	return new StatementResult();
+}
+
+void UpdateStatement::writeStatementQuery(OutPutter* anOutPutter) {
+	anOutputter->printLine("Sé ejecutó la instrucción UpdateStatement");	
 }
 
 UpdateStatement::~UpdateStatement(){

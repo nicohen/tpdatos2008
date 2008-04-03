@@ -2,7 +2,6 @@
 #define UPDATESTATEMENT_H_
 
 #include "Statement.h"
-#include "OutPutter.h"
 
 class UpdateStatement : public Statement{
 public:
@@ -10,7 +9,8 @@ public:
 	UpdateStatement(char* filename);
 	virtual ~UpdateStatement();
 	
-	virtual void execute(void* anIDataManager, OutPutter* anOutputter);
+	virtual StatementResult* execute(DataManager* anIDataManager);
+	virtual void writeStatementQuery(OutPutter* outPutter);
 };
 
 #endif /*UPDATESTATEMENT_H_*/
