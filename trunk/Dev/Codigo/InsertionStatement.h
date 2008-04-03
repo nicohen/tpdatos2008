@@ -5,7 +5,6 @@
 #include <vector>
 
 class InsertionStatement: public Statement {
-
 	private:
 		std::vector<DataValue*>* _values;
 	public:
@@ -19,7 +18,8 @@ class InsertionStatement: public Statement {
 		//Otros metodos
 		void addValue(DataValue* aValue);
 		void clearValues(vector<DataValue*>* values);
-		virtual void execute(void* anIDataManager, OutPutter* anOutputter);
+		virtual void writeStatementQuery(OutPutter* outPutter);
+		virtual StatementResult* execute(DataManager* anIDataManager);
 		
 };
 
