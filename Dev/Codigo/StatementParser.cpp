@@ -14,14 +14,14 @@ void StatementParser::parseFields(CreateStatement* statement){
 	
 		
 	// PARSEO EL CORCHETE
-	printf("PARSEO EL \"[\"\n");
+	//printf("PARSEO EL \"[\"\n");
 	token =	_tokenizer->getNextToken(false);
 	if ((token==NULL)||(token->getType()!=Parsing::ITokenizer::DELIMITER)||(strcmp(token->getContent(),"[")!=0)){
 		//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
-		printf("Se esperaba \"[\" pero vino \"%s\".\n",token->getContent());		
+		//printf("Se esperaba \"[\" pero vino \"%s\".\n",token->getContent());		
 	}else{
 		//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
-		printf("Se encontró \"[\".\n");
+		//printf("Se encontró \"[\".\n");
 	}
 	
 	
@@ -68,7 +68,7 @@ DataType* StatementParser::parseType(Token* currentToken){
 		//TODO: llenar el StructureType
 	}else{
 		//TODO: LANZAR UN EXCEPCION
-		printf("Se espera");
+		//printf("Se espera");
 	}
 }
 
@@ -80,13 +80,13 @@ DataType* StatementParser::parseType(Token* currentToken){
 int StatementParser::parseFileType(){
 	int fileType;
 	//TODO: llamar al debug
-	printf("Inicio del parseo del tipo de archivo.\n");
+	DEBUG("Inicio del parseo del tipo de archivo.\n");
 	Parsing::Token* token =	_tokenizer->getNextToken(false);
-	printf("Inicio del parseo del tipo de archivo: Luego de obtener el token.\n");
+	//printf("Inicio del parseo del tipo de archivo: Luego de obtener el token.\n");
 	if ((token==NULL) || (token->getType()!=Parsing::ITokenizer::KEYWORD)){
 		fileType= Statement::OTHER;
 		//TODO: llamar al debug
-		printf("1_No se encontró un tipo de archivo válido. Vino \"%s\".\n",token->getContent());
+		//printf("No se encontró un tipo de archivo válido. Vino \"%s\".\n",token->getContent());
 	}else{
 		if (strcmp(token->getContent(),"secuencial")==0){ 
 			fileType=Statement::SECUENCIAL;
@@ -99,49 +99,49 @@ int StatementParser::parseFileType(){
 		}else{
 			fileType=Statement::OTHER;
 			//TODO: llamar al debug
-			printf("2_No se encontró un tipo de archivo válido. Vino \"%s\".\n",token->getContent());
+			//printf("2_No se encontró un tipo de archivo válido. Vino \"%s\".\n",token->getContent());
 		}
 	}
 	//TODO: llamar al debug
-	printf("Fin de parseo del tipo de archivo.\n");
+	DEBUG("Fin de parseo del tipo de archivo.\n");
 	return fileType;
 }
 
 Statement* StatementParser::parseCreateStatement(){
 	CreateStatement* createStatement=NULL;
-	printf("Statement* StatementParser::parseCreateStatement(){\n");
+	//DEBUG("Statement* StatementParser::parseCreateStatement(){\n");
 
 	// PARSEO ESPACIO
-	printf("PARSEO ESPACIO\n");
+	//printf("PARSEO ESPACIO\n");
 	Parsing::Token* token =	_tokenizer->getNextToken(false);
 	if ((token==NULL)||(strcmp(token->getContent()," ")!=0)){
 		//TODO: loggear un error ERROR: "Se esperaba espacio"
-		printf("Se esperaba espacio.");
+		DEBUG("Se esperaba espacio.");
 	}
 	// PARSEO NOMBRE DEL ARCHIVO DE DATOS
-	printf("PARSEO NOMBRE DEL ARCHIVO DE DATOS\n");
+	//printf("PARSEO NOMBRE DEL ARCHIVO DE DATOS\n");
 	token =	_tokenizer->getNextToken(true);
 	if((token==NULL) || (token->getType()!=Parsing::ITokenizer::STRING) || (strlen(token->getContent())==0)){
 		//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
-		printf("Se esperaba el nombre del archivo de datos (literal de cadena) pero vino: %s.",token->getContent());
+		//DEBUG("Se esperaba el nombre del archivo de datos (literal de cadena) pero vino: %s.",token->getContent());
 	}else{
 		createStatement=new CreateStatement(token->getContent());		
 	}
 	// PARSEO EL ";"
-	printf("PARSEO EL \";\"\n");
+	//printf("PARSEO EL \";\"\n");
 	token =	_tokenizer->getNextToken(false);
 	if ((token==NULL)||(token->getType()!=Parsing::ITokenizer::DELIMITER)||(strcmp(token->getContent(),";")!=0)){
 		//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
-		printf("Se esperaba ;. Vino: %s.\n",token->getContent());	
+		//DEBUG("Se esperaba ;. Vino: %s.\n",token->getContent());	
 	}else{
 		//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
-		printf("Se encontró \";\".\n");
+		//DEBUG("Se encontró \";\".\n");
 	}
 	
 	// PARSEO EL TIPO DE ARCHIVO
 	createStatement->setFileType(parseFileType());
 	//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
-	printf("Se encontró el tipo de archivo.\n");
+	//DEBUG("Se encontró el tipo de archivo.\n");
 	
 	/*
 	// PARSEO EL CORCHETE
@@ -159,7 +159,7 @@ Statement* StatementParser::parseCreateStatement(){
 	//PARSEO LOS CAMPOS
 	this->parseFields(createStatement);	
 		
-	printf("Fin parseo del create statement\n");
+	DEBUG("Fin parseo del create statement\n");
 	this->_tokenizer->moveToNextLine(true);
 	return createStatement;
 }
@@ -168,11 +168,10 @@ Statement* StatementParser::parseInsertionStatement(){
 	Parsing::Token* token =	NULL;
 	Statement* statement=NULL;
 	// PARSEO NOMBRE DEL ARCHIVO DE DATOS
-	printf("PARSEO NOMBRE DEL ARCHIVO DE DATOS\n");
 	token =	_tokenizer->getNextToken(true);
 	if((token==NULL) || (token->getType()!=Parsing::ITokenizer::STRING) || (strlen(token->getContent())==0)){
 		//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
-		printf("Se esperaba el nombre del archivo de datos (literal de cadena) pero vino: %s.",token->getContent());
+		DEBUG("Se esperaba el nombre del archivo de datos (literal de cadena)");
 	}else{
 		statement=new InsertionStatement(token->getContent());		
 	}
@@ -183,11 +182,11 @@ Statement* StatementParser::parseQueryStatement(){
 	Statement* statement=NULL;
 	Parsing::Token* token =	NULL;
 	// PARSEO NOMBRE DEL ARCHIVO DE DATOS
-	printf("PARSEO NOMBRE DEL ARCHIVO DE DATOS\n");
+	//printf("PARSEO NOMBRE DEL ARCHIVO DE DATOS\n");
 	token =	_tokenizer->getNextToken(true);
 	if((token==NULL) || (token->getType()!=Parsing::ITokenizer::STRING) || (strlen(token->getContent())==0)){
 		//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
-		printf("Se esperaba el nombre del archivo de datos (literal de cadena) pero vino: %s.",token->getContent());
+		//printf("Se esperaba el nombre del archivo de datos (literal de cadena) pero vino: %s.",token->getContent());
 	}else{
 		statement=new QueryStatement(token->getContent());		
 	}
@@ -198,11 +197,11 @@ Statement* StatementParser::parseRemoveStatement(){
 	Statement* statement=NULL;
 	Parsing::Token* token =	NULL;
 	// PARSEO NOMBRE DEL ARCHIVO DE DATOS
-	printf("PARSEO NOMBRE DEL ARCHIVO DE DATOS\n");
+	//printf("PARSEO NOMBRE DEL ARCHIVO DE DATOS\n");
 	token =	_tokenizer->getNextToken(true);
 	if((token==NULL) || (token->getType()!=Parsing::ITokenizer::STRING) || (strlen(token->getContent())==0)){
 		//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
-		printf("Se esperaba el nombre del archivo de datos (literal de cadena) pero vino: %s.",token->getContent());
+		//printf("Se esperaba el nombre del archivo de datos (literal de cadena) pero vino: %s.",token->getContent());
 	}else{
 		statement=new RemoveStatement(token->getContent());		
 	}
@@ -213,11 +212,11 @@ Statement* StatementParser::parseDeleteStatement(){
 	Statement* statement=NULL;
 	Parsing::Token* token =	NULL;
 	// PARSEO NOMBRE DEL ARCHIVO DE DATOS
-	printf("PARSEO NOMBRE DEL ARCHIVO DE DATOS\n");
+	//printf("PARSEO NOMBRE DEL ARCHIVO DE DATOS\n");
 	token =	_tokenizer->getNextToken(true);
 	if((token==NULL) || (token->getType()!=Parsing::ITokenizer::STRING) || (strlen(token->getContent())==0)){
 		//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
-		printf("Se esperaba el nombre del archivo de datos (literal de cadena) pero vino: %s.",token->getContent());
+		//printf("Se esperaba el nombre del archivo de datos (literal de cadena) pero vino: %s.",token->getContent());
 	}else{
 		statement=new DeleteStatement(token->getContent());		
 	}
@@ -228,11 +227,11 @@ Statement* StatementParser::parseStatsStatement(){
 	Statement* statement=NULL;
 	Parsing::Token* token =	NULL;
 	// PARSEO NOMBRE DEL ARCHIVO DE DATOS
-	printf("PARSEO NOMBRE DEL ARCHIVO DE DATOS\n");
+//	printf("PARSEO NOMBRE DEL ARCHIVO DE DATOS\n");////
 	token =	_tokenizer->getNextToken(true);
 	if((token==NULL) || (token->getType()!=Parsing::ITokenizer::STRING) || (strlen(token->getContent())==0)){
 		//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
-		printf("Se esperaba el nombre del archivo de datos (literal de cadena) pero vino: %s.",token->getContent());
+		//printf("Se esperaba el nombre del archivo de datos (literal de cadena) pero vino: %s.",token->getContent());
 	}else{
 		statement=new StatsStatement(token->getContent());		
 	}
@@ -243,11 +242,11 @@ Statement* StatementParser::parseUpdateStatement(){
 	Statement* statement=NULL;
 	Parsing::Token* token =	NULL;
 	// PARSEO NOMBRE DEL ARCHIVO DE DATOS
-	printf("PARSEO NOMBRE DEL ARCHIVO DE DATOS\n");
+	//printf("PARSEO NOMBRE DEL ARCHIVO DE DATOS\n");
 	token =	_tokenizer->getNextToken(true);
 	if((token==NULL) || (token->getType()!=Parsing::ITokenizer::STRING) || (strlen(token->getContent())==0)){
 		//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
-		printf("Se esperaba el nombre del archivo de datos (literal de cadena) pero vino: %s.",token->getContent());
+		//printf("Se esperaba el nombre del archivo de datos (literal de cadena) pero vino: %s.",token->getContent());
 	}else{
 		statement=new UpdateStatement(token->getContent());		
 	}
@@ -256,65 +255,67 @@ Statement* StatementParser::parseUpdateStatement(){
 
 Statement* StatementParser::getNext(){
 	Parsing::Token* token =	_tokenizer->getNextToken(false);
-	printf("Statement* StatementParser::getNext(){\n.");
-	printf("Primer token: %s\n.",token->getContent());
+	//printf("Statement* StatementParser::getNext(){\n.");
+	//printf("Primer token: %s\n.",token->getContent());
+	DEBUG("Comienzo del parseo de una instruccion.");
 	if (token==NULL){
-		printf("Primer token null\n.");
+		//printf("Primer token null\n.");
 		//TODO: archivo vacio
 		return NULL;
 	}
-	printf("VALIDA EL COMIENZO DEL STATEMENT\n.");
+	//printf("VALIDA EL COMIENZO DEL STATEMENT\n.");
 	try{
 		// VALIDA EL COMIENZO DEL STATEMENT
 		if ((token->getType()!=_tokenizer->KEYWORD)){
 			
 			//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
-			printf("Se esperaba KEYWORD pero vino: %i\n. valor: \"%s\".\n",token->getType(),token->getContent());
+			//printf("Se esperaba KEYWORD pero vino: %i\n. valor: \"%s\".\n",token->getType(),token->getContent());
+			DEBUG("Se esperaba KEYWORD");
 			return NULL;
 		}else{
-			printf("Identificando el tipo de statement.\n");
+			//printf("Identificando el tipo de statement.\n");
 			// IDENTIFICA EL TIPO DE STATEMENT Y DERIVO AL METODO CORRECTO
 			if (strcmp(token->getContent(),"CREAR")==0){
-				printf("Inicio del parseo de CREAR.\n");
+				DEBUG("Inicio del parseo de CREAR.\n");
 				return parseCreateStatement();
 			}
 			if (strcmp(token->getContent(),"INGRESAR")==0){
-				printf("Inicio del parseo de INGRESAR.\n");
+				DEBUG("Inicio del parseo de INGRESAR.\n");
 				return parseInsertionStatement();
 			}
 			if (strcmp(token->getContent(),"CONSULTAR")==0){
-				printf("Inicio del parseo de CONSULTAR.\n");
+				DEBUG("Inicio del parseo de CONSULTAR.\n");
 				return parseQueryStatement();
 			}
 			if (strcmp(token->getContent(),"QUITAR")==0){
-				printf("Inicio del parseo de QUITAR.\n");
+				DEBUG("Inicio del parseo de QUITAR.\n");
 				return parseRemoveStatement();
 			}
 			if (strcmp(token->getContent(),"ELIMINAR")==0){
-				printf("Inicio del parseo de ELIMINAR.\n");
+				DEBUG("Inicio del parseo de ELIMINAR.\n");
 				return parseDeleteStatement();
 			}
 			if (strcmp(token->getContent(),"ESTADISTICA")==0){
-				printf("Inicio del parseo de ESTADISTICA.\n");
+				DEBUG("Inicio del parseo de ESTADISTICA.\n");
 				return parseStatsStatement();
 			}
 			if (strcmp(token->getContent(),"FINALIZAR")==0){
-				printf("Inicio del parseo de FINALIZAR.\n");
+				DEBUG("Inicio del parseo de FINALIZAR.\n");
 				throw new KillDaemonException();
 			}
 			if (strcmp(token->getContent(),"ACTUALIZAR")==0){
-				printf("Inicio del parseo de ACTUALIZAR.\n");
+				DEBUG("Inicio del parseo de ACTUALIZAR.\n");
 				return parseUpdateStatement();
 			}
 			throw new StatementParserException("Tipo de statement desconocido\n");
 			//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
-			printf("Tipo de statement desconocido\n.");			
+			DEBUG("Tipo de statement desconocido\n.");			
 			return NULL;
 		}
 	}catch(StatementParserException* e){
 		//TODO: Llamar al tokenizer y decirle que vaya hasta el proximo \n
-		printf("La linea es incorrecta. Se continuará parseando la proxima linea.\n");
-		printf("Pasando a la linea siguiente.\n");
+		DEBUG("La linea es incorrecta. Se continuará parseando la proxima linea.\n");
+		DEBUG("Pasando a la linea siguiente.\n");
 		this->_tokenizer->moveToNextLine(true);
 	}
 	
