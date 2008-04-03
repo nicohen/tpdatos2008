@@ -2,7 +2,6 @@
 #define STATSSTATEMENT_H_
 
 #include "Statement.h"
-#include "OutPutter.h"
 
 class StatsStatement : public Statement{
 public:
@@ -10,7 +9,8 @@ public:
 	StatsStatement(char* filename);
 	virtual ~StatsStatement();
 	
-	virtual void execute(void* anIDataManager, OutPutter* anOutputter);
+	virtual StatementResult* execute(DataManager* anIDataManager);
+	virtual void writeStatementQuery(OutPutter* outPutter);
 };
 
 #endif /*STATSSTATEMENT_H_*/

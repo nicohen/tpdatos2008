@@ -5,8 +5,12 @@ QueryStatement::QueryStatement(char* filename):Statement(filename){
 }
 
 
-void QueryStatement::execute(void* anIDataManager, OutPutter* anOutputter){
-	anOutputter->printLine("Sé ejecutó la instrucción ConsultStatemet");
+StatementResult* QueryStatement::execute(DataManager* anIDataManager){
+	return new StatementResult();
+}
+
+void QueryStatement::writeStatementQuery(OutPutter* anOutPutter) {
+		anOutputter->printLine("Sé ejecutó la instrucción QueryStatemet");	
 }
 
 QueryStatement::~QueryStatement(){

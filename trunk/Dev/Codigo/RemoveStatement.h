@@ -2,7 +2,6 @@
 #define REMOVESTATEMENT_H_
 
 #include "Statement.h"
-#include "OutPutter.h"
 
 class RemoveStatement : public Statement{
 public:
@@ -10,7 +9,8 @@ public:
 	RemoveStatement(char* filename);
 	virtual ~RemoveStatement();
 	
-	virtual void execute(void* anIDataManager, OutPutter* anOutputter);
+	virtual StatementResult* execute(DataManager* anIDataManager);
+	virtual void writeStatementQuery(OutPutter* outPutter);
 };
 
 #endif /*REMOVESTATEMENT_H_*/
