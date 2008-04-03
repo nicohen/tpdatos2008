@@ -4,11 +4,12 @@
 #import "Demon.h"
 #import "FileManager.h"
 
+bool verbose = false;
+
 int main(int argc, char **argv) {
 	int sleepTime;
 	int bufferSize;
 	Demon *demon;
-	bool verbose = false;
 
 	// VERIFICO LA CANTIDAD MINIMA DE PARAMETROS
 	if (argc < 3){
@@ -32,7 +33,7 @@ int main(int argc, char **argv) {
 	if ((argc==4)&&(strcmp("-d",argv[3])==0)){
 		verbose = true;
 	}
-	demon = new Demon(sleepTime,bufferSize,verbose);
+	demon = new Demon(sleepTime,bufferSize);
 	demon->run();
 	delete demon;
 	return 0;
