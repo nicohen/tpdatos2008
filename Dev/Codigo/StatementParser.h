@@ -18,6 +18,7 @@
 #include "RemoveStatement.h"
 #include "QueryStatement.h"
 #include "DeleteStatement.h"
+#include "InsertionStatement.h"
 #include <vector>
 
 using namespace Parsing;
