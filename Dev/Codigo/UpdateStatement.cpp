@@ -10,7 +10,7 @@ StatementResult* UpdateStatement::execute(DataManager* anIDataManager){
 }
 
 void UpdateStatement::writeStatementQuery(OutPutter* anOutPutter) {
-	anOutputter->printLine("Sé ejecutó la instrucción UpdateStatement");	
+	anOutPutter->printLine("Sé ejecutó la instrucción UpdateStatement");	
 }
 
 UpdateStatement::~UpdateStatement(){

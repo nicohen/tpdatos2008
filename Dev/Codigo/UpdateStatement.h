@@ -2,6 +2,7 @@
 #define UPDATESTATEMENT_H_
 
 #include "Statement.h"
+#include "OutPutter.h"
 
 class UpdateStatement : public Statement{
 public:
