@@ -401,9 +401,9 @@ void test_ParserCreateStatementParsing(TestCase* test){
 	CreateStatement* vvExpectedFirstStatement=NULL;
 	//char delimiters[]= {' ',';','[',']','\n'};
 	char delimiters[]= {' ','[',']',';',',','\n','|'};
-	char* keywords[]= {"CREAR","CONSULTAR","hash"};
+	char* keywords[]= {"CREAR","CONSULTAR","hash","INGRESAR","QUITAR","ELIMINAR","ESTADISTICA","FINALIZAR","ACTUALIZAR","secuencial","indexado","secIndexado"};
 	vvFileInfo = vvFileManager->CreateFileInfo("In/Comandos.7506");
-	vvTokz= new Tokenizer(vvFileInfo,'\'',delimiters,7,keywords ,3);	
+	vvTokz= new Tokenizer(vvFileInfo,'\'',delimiters,7,keywords ,12);	
 	vvStPars=new StatementParser(vvTokz,NULL);	
 	vvFirstStatement=vvStPars->getNext();
 	//vvExpectedFirstStatement=dynamic_cast<CreateStatement *>(vvFirstStatement);

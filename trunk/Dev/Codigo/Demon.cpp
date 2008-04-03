@@ -65,19 +65,23 @@ void Demon::debug(char* msg) {
 
 void Demon::processInputStatements(BufferedDataManager* bufferedDataManager, OutPutter* outPutter, FileManager::FileInfo* inputFile) {
 	Statement* statement = NULL;
-	char SEPARATORS[]= {' ','!','\n'};
- 	char* KEYWORDS[]= {"Hello","CONSULTAR"};
 
- 	Parsing::Tokenizer* tokenizer = new Parsing::Tokenizer(inputFile,'\'',SEPARATORS,3,KEYWORDS,2);
+	char delimiters[]= {' ','[',']',';',',','\n','|'};
+	char* keywords[]= {"CREAR","CONSULTAR","hash","INGRESAR","QUITAR","ELIMINAR","ESTADISTICA","FINALIZAR","ACTUALIZAR","secuencial","indexado","secIndexado"};
+ 	
+ 	Parsing::Tokenizer* tokenizer = new Parsing::Tokenizer(inputFile,'\'',delimiters,7,keywords,12);
 	StatementParser* statementParser = new StatementParser(tokenizer,outPutter);
 
 	try {
+		statement = statementParser->getNext();
+		statement = statementParser->getNext();
 		while ((statement = statementParser->getNext()) != NULL) {
 			bufferedDataManager->executeStatement(statement,outPutter);
 			delete statement;
 		}
-	} catch(KillDaemonException kde) {
-		_finishDaemon = true; 
+	} catch(KillDaemonException* kde) {
+		_finishDaemon = true;
+		debug("Se llamo a la instruccion finalizar");
 	}
 	
 	delete statementParser;
