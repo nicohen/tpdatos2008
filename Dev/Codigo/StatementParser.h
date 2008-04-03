@@ -33,7 +33,7 @@ private:
 	Statement* parseDeleteStatement();
 	Statement* parseStatsStatement();
 	Statement* parseEndStatement();
-	Statement* parseActualizeStatement();
+	Statement* parseUpdateStatement();
 	
 public:
 	//constructores y destructores
