@@ -65,7 +65,7 @@ void CreateStatement::clearSecondaryFields(vector<Field*>* secondaryFields){
 }
 
 void CreateStatement::writeStatementQuery(OutPutter* outPutter){
-	
+		
 }
 
 StatementResult* CreateStatement::execute(DataManager* dataManager){

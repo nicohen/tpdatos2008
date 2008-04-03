@@ -5,6 +5,7 @@
 using namespace std;
 
 //Setters
+
 InsertionStatement::InsertionStatement(char* fileName):Statement(fileName) {
 	_values = new vector<DataValue*>();
 }
@@ -27,8 +28,12 @@ void InsertionStatement::clearValues(vector<DataValue*>* values){
 	values->clear();
 }
 
-void InsertionStatement::execute(void* anIDataManager, OutPutter* anOutputter){
-	anOutputter->printLine("Sé ejecutó la instrucción InsertionStatement");
+StatementResult* InsertionStatement::execute(DataManager* anIDataManager){
+	return new StatementResult();
+}
+
+void InsertionStatement::writeStatementQuery(OutPutter* outPutter){
+	
 }
 
 InsertionStatement::~InsertionStatement() {
