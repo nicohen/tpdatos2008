@@ -188,7 +188,7 @@ Statement* StatementParser::parseEndStatement(){
 
 }
 
-Statement* StatementParser::parseActualizeStatement(){
+Statement* StatementParser::parseUpdateStatement(){
 
 }
 
@@ -246,7 +246,7 @@ Statement* StatementParser::getNext(){
 			}
 			if (strcmp(token->getContent(),"ACTUALIZAR")==0){
 				printf("Inicio del parseo de ACTUALIZAR.\n");
-				return parseActualizeStatement();
+				return parseUpdateStatement();
 			}
 			throw new StatementParserException("Tipo de statement desconocido\n");
 			printf("Tipo de statement desconocido\n.");
