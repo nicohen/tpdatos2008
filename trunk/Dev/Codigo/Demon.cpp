@@ -33,12 +33,13 @@ void Demon::run(void){
 			outPutter->debug("Inicio escritura de archivo");
 			outPutter->writeOutputFile(inputFile);
 			outPutter->debug("Archivo copiado correctamente");
-			outPutter->printLine("Todas las cosas que puedan salir al archivo OUT");
-			outPutter->printLine("Mas cosas...");
-			outPutter->debug("Fin escritura de archivo");
 
 			processInputStatements(bufferedDataManager, outPutter, inputFile);
 
+			outPutter->printLine("Escribo en el archivo Out...");
+			outPutter->debug("Fin escritura en archivo Out");
+
+			
 			inputFile->close();
 			inputFile->delet();
 			
