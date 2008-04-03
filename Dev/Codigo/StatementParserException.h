@@ -3,8 +3,10 @@
 
 class StatementParserException
 {
+private:
+	char* _msg;
 public:
-	StatementParserException();
+	StatementParserException(char* msg);
 	virtual ~StatementParserException();
 };
 

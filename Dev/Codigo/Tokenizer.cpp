@@ -22,6 +22,11 @@ namespace Parsing{
 		this->_readTokens=new vector<Token*>();
 	}
 	
+	void Tokenizer::moveToNextLine(){
+		while (_current!='\n'){
+			_fileInfo->read(&_current,1);
+		}
+	}
 	/*
 	Token* Tokenizer::getNextLineToken(){
 		char buffer[128];

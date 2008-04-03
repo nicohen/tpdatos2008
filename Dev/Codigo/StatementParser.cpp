@@ -217,38 +217,46 @@ Statement* StatementParser::getNext(){
 			printf("Identificando el tipo de statement.\n");
 			// IDENTIFICA EL TIPO DE STATEMENT Y DERIVO AL METODO CORRECTO
 			if (strcmp(token->getContent(),"CREAR")==0){
+				printf("Inicio del parseo de CREAR.\n");
 				return parseCreateStatemet();
 			}
 			if (strcmp(token->getContent(),"INGRESAR")==0){
-				printf("__INGRESAR\n;");
+				printf("Inicio del parseo de INGRESAR.\n");
 				return parseAddStatemet();
 			}
 			if (strcmp(token->getContent(),"CONSULTAR")==0){
+				printf("Inicio del parseo de CONSULTAR.\n");
 				return parseConsultStatemet();
 			}
 			if (strcmp(token->getContent(),"QUITAR")==0){
+				printf("Inicio del parseo de QUITAR.\n");
 				return parseRemoveStatemet();
 			}
 			if (strcmp(token->getContent(),"ELIMINAR")==0){
+				printf("Inicio del parseo de ELIMINAR.\n");
 				return parseDeleteStatemet();
 			}
 			if (strcmp(token->getContent(),"ESTADISTICA")==0){
+				printf("Inicio del parseo de ESTADISTICA.\n");
 				return parseStatsStatemet();
 			}
 			if (strcmp(token->getContent(),"FINALIZAR")==0){
+				printf("Inicio del parseo de FINALIZAR.\n");
 				throw new KillDaemonException();
 			}
 			if (strcmp(token->getContent(),"ACTUALIZAR")==0){
+				printf("Inicio del parseo de ACTUALIZAR.\n");
 				return parseActualizeStatemet();
 			}
+			throw new StatementParserException("Tipo de statement desconocido\n");
 			printf("Tipo de statement desconocido\n.");
 			//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
 			return NULL;
 		}
 	}catch(StatementParserException* e){
 		//TODO: Llamar al tokenizer y decirle que vaya hasta el proximo \n
-		printf("La linea es incorrecta. Será omitida\n");
-		//this->_tokenizer->
+		printf("La linea es incorrecta. Se continuará parseando la proxima linea.\n");
+		this->_tokenizer->moveToNextLine();
 	}
 	
 	//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
