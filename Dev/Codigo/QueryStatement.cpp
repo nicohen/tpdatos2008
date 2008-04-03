@@ -9,5 +9,5 @@ void QueryStatement::execute(void* anIDataManager, OutPutter* anOutputter){
 	anOutputter->printLine("Sé ejecutó la instrucción ConsultStatemet");
 }
 
-QueryStatemet::~QueryStatement(){
+QueryStatement::~QueryStatement(){
 }
