@@ -6,7 +6,7 @@ StatsStatement::StatsStatement(char* filename):Statement(filename){
 
 
 void StatsStatement::execute(void* anIDataManager, OutPutter* anOutputter){
-	anOutputter->printLine("Sé ejecutó la instrucción StataStatement");
+	anOutputter->printLine("Sé ejecutó la instrucción ConsultStatemet");
 }
 
 StatsStatement::~StatsStatement(){
