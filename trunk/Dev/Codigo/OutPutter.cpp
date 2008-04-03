@@ -6,9 +6,8 @@
 
 using namespace std;
 
-OutPutter::OutPutter(FileManager::FileManager* aFileManager, bool verbose) {
+OutPutter::OutPutter(FileManager::FileManager* aFileManager) {
 	this->_fileManager = aFileManager;
-	this->_verbose = verbose;
 }
 
 OutPutter::~OutPutter(){
@@ -47,22 +46,6 @@ void OutPutter::writeOutputFile(FileManager::FileInfo* inputFile) {
 	
 	free(fileNameOut);
 
-}
-
-bool OutPutter::getVerbose() {
-	return this->_verbose;
-}
-
-void OutPutter::debug(char* message){
-	if (getVerbose()) {
-		printf("[Debug: %s]\n",message);
-	}
-}
-
-void OutPutter::error(char* message){
-	if (getVerbose()) {
-		printf("[Error: %s]\n",message);
-	}
 }
 
 void OutPutter::printLine(char* message) {

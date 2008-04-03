@@ -29,15 +29,15 @@ void Demon::run(void){
 			
 			inputFile->open();
 			
-			outPutter = new OutPutter(fileManager, true);
-			outPutter->debug("Inicio escritura de archivo");
+			outPutter = new OutPutter(fileManager);
+			DEBUG("Inicio escritura de archivo");
 			outPutter->writeOutputFile(inputFile);
-			outPutter->debug("Archivo copiado correctamente");
+			DEBUG("Archivo copiado correctamente");
 
 			processInputStatements(bufferedDataManager, outPutter, inputFile);
 
 			outPutter->printLine("Escribo en el archivo Out...");
-			outPutter->debug("Fin escritura en archivo Out");
+			DEBUG("Fin escritura en archivo Out");
 
 			
 			inputFile->close();
