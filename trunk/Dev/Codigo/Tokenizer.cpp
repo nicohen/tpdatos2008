@@ -68,8 +68,7 @@ namespace Parsing{
 		char *content;
 		int i=0;
 		if (_current==0){
-			//TODO: llamar al debug
-			printf("Tokenizer: Current es null.\n");
+			//printf("Tokenizer: Current es null.\n");
 			return NULL;
 		}
 		if (_current==_sIndicator){
@@ -97,7 +96,6 @@ namespace Parsing{
 						buffer[i]=_current;
 						i++;
 					}
-					printf("current: %c\n",_current);
 					_fileInfo->read(&_current,1);
 				}	
 			}catch (FileManager::IOException e){
@@ -113,20 +111,14 @@ namespace Parsing{
 			buffer[i]=0;
 		}
 		content = cloneStr(buffer);
-		printf("clonando str: \"%s\".\n",content);
 		if (type!=STRING && type!=DELIMITER){
-			printf("No es ni STRING ni DELIMITER\n");
 			if (isNumeric(content)){
 				type=NUMBER;
-				printf("es NUMERICO\n");
 			}else {
-				printf("no es NUMERICO\n");
 				if (isKeyWord(content)){
 					type=KEYWORD;
-					printf("Es KEYWORD\n");
 				}	
 			}
-			printf("No es ni KEYWORD ni NUMERIC\n");
 		}
 
 		
@@ -144,7 +136,6 @@ namespace Parsing{
 	bool Tokenizer::isKeyWord(char* item){
 		int i=0;
 		bool found=false;
-		//printf("Buscando si es KEYWORD \"%s\".\n",item);
 		while(!found && i<_keyWordsSize){
 			if(strcmp(item,_keyWords[i])==0){
 				found=true;
@@ -152,12 +143,12 @@ namespace Parsing{
 			//printf("KEYWORD[i]: %s\n",_keyWords[i]);
 			i++;
 		}
-		printf("Resultado de is Keyword: %i\n",found);
+		//printf("Resultado de is Keyword: %i\n",found);
 		return found;
 	}
 
 	Tokenizer::~Tokenizer(){
-		printf("~Tokenizer\n");
+		//printf("~Tokenizer\n");
 		_fileInfo->close();
 		this->clearReadTokens();
 		delete(this->_readTokens);
