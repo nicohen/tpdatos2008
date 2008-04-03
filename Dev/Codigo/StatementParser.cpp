@@ -10,8 +10,7 @@ StatementParser::StatementParser(Parsing::ITokenizer* tokenizer,OutPutter* outpu
 
 void StatementParser::parseFields(CreateStatement* statement){
 	Parsing::Token* token =	NULL;
-	//TODO: llamar al debug
-	printf("Inicio del parseo de los campos\n");
+	DEBUG("Inicio del parseo de los campos\n");
 	
 		
 	// PARSEO EL CORCHETE
@@ -166,31 +165,93 @@ Statement* StatementParser::parseCreateStatement(){
 }
 
 Statement* StatementParser::parseInsertionStatement(){
-
+	Parsing::Token* token =	NULL;
+	Statement* statement=NULL;
+	// PARSEO NOMBRE DEL ARCHIVO DE DATOS
+	printf("PARSEO NOMBRE DEL ARCHIVO DE DATOS\n");
+	token =	_tokenizer->getNextToken(true);
+	if((token==NULL) || (token->getType()!=Parsing::ITokenizer::STRING) || (strlen(token->getContent())==0)){
+		//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
+		printf("Se esperaba el nombre del archivo de datos (literal de cadena) pero vino: %s.",token->getContent());
+	}else{
+		statement=new InsertionStatement(token->getContent());		
+	}
+	return statement;
 }
 
 Statement* StatementParser::parseQueryStatement(){
-
+	Statement* statement=NULL;
+	Parsing::Token* token =	NULL;
+	// PARSEO NOMBRE DEL ARCHIVO DE DATOS
+	printf("PARSEO NOMBRE DEL ARCHIVO DE DATOS\n");
+	token =	_tokenizer->getNextToken(true);
+	if((token==NULL) || (token->getType()!=Parsing::ITokenizer::STRING) || (strlen(token->getContent())==0)){
+		//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
+		printf("Se esperaba el nombre del archivo de datos (literal de cadena) pero vino: %s.",token->getContent());
+	}else{
+		statement=new QueryStatement(token->getContent());		
+	}
+	return statement;
 }
 
 Statement* StatementParser::parseRemoveStatement(){
-
+	Statement* statement=NULL;
+	Parsing::Token* token =	NULL;
+	// PARSEO NOMBRE DEL ARCHIVO DE DATOS
+	printf("PARSEO NOMBRE DEL ARCHIVO DE DATOS\n");
+	token =	_tokenizer->getNextToken(true);
+	if((token==NULL) || (token->getType()!=Parsing::ITokenizer::STRING) || (strlen(token->getContent())==0)){
+		//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
+		printf("Se esperaba el nombre del archivo de datos (literal de cadena) pero vino: %s.",token->getContent());
+	}else{
+		statement=new RemoveStatement(token->getContent());		
+	}
+	return statement;
 }
 
 Statement* StatementParser::parseDeleteStatement(){
-
+	Statement* statement=NULL;
+	Parsing::Token* token =	NULL;
+	// PARSEO NOMBRE DEL ARCHIVO DE DATOS
+	printf("PARSEO NOMBRE DEL ARCHIVO DE DATOS\n");
+	token =	_tokenizer->getNextToken(true);
+	if((token==NULL) || (token->getType()!=Parsing::ITokenizer::STRING) || (strlen(token->getContent())==0)){
+		//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
+		printf("Se esperaba el nombre del archivo de datos (literal de cadena) pero vino: %s.",token->getContent());
+	}else{
+		statement=new DeleteStatement(token->getContent());		
+	}
+	return statement;
 }
 
 Statement* StatementParser::parseStatsStatement(){
-	/*Field* parseField(Token* currentToken);*/
-}
-
-Statement* StatementParser::parseEndStatement(){
-
+	Statement* statement=NULL;
+	Parsing::Token* token =	NULL;
+	// PARSEO NOMBRE DEL ARCHIVO DE DATOS
+	printf("PARSEO NOMBRE DEL ARCHIVO DE DATOS\n");
+	token =	_tokenizer->getNextToken(true);
+	if((token==NULL) || (token->getType()!=Parsing::ITokenizer::STRING) || (strlen(token->getContent())==0)){
+		//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
+		printf("Se esperaba el nombre del archivo de datos (literal de cadena) pero vino: %s.",token->getContent());
+	}else{
+		statement=new StatsStatement(token->getContent());		
+	}
+	return statement;
 }
 
 Statement* StatementParser::parseUpdateStatement(){
-
+	Statement* statement=NULL;
+	Parsing::Token* token =	NULL;
+	// PARSEO NOMBRE DEL ARCHIVO DE DATOS
+	printf("PARSEO NOMBRE DEL ARCHIVO DE DATOS\n");
+	token =	_tokenizer->getNextToken(true);
+	if((token==NULL) || (token->getType()!=Parsing::ITokenizer::STRING) || (strlen(token->getContent())==0)){
+		//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
+		printf("Se esperaba el nombre del archivo de datos (literal de cadena) pero vino: %s.",token->getContent());
+	}else{
+		statement=new UpdateStatement(token->getContent());		
+	}
+	return statement;
 }
 
 Statement* StatementParser::getNext(){

@@ -11,8 +11,7 @@ private:
 	char* _fileName;
 public:
 	Statement(char* fileName);
-	virtual char* getFileName();
-	virtual void writeStatementQuery(OutPutter* outPutter)=0;
+	char* getFileName();
 	virtual StatementResult* execute(DataManager* dataManager) = 0;
 	virtual ~Statement();
 	static const int OTHER= 0;

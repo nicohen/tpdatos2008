@@ -13,6 +13,11 @@
 #include "IntType.h"
 #include "KillDaemonException.h"
 #include "StatementParserException.h"
+#include "UpdateStatement.h"
+#include "StatsStatement.h"
+#include "RemoveStatement.h"
+#include "QueryStatement.h"
+#include "DeleteStatement.h"
 #include <vector>
 
 using namespace Parsing;
@@ -32,7 +37,6 @@ private:
 	Statement* parseRemoveStatement();
 	Statement* parseDeleteStatement();
 	Statement* parseStatsStatement();
-	Statement* parseEndStatement();
 	Statement* parseUpdateStatement();
 	
 public:
