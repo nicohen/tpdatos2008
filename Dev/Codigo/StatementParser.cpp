@@ -1,4 +1,5 @@
 #include "StatementParser.h"
+#include "IOException.h"
 
 using namespace Parsing;
 StatementParser::StatementParser(Parsing::ITokenizer* tokenizer,OutPutter* outputter)
@@ -125,7 +126,7 @@ Statement* StatementParser::parseCreateStatement(){
 		//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
 		//DEBUG("Se esperaba el nombre del archivo de datos (literal de cadena) pero vino: %s.",token->getContent());
 	}else{
-		createStatement=new CreateStatement(token->getContent());		
+		createStatement=new CreateStatement(token->getContent());
 	}
 	// PARSEO EL ";"
 	//printf("PARSEO EL \";\"\n");
@@ -160,7 +161,7 @@ Statement* StatementParser::parseCreateStatement(){
 	this->parseFields(createStatement);	
 		
 	DEBUG("Fin parseo del create statement\n");
-	this->_tokenizer->moveToNextLine(true);
+//	this->_tokenizer->moveToNextLine(true);
 	return createStatement;
 }
 
@@ -253,7 +254,7 @@ Statement* StatementParser::parseUpdateStatement(){
 	return statement;
 }
 
-Statement* StatementParser::getNext(){
+Statement* StatementParser::getNext() {
 	Parsing::Token* token =	_tokenizer->getNextToken(false);
 	//printf("Statement* StatementParser::getNext(){\n.");
 	//printf("Primer token: %s\n.",token->getContent());
@@ -261,7 +262,7 @@ Statement* StatementParser::getNext(){
 	if (token==NULL){
 		//printf("Primer token null\n.");
 		//TODO: archivo vacio
-		return NULL;
+		throw new FileManager::IOException();
 	}
 	//printf("VALIDA EL COMIENZO DEL STATEMENT\n.");
 	try{
@@ -315,9 +316,10 @@ Statement* StatementParser::getNext(){
 	}catch(StatementParserException* e){
 		//TODO: Llamar al tokenizer y decirle que vaya hasta el proximo \n
 		DEBUG("La linea es incorrecta. Se continuará parseando la proxima linea.\n");
-		DEBUG("Pasando a la linea siguiente.\n");
 		this->_tokenizer->moveToNextLine(true);
+		
 	}
+	return NULL;
 	
 	
 	

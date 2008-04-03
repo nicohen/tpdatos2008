@@ -25,7 +25,8 @@ void BufferedDataManager::saveToCache(StatementResult* result){
 StatementResult* BufferedDataManager::executeStatement(Statement* aStatement, OutPutter* outPutter){
 	StatementResult* result=NULL;
 	if(!tryGetResultFromCache(aStatement,&result)){
-		result=aStatement->execute(this->_dataManager);
+		if(aStatement!=NULL)
+			result=aStatement->execute(this->_dataManager);
 		saveToCache(result);
 	}
 	return result;

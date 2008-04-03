@@ -20,6 +20,7 @@
 #include "DeleteStatement.h"
 #include "InsertionStatement.h"
 #include <vector>
+#include "IOException.h"
 
 using namespace Parsing;
 class StatementParser

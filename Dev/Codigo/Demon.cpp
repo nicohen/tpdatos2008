@@ -8,6 +8,7 @@
 #include "KillDaemonException.h"
 #include "StatementParser.h"
 #include "Tokenizer.h"
+#include "IOException.h"
 
 Demon::Demon(int sleepTime, int bufferSize){
 	_sleepTime= sleepTime;
@@ -53,14 +54,10 @@ void Demon::run(void){
 
 	}
 	delete fileManager;
-	debug("Fin del programa");
+	DEBUG("Fin del programa");
 }
 
 Demon::~Demon(){
-}
-
-void Demon::debug(char* msg) {
-	printf("%s\n",msg);
 }
 
 void Demon::processInputStatements(BufferedDataManager* bufferedDataManager, OutPutter* outPutter, FileManager::FileInfo* inputFile) {
@@ -80,8 +77,10 @@ void Demon::processInputStatements(BufferedDataManager* bufferedDataManager, Out
 			statement = statementParser->getNext();
 		}
 	} catch(KillDaemonException* kde) {
+		DEBUG("KILL DAEMON");
 		_finishDaemon = true;
-		debug("Se llamo a la instruccion finalizar");
+	} catch(FileManager::IOException* ioe) {
+		DEBUG("Fin de archivo.");
 	}
 	
 	delete statementParser;
