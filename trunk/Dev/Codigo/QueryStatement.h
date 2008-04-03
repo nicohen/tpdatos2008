@@ -2,6 +2,7 @@
 #define QUERYSTATEMENT_H_
 
 #include "Statement.h"
+#include "OutPutter.h"
 
 class QueryStatement : public Statement{
 public:

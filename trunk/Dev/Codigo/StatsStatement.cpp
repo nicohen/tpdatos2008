@@ -10,7 +10,7 @@ StatementResult* StatsStatement::execute(DataManager* anIDataManager){
 }
 
 void StatsStatement::writeStatementQuery(OutPutter* anOutPutter) {
-	anOutputter->printLine("Sé ejecutó la instrucción StatsStatemet");	
+	anOutPutter->printLine("Sé ejecutó la instrucción StatsStatemet");	
 }
 
 StatsStatement::~StatsStatement(){

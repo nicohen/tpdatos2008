@@ -2,6 +2,7 @@
 #define STATSSTATEMENT_H_
 
 #include "Statement.h"
+#include "OutPutter.h"
 
 class StatsStatement : public Statement{
 public:

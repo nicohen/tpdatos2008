@@ -10,7 +10,7 @@ StatementResult* RemoveStatement::execute(DataManager* anIDataManager){
 }
 
 void RemoveStatement::writeStatementQuery(OutPutter* anOutPutter) {
-		anOutputter->printLine("Sé ejecutó la instrucción RemoveStatement");	
+	anOutPutter->printLine("Sé ejecutó la instrucción RemoveStatement");	
 }
 
 RemoveStatement::~RemoveStatement(){

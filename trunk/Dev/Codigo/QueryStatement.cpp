@@ -10,7 +10,7 @@ StatementResult* QueryStatement::execute(DataManager* anIDataManager){
 }
 
 void QueryStatement::writeStatementQuery(OutPutter* anOutPutter) {
-		anOutputter->printLine("Sé ejecutó la instrucción QueryStatemet");	
+	anOutPutter->printLine("Sé ejecutó la instrucción QueryStatemet");	
 }
 
 QueryStatement::~QueryStatement(){

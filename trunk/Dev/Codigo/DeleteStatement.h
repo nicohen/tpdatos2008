@@ -2,6 +2,7 @@
 #define DELETESTATEMENT_H_
 
 #include "Statement.h"
+#include "OutPutter.h"
 
 class DeleteStatement : public Statement{
 public:
