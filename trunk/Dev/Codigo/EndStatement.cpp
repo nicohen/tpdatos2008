@@ -11,7 +11,7 @@ StatementResult* EndStatement::execute(DataManager* anIDataManager){
 }
 
 void EndStatement::writeStatementQuery(OutPutter* anOutPutter) {
-	anOutputter->printLine("Sé ejecutó la instrucción EndStatement");
+	anOutPutter->printLine("Sé ejecutó la instrucción EndStatement");
 }
 
 EndStatement::~EndStatement(){
