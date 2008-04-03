@@ -26,14 +26,14 @@ private:
 	int parseFileType();
 	void parseFields(CreateStatement* statement);
 	StructureType* parseDataType();
-	Statement* parseCreateStatemet();
-	Statement* parseAddStatemet();
-	Statement* parseConsultStatemet();
-	Statement* parseRemoveStatemet();
-	Statement* parseDeleteStatemet();
-	Statement* parseStatsStatemet();
-	Statement* parseEndStatemet();
-	Statement* parseActualizeStatemet();
+	Statement* parseCreateStatement();
+	Statement* parseInsertionStatement();
+	Statement* parseQueryStatement();
+	Statement* parseRemoveStatement();
+	Statement* parseDeleteStatement();
+	Statement* parseStatsStatement();
+	Statement* parseEndStatement();
+	Statement* parseActualizeStatement();
 	
 public:
 	//constructores y destructores

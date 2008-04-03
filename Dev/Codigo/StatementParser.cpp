@@ -108,9 +108,9 @@ int StatementParser::parseFileType(){
 	return fileType;
 }
 
-Statement* StatementParser::parseCreateStatemet(){
+Statement* StatementParser::parseCreateStatement(){
 	CreateStatement* createStatement=NULL;
-	printf("Statement* StatementParser::parseCreateStatemet(){\n");
+	printf("Statement* StatementParser::parseCreateStatement(){\n");
 
 	// PARSEO ESPACIO
 	printf("PARSEO ESPACIO\n");
@@ -164,31 +164,31 @@ Statement* StatementParser::parseCreateStatemet(){
 	return createStatement;
 }
 
-Statement* StatementParser::parseAddStatemet(){
+Statement* StatementParser::parseInsertionStatement(){
 
 }
 
-Statement* StatementParser::parseConsultStatemet(){
+Statement* StatementParser::parseQueryStatement(){
 
 }
 
-Statement* StatementParser::parseRemoveStatemet(){
+Statement* StatementParser::parseRemoveStatement(){
 
 }
 
-Statement* StatementParser::parseDeleteStatemet(){
+Statement* StatementParser::parseDeleteStatement(){
 
 }
 
-Statement* StatementParser::parseStatsStatemet(){
+Statement* StatementParser::parseStatsStatement(){
 	/*Field* parseField(Token* currentToken);*/
 }
 
-Statement* StatementParser::parseEndStatemet(){
+Statement* StatementParser::parseEndStatement(){
 
 }
 
-Statement* StatementParser::parseActualizeStatemet(){
+Statement* StatementParser::parseActualizeStatement(){
 
 }
 
@@ -218,27 +218,27 @@ Statement* StatementParser::getNext(){
 			// IDENTIFICA EL TIPO DE STATEMENT Y DERIVO AL METODO CORRECTO
 			if (strcmp(token->getContent(),"CREAR")==0){
 				printf("Inicio del parseo de CREAR.\n");
-				return parseCreateStatemet();
+				return parseCreateStatement();
 			}
 			if (strcmp(token->getContent(),"INGRESAR")==0){
 				printf("Inicio del parseo de INGRESAR.\n");
-				return parseAddStatemet();
+				return parseInsertionStatement();
 			}
 			if (strcmp(token->getContent(),"CONSULTAR")==0){
 				printf("Inicio del parseo de CONSULTAR.\n");
-				return parseConsultStatemet();
+				return parseQueryStatement();
 			}
 			if (strcmp(token->getContent(),"QUITAR")==0){
 				printf("Inicio del parseo de QUITAR.\n");
-				return parseRemoveStatemet();
+				return parseRemoveStatement();
 			}
 			if (strcmp(token->getContent(),"ELIMINAR")==0){
 				printf("Inicio del parseo de ELIMINAR.\n");
-				return parseDeleteStatemet();
+				return parseDeleteStatement();
 			}
 			if (strcmp(token->getContent(),"ESTADISTICA")==0){
 				printf("Inicio del parseo de ESTADISTICA.\n");
-				return parseStatsStatemet();
+				return parseStatsStatement();
 			}
 			if (strcmp(token->getContent(),"FINALIZAR")==0){
 				printf("Inicio del parseo de FINALIZAR.\n");
@@ -246,7 +246,7 @@ Statement* StatementParser::getNext(){
 			}
 			if (strcmp(token->getContent(),"ACTUALIZAR")==0){
 				printf("Inicio del parseo de ACTUALIZAR.\n");
-				return parseActualizeStatemet();
+				return parseActualizeStatement();
 			}
 			throw new StatementParserException("Tipo de statement desconocido\n");
 			printf("Tipo de statement desconocido\n.");
