@@ -2,6 +2,7 @@
 #define DEMON_H_
 #include "BufferedDataManager.h"
 #include "OutPutter.h"
+#include "Utils.h"
 
 class Demon {
 	
