@@ -25,8 +25,9 @@ MAIN_NICOLAS= $(CODE_PATH)main.cpp
 #	g++ -Wall $(MAIN_CLASS) $(CODE_PATH)StringType.cpp $(CODE_PATH)DataType.cpp $(CODE_PATH)IntType.cpp $(CODE_PATH)Utils.cpp $(CODE_PATH)SecondaryIndex.cpp $(CODE_PATH)IOException.cpp $(CODE_PATH)FileManager.cpp $(CODE_PATH)FileInfo.cpp $(CODE_PATH)Demon.cpp
 
 #El eclipse ejecuta el makefile usando "make all". Y "All" apunta a TARGET. Por lo tanto se ejecuta lo que dice en la etiqueta TARGET
-all: $(TARGET2)
-
+all: $(MAIN) $(GLOBAL_CPP_H)
+	g++ -Wall $(MAIN) $(GLOBAL_CPP) -o $(TARGET)		
+	
 #Sirve para limpiar. Para ejecutar la limpieza hay que ejecutar "make clean"
 clean:
 	rm -f $(TARGET)

@@ -23,17 +23,22 @@ namespace Parsing{
 	}
 	
 	void Tokenizer::moveToNextLine(bool stopOnTheFirstChar){
+		printf("AAA");
 		try{
+			printf("1");
 			if(stopOnTheFirstChar && _current=='\n'){
 				_fileInfo->read(&_current,1);
 				return;
 			}
+			printf("2");
 			while (_current!=0 && _current!='\n'){
 				_fileInfo->read(&_current,1);
 			}
+			printf("3");
 			if(_current=='\n'){
 				_fileInfo->read(&_current,1);	
 			}
+			printf("4");
 		}catch (FileManager::IOException e){
 			_current=0;
 		}

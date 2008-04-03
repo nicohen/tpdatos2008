@@ -14,7 +14,6 @@ class Demon {
 	public:
 	Demon(int st, int bs);
 	void run(void);
-	void debug(char* msg);
 	void processInputStatements(BufferedDataManager* bufferedDataManager, OutPutter* outPutter, FileManager::FileInfo* inputFile);
 	virtual ~Demon();
 	
