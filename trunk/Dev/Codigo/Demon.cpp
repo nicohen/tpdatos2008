@@ -9,10 +9,9 @@
 #include "StatementParser.h"
 #include "Tokenizer.h"
 
-Demon::Demon(int sleepTime, int bufferSize, bool verbose){
+Demon::Demon(int sleepTime, int bufferSize){
 	_sleepTime= sleepTime;
 	_bufferSize= bufferSize;
-	_verbose = verbose;
 	_finishDaemon = false;
 }
 
