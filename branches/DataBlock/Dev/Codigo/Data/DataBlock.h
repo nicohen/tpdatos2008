@@ -14,5 +14,6 @@ public:
 
 	void allocateSpace();
 	void writeRecord(char* recordContent);
+	void flush();
 };
 #endif /*DataBlock*/

@@ -113,6 +113,7 @@ void Test_DateBlock(TestCase* test){
 	
 	block=new DataBlock(filename,blockSize);
 	block->allocateSpace();
+	block->flush();
 	delete block;
 		
 	//test->Assert_True_m(hadSuccessRemoving(remove(filename)),"El DataBlock no creó ningun archivo");
@@ -149,6 +150,7 @@ Escribe el contenido en el archivo con el formato adecuado
 	file->write(content,strlen(content));
 }
 */
+
 void Test_Block_WritesRecordCountAtTheBeginingOfTheFile(TestCase* test){
 	DataBlock* block=NULL;
 	char* recordContent=0;
@@ -158,14 +160,28 @@ void Test_Block_WritesRecordCountAtTheBeginingOfTheFile(TestCase* test){
 
 	block=new DataBlock(filename,blockSize);
 	block->allocateSpace();
+	block->flush();
 	delete block;
 	
 	block=new DataBlock(filename,blockSize);
 	block->writeRecord("Este es el primer registro");
+	block->flush();
+	delete block;
+	block=new DataBlock(filename,blockSize);
 	block->writeRecord("Este es el segundo registro");
+	block->flush();
+	delete block;
+	block=new DataBlock(filename,blockSize);
 	block->writeRecord("Este es el tercer registro");
+	block->flush();
+	delete block;
+	block=new DataBlock(filename,blockSize);
 	block->writeRecord("Este es el cuarto registro");
+	block->flush();
+	delete block;
+	block=new DataBlock(filename,blockSize);
 	block->writeRecord("Este es el quinto registro");
+	block->flush();
 	delete block;
 
 	fstream file (filename,ios::in|ios::binary);
@@ -178,7 +194,37 @@ void Test_Block_WritesRecordCountAtTheBeginingOfTheFile(TestCase* test){
 		test->Assert_True_m(false,"No se pudo abrir el archivo para testear");
 	}
 
-	//remove(filename);
+	remove(filename);
+}
+
+void Test_Block_DoesNotMakesEfectiveUntilTheFlushMethodIsCalled(TestCase* test){
+	DataBlock* block=NULL;
+	fstream* file =NULL;
+	remove(filename);
+	
+	block=new DataBlock(filename,blockSize);
+	block->allocateSpace();
+	
+	file = new fstream(filename,ios::in|ios::binary);
+	if(file->is_open()){
+		test->Assert_True_m(!file->is_open(),"No puede existir el archivo, porque todavia no se hizo flush");	
+		file->close();
+	}
+	delete file;
+
+	block->flush();
+
+	file = new fstream(filename,ios::in|ios::binary);
+	if(file->is_open()){
+		file->close();
+	}else{
+		test->Assert_True_m(!file->is_open(),"El flush no creó ningun archivo");	
+	}
+	delete file;
+	delete block;
+
+
+	remove(filename);
 }
 
 int main(int argc, char* argv[]){
@@ -192,6 +238,10 @@ int main(int argc, char* argv[]){
 	TestCase* test02=new TestCase("Test_Block_WritesRecordCountAtTheBeginingOfTheFile",&failedTests);	
 	Test_Block_WritesRecordCountAtTheBeginingOfTheFile(test02);
 	delete test02;
+
+	TestCase* test03=new TestCase("Test_Block_DoesNotMakesEfectiveUntilTheFlushMethodIsCalled",&failedTests);	
+	Test_Block_DoesNotMakesEfectiveUntilTheFlushMethodIsCalled(test03);
+	delete test03;
 	
 	
 	printf("::::::::::::::::::::::::::::::::::\n");

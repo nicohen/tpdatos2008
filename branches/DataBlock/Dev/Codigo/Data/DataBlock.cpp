@@ -59,3 +59,6 @@ void DataBlock::writeRecord(char* recordContent){
 	file.close();
 }
 
+
+void DataBlock::flush(){
+}
