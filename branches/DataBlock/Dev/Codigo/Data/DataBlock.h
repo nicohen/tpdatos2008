@@ -13,7 +13,7 @@ public:
 	virtual ~DataBlock();
 
 
-	void allocateSpace();
+	void clear();
 	void writeRecord(char* recordContent);
 	void update();
 	void flush();

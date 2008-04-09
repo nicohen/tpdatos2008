@@ -31,7 +31,7 @@ void DataBlock::update(){
 	file.close();
 }
 
-void DataBlock::allocateSpace(){
+void DataBlock::clear(){
 	for(int i=0;i<this->_size;i++){
 		*(this->_buffer+i)='\0';
 	}

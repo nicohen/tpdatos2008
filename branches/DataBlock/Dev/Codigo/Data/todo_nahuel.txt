@@ -11,4 +11,4 @@ generalizar el tamaño del RecordCount dentro de un bloque
 validar que no se quiera meter un registro mas grande que Size-Tamaño de RecordCount
 validar que no se quiera meter un registro mas grande que el espacio libre - Tamaño de RecordLenght
 >>--Done --> IMP: hacer todo en memoria y poner un flush()
-cambiar allocateSpace por clear
+>>--Done --> cambiar allocateSpace por clear

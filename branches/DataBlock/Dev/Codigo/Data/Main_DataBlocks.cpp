@@ -106,15 +106,15 @@ bool hadSuccessRemoving(int removeResponse){
 int blockSize=256;
 bool REMOVE_FILES=false;
 
-void Test_DateBlock(TestCase* test){
-	char* filename="C:\\temp\\Test_DateBlock.bin";
+void Test_Block_TheClearMethodDoesIt(TestCase* test){
+	char* filename="C:\\temp\\Test_Block_TheClearMethodDoesIt.bin";
 	DataBlock* block=NULL;
 	char current='\0';
 	int nonSpacesFound=0;
 	remove(filename);	
 	
 	block=new DataBlock(filename,blockSize);
-	block->allocateSpace();
+	block->clear();
 	block->flush();
 	delete block;
 		
@@ -139,11 +139,7 @@ void Test_DateBlock(TestCase* test){
 		test->Assert_True_m(hadSuccessRemoving(remove(filename)),"El DataBlock no creó ningun archivo");
 		remove(filename);
 	}
-
 }
-
-
-
 
 /*
 Escribe el contenido en el archivo con el formato adecuado
@@ -165,7 +161,7 @@ void Test_Block_WritesRecordCountAtTheBeginingOfTheFile(TestCase* test){
 	remove(filename);
 
 	block=new DataBlock(filename,blockSize);
-	block->allocateSpace();
+	block->clear();
 	block->flush();
 	delete block;
 	
@@ -203,7 +199,7 @@ void Test_Block_DoesNotMakesEfectiveUntilTheFlushMethodIsCalled(TestCase* test){
 	remove(filename);
 	
 	block=new DataBlock(filename,blockSize);
-	block->allocateSpace();
+	block->clear();
 	
 	file = new fstream(filename,ios::in|ios::binary);
 	if(file->is_open()){
@@ -232,8 +228,8 @@ int main(int argc, char* argv[]){
 	int failedTests=0;
 	
 	
-	TestCase* test01=new TestCase("Allocate Block Space",&failedTests);	
-	Test_DateBlock(test01);
+	TestCase* test01=new TestCase("Test_Block_TheClearMethodDoesIt",&failedTests);	
+	Test_Block_TheClearMethodDoesIt(test01);
 	delete test01;
 
 	TestCase* test02=new TestCase("Test_Block_WritesRecordCountAtTheBeginingOfTheFile",&failedTests);	
