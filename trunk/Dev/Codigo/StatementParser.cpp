@@ -1,93 +1,200 @@
 #include "StatementParser.h"
 #include "IOException.h"
+#include "ParserException.h"
 
 using namespace Parsing;
-StatementParser::StatementParser(Parsing::ITokenizer* tokenizer,OutPutter* outputter)
-{
+StatementParser::StatementParser(Parsing::ITokenizer* tokenizer,OutPutter* outputter){
 	this->_statementCount=0;
 	this->_tokenizer=tokenizer;
 	this->_outPutter=outputter;
 }
 
-void StatementParser::parseFields(CreateStatement* statement){
+StructureType* StatementParser::parseStructuredType(){
+	StructureType* structuredType= new StructureType();
+	DataType* dType;
+	Token* token= _tokenizer->getNextToken(true);
+	while ((token!=NULL)&&((token->getType()!=Parsing::ITokenizer::DELIMITER)&&(strcmp(token->getContent(),"|")!=0))){		
+		if ((token==NULL)||(token->getType()!=Parsing::ITokenizer::KEYWORD)){
+			delete structuredType;
+			throw ParserException();
+		}else{
+			if (strcmp(token->getContent(),"string")==0){
+				dType= new StringType();
+				structuredType->addType(dType);
+				token =	_tokenizer->getNextToken(false);
+				if ((token==NULL) || (token->getType()!=Parsing::ITokenizer::DELIMITER)){
+					delete structuredType;
+					throw ParserException();
+				}else{
+					if (strcmp(token->getContent(),"|")==0){
+						break;
+					}else if (strcmp(token->getContent(),",")!=0){
+						delete structuredType;
+						throw ParserException();
+					}
+				}
+			}else if (strcmp(token->getContent(),"int")==0){
+				dType= new IntType();
+				structuredType->addType(dType);
+				token =	_tokenizer->getNextToken(false);
+				if ((token==NULL) || (token->getType()!=Parsing::ITokenizer::DELIMITER)){
+					delete structuredType;
+					throw ParserException();
+				}else{
+					if (strcmp(token->getContent(),"|")==0){
+						break;
+					}else if (strcmp(token->getContent(),",")!=0){
+						delete structuredType;
+						throw ParserException();
+					}
+				}			
+			}else{
+				throw ParserException();
+			}
+			token =	_tokenizer->getNextToken(false);
+		}
+	}
+	return structuredType;
+}
+
+void StatementParser::parseParameters(CreateStatement* statement){
 	Parsing::Token* token =	NULL;
-	DEBUG("Inicio del parseo de los campos\n");
-	
-		
 	// PARSEO EL CORCHETE
-	//printf("PARSEO EL \"[\"\n");
 	token =	_tokenizer->getNextToken(false);
 	if ((token==NULL)||(token->getType()!=Parsing::ITokenizer::DELIMITER)||(strcmp(token->getContent(),"[")!=0)){
-		//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
-		//printf("Se esperaba \"[\" pero vino \"%s\".\n",token->getContent());		
-	}else{
-		//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
-		//printf("Se encontró \"[\".\n");
+		throw ParserException();
+	}		
+	token =	_tokenizer->getNextToken(false);
+	while ((token!=NULL) && (strcmp(token->getContent(),"]")!=0)){
+		if (token->getType()!=Parsing::ITokenizer::NUMBER){
+			throw ParserException();	
+		}else{
+			//ACER ALGO ACA.
+			token =	_tokenizer->getNextToken(false);
+			if ((token==NULL) || (token->getType()!=Parsing::ITokenizer::DELIMITER)){
+				throw ParserException();
+			}else{
+				if (strcmp(token->getContent(),"]")==0){
+					break;
+				}else if (strcmp(token->getContent(),",")!=0){
+					throw ParserException();
+				}
+			}
+		}
+		token =	_tokenizer->getNextToken(false);
 	}
-	
-	
-	/*
-	 mientras no se encuentre ]
-	 si hay algo como int, string o |
-	 crear un field 
-	 (parseType)parsear los tipos
-	 	si se encontro un int -> return inttype
-	 	si se encontro un string -> return string
-	 	si se encontro un | -> return structureType
-	 
-	 */
+}
+
+void StatementParser::parseIndexes(CreateStatement* statement){
+}
+
+void StatementParser::parseFields(CreateStatement* statement){
+	Parsing::Token* token =	NULL;
+	Field* field;
+	// PARSEO EL CORCHETE
+	token =	_tokenizer->getNextToken(false);
+	if ((token==NULL)||(token->getType()!=Parsing::ITokenizer::DELIMITER)||(strcmp(token->getContent(),"[")!=0)){
+		throw ParserException();		
+	}
 	
 	token =	_tokenizer->getNextToken(false);
 	while ((token!=NULL) && (strcmp(token->getContent(),"]")!=0)){
-		if((strcmp(token->getContent(),",")==0)){
+		if(token->getType()!=Parsing::ITokenizer::KEYWORD){
+			if (strcmp(token->getContent(),"|")==0){
+				field= new Field();
+				try{
+				field->setDataType(parseStructuredType());
+				}catch(ParserException pe){
+					delete field;
+					throw pe;
+				}
+				statement->addSecondaryField(field);
+				token =	_tokenizer->getNextToken(false);
+				if ((token==NULL) || (token->getType()!=Parsing::ITokenizer::DELIMITER)){
+					delete field;
+					throw ParserException();
+				}else{
+					if (strcmp(token->getContent(),"+")==0){
+						field->setIsMandatory(true);
+						token =	_tokenizer->getNextToken(false);
+						if ((token==NULL) || (token->getType()!=Parsing::ITokenizer::DELIMITER)){
+							delete field;
+							throw ParserException();
+						}else{
+							if (strcmp(token->getContent(),"]")==0){
+								break;
+							}else if (strcmp(token->getContent(),",")!=0){
+								delete field;
+							throw ParserException();
+							}
+						}
+					}else if (strcmp(token->getContent(),"*")==0){
+						field->setIsPolyvalent(true);
+						token =	_tokenizer->getNextToken(false);
+						if ((token==NULL) || (token->getType()!=Parsing::ITokenizer::DELIMITER)){
+							delete field;
+							throw ParserException();
+						}else{
+							if (strcmp(token->getContent(),"]")==0){
+								break;
+							}else if (strcmp(token->getContent(),",")!=0){
+								delete field;
+							throw ParserException();
+							}
+						}
+					}else if (strcmp(token->getContent(),"]")==0){
+						break;
+					}else if (strcmp(token->getContent(),",")!=0){
+						delete field;
+						throw ParserException();
+					}					
+				}
+			}
 		}else{
-			statement->addSecondaryField(this->parseField(token));
+			if (strcmp(token->getContent(),"string")==0){
+				field= new Field();
+				field->setDataType(new StringType());
+				token =	_tokenizer->getNextToken(false);
+				if ((token==NULL) || (token->getType()!=Parsing::ITokenizer::DELIMITER)){
+					delete field;
+					throw ParserException();
+				}else{
+					if (strcmp(token->getContent(),"]")==0){
+						break;
+					}else if (strcmp(token->getContent(),",")!=0){
+						delete field;
+					throw ParserException();
+					}
+				}
+			}else if (strcmp(token->getContent(),"int")==0){
+				field= new Field();
+				field->setDataType(new IntType());
+				token =	_tokenizer->getNextToken(false);
+				if ((token==NULL) || (token->getType()!=Parsing::ITokenizer::DELIMITER)){
+					delete field;
+					throw ParserException();
+				}else{
+					if (strcmp(token->getContent(),"]")==0){
+						break;
+					}else if (strcmp(token->getContent(),",")!=0){
+						delete field;
+					throw ParserException();
+					}
+				}				
+			}else{
+				throw ParserException();
+			}
 		}
-		token =	_tokenizer->getNextToken(false);
+		token =	_tokenizer->getNextToken(false);			
 	}
 	return;
 }
 
-Field* StatementParser::parseField(Token* currentToken){
-	Field* field=NULL;
-	if (strcmp(currentToken->getContent(),"string")==0 || strcmp(currentToken->getContent(),"int") || strcmp(currentToken->getContent(),"|")){
-		field= new Field();
-		field->setDataType(this->parseType(currentToken));
-		return field;
-	}
-	//TODO: LAnzar una excepcion
-	return NULL;
-}
-
-DataType* StatementParser::parseType(Token* currentToken){
-	if (strcmp(currentToken->getContent(),"string")==0){
-		return new StringType();		
-	}else if (strcmp(currentToken->getContent(),"int")==0){
-		return new IntType();
-	}if (strcmp(currentToken->getContent(),"|")==0){
-		return new StructureType();		
-		//TODO: llenar el StructureType
-	}else{
-		//TODO: LANZAR UN EXCEPCION
-		//printf("Se espera");
-	}
-}
-
-/*Field* StatementParser::ParseField(){
-	
-}*/
-
-
 int StatementParser::parseFileType(){
 	int fileType;
-	//TODO: llamar al debug
-	DEBUG("Inicio del parseo del tipo de archivo.\n");
 	Parsing::Token* token =	_tokenizer->getNextToken(false);
-	//printf("Inicio del parseo del tipo de archivo: Luego de obtener el token.\n");
 	if ((token==NULL) || (token->getType()!=Parsing::ITokenizer::KEYWORD)){
-		fileType= Statement::OTHER;
-		//TODO: llamar al debug
-		//printf("No se encontró un tipo de archivo válido. Vino \"%s\".\n",token->getContent());
+		//throw ParserException();
 	}else{
 		if (strcmp(token->getContent(),"secuencial")==0){ 
 			fileType=Statement::SECUENCIAL;
@@ -99,8 +206,6 @@ int StatementParser::parseFileType(){
 			fileType=Statement::SECINDEXADO;
 		}else{
 			fileType=Statement::OTHER;
-			//TODO: llamar al debug
-			//printf("2_No se encontró un tipo de archivo válido. Vino \"%s\".\n",token->getContent());
 		}
 	}
 	//TODO: llamar al debug
@@ -110,58 +215,70 @@ int StatementParser::parseFileType(){
 
 Statement* StatementParser::parseCreateStatement(){
 	CreateStatement* createStatement=NULL;
-	//DEBUG("Statement* StatementParser::parseCreateStatement(){\n");
-
 	// PARSEO ESPACIO
-	//printf("PARSEO ESPACIO\n");
 	Parsing::Token* token =	_tokenizer->getNextToken(false);
 	if ((token==NULL)||(strcmp(token->getContent()," ")!=0)){
-		//TODO: loggear un error ERROR: "Se esperaba espacio"
-		DEBUG("Se esperaba espacio.");
+		throw ParserException();
 	}
 	// PARSEO NOMBRE DEL ARCHIVO DE DATOS
-	//printf("PARSEO NOMBRE DEL ARCHIVO DE DATOS\n");
 	token =	_tokenizer->getNextToken(true);
 	if((token==NULL) || (token->getType()!=Parsing::ITokenizer::STRING) || (strlen(token->getContent())==0)){
-		//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
-		//DEBUG("Se esperaba el nombre del archivo de datos (literal de cadena) pero vino: %s.",token->getContent());
+		throw ParserException();
 	}else{
 		createStatement=new CreateStatement(token->getContent());
 	}
 	// PARSEO EL ";"
-	//printf("PARSEO EL \";\"\n");
 	token =	_tokenizer->getNextToken(false);
 	if ((token==NULL)||(token->getType()!=Parsing::ITokenizer::DELIMITER)||(strcmp(token->getContent(),";")!=0)){
-		//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
-		//DEBUG("Se esperaba ;. Vino: %s.\n",token->getContent());	
-	}else{
-		//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
-		//DEBUG("Se encontró \";\".\n");
-	}
-	
+		delete createStatement; 
+		throw ParserException();	
+	}	
 	// PARSEO EL TIPO DE ARCHIVO
-	createStatement->setFileType(parseFileType());
-	//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
-	//DEBUG("Se encontró el tipo de archivo.\n");
-	
-	/*
-	// PARSEO EL CORCHETE
-	printf("PARSEO EL \"[\"\n");
-	token =	_tokenizer->getNextToken(false);
-	if ((token==NULL)||(token->getType()!=Parsing::ITokenizer::DELIMITER)||(strcmp(token->getContent(),"[")!=0)){
-		//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
-		printf("Se esperaba \"[\" pero vino \"%s\".\n",token->getContent());		
-	}else{
-		//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
-		printf("Se encontró \"[\".\n");
+	try{
+		createStatement->setFileType(parseFileType());
+	}catch(ParserException pe){
+		delete createStatement; 
+		throw ParserException();
 	}
-	*/
-	
 	//PARSEO LOS CAMPOS
-	this->parseFields(createStatement);	
-		
-	DEBUG("Fin parseo del create statement\n");
-//	this->_tokenizer->moveToNextLine(true);
+	try{
+		//createStatement->setFileType(parseFileType());
+		this->parseFields(createStatement);
+	}catch(ParserException pe){
+		delete createStatement; 
+		throw ParserException();
+	}
+	// PARSEO EL ";"
+	token =	_tokenizer->getNextToken(false);
+	if ((token==NULL)||(token->getType()!=Parsing::ITokenizer::DELIMITER)||(strcmp(token->getContent(),";")!=0)){
+		delete createStatement; 
+		throw ParserException();	
+	}
+	//PARSEO LOS PARAMETROS
+	try{
+		//createStatement->setFileType(parseFileType());
+		this->parseParameters(createStatement);
+	}catch(ParserException pe){
+		delete createStatement; 
+		throw ParserException();
+	}
+	// PARSEO EL ";" o "\n"
+	token =	_tokenizer->getNextToken(false);
+	if ((token==NULL)||(token->getType()!=Parsing::ITokenizer::DELIMITER)||!((strcmp(token->getContent(),";")!=0)||(strcmp(token->getContent(),"\n")!=0))){
+		delete createStatement; 
+		throw ParserException();	
+	}else{
+		if (strcmp(token->getContent(),"\n")==0){
+			return createStatement;			
+		}
+	}
+	//PARSEO EL TIPO DE INDICE
+	try{
+		this->parseIndexes(createStatement);
+	}catch(ParserException pe){
+		delete createStatement; 
+		throw ParserException();
+	}
 	return createStatement;
 }
 
@@ -243,7 +360,6 @@ Statement* StatementParser::parseUpdateStatement(){
 	Statement* statement=NULL;
 	Parsing::Token* token =	NULL;
 	// PARSEO NOMBRE DEL ARCHIVO DE DATOS
-	//printf("PARSEO NOMBRE DEL ARCHIVO DE DATOS\n");
 	token =	_tokenizer->getNextToken(true);
 	if((token==NULL) || (token->getType()!=Parsing::ITokenizer::STRING) || (strlen(token->getContent())==0)){
 		//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
@@ -256,25 +372,15 @@ Statement* StatementParser::parseUpdateStatement(){
 
 Statement* StatementParser::getNext() {
 	Parsing::Token* token =	_tokenizer->getNextToken(false);
-	//printf("Statement* StatementParser::getNext(){\n.");
-	//printf("Primer token: %s\n.",token->getContent());
-	DEBUG("Comienzo del parseo de una instruccion.");
 	if (token==NULL){
-		//printf("Primer token null\n.");
-		//TODO: archivo vacio
-		throw new FileManager::IOException();
+		return NULL;
 	}
-	//printf("VALIDA EL COMIENZO DEL STATEMENT\n.");
 	try{
 		// VALIDA EL COMIENZO DEL STATEMENT
 		if ((token->getType()!=_tokenizer->KEYWORD)){
-			
-			//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
-			//printf("Se esperaba KEYWORD pero vino: %i\n. valor: \"%s\".\n",token->getType(),token->getContent());
 			DEBUG("Se esperaba KEYWORD");
 			return NULL;
 		}else{
-			//printf("Identificando el tipo de statement.\n");
 			// IDENTIFICA EL TIPO DE STATEMENT Y DERIVO AL METODO CORRECTO
 			if (strcmp(token->getContent(),"CREAR")==0){
 				DEBUG("Inicio del parseo de CREAR.\n");

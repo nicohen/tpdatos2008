@@ -32,7 +32,9 @@ private:
 	
 	int parseFileType();
 	void parseFields(CreateStatement* statement);
-	StructureType* parseDataType();
+	void parseParameters(CreateStatement* statement);
+	void parseIndexes(CreateStatement* statement);
+	StructureType* parseStructuredType();
 	Statement* parseCreateStatement();
 	Statement* parseInsertionStatement();
 	Statement* parseQueryStatement();
