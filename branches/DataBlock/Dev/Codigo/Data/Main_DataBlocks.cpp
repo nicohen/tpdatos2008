@@ -89,8 +89,10 @@ void readFile(char* filename){
 */
 
 void test_01(TestCase* test){
-	test->Assert_True(false);
+	test->Assert_True_m(false,"Errprrrr");
 	test->Assert_True(true);
+	test->Assert_streq("a","a");
+	test->Assert_streq("b","a");
 }
 
 int main(int argc, char* argv[]){

@@ -17,6 +17,9 @@ public:
 	
 	//Asserts
 	void Assert_True(bool expr);
+	void Assert_True_m(bool expr,char* msg);
+	void Assert_streq(char* expected, char* actual);
+
 
 	void printTestStart();
 	void printTestEnd();	

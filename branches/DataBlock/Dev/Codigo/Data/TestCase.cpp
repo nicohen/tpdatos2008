@@ -46,3 +46,13 @@ bool TestCase::getResult(){
 void TestCase::Assert_True(bool expr){
 	this->reportAssertion(new TrueAssertion(expr));
 }
+
+
+void TestCase::Assert_True_m(bool expr,char* msg){
+	this->reportAssertion(new TrueAssertion(expr,msg));
+}
+
+void TestCase::Assert_streq(char* expected, char* actual){
+	this->reportAssertion(new EqualsAssertion(expected,actual));
+}
+	
