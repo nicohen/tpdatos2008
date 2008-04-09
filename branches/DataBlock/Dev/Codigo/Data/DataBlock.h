@@ -5,10 +5,13 @@
 class DataBlock{
 private:
 	char* _filename;
+	int _size;
 public:
 	//Constructores y destructores 	
-	DataBlock(char* filename);	
+	DataBlock(char* filename,int size);	
 	virtual ~DataBlock();
 
+
+	void allocateSpace();
 };
 #endif /*DataBlock*/

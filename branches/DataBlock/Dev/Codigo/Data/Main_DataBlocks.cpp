@@ -8,6 +8,7 @@
 #include "TrueAssertion.h"
 #include "DataBlock.h"
 
+#include <stdio.h>
 
 using namespace std;
 
@@ -27,7 +28,7 @@ void writeRecord(fstream* file, char* content){
 
 
 void writeTestFile(char* filename){
-	fstream file (filename,ios::trunc|ios::in|ios::binary|ios::out);	
+	fstream file (filename,ios::trunc|ios::in|ios::binary|ios::out);
 	if (file.is_open())
 	{
 		cout << "File was opened\n";
@@ -97,12 +98,22 @@ void test_01(TestCase* test){
 	test->Assert_streq("b","a");
 }*/
 
+bool hadSuccessRemoving(int removeResponse){
+	return removeResponse==0;
+}
+
 void Test_DateBlock(TestCase* test){
+	char* filename="C:\\temp\\block.bin";
 	DataBlock* block=NULL;
-	block=new DataBlock("C:\\temp\\block.bin");
-
-
+	
+	remove(filename);	
+	
+	block=new DataBlock(filename,512);
+	block->allocateSpace();
 	delete block;
+	
+	
+	test->Assert_True_m(hadSuccessRemoving(remove(filename)),"El DataBlock no creó ningun archivo");
 }
 
 int main(int argc, char* argv[]){
