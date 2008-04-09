@@ -28,3 +28,34 @@ void DataBlock::allocateSpace(){
 	file.close();
 	delete[] buffer;	
 }
+
+void DataBlock::writeRecord(char* recordContent){
+	char recordCount=0;//Refactor here -->"char"
+
+	fstream file (this->_filename,ios::in|ios::out|ios::binary);	
+	if(file.is_open()){
+		
+		/*
+		recordCount=(char)4;
+		file.write(&recordCount,1);
+		*/
+		
+		file.seekg(0,ios::beg);
+		file.read(&recordCount,1);//Refactor here -->"1"
+		recordCount++;
+		//recordCount=(char)4;
+		file.seekg(0,ios::beg);
+		file.write(&recordCount,1);
+
+
+		/*
+		file->seekg(0,ios::beg);
+		file->read(&recordCount,1);//Refactor here -->"1"
+
+		file->write(&length,1);
+		file->write(content,strlen(content));
+		*/
+	}	
+	file.close();
+}
+

@@ -102,13 +102,14 @@ bool hadSuccessRemoving(int removeResponse){
 	return removeResponse==0;
 }
 
+char* filename="C:\\temp\\block.bin";
+int blockSize=256;
+
 void Test_DateBlock(TestCase* test){
-	char* filename="C:\\temp\\block.bin";
 	DataBlock* block=NULL;
 	char current='\0';
 	int nonSpacesFound=0;
-	int blockSize=2;
-	//remove(filename);	
+	remove(filename);	
 	
 	block=new DataBlock(filename,blockSize);
 	block->allocateSpace();
@@ -132,15 +133,65 @@ void Test_DateBlock(TestCase* test){
 		file.close();
 	}
 	test->Assert_True_m(hadSuccessRemoving(remove(filename)),"El DataBlock no creó ningun archivo");
+	remove(filename);
+}
+
+
+
+
+/*
+Escribe el contenido en el archivo con el formato adecuado
+*/
+/*void writeRecord(fstream* file, char* content){
+	char length=0;
+	length=(char)strlen(content);	
+	file->write(&length,1);
+	file->write(content,strlen(content));
+}
+*/
+void Test_Block_WritesRecordCountAtTheBeginingOfTheFile(TestCase* test){
+	DataBlock* block=NULL;
+	char* recordContent=0;
+	char recordCount='\0';
+	
+	remove(filename);
+
+	block=new DataBlock(filename,blockSize);
+	block->allocateSpace();
+	delete block;
+	
+	block=new DataBlock(filename,blockSize);
+	block->writeRecord("Este es el primer registro");
+	block->writeRecord("Este es el segundo registro");
+	block->writeRecord("Este es el tercer registro");
+	block->writeRecord("Este es el cuarto registro");
+	block->writeRecord("Este es el quinto registro");
+	delete block;
+
+	fstream file (filename,ios::in|ios::binary);
+	if(file.is_open()){		
+		file.seekg (0, ios::beg);
+		file.read(&recordCount,1);
+		test->Assert_True_m((int)recordCount==5,"Se esperaban 5 registros");
+		file.close();
+	}else{
+		test->Assert_True_m(false,"No se pudo abrir el archivo para testear");
+	}
+
+	//remove(filename);
 }
 
 int main(int argc, char* argv[]){
 	int failedTests=0;
 	
 	
-	TestCase* test01=new TestCase("Test_DateBlock",&failedTests);	
+	TestCase* test01=new TestCase("Allocate Block Space",&failedTests);	
 	Test_DateBlock(test01);
 	delete test01;
+
+	TestCase* test02=new TestCase("Test_Block_WritesRecordCountAtTheBeginingOfTheFile",&failedTests);	
+	Test_Block_WritesRecordCountAtTheBeginingOfTheFile(test02);
+	delete test02;
 	
 	
 	printf("::::::::::::::::::::::::::::::::::\n");
