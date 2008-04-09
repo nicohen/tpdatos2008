@@ -41,3 +41,8 @@ void TestCase::reportAssertion(Assertion* assertion ){
 bool TestCase::getResult(){
 	return this->_rest;		
 }
+
+
+void TestCase::Assert_True(bool expr){
+	this->reportAssertion(new TrueAssertion(expr));
+}

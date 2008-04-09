@@ -5,6 +5,7 @@
 #include <iostream>
 #include <fstream>
 #include "TestCase.h"
+#include "TrueAssertion.h"
 
 using namespace std;
 
@@ -88,7 +89,8 @@ void readFile(char* filename){
 */
 
 void test_01(TestCase* test){
-
+	test->Assert_True(false);
+	test->Assert_True(true);
 }
 
 int main(int argc, char* argv[]){
