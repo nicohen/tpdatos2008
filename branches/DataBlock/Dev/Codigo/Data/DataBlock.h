@@ -6,6 +6,7 @@ class DataBlock{
 private:
 	char* _filename;
 	int _size;
+	char* _buffer;
 public:
 	//Constructores y destructores 	
 	DataBlock(char* filename,int size);	
@@ -14,6 +15,7 @@ public:
 
 	void allocateSpace();
 	void writeRecord(char* recordContent);
+	void update();
 	void flush();
 };
 #endif /*DataBlock*/

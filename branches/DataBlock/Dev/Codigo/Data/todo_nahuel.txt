@@ -1,5 +1,5 @@
-Crear un bloque de tamaño N en un archivo dado
-Al escribir se actualiza la cantidad de registros escritos al principipo
+>>--Done --> Crear un bloque de tamaño N en un archivo dado
+>>--Done --> Al escribir se actualiza la cantidad de registros escritos al principipo
 Escribir bytes(registros) en bloque
 Leer bytes(registros) en bloque
 Parametrizar tamaños
@@ -10,4 +10,5 @@ Cuando se elimina un registro, el espacio queda libre. Hay que leer hasta el fin
 generalizar el tamaño del RecordCount dentro de un bloque
 validar que no se quiera meter un registro mas grande que Size-Tamaño de RecordCount
 validar que no se quiera meter un registro mas grande que el espacio libre - Tamaño de RecordLenght
-IMP: hacer todo en memoria y poner un flush()
+>>--Done --> IMP: hacer todo en memoria y poner un flush()
+cambiar allocateSpace por clear

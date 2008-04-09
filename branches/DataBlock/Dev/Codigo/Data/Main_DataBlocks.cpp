@@ -102,10 +102,12 @@ bool hadSuccessRemoving(int removeResponse){
 	return removeResponse==0;
 }
 
-char* filename="C:\\temp\\block.bin";
+
 int blockSize=256;
+bool REMOVE_FILES=false;
 
 void Test_DateBlock(TestCase* test){
+	char* filename="C:\\temp\\Test_DateBlock.bin";
 	DataBlock* block=NULL;
 	char current='\0';
 	int nonSpacesFound=0;
@@ -133,8 +135,11 @@ void Test_DateBlock(TestCase* test){
 		test->Assert_True_m(nonSpacesFound==0,"El DataBlock dejó algunos espacios no vacios");
 		file.close();
 	}
-	test->Assert_True_m(hadSuccessRemoving(remove(filename)),"El DataBlock no creó ningun archivo");
-	remove(filename);
+	if(REMOVE_FILES){
+		test->Assert_True_m(hadSuccessRemoving(remove(filename)),"El DataBlock no creó ningun archivo");
+		remove(filename);
+	}
+
 }
 
 
@@ -152,6 +157,7 @@ Escribe el contenido en el archivo con el formato adecuado
 */
 
 void Test_Block_WritesRecordCountAtTheBeginingOfTheFile(TestCase* test){
+	char* filename="C:\\temp\\Test_Block_WritesRecordCountAtTheBeginingOfTheFile.bin";
 	DataBlock* block=NULL;
 	char* recordContent=0;
 	char recordCount='\0';
@@ -175,29 +181,23 @@ void Test_Block_WritesRecordCountAtTheBeginingOfTheFile(TestCase* test){
 	block->writeRecord("Este es el tercer registro");
 	block->flush();
 	delete block;
-	block=new DataBlock(filename,blockSize);
-	block->writeRecord("Este es el cuarto registro");
-	block->flush();
-	delete block;
-	block=new DataBlock(filename,blockSize);
-	block->writeRecord("Este es el quinto registro");
-	block->flush();
-	delete block;
 
 	fstream file (filename,ios::in|ios::binary);
 	if(file.is_open()){		
 		file.seekg (0, ios::beg);
 		file.read(&recordCount,1);
-		test->Assert_True_m((int)recordCount==5,"Se esperaban 5 registros");
+		test->Assert_True_m((int)recordCount==3,"Se esperaban 3 registros");
 		file.close();
 	}else{
 		test->Assert_True_m(false,"No se pudo abrir el archivo para testear");
 	}
-
-	remove(filename);
+	if(REMOVE_FILES){
+		remove(filename);
+	}
 }
 
 void Test_Block_DoesNotMakesEfectiveUntilTheFlushMethodIsCalled(TestCase* test){
+	char* filename="C:\\temp\\Test_Block_DoesNotMakesEfectiveUntilTheFlushMethodIsCalled.bin";
 	DataBlock* block=NULL;
 	fstream* file =NULL;
 	remove(filename);
@@ -223,8 +223,9 @@ void Test_Block_DoesNotMakesEfectiveUntilTheFlushMethodIsCalled(TestCase* test){
 	delete file;
 	delete block;
 
-
-	remove(filename);
+	if(REMOVE_FILES){
+		remove(filename);
+	}
 }
 
 int main(int argc, char* argv[]){
