@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include <iostream>
 #include <fstream>
+#include "TestCase.h"
 
 using namespace std;
 
@@ -76,23 +77,38 @@ void readFile(char* filename){
 	return;
 }
 
-int main(int argc, char* argv[]){
+/*int main(int argc, char* argv[]){
 
 	writeTestFile("c:/temp/example2.bin");
 	readFile("c:/temp/example2.bin");
-	/*
-	fstream file ("c:/temp/example2.bin",ios::trunc|ios::in|ios::binary|ios::out);	
-	if (file.is_open())
-	{
-		cout << "The file was opened";
-		file.seekg(0);
-		writeRecord(&file,"HolaMundo2");
-		file.close();	
 
-		delete[] memblock;
-	}
-	else cout << "Unable to open file";
+	system("pause");
+	return 0;
+}
 */
+
+void test_01(TestCase* test){
+
+}
+
+int main(int argc, char* argv[]){
+	int failedTests=0;
+	
+	
+	TestCase* test01=new TestCase("test_01",&failedTests);	
+	test_01(test01);
+	delete test01;
+	
+	
+	printf(":::Tests:::.......................\n");
+	if(failedTests>0){
+		printf("!!!!!!FAILED %i TEST/S !!!!!!!!!!\n",failedTests);
+	}else{
+		printf("Ok\n");		
+	}
+
+	printf("..................................\n");
+
 	system("pause");
 	return 0;
 }
