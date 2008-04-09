@@ -105,14 +105,32 @@ bool hadSuccessRemoving(int removeResponse){
 void Test_DateBlock(TestCase* test){
 	char* filename="C:\\temp\\block.bin";
 	DataBlock* block=NULL;
+	char current='\0';
+	int nonSpacesFound=0;
+	int blockSize=2;
+	//remove(filename);	
 	
-	remove(filename);	
-	
-	block=new DataBlock(filename,512);
+	block=new DataBlock(filename,blockSize);
 	block->allocateSpace();
 	delete block;
-	
-	
+		
+	//test->Assert_True_m(hadSuccessRemoving(remove(filename)),"El DataBlock no creó ningun archivo");
+	fstream file (filename,ios::in|ios::binary);
+	if(file.is_open()){
+		file.seekg (0, ios::end);
+		test->Assert_True_m(blockSize==file.tellg(),"El DataBlock creo un archivo de tamaño distinto a 512");
+		
+		file.seekg (0, ios::beg);
+		for(int i=0;i<blockSize;i++){
+			file.seekg(i);
+			file.read(&current,1);
+			if(current!='\0'){
+				nonSpacesFound++;
+			}
+		}
+		test->Assert_True_m(nonSpacesFound==0,"El DataBlock dejó algunos espacios no vacios");
+		file.close();
+	}
 	test->Assert_True_m(hadSuccessRemoving(remove(filename)),"El DataBlock no creó ningun archivo");
 }
 
@@ -125,14 +143,15 @@ int main(int argc, char* argv[]){
 	delete test01;
 	
 	
-	printf(":::Tests:::.......................\n");
+	printf("::::::::::::::::::::::::::::::::::\n");
+	printf(":::Tests::::::::::::::::::::::::::\n");
+	printf("::::::::::::::::::::::::::::::::::\n");
 	if(failedTests>0){
 		printf("!!!!!!FAILED %i TEST/S !!!!!!!!!!\n",failedTests);
 	}else{
 		printf("Ok\n");		
 	}
-
-	printf("..................................\n");
+	printf("::::::::::::::::::::::::::::::::::\n");
 
 	system("pause");
 	return 0;

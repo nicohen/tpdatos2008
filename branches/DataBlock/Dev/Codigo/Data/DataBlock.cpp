@@ -16,8 +16,15 @@ DataBlock::~DataBlock(){
 
 
 void DataBlock::allocateSpace(){
+	char* buffer = NULL;
 	fstream file (this->_filename,ios::trunc|ios::in|ios::binary|ios::out);
-	file.clear();
+	file.seekg (0, ios::beg);
+
+	buffer=new char [this->_size];
+	for(int i=0;i<this->_size;i++){
+		*(buffer+i)='\0';
+	}
+	file.write(buffer,this->_size);
 	file.close();
-	
+	delete[] buffer;	
 }
