@@ -4,10 +4,10 @@
 
 class DataBlock{
 private:
-
+	char* _filename;
 public:
 	//Constructores y destructores 	
-	DataBlock();	
+	DataBlock(char* filename);	
 	virtual ~DataBlock();
 
 };

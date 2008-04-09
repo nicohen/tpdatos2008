@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include "DataBlock.h"
 
-DataBlock::DataBlock(){
+DataBlock::DataBlock(char* filename){
+	this->_filename=filename;
 }
 	
 DataBlock::~DataBlock(){

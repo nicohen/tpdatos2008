@@ -99,7 +99,9 @@ void test_01(TestCase* test){
 
 void Test_DateBlock(TestCase* test){
 	DataBlock* block=NULL;
-	block=new DataBlock();
+	block=new DataBlock("C:\\temp\\block.bin");
+
+
 	delete block;
 }
 
