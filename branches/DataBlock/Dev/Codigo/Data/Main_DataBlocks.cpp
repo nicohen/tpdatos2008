@@ -6,6 +6,8 @@
 #include <fstream>
 #include "TestCase.h"
 #include "TrueAssertion.h"
+#include "DataBlock.h"
+
 
 using namespace std;
 
@@ -87,20 +89,26 @@ void readFile(char* filename){
 	return 0;
 }
 */
-
+/*
 void test_01(TestCase* test){
 	test->Assert_True_m(false,"Errprrrr");
 	test->Assert_True(true);
 	test->Assert_streq("a","a");
 	test->Assert_streq("b","a");
+}*/
+
+void Test_DateBlock(TestCase* test){
+	DataBlock* block=NULL;
+	block=new DataBlock();
+	delete block;
 }
 
 int main(int argc, char* argv[]){
 	int failedTests=0;
 	
 	
-	TestCase* test01=new TestCase("test_01",&failedTests);	
-	test_01(test01);
+	TestCase* test01=new TestCase("Test_DateBlock",&failedTests);	
+	Test_DateBlock(test01);
 	delete test01;
 	
 	
