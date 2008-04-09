@@ -22,7 +22,7 @@ void DEBUG(char* words){
 bool isNumeric(char* word){
 	int i=0;
 	int size =strlen(word);
-	while ((i<size)&& ('0'<word[i])&&(word[i]<'9')){
+	while ((i<size)&& ('0'<=word[i])&&(word[i]<='9')){
 		i++;
 	}
 	return i==size;
