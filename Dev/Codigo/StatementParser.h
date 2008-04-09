@@ -6,6 +6,7 @@
 #include "CreateStatement.h"
 #include "OutPutter.h"
 #include "StructureType.h"
+#include "StructureValue.h"
 #include "Field.h"
 #include "DataType.h"
 #include "Token.h"
@@ -32,9 +33,11 @@ private:
 	
 	int parseFileType();
 	void parseFields(CreateStatement* statement);
+	void parseValues(InsertionStatement* statement);
 	void parseParameters(CreateStatement* statement);
-	void parseIndexes(CreateStatement* statement);
+	void parseIndex(CreateStatement* statement);
 	StructureType* parseStructuredType();
+	StructureValue* parseStructuredValue();
 	Statement* parseCreateStatement();
 	Statement* parseInsertionStatement();
 	Statement* parseQueryStatement();

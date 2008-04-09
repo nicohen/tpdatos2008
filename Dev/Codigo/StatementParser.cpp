@@ -1,6 +1,8 @@
 #include "StatementParser.h"
 #include "IOException.h"
 #include "ParserException.h"
+#include "StringValue.h"
+#include "IntValue.h"
 
 using namespace Parsing;
 StatementParser::StatementParser(Parsing::ITokenizer* tokenizer,OutPutter* outputter){
@@ -65,27 +67,50 @@ void StatementParser::parseParameters(CreateStatement* statement){
 		throw ParserException();
 	}		
 	token =	_tokenizer->getNextToken(false);
-	while ((token!=NULL) && (strcmp(token->getContent(),"]")!=0)){
-		if (token->getType()!=Parsing::ITokenizer::NUMBER){
-			throw ParserException();	
-		}else{
-			//ACER ALGO ACA.
-			token =	_tokenizer->getNextToken(false);
-			if ((token==NULL) || (token->getType()!=Parsing::ITokenizer::DELIMITER)){
-				throw ParserException();
-			}else{
-				if (strcmp(token->getContent(),"]")==0){
-					break;
-				}else if (strcmp(token->getContent(),",")!=0){
-					throw ParserException();
-				}
-			}
-		}
-		token =	_tokenizer->getNextToken(false);
+	if (token->getType()!=Parsing::ITokenizer::NUMBER){
+		throw ParserException();	
+	}
+	statement->setDataBlockSize(atol(token->getContent()));
+	token =	_tokenizer->getNextToken(false);
+	if ((token==NULL) || (token->getType()!=Parsing::ITokenizer::DELIMITER)){
+		throw ParserException();
+	}
+	if (strcmp(token->getContent(),",")!=0){
+		throw ParserException();
+	}
+	token =	_tokenizer->getNextToken(false);
+	if (token->getType()!=Parsing::ITokenizer::NUMBER){
+		throw ParserException();	
+	}
+	statement->setIndexSize(atol(token->getContent()));
+	token =	_tokenizer->getNextToken(false);
+	if ((token==NULL) || (token->getType()!=Parsing::ITokenizer::DELIMITER)){
+		throw ParserException();
+	}
+	if (strcmp(token->getContent(),"]")!=0){
+		throw ParserException();
 	}
 }
 
-void StatementParser::parseIndexes(CreateStatement* statement){
+void StatementParser::parseIndex(CreateStatement* statement){
+	Parsing::Token* token =	NULL;
+	SecondaryIndex* sIndex = new SecondaryIndex();
+	// PARSEO EL CORCHETE
+	token =	_tokenizer->getNextToken(false);
+	if ((token==NULL)||(token->getType()!=Parsing::ITokenizer::DELIMITER)||(strcmp(token->getContent(),"[")!=0)){
+		throw ParserException();
+	}
+	token =	_tokenizer->getNextToken(false);
+	if ((token==NULL) || (token->getType()!=Parsing::ITokenizer::NUMBER)){
+		throw ParserException();
+	}else{
+		//HACER ALGO
+	}
+	token =	_tokenizer->getNextToken(false);
+	if ((token==NULL)||(token->getType()!=Parsing::ITokenizer::DELIMITER)||(strcmp(token->getContent(),"]")!=0)){
+		throw ParserException();
+	}
+	statement->setSecondaryIndex(sIndex);		
 }
 
 void StatementParser::parseFields(CreateStatement* statement){
@@ -194,7 +219,7 @@ int StatementParser::parseFileType(){
 	int fileType;
 	Parsing::Token* token =	_tokenizer->getNextToken(false);
 	if ((token==NULL) || (token->getType()!=Parsing::ITokenizer::KEYWORD)){
-		//throw ParserException();
+		throw ParserException();
 	}else{
 		if (strcmp(token->getContent(),"secuencial")==0){ 
 			fileType=Statement::SECUENCIAL;
@@ -208,9 +233,121 @@ int StatementParser::parseFileType(){
 			fileType=Statement::OTHER;
 		}
 	}
-	//TODO: llamar al debug
-	DEBUG("Fin de parseo del tipo de archivo.\n");
 	return fileType;
+}
+
+StructureValue* StatementParser::parseStructuredValue(){
+	StructureValue* structuredValue= new StructureValue();
+	DataValue* dValue;
+	Token* token= _tokenizer->getNextToken(true);
+	while ((token!=NULL)&&((token->getType()!=Parsing::ITokenizer::DELIMITER)&&(strcmp(token->getContent(),"|")!=0))){		
+		if ((token==NULL)||!((token->getType()!=Parsing::ITokenizer::NUMBER)||(token->getType()!=Parsing::ITokenizer::STRING))){
+			delete structuredValue;
+			throw ParserException();
+		}else{
+			if (token->getType()==Parsing::ITokenizer::STRING){
+				dValue= new StringValue(token->getContent());
+				structuredValue->addValue(dValue);
+				token =	_tokenizer->getNextToken(false);
+				if ((token==NULL) || (token->getType()!=Parsing::ITokenizer::DELIMITER)){
+					delete structuredValue;
+					throw ParserException();
+				}else{
+					if (strcmp(token->getContent(),"|")==0){
+						break;
+					}else if (strcmp(token->getContent(),",")!=0){
+						delete structuredValue;
+						throw ParserException();
+					}
+				}
+			}else if (token->getType()==Parsing::ITokenizer::NUMBER){
+				dValue= new IntValue(atol(token->getContent()));
+				structuredValue->addValue(dValue);
+				token =	_tokenizer->getNextToken(false);
+				if ((token==NULL) || (token->getType()!=Parsing::ITokenizer::DELIMITER)){
+					delete structuredValue;
+					throw ParserException();
+				}else{
+					if (strcmp(token->getContent(),"|")==0){
+						break;
+					}else if (strcmp(token->getContent(),",")!=0){
+						delete structuredValue;
+						throw ParserException();
+					}
+				}			
+			}else{
+				throw ParserException();
+			}
+			token =	_tokenizer->getNextToken(false);
+		}
+	}
+	return structuredValue;
+}
+
+void StatementParser::parseValues(InsertionStatement* statement){
+	DataValue* dValue;
+	Parsing::Token* token =	NULL;
+	// PARSEO EL CORCHETE
+	token =	_tokenizer->getNextToken(false);
+	if ((token==NULL)||(token->getType()!=Parsing::ITokenizer::DELIMITER)||(strcmp(token->getContent(),"[")!=0)){
+		throw ParserException();
+	}
+	token =	_tokenizer->getNextToken(false);
+	while ((token!=NULL)&&(strcmp(token->getContent(),"]")!=0)){
+		if((token->getType()!=Parsing::ITokenizer::NUMBER)&&(token->getType()!=Parsing::ITokenizer::STRING)){
+			if (strcmp(token->getContent(),"|")==0){
+				StructureValue* sValue;
+				try{
+				sValue= parseStructuredValue();
+				}catch(ParserException pe){
+					delete sValue;
+					throw pe;
+				}
+				statement->addValue(sValue);
+				token =	_tokenizer->getNextToken(false);
+				if ((token==NULL) || (token->getType()!=Parsing::ITokenizer::DELIMITER)){
+					delete sValue;
+					throw ParserException();
+				}else{
+					 if (strcmp(token->getContent(),"]")==0){
+						break;
+					}else if (strcmp(token->getContent(),",")!=0){
+						throw ParserException();
+					}					
+				}
+			}
+		}else{
+			if (token->getType()==Parsing::ITokenizer::STRING){
+				dValue= new StringValue(token->getContent());
+				statement->addValue(dValue);
+				token =	_tokenizer->getNextToken(false);
+				if ((token==NULL) || (token->getType()!=Parsing::ITokenizer::DELIMITER)){
+					throw ParserException();
+				}else{
+					if (strcmp(token->getContent(),"]")==0){
+						break;
+					}else if (strcmp(token->getContent(),",")!=0){
+						throw ParserException();
+					}
+				}
+			}else if (token->getType()==Parsing::ITokenizer::NUMBER){
+				dValue= new IntValue(atol(token->getContent()));
+				token =	_tokenizer->getNextToken(false);
+				if ((token==NULL) || (token->getType()!=Parsing::ITokenizer::DELIMITER)){
+					throw ParserException();
+				}else{
+					if (strcmp(token->getContent(),"]")==0){
+						break;
+					}else if (strcmp(token->getContent(),",")!=0){
+						throw ParserException();
+					}
+				}
+			}else{
+				throw ParserException();
+			}
+		token =	_tokenizer->getNextToken(false);
+		}	
+	}
 }
 
 Statement* StatementParser::parseCreateStatement(){
@@ -242,7 +379,6 @@ Statement* StatementParser::parseCreateStatement(){
 	}
 	//PARSEO LOS CAMPOS
 	try{
-		//createStatement->setFileType(parseFileType());
 		this->parseFields(createStatement);
 	}catch(ParserException pe){
 		delete createStatement; 
@@ -256,7 +392,6 @@ Statement* StatementParser::parseCreateStatement(){
 	}
 	//PARSEO LOS PARAMETROS
 	try{
-		//createStatement->setFileType(parseFileType());
 		this->parseParameters(createStatement);
 	}catch(ParserException pe){
 		delete createStatement; 
@@ -274,7 +409,7 @@ Statement* StatementParser::parseCreateStatement(){
 	}
 	//PARSEO EL TIPO DE INDICE
 	try{
-		this->parseIndexes(createStatement);
+		this->parseIndex(createStatement);
 	}catch(ParserException pe){
 		delete createStatement; 
 		throw ParserException();
@@ -283,15 +418,31 @@ Statement* StatementParser::parseCreateStatement(){
 }
 
 Statement* StatementParser::parseInsertionStatement(){
-	Parsing::Token* token =	NULL;
-	Statement* statement=NULL;
+	InsertionStatement* statement=NULL;
+	// PARSEO ESPACIO
+	Parsing::Token* token =	_tokenizer->getNextToken(false);
+	if ((token==NULL)||(strcmp(token->getContent()," ")!=0)){
+		throw ParserException();
+	}
 	// PARSEO NOMBRE DEL ARCHIVO DE DATOS
 	token =	_tokenizer->getNextToken(true);
 	if((token==NULL) || (token->getType()!=Parsing::ITokenizer::STRING) || (strlen(token->getContent())==0)){
-		//TODO: loggear un error ERROR: "SE ESPERABA KEYWORD"
-		DEBUG("Se esperaba el nombre del archivo de datos (literal de cadena)");
+		throw ParserException();
 	}else{
-		statement=new InsertionStatement(token->getContent());		
+		statement=new InsertionStatement(token->getContent());
+	}
+	// PARSEO EL ";"
+	token =	_tokenizer->getNextToken(false);
+	if ((token==NULL)||(token->getType()!=Parsing::ITokenizer::DELIMITER)||(strcmp(token->getContent(),";")!=0)){
+		delete statement; 
+		throw ParserException();	
+	}
+	// PARCEO LOS VALORES
+	try{
+		this->parseValues(statement);
+	}catch(ParserException pe){
+		delete statement; 
+		throw ParserException();
 	}
 	return statement;
 }
