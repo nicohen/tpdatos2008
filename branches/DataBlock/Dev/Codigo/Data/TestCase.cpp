@@ -27,6 +27,7 @@ void TestCase::printTestEnd(){
 	}	
 }
 
+
 void TestCase::reportAssertion(Assertion* assertion ){
 	if(assertion->evaluate()==false){
 		(*_failedTests)++;
@@ -52,7 +53,11 @@ void TestCase::Assert_True_m(bool expr,char* msg){
 	this->reportAssertion(new TrueAssertion(expr,msg));
 }
 
+
 void TestCase::Assert_streq(char* expected, char* actual){
 	this->reportAssertion(new EqualsAssertion(expected,actual));
 }
-	
+
+void TestCase::Assert_inteq(int expected, int actual){
+	this->reportAssertion(new EqualsIntAssertion(expected,actual));
+}

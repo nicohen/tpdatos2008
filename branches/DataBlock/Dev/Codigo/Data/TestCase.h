@@ -4,6 +4,7 @@
 #include "Assertion.h"
 #include "TrueAssertion.h"
 #include "EqualsAssertion.h"
+#include "EqualsIntAssertion.h"
 
 class TestCase{
 private:
@@ -19,7 +20,7 @@ public:
 	void Assert_True(bool expr);
 	void Assert_True_m(bool expr,char* msg);
 	void Assert_streq(char* expected, char* actual);
-
+	void Assert_inteq(int expected, int actual);
 
 	void printTestStart();
 	void printTestEnd();	
