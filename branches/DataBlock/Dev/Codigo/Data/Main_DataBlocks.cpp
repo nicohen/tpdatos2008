@@ -224,7 +224,7 @@ void Test_Block_DoesNotMakesEfectiveUntilTheFlushMethodIsCalled(TestCase* test){
 	}
 }
 
-int main(int argc, char* argv[]){
+int _tmain(int argc, char* argv[]){
 	int failedTests=0;
 	
 	
