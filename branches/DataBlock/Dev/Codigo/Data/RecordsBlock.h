@@ -1,4 +1,5 @@
-#pragma once
+#ifndef RecordsBlock_H_
+#define RecordsBlock_H_
 
 class RecordsBlock
 {
@@ -19,3 +20,5 @@ public:
 	int getFreeSpace();
 
 };
+
+#endif /*RecordsBlock_H_*/

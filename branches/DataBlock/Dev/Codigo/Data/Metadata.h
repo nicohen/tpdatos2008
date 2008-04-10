@@ -1,4 +1,5 @@
-#pragma once
+#ifndef Metadata_H_
+#define Metadata_H_
 
 class Metadata
 {
@@ -18,3 +19,5 @@ public:
 
 
 };
+
+#endif /*Metadata_H_*/

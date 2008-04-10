@@ -1,4 +1,5 @@
-#pragma once
+#ifndef BlockStructuredFile_H_
+#define BlockStructuredFile_H_
 
 class BlockStructuredFile
 {
@@ -21,3 +22,5 @@ public:
 	int getFirstFreeBlockNumber();
 	virtual ~BlockStructuredFile(void);
 };
+
+#endif /*BlockStructuredFile_H_*/

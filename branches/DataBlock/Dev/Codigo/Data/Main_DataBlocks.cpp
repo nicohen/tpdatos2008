@@ -7,7 +7,7 @@
 #include "TestCase.h"
 #include "TrueAssertion.h"
 #include "DataBlock.h"
-
+#include "TestSuiteResult.h"
 #include <stdio.h>
 
 using namespace std;
@@ -224,7 +224,7 @@ void Test_Block_DoesNotMakesEfectiveUntilTheFlushMethodIsCalled(TestCase* test){
 	}
 }
 
-int _tmain(int argc, char* argv[]){
+/*int _tmain(int argc, char* argv[]){
 	int failedTests=0;
 	
 	
@@ -241,16 +241,8 @@ int _tmain(int argc, char* argv[]){
 	delete test03;
 	
 	
-	printf("::::::::::::::::::::::::::::::::::\n");
-	printf(":::Tests::::::::::::::::::::::::::\n");
-	printf("::::::::::::::::::::::::::::::::::\n");
-	if(failedTests>0){
-		printf("!!!!!!FAILED %i TEST/S !!!!!!!!!!\n",failedTests);
-	}else{
-		printf("Ok\n");		
-	}
-	printf("::::::::::::::::::::::::::::::::::\n");
+	delete new TestSuiteResult(failedTests);
 
 	system("pause");
 	return 0;
-}
+}*/
