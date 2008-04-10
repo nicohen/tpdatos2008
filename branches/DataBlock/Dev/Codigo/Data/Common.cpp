@@ -13,3 +13,8 @@ char* cloneStr(char* source){
 	memcpy(clon,source,len+1);
 	return clon; 
 }
+
+
+bool hadSuccessRemoving(int removeResponse){
+	return removeResponse==0;
+}

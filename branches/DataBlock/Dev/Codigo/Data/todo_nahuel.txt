@@ -12,3 +12,19 @@ validar que no se quiera meter un registro mas grande que Size-Tamaño de RecordC
 validar que no se quiera meter un registro mas grande que el espacio libre - Tamaño de RecordLenght
 >>--Done --> IMP: hacer todo en memoria y poner un flush()
 >>--Done --> cambiar allocateSpace por clear
+
+2008_04_10
+-------------
+
+static BlockStructuredFile* Load(char* filename);
+static BlockStructuredFile* Create(char* filename,int blockSize);
+
+char* getBlock(int blockNumber);
+void updateBlock(int blockNumber,char* content);
+void appendBlock(char* content);
+void removeBlock(int blockNumber);	
+void moveBlock(int currentBlockNumber,int destBlockNumber);	
+int getBlockSize();
+int getBlockCount();
+int getFirstFreeBlockNumber();
+virtual ~BlockStructuredFile(void);

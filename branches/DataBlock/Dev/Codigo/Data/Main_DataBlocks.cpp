@@ -9,8 +9,11 @@
 #include "DataBlock.h"
 #include "TestSuiteResult.h"
 #include <stdio.h>
+#include "Common.h"
 
 using namespace std;
+
+bool REMOVE_TEST_FILES=false;
 
 ifstream::pos_type size;
 char * memblock;
@@ -98,13 +101,9 @@ void test_01(TestCase* test){
 	test->Assert_streq("b","a");
 }*/
 
-bool hadSuccessRemoving(int removeResponse){
-	return removeResponse==0;
-}
 
 
 int blockSize=256;
-bool REMOVE_FILES=false;
 
 void Test_Block_TheClearMethodDoesIt(TestCase* test){
 	char* filename="C:\\temp\\Test_Block_TheClearMethodDoesIt.bin";
@@ -135,7 +134,7 @@ void Test_Block_TheClearMethodDoesIt(TestCase* test){
 		test->Assert_True_m(nonSpacesFound==0,"El DataBlock dejó algunos espacios no vacios");
 		file.close();
 	}
-	if(REMOVE_FILES){
+	if(REMOVE_TEST_FILES){
 		test->Assert_True_m(hadSuccessRemoving(remove(filename)),"El DataBlock no creó ningun archivo");
 		remove(filename);
 	}
@@ -187,7 +186,7 @@ void Test_Block_WritesRecordCountAtTheBeginingOfTheFile(TestCase* test){
 	}else{
 		test->Assert_True_m(false,"No se pudo abrir el archivo para testear");
 	}
-	if(REMOVE_FILES){
+	if(REMOVE_TEST_FILES){
 		remove(filename);
 	}
 }
@@ -219,7 +218,7 @@ void Test_Block_DoesNotMakesEfectiveUntilTheFlushMethodIsCalled(TestCase* test){
 	delete file;
 	delete block;
 
-	if(REMOVE_FILES){
+	if(REMOVE_TEST_FILES){
 		remove(filename);
 	}
 }

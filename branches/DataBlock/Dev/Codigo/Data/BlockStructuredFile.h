@@ -7,6 +7,7 @@ private:
 	char* _filename;
 	int _blockSize;	
 	BlockStructuredFile(char* filename);
+	void save();
 public:
 
 	static BlockStructuredFile* Load(char* filename);
