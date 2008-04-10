@@ -30,6 +30,7 @@ void Test_BlockStructuredFile(TestCase* test){
 
 	BlockStructuredFile* bsfile=NULL;
 	bsfile=BlockStructuredFile::Create(filename,512);
+	delete bsfile;
 
 	file = new fstream(filename,ios::in|ios::binary);
 	if(file->is_open()){
@@ -42,7 +43,6 @@ void Test_BlockStructuredFile(TestCase* test){
 	}
 	delete file;
 	REMOVE_OPTINALY(filename);
-	delete bsfile;
 
 }
 

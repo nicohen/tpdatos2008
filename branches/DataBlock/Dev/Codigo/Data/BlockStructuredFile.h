@@ -1,9 +1,11 @@
 #ifndef BlockStructuredFile_H_
 #define BlockStructuredFile_H_
 
-typedef unsigned short T_BLOCKSIZE;
-typedef unsigned short T_BLOCKCOUNT;
 
+
+#include <fstream>
+
+using namespace std;
 /*
 Archivo:
 _
@@ -13,14 +15,18 @@ _
 -
 */
 
+typedef unsigned short T_BLOCKSIZE;
+typedef unsigned short T_BLOCKCOUNT;
+
 class BlockStructuredFile
 {
 
 private: 
+	fstream* _file;
 	char* _filename;
 	T_BLOCKSIZE _blockSize;	
 	BlockStructuredFile(char* filename);
-	void save();
+	void create();
 public:
 
 	static BlockStructuredFile* Load(char* filename);
