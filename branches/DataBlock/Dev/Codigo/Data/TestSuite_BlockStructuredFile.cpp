@@ -23,7 +23,9 @@ void REMOVE_OPTINALY(char* filename){
 void Test_BlockStructuredFile(TestCase* test){
 	fstream* file=NULL;
 	char* filename="C:\\temp\\Test_BlockStructuredFile.bin";
-	
+	T_BLOCKSIZE blockSize=0;
+
+
 	remove(filename);
 
 	BlockStructuredFile* bsfile=NULL;
@@ -31,6 +33,9 @@ void Test_BlockStructuredFile(TestCase* test){
 
 	file = new fstream(filename,ios::in|ios::binary);
 	if(file->is_open()){
+		file->seekg(0,ios::beg);
+		file->read((char*)&blockSize, sizeof(T_BLOCKSIZE));
+		test->Assert_inteq(512,blockSize);
 		file->close();
 	}else{
 		test->Assert_True_m(file->is_open(),"El archivo no se creó");

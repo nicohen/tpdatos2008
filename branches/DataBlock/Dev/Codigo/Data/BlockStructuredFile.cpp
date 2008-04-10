@@ -18,7 +18,7 @@ void BlockStructuredFile::save(){
 	file.close();*/
 }
 
-BlockStructuredFile* BlockStructuredFile::Create(char* filename,int blockSize){
+BlockStructuredFile* BlockStructuredFile::Create(char* filename,T_BLOCKSIZE blockSize){
 	BlockStructuredFile* res=NULL;
 	fstream* file=NULL;
 	res=new BlockStructuredFile(filename);
@@ -26,6 +26,7 @@ BlockStructuredFile* BlockStructuredFile::Create(char* filename,int blockSize){
 
 	file = new fstream(res->_filename,ios::trunc|ios::in|ios::binary|ios::out);
 	file->seekg (0, ios::beg);
+	file->write((char*)&blockSize,sizeof(T_BLOCKSIZE));
 	file->close();
 	delete file;
 

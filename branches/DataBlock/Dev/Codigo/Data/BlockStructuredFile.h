@@ -1,26 +1,39 @@
 #ifndef BlockStructuredFile_H_
 #define BlockStructuredFile_H_
 
+typedef unsigned short T_BLOCKSIZE;
+typedef unsigned short T_BLOCKCOUNT;
+
+/*
+Archivo:
+_
+|BlockSize
+-
+|BlockCount
+-
+*/
+
 class BlockStructuredFile
 {
+
 private: 
 	char* _filename;
-	int _blockSize;	
+	T_BLOCKSIZE _blockSize;	
 	BlockStructuredFile(char* filename);
 	void save();
 public:
 
 	static BlockStructuredFile* Load(char* filename);
-	static BlockStructuredFile* Create(char* filename,int blockSize);
+	static BlockStructuredFile* Create(char* filename,T_BLOCKSIZE blockSize);
 	
-	char* getBlock(int blockNumber);
-	void updateBlock(int blockNumber,char* content);
+	char* getBlock(T_BLOCKCOUNT blockNumber);
+	void updateBlock(T_BLOCKCOUNT blockNumber,char* content);
 	void appendBlock(char* content);
-	void removeBlock(int blockNumber);	
-	void moveBlock(int currentBlockNumber,int destBlockNumber);	
-	int getBlockSize();
-	int getBlockCount();
-	int getFirstFreeBlockNumber();
+	void removeBlock(T_BLOCKCOUNT blockNumber);	
+	void moveBlock(T_BLOCKCOUNT currentBlockNumber,T_BLOCKCOUNT destBlockNumber);	
+	T_BLOCKSIZE getBlockSize();
+	T_BLOCKCOUNT getBlockCount();
+	T_BLOCKCOUNT getFirstFreeBlockNumber();
 	virtual ~BlockStructuredFile(void);
 };
 
