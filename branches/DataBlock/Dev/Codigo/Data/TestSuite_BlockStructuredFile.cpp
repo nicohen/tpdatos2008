@@ -43,14 +43,11 @@ void Test_WritesTheHeader(TestCase* test){
 		memcpy(&blockCount,buffers+sizeof(T_BLOCKSIZE),sizeof(T_BLOCKCOUNT));
 		memcpy(&firstBlockFreeSpace,buffers+sizeof(T_BLOCKSIZE)+sizeof(T_BLOCKCOUNT), sizeof(T_BLOCKSIZE));
 		
-		//Verifico que haya escrito el BlockSize		
-		//printf("-----%i-----",blockSize);
+		//Verifico que haya escrito el BlockSize
 		test->Assert_inteq(512,blockSize);
 		//Verifico que haya escrito el BlockCount
-		//printf("-----%i-----",blockCount);
 		test->Assert_inteq(1,blockCount);
 		//Verifico que haya escrito el primer elemento de la FreeSpaceList
-		//printf("-----%i-----",firstBlockFreeSpace);
 		test->Assert_inteq(512-sizeof(T_BLOCKSIZE)-sizeof(T_BLOCKCOUNT)-sizeof(T_BLOCKSIZE),firstBlockFreeSpace);
 		file->close();
 		delete buffers;
