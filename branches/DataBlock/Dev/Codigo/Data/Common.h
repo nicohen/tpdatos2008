@@ -7,7 +7,7 @@
 
 
 char* cloneStr(char* source);
-
+bool existsFile(char* filename);
 bool hadSuccessRemoving(int removeResponse);
 
 #endif /*common_H_*/
