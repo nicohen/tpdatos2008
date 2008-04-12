@@ -4,12 +4,12 @@
 #include "stdafx.h"
 #include <iostream>
 #include <fstream>
-#include "TestCase.h"
-#include "TrueAssertion.h"
+#include "../TestFramework/TestCase.h"
+#include "../TestFramework/TrueAssertion.h"
 #include "DataBlock.h"
-#include "TestSuiteResult.h"
+#include "../TestFramework/TestSuiteResult.h"
 #include <stdio.h>
-#include "Common.h"
+#include "../Common.h"
 
 using namespace std;
 

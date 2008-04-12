@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "BlockStructuredFile.h"
-#include "Common.h"
+#include "../Common.h"
 
 
 

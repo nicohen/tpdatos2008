@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "TestCase.h"
-#include "Common.h"
+#include "../Common.h"
 
 TestCase::TestCase(char* testName,int* failedTests){
 	_rest=true;

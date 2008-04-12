@@ -2,9 +2,9 @@
 //
 
 #include "stdafx.h"
-#include "Common.h"
-#include "TestCase.h"
-#include "TestSuiteResult.h"
+#include "../Common.h"
+#include "../TestFramework/TestCase.h"
+#include "../TestFramework/TestSuiteResult.h"
 #include <iostream>
 #include <fstream>
 #include <stdio.h>
