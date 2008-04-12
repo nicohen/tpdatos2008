@@ -24,8 +24,8 @@ private:
 	BlockStructuredFileHeader* _header;
 	
 	BlockStructuredFile(char* filename);
-	void create();
-	void load();
+	void load(T_BLOCKSIZE blockSize);
+	void save();
 	
 	void setBlockSize(T_BLOCKSIZE size);
 	void setBlockCount(T_BLOCKCOUNT count);
