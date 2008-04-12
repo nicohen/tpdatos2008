@@ -1,8 +1,9 @@
 #ifndef STATEMENTRESULT_H_
 #define STATEMENTRESULT_H_
 
-
+/*
 #include "Registry.h"
+*/
 #include "OutPutter.h"
 #include <vector>
 
@@ -15,7 +16,7 @@ public:
 	virtual ~StatementResult();
 	
 	bool wasOk();
-	vector<Registry*>* getFoundRegistries();
+	//vector<Registry*>* getFoundRegistries();
 	void write(OutPutter* outputter);
 };
 

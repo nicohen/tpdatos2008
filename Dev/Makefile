@@ -22,7 +22,6 @@ GLOBAL_CPP:=	$(CODE_PATH)StatementParserException.cpp\
 	$(CODE_PATH)IntValue.cpp\
 	$(CODE_PATH)DataValue.cpp\
 	$(CODE_PATH)StatementResult.cpp\
-	$(CODE_PATH)Registry.cpp\
 	$(CODE_PATH)BufferedDataManager.cpp\
 	$(CODE_PATH)DataManager.cpp\
 	$(CODE_PATH)StructureType.cpp\
@@ -68,9 +67,6 @@ GLOBAL_CPP_H:=	$(CODE_PATH)StatementParserException.h\
 	$(CODE_PATH)StructureValue.h\
 	$(CODE_PATH)DataValue.h\
 	$(CODE_PATH)StatementResult.h\
-	$(CODE_PATH)Registry.h\
-	$(CODE_PATH)BufferedDataManager.h\
-	$(CODE_PATH)Registry.h\
 	$(CODE_PATH)BufferedDataManager.h\
 	$(CODE_PATH)DataManager.h\
 	$(CODE_PATH)StructureType.h\
