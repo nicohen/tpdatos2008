@@ -45,7 +45,7 @@ BlockStructuredFile* BlockStructuredFile::Create(char* filename,T_BLOCKSIZE bloc
 	res=new BlockStructuredFile(filename);
 	res->setBlockSize(blockSize);
 	res->setBlockCount(1);
-	res->save();
+	res->saveHeader();
 	return res;
 }
 
@@ -56,7 +56,8 @@ BlockStructuredFile::BlockStructuredFile(char* filename) {
 	if(!existsFile(this->_filename)){
 		//ERROR
 	}
-	this->_file = new fstream(this->_filename,ios::app|ios::in|ios::out|ios::binary);
+	//this->_file = new fstream(this->_filename,ios::app|ios::in|ios::out|ios::binary);
+	this->_file = new fstream(this->_filename,ios::in|ios::out|ios::binary);
 	this->_header=new BlockStructuredFileHeader();
 	this->setBlockCount(0);
 	this->setBlockSize(0);
@@ -80,9 +81,8 @@ void BlockStructuredFile::load(T_BLOCKSIZE blockSize){
 	delete buffer;
 }
 
-void BlockStructuredFile::save(){
+void BlockStructuredFile::saveHeader(){
 	char* buffer;
-	this->setBlockCount(1);
 	
 	buffer=(char*)malloc(this->getBlockSize());
 
@@ -100,5 +100,15 @@ void BlockStructuredFile::appendBlock(char* content){
 	memcpy(buffer,content,this->getBlockSize());
 	this->setBlockCount(this->getBlockCount()+1);
 	free (buffer);
+}
+
+void BlockStructuredFile::updateBlock(T_BLOCKCOUNT blockNumber,char* content){
+	this->_file->seekg(this->getBlockSize()*(blockNumber+1),ios::beg);
+	this->_file->write(content,this->getBlockSize());
+	
+	if(blockNumber+1>=this->getBlockCount()){
+		this->setBlockCount(this->getBlockCount()+1);
+		this->saveHeader();
+	}	
 }
 

@@ -25,7 +25,7 @@ private:
 	
 	BlockStructuredFile(char* filename);
 	void load(T_BLOCKSIZE blockSize);
-	void save();
+	void saveHeader();
 	
 	void setBlockSize(T_BLOCKSIZE size);
 	void setBlockCount(T_BLOCKCOUNT count);
