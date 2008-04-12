@@ -41,6 +41,13 @@ vector<Field*>* CreateStatement::getSecondaryFields(){
 void CreateStatement::addSecondaryField(Field* aField){
 	_secondaryFields->push_back(aField);
 }
+void CreateStatement::addSecondaryFields(vector<Field*>* fieldList){
+	vector<Field*>::iterator iter;
+	for (iter = fieldList->begin(); iter != fieldList->end(); iter++ ){
+		_secondaryFields->push_back(*iter);
+	}
+	delete fieldList;
+}
 
 void CreateStatement::setSecondaryIndex(SecondaryIndex* aSecondaryIndex){
 	_secondaryIndex=aSecondaryIndex;

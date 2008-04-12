@@ -15,3 +15,16 @@ void QueryStatement::writeStatementQuery(OutPutter* anOutPutter) {
 
 QueryStatement::~QueryStatement(){
 }
+
+void QueryStatement::setFieldNumber(int fieldNumber){
+	_fieldNumber= fieldNumber;
+}
+int QueryStatement::getFieldNumber(){
+	return _fieldNumber;
+}
+void QueryStatement::setValue(DataValue* value){
+	_value= value;
+}
+DataValue* QueryStatement::getValue(){
+	return _value;
+}

@@ -32,8 +32,8 @@ private:
 	int _statementCount;
 	
 	int parseFileType();
-	void parseFields(CreateStatement* statement);
-	void parseValues(InsertionStatement* statement);
+	std::vector<Field*>* parseFields();
+	std::vector<DataValue*>* parseValues();
 	void parseParameters(CreateStatement* statement);
 	void parseIndex(CreateStatement* statement);
 	StructureType* parseStructuredType();

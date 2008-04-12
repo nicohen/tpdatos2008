@@ -20,6 +20,14 @@ void InsertionStatement::addValue(DataValue* aValue){
 	_values->push_back(aValue);
 }
 
+void InsertionStatement::addValues(std::vector<DataValue*>* valueList){
+	vector<DataValue*>::iterator iter;
+	for (iter = valueList->begin(); iter != valueList->end(); iter++ ){
+		_values->push_back(*iter);
+	}
+	delete valueList;
+}
+
 void InsertionStatement::clearValues(vector<DataValue*>* values){
 	vector<DataValue*>::iterator iter;
 	for (iter = _values->begin(); iter != _values->end(); iter++ ) {

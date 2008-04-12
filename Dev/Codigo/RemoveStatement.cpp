@@ -15,3 +15,16 @@ void RemoveStatement::writeStatementQuery(OutPutter* anOutPutter) {
 
 RemoveStatement::~RemoveStatement(){
 }
+
+void RemoveStatement::setFieldNumber(int fieldNumber){
+	_fieldNumber= fieldNumber;
+}
+int RemoveStatement::getFieldNumber(){
+	return _fieldNumber;
+}
+void RemoveStatement::setValue(DataValue* value){
+	_value= value;
+}
+DataValue* RemoveStatement::getValue(){
+	return _value;
+}

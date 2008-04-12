@@ -1,25 +1,18 @@
 #include "SecondaryIndex.h"
 
-SecondaryIndex::SecondaryIndex()
-{
+SecondaryIndex::SecondaryIndex(int type, int fieldNumber){
+	_indexType= type;
+	_fieldNumber= fieldNumber;
 }
-char* SecondaryIndex::getType()
-{
-	return 0;
+int SecondaryIndex::getType(){
+	return _indexType;
 }
 
-int SecondaryIndex::getNumberOfFieldToIndexBy()
-{
-	return 0;
+int SecondaryIndex::getNumberOfFieldToIndexBy(){
+	return _fieldNumber;
 }
 	
-SecondaryIndex::~SecondaryIndex()
-{
+SecondaryIndex::~SecondaryIndex(){
 }
-/*
-SecondaryIndex::XXXXXX()
-{
-}
-*/
 
 

@@ -2,9 +2,12 @@
 #define SECONDARYINDEX_H_
 
 class SecondaryIndex{
+private:
+	int _indexType;
+	int _fieldNumber;
 public:
-	SecondaryIndex();
-	char* getType();
+	SecondaryIndex(int type, int fieldNumber);
+	int getType();
 	int getNumberOfFieldToIndexBy();
 	~SecondaryIndex();
 };
