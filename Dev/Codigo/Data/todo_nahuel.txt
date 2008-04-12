@@ -1,0 +1,30 @@
+>>--Done --> Crear un bloque de tamaño N en un archivo dado
+>>--Done --> Al escribir se actualiza la cantidad de registros escritos al principipo
+Escribir bytes(registros) en bloque
+Leer bytes(registros) en bloque
+Parametrizar tamaños
+Informacion de llenado
+colchon de 80%
+EliminarRegistros
+Cuando se elimina un registro, el espacio queda libre. Hay que leer hasta el final en busca de registros, es decir, en busca de algun campo que indique el largo de un registro
+generalizar el tamaño del RecordCount dentro de un bloque
+validar que no se quiera meter un registro mas grande que Size-Tamaño de RecordCount
+validar que no se quiera meter un registro mas grande que el espacio libre - Tamaño de RecordLenght
+>>--Done --> IMP: hacer todo en memoria y poner un flush()
+>>--Done --> cambiar allocateSpace por clear
+
+2008_04_10
+-------------
+
+static BlockStructuredFile* Load(char* filename);
+static BlockStructuredFile* Create(char* filename,int blockSize);
+
+char* getBlock(int blockNumber);
+void updateBlock(int blockNumber,char* content);
+void appendBlock(char* content);
+void removeBlock(int blockNumber);	
+void moveBlock(int currentBlockNumber,int destBlockNumber);	
+int getBlockSize();
+int getBlockCount();
+int getFirstFreeBlockNumber();
+virtual ~BlockStructuredFile(void);

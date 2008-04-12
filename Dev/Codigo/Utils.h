@@ -7,4 +7,6 @@
 char* cloneStr(char* source);
 bool isNumeric(char* word);
 void DEBUG(const char* word);
+bool existsFile(char* filename);
+bool hadSuccessRemoving(int removeResponse);
 #endif /*UTILS_H_*/
