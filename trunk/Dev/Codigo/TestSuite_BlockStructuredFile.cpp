@@ -273,7 +273,6 @@ void Test_GetBlock(TestCase* test){
 	free(obtainedbuffer);
 }
 
-
 int main(int argc, char* argv[]){
 	int failedTests=0;
 	
@@ -314,6 +313,7 @@ int main(int argc, char* argv[]){
 	TestCase* test09=new TestCase("Test_GetBlock",&failedTests);	
 	Test_GetBlock(test09);
 	delete test09;
+	
 	
 	delete new TestSuiteResult(failedTests);
 	return 0;

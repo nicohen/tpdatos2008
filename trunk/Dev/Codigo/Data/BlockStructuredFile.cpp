@@ -82,15 +82,10 @@ void BlockStructuredFile::load(T_BLOCKSIZE blockSize){
 }
 
 void BlockStructuredFile::saveHeader(){
-	char* buffer;
-	
+	char* buffer;	
 	buffer=(char*)malloc(this->getBlockSize());
-
-	this->_header->saveHeaderToBuffer(buffer);
-
-	this->_file->seekg (0, ios::beg);
-	this->_file->write(buffer,this->getBlockSize());
-	this->_file->flush();
+	this->_header->saveHeaderToBuffer(buffer);	
+	this->updateBlock(0,buffer);
 	delete buffer;
 }
 
@@ -102,14 +97,22 @@ void BlockStructuredFile::appendBlock(char* content){
 	free (buffer);
 }
 
-void BlockStructuredFile::updateContentBlock(T_BLOCKCOUNT contentBlockNumber,char* content){
-	this->_file->seekg(this->getBlockFilePositionFromAbsoluteBlockCount(this->getAbsoluteBlockNumberFromContentBlockNumber(contentBlockNumber)),ios::beg);
-	this->_file->write(content,this->getBlockSize());
-	
-	if(contentBlockNumber+1>=this->getContentBlockCount()){
+void BlockStructuredFile::notifyBlockUpdated(T_BLOCKCOUNT blockNumber){
+	if(blockNumber>=this->getContentBlockCount()){
 		this->setBlockCount(this->getBlockCount()+1);
 		this->saveHeader();
-	}	
+	}
+}
+
+void BlockStructuredFile::updateBlock(T_BLOCKCOUNT blockNumber,char* content){
+	this->_file->seekg(this->getBlockFilePositionFromAbsoluteBlockCount(blockNumber),ios::beg);
+	this->_file->write(content,this->getBlockSize());
+	this->_file->flush();
+}
+
+void BlockStructuredFile::updateContentBlock(T_BLOCKCOUNT contentBlockNumber,char* content){
+	this->updateBlock(this->getAbsoluteBlockNumberFromContentBlockNumber(contentBlockNumber),content);
+	notifyBlockUpdated(this->getAbsoluteBlockNumberFromContentBlockNumber(contentBlockNumber));
 }
 
 T_FILESIZE  BlockStructuredFile::getBlockFilePositionFromAbsoluteBlockCount(T_BLOCKCOUNT blockNumber){
