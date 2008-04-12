@@ -72,6 +72,34 @@ void Test_LoadsProperly(TestCase* test){
 	
 }
 
+void createBlockStructuredFileOnDisk(char* filename,T_BLOCKSIZE blockSize){
+	BlockStructuredFile* file=NULL;
+	remove(filename);
+	file=BlockStructuredFile::Create(filename,blockSize);
+	delete file;
+}
+
+char* createEmptyByteArray(T_BLOCKSIZE size){
+	char* array;
+	array=(char*)malloc(size);
+	array="aaaaaaaaabbbbbbbbbccccccc";
+	return array;	
+}
+
+void Test_UpdatesBlockCountAfterABlockAppend(TestCase* test){
+	BlockStructuredFile* file=NULL;
+	char* filename="Test_UpdatesBlockCountAfterABlockAppend.bin";
+		
+	createBlockStructuredFileOnDisk(filename,512);
+
+	file=BlockStructuredFile::Load(filename);
+	test->Assert_inteq(512,file->getBlockSize());
+	test->Assert_inteq(1,file->getBlockCount());
+	file->appendBlock(createEmptyByteArray(512));
+	test->Assert_inteq(2,file->getBlockCount());
+	
+	delete file;	
+}
 
 int main(int argc, char* argv[]){
 	int failedTests=0;
@@ -83,6 +111,10 @@ int main(int argc, char* argv[]){
 	TestCase* test02=new TestCase("Test_LoadsProperly",&failedTests);	
 	Test_LoadsProperly(test02);
 	delete test02;	
+	
+	TestCase* test03=new TestCase("Test_UpdatesBlockCountAfterABlockAppend",&failedTests);	
+	Test_UpdatesBlockCountAfterABlockAppend(test03);
+	delete test03;	
 
 	delete new TestSuiteResult(failedTests);
 	return 0;
@@ -107,15 +139,14 @@ int getFirstFreeBlockNumber();
 void moveBlock(int currentBlockNumber,int destBlockNumber);
 virtual ~BlockStructuredFile(void);
 void updateBlock(int blockNumber,char* content);
+clase block??
+clase header block??
 
 
 
 
 
-
-
-
- OOOLDD
+VIEJO!!!!VIEJO!!!!VIEJO!!!!VIEJO!!!!VIEJO!!!!
 >>--Done --> Crear un bloque de tama�o N en un archivo dado
 >>--Done --> Al escribir se actualiza la cantidad de registros escritos al principipo
 Escribir bytes(registros) en bloque
