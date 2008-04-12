@@ -17,6 +17,7 @@ class InsertionStatement: public Statement {
 		
 		//Otros metodos
 		void addValue(DataValue* aValue);
+		void addValues(std::vector<DataValue*>* valueList);
 		void clearValues(vector<DataValue*>* values);
 		virtual void writeStatementQuery(OutPutter* outPutter);
 		virtual StatementResult* execute(DataManager* anIDataManager);

@@ -64,7 +64,7 @@ void Demon::processInputStatements(BufferedDataManager* bufferedDataManager, Out
 	Statement* statement = NULL;
 
 	char delimiters[]= {' ','[',']',';',',','\n','|','+','*'};
-	char* keywords[]= {"CREAR","CONSULTAR","hash","INGRESAR","QUITAR","ELIMINAR","ESTADISTICA","FINALIZAR","ACTUALIZAR","secuencial","indexado","secIndexado","int","string"};
+	char* keywords[]= {"CREAR","CONSULTA","hash","INGRESAR","QUITAR","ELIMINAR","ESTADISTICA","FINALIZAR","ACTUALIZAR","secuencial","indexado","secIndexado","int","string"};
  	
  	Parsing::Tokenizer* tokenizer = new Parsing::Tokenizer(inputFile,'\'',delimiters,9,keywords,14);
 	StatementParser* statementParser = new StatementParser(tokenizer,outPutter);

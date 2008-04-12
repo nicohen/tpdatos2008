@@ -35,6 +35,7 @@ public:
 	void setFileType(int fileType);
 	//Otros metodos
 	void addSecondaryField(Field* aField);
+	void addSecondaryFields(vector<Field*>* fieldList);
 	virtual void writeStatementQuery(OutPutter* outPutter);
 	virtual StatementResult* execute(DataManager* dataManager);
 private:

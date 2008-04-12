@@ -13,7 +13,6 @@ public:
 	//Constructores y destructores 
 	QueryStatement(char* filename);
 	virtual ~QueryStatement();
-	
 	void setFieldNumber(int fieldNumber);
 	int getFieldNumber();
 	void setValue(DataValue* value);

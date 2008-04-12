@@ -12,7 +12,7 @@ char* cloneStr(char* source){
 	return clon; 
 }
 
-void DEBUG(char* words){
+void DEBUG(const char* words){
 	extern bool verbose;
 	if (verbose){
 		printf("%s\n",words);

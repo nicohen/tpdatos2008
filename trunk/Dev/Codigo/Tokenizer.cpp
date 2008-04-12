@@ -9,7 +9,6 @@ using namespace std;
 namespace Parsing{
 
 	Tokenizer::Tokenizer(FileManager::FileInfo* fileInfo, char stringIndicator, char delimiters[], int delimitersSize, char* keyWords[], int keyWorsSize) throw (FileManager::IOException){
-		_delimitersSize= delimitersSize;
 		_fileInfo= fileInfo;
 		_sIndicator= stringIndicator;
 		_delimiters= delimiters;
@@ -18,64 +17,39 @@ namespace Parsing{
 		_keyWordsSize= keyWorsSize;
 		fileInfo->open();
 		fileInfo->read(&_current,1);
-		
 		this->_readTokens=new vector<Token*>();
 	}
 	
-	void Tokenizer::moveToNextLine(bool stopOnTheFirstChar){
-		printf("AAA");
+	void Tokenizer::moveToNextLine(){
 		try{
-			printf("1");
-			if(stopOnTheFirstChar && _current=='\n'){
-				_fileInfo->read(&_current,1);
-				return;
-			}
-			printf("2");
-			while (_current!=0 && _current!='\n'){
-				_fileInfo->read(&_current,1);
-			}
-			printf("3");
-			if(_current=='\n'){
-				_fileInfo->read(&_current,1);	
-			}
-			printf("4");
-		}catch (FileManager::IOException e){
-			_current=0;
-		}
-		return;		
-	}
-	/*
-	Token* Tokenizer::getNextLineToken(){
-		char buffer[128];
-		int type=OTHER;
-		char *content;
-		int i=0;
-		
-		try{
-			if(_current=='\n'){
-				_fileInfo->read(&_current,1);
-			}
 			while (_current!='\n'){
-				buffer[i]=_current;
-				i++;
 				_fileInfo->read(&_current,1);
 			}
+			_fileInfo->read(&_current,1);
 		}catch (FileManager::IOException e){
 			_current=0;
 		}
-		return this->addToReadTokens(new Token(content,type));
 	}
-*/
+	
 	Token* Tokenizer::getNextToken(bool ignoreDelimiters){
 		bool isInString=false;
 		char buffer[128];
 		int type=OTHER;
 		char *content;
 		int i=0;
+		// IGNORO LOS ESPACIOS
+		try{
+			while (_current==' '){
+				_fileInfo->read(&_current,1);
+			}	
+		}catch (FileManager::IOException e){
+			_current=0;
+		}
+		// SI ME QUEDO SIN ENTRADA
 		if (_current==0){
-			//printf("Tokenizer: Current es null.\n");
 			return NULL;
 		}
+		// DETECTO INICIO DE STRING
 		if (_current==_sIndicator){
 			type=STRING;
 			isInString= true;
@@ -83,6 +57,7 @@ namespace Parsing{
 			buffer[i]=_current;
 			i++;
 		}
+		
 		if (!ignoreDelimiters && this->isDelimiter(_current)){
 			try{
 				buffer[1]=0;
@@ -124,9 +99,7 @@ namespace Parsing{
 					type=KEYWORD;
 				}	
 			}
-		}
-
-		
+		}		
 		return this->addToReadTokens(new Token(content,type));
 	}
 
@@ -145,15 +118,12 @@ namespace Parsing{
 			if(strcmp(item,_keyWords[i])==0){
 				found=true;
 			}
-			//printf("KEYWORD[i]: %s\n",_keyWords[i]);
 			i++;
 		}
-		//printf("Resultado de is Keyword: %i\n",found);
 		return found;
 	}
 
 	Tokenizer::~Tokenizer(){
-		//printf("~Tokenizer\n");
 		_fileInfo->close();
 		this->clearReadTokens();
 		delete(this->_readTokens);

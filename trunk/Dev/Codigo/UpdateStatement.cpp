@@ -2,6 +2,7 @@
 #include "Utils.h"
 
 UpdateStatement::UpdateStatement(char* filename):Statement(filename){
+	_values= new std::vector<DataValue*>();
 }
 
 
@@ -14,4 +15,11 @@ void UpdateStatement::writeStatementQuery(OutPutter* anOutPutter) {
 }
 
 UpdateStatement::~UpdateStatement(){
+}
+void UpdateStatement::addValues(std::vector<DataValue*>* valueList){
+	vector<DataValue*>::iterator iter;
+	for (iter = valueList->begin(); iter != valueList->end(); iter++ ){
+		_values->push_back(*iter);
+	}
+	delete valueList;
 }

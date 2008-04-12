@@ -18,6 +18,7 @@ public:
 		
 	//Otros metodos
 	void addValue(DataValue* aValue);
+	void addValues(std::vector<DataValue*>* valueList);
 	void clearValues(vector<DataValue*>* values);
 	virtual StatementResult* execute(DataManager* anIDataManager);
 	virtual void writeStatementQuery(OutPutter* outPutter);
