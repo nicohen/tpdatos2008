@@ -2,7 +2,7 @@
 #define Block_H_
 
 typedef unsigned short T_BLOCKSIZE;
-
+typedef unsigned short T_BLOCKCOUNT;
 //No funciona bien, solo usar la interfaz
 
 class Block

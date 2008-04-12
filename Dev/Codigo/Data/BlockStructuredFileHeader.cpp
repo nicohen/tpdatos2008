@@ -1,5 +1,7 @@
 #include "BlockStructuredFileHeader.h"
 
+#include "../Utils.h"
+
 BlockStructuredFileHeader::BlockStructuredFileHeader()
 {
 	this->setBlockCount(0);
@@ -38,8 +40,8 @@ char* BlockStructuredFileHeader::getFirstFreeSpaceListItem(char* reference){
 }
 
 void BlockStructuredFileHeader::loadPropertiesFromBuffer(char* buffer){
-	memcpy((char*)&this->_bblockSize,this->getBlockSizePosition(buffer),sizeof(T_BLOCKSIZE));
-	memcpy((char*)&this->_bblockCount,this->getBlockCountPosition(buffer),sizeof(T_BLOCKCOUNT));
+	memcpy((char*)&this->_blockSize,this->getBlockSizePosition(buffer),sizeof(T_BLOCKSIZE));
+	memcpy((char*)&this->_blockCount,this->getBlockCountPosition(buffer),sizeof(T_BLOCKCOUNT));
 
 }
 
