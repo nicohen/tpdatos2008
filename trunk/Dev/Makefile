@@ -57,7 +57,8 @@ GLOBAL_CPP:=	$(CODE_PATH)StatementParserException.cpp\
 	$(TEST_PATH)EqualsIntAssertion.cpp\
 	$(TEST_PATH)TrueAssertion.cpp\
 	$(TEST_PATH)TestCase.cpp\
-	$(TEST_PATH)TestSuiteResult.cpp	
+	$(TEST_PATH)TestSuiteResult.cpp\
+	$(DATA_PATH)BlockStructuredFileHeader.cpp
 
 
 GLOBAL_CPP_H:=	$(CODE_PATH)StatementParserException.h\
@@ -104,7 +105,8 @@ GLOBAL_CPP_H:=	$(CODE_PATH)StatementParserException.h\
 	$(TEST_PATH)EqualsIntAssertion.h\
 	$(TEST_PATH)TrueAssertion.h\
 	$(TEST_PATH)TestCase.h\
-	$(TEST_PATH)TestSuiteResult.h
+	$(TEST_PATH)TestSuiteResult.h\
+	$(DATA_PATH)BlockStructuredFileHeader.h
 
 #Si se quiere arrancar usando un "main" propio, crear el archivo con la funcion main adentro y decomentar la linea que corresponda
 

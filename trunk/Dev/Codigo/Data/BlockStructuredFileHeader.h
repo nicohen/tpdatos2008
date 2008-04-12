@@ -1,12 +1,16 @@
 #ifndef BLOCKSTRUCTUREDFILEHEADER_H_
 #define BLOCKSTRUCTUREDFILEHEADER_H_
 
+#include "Block.h"
+#include <stdlib.h>
+#include <stdio.h>
+
 class BlockStructuredFileHeader
 {	
 private:
 	T_BLOCKSIZE _blockSize;	
 	T_BLOCKCOUNT _blockCount;	
-			
+		
 	char* getBlockSizePosition(char* reference);
 	char* getBlockCountPosition(char* reference);
 	char* getFirstFreeSpaceListItem(char* reference);

@@ -24,13 +24,16 @@ void Test_WritesTheHeader(TestCase* test){
 	T_BLOCKSIZE firstBlockFreeSpace=0;
 	char* buffers;
 	BlockStructuredFile* bsfile=NULL;
-
+		
 	remove(filename);
+	
 	bsfile=BlockStructuredFile::Create(filename,512);
+	
 	test->Assert_inteq(1,bsfile->getBlockCount());
 	test->Assert_inteq(512,bsfile->getBlockSize());
 	delete bsfile;
-
+	
+	
 	file = new fstream(filename,ios::in|ios::binary);
 	if(file->is_open()){
 		buffers=(char*)malloc(512);
@@ -103,6 +106,8 @@ void Test_UpdatesBlockCountAfterABlockAppend(TestCase* test){
 
 int main(int argc, char* argv[]){
 	int failedTests=0;
+	
+	
 		
 	TestCase* test01=new TestCase("Test_WritesTheHeader",&failedTests);	
 	Test_WritesTheHeader(test01);
