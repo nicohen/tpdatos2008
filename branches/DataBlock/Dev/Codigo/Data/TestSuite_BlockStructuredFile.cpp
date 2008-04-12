@@ -27,11 +27,12 @@ void Test_WritesTheHeader(TestCase* test){
 	T_BLOCKCOUNT blockCount=0;
 	T_BLOCKSIZE firstBlockFreeSpace=0;
 	char* buffers;
+	BlockStructuredFile* bsfile=NULL;
 
 	remove(filename);
-
-	BlockStructuredFile* bsfile=NULL;
 	bsfile=BlockStructuredFile::Create(filename,512);
+	test->Assert_inteq(1,bsfile->getBlockCount());
+	test->Assert_inteq(512,bsfile->getBlockSize());
 	delete bsfile;
 
 	file = new fstream(filename,ios::in|ios::binary);
@@ -59,6 +60,22 @@ void Test_WritesTheHeader(TestCase* test){
 
 }
 
+void Test_LoadsProperly(TestCase* test){
+	BlockStructuredFile* createdbsfile=NULL;
+	BlockStructuredFile* loadedbsfile=NULL;
+	char* filename="C:\\temp\\Test_LoadsProperly.bin";
+	remove(filename);
+
+	createdbsfile=BlockStructuredFile::Create(filename,512);
+	delete createdbsfile;
+
+	loadedbsfile=BlockStructuredFile::Load(filename);
+	test->Assert_inteq(512,loadedbsfile->getBlockSize());
+	test->Assert_inteq(1,loadedbsfile->getBlockCount());
+	delete loadedbsfile;
+	
+}
+
 
 int _tmain(int argc, char* argv[]){
 	int failedTests=0;
@@ -66,6 +83,10 @@ int _tmain(int argc, char* argv[]){
 	TestCase* test01=new TestCase("Test_WritesTheHeader",&failedTests);	
 	Test_WritesTheHeader(test01);
 	delete test01;	
+
+	TestCase* test02=new TestCase("Test_LoadsProperly",&failedTests);	
+	Test_LoadsProperly(test02);
+	delete test02;	
 
 	delete new TestSuiteResult(failedTests);
 	system("pause");

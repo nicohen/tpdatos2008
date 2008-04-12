@@ -2,7 +2,7 @@
 #define BlockStructuredFile_H_
 
 
-
+#include "Block.h"
 #include <fstream>
 
 using namespace std;
@@ -15,7 +15,6 @@ _
 -
 */
 
-typedef unsigned short T_BLOCKSIZE;
 typedef unsigned short T_BLOCKCOUNT;
 
 class BlockStructuredFile
@@ -25,8 +24,13 @@ private:
 	fstream* _file;
 	char* _filename;
 	T_BLOCKSIZE _blockSize;	
+	T_BLOCKCOUNT _blockCount;	
 	BlockStructuredFile(char* filename);
 	void create();
+	void load();
+	void loadPropertiesFromBuffer(char* buffer);
+	char* getBlockSizePosition(char* reference);
+	char* getBlockCountPosition(char* reference);
 public:
 
 	static BlockStructuredFile* Load(char* filename);
