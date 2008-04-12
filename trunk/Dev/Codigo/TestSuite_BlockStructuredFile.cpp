@@ -141,7 +141,7 @@ virtual ~BlockStructuredFile(void);
 void updateBlock(int blockNumber,char* content);
 clase block??
 clase header block??
-
+Cambiar loadPropertiesFromBuffer por "load header from buffer"
 
 
 
