@@ -101,8 +101,72 @@ void Test_UpdatesBlockCountAfterABlockAppend(TestCase* test){
 	file->appendBlock(createEmptyByteArray(512));
 	test->Assert_inteq(2,file->getBlockCount());
 	
-	delete file;	
+	delete file;
 }
+
+void Test_WhenItUpdatesBlockRealyWritesOnDisk(TestCase* test){
+	BlockStructuredFile* file=NULL;
+	char* filename="Test_WhenItUpdatesBlockRealyWritesOnDisk.bin";
+	fstream* filestream=NULL;
+	
+	
+	createBlockStructuredFileOnDisk(filename,512);
+	file=BlockStructuredFile::Load(filename);
+	file->updateBlock(0,createEmptyByteArray(512));
+	delete file;
+	
+	filestream = new fstream(filename,ios::in|ios::binary);
+	if(filestream->is_open()){
+		filestream->seekg(0,ios::end);
+		test->Assert_inteq(1024,filestream->tellg());
+		filestream->close();
+	}else{
+		test->Assert_True_m(filestream->is_open(),"El archivo no se cre�");
+	}	
+	delete filestream;	
+}
+
+void Test_WhenItUpdatesBlockSavesHeaderInformation(TestCase* test){
+	BlockStructuredFile* file=NULL;
+	BlockStructuredFile* loadedfile=NULL;
+	char* filename="Test_WhenItUpdatesBlockSavesHeaderInformation.bin";
+	
+	//Actualizo el primer bloque
+	createBlockStructuredFileOnDisk(filename,512);
+	file=BlockStructuredFile::Load(filename);
+	test->Assert_inteq(1,file->getBlockCount());
+	file->updateBlock(0,createEmptyByteArray(512));
+	test->Assert_inteq(2,file->getBlockCount());
+	delete file;
+	
+	loadedfile=BlockStructuredFile::Load(filename);
+	test->Assert_inteq(2,loadedfile->getBlockCount());
+	delete file;
+	
+	
+	//Actualizo el segundo bloque
+	file=BlockStructuredFile::Load(filename);
+	file->updateBlock(1,createEmptyByteArray(512));
+	test->Assert_inteq(3,file->getBlockCount());
+	delete file;
+	
+	loadedfile=BlockStructuredFile::Load(filename);
+	test->Assert_inteq(3,loadedfile->getBlockCount());
+	delete file;
+	
+	
+	//Actualizo el primer bloque nuevamente
+	file=BlockStructuredFile::Load(filename);
+	file->updateBlock(0,createEmptyByteArray(512));
+	test->Assert_inteq(3,file->getBlockCount());
+	delete file;
+	
+	loadedfile=BlockStructuredFile::Load(filename);
+	test->Assert_inteq(3,loadedfile->getBlockCount());
+	delete file;
+}
+
+
 
 int main(int argc, char* argv[]){
 	int failedTests=0;
@@ -120,7 +184,15 @@ int main(int argc, char* argv[]){
 	TestCase* test03=new TestCase("Test_UpdatesBlockCountAfterABlockAppend",&failedTests);	
 	Test_UpdatesBlockCountAfterABlockAppend(test03);
 	delete test03;	
-
+	
+	TestCase* test04=new TestCase("Test_WhenItUpdatesBlockRealyWritesOnDisk",&failedTests);	
+	Test_WhenItUpdatesBlockRealyWritesOnDisk(test04);
+	delete test04;
+	
+	TestCase* test05=new TestCase("Test_WhenItUpdatesBlockSavesHeaderInformation",&failedTests);	
+	Test_WhenItUpdatesBlockSavesHeaderInformation(test05);
+	delete test05;
+	
 	delete new TestSuiteResult(failedTests);
 	return 0;
 };
@@ -143,10 +215,11 @@ Actualizar la lista de espacios libres en bloques en cada operacion
 int getFirstFreeBlockNumber();
 void moveBlock(int currentBlockNumber,int destBlockNumber);
 virtual ~BlockStructuredFile(void);
-void updateBlock(int blockNumber,char* content);
+>>--Done --> void updateBlock(int blockNumber,char* content);
 clase block??
-clase header block??
-Cambiar loadPropertiesFromBuffer por "load header from buffer"
+>>--Done --> clase header block??
+>>--Done --> Cambiar loadPropertiesFromBuffer por "load header from buffer"
+Aclarar Indices
 
 
 
