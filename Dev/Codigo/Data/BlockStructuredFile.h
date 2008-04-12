@@ -22,14 +22,16 @@ class BlockStructuredFile
 private: 
 	fstream* _file;
 	char* _filename;
-	T_BLOCKSIZE _blockSize;	
-	T_BLOCKCOUNT _blockCount;	
+	T_BLOCKSIZE _bblockSize;	
+	T_BLOCKCOUNT _bblockCount;	
 	BlockStructuredFile(char* filename);
 	void create();
 	void load();
 	void loadPropertiesFromBuffer(char* buffer);
 	void saveHeaderToBuffer(char* buffer);
 	
+	void setBlockSize(T_BLOCKSIZE size);
+	void setBlockCount(T_BLOCKCOUNT count);
 	
 	char* getBlockSizePosition(char* reference);
 	char* getBlockCountPosition(char* reference);
