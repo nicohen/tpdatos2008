@@ -16,6 +16,32 @@ void REMOVE_OPTINALY(char* filename){
 	}
 }
 
+
+bool compareByteArray(char* array1,char* array2,T_BLOCKSIZE size){
+	T_BLOCKSIZE i=0;
+	for (i = 0; i < size; ++i) {
+		if(*(array1+i)!=*(array2+i)){
+			return false;
+		}
+	}
+	return true;
+}
+
+void cleararray(char* array,T_BLOCKSIZE size){
+	T_BLOCKSIZE i=0;
+	for (i = 0; i < size; ++i) {
+		*(array+i)='\0';
+	}
+}
+
+char* createEmptyByteArray(T_BLOCKSIZE size){
+	char* array;
+	array=(char*)malloc(size);
+	cleararray(array,size);
+	*(array+size-1)='a';
+	return array;	
+}
+
 void Test_WritesTheHeader(TestCase* test){
 	fstream* file=NULL;
 	char* filename="Test_BlockStructuredFile.bin";
@@ -82,12 +108,7 @@ void createBlockStructuredFileOnDisk(char* filename,T_BLOCKSIZE blockSize){
 	delete file;
 }
 
-char* createEmptyByteArray(T_BLOCKSIZE size){
-	char* array;
-	array=(char*)malloc(size);
-	array="aaaaaaaaabbbbbbbbbccccccc";
-	return array;	
-}
+
 
 void Test_UpdatesBlockCountAfterABlockAppend(TestCase* test){
 	BlockStructuredFile* file=NULL;
@@ -112,7 +133,7 @@ void Test_WhenItUpdatesBlockRealyWritesOnDisk(TestCase* test){
 	
 	createBlockStructuredFileOnDisk(filename,512);
 	file=BlockStructuredFile::Load(filename);
-	file->updateBlock(0,createEmptyByteArray(512));
+	file->updateContentBlock(0,createEmptyByteArray(512));
 	delete file;
 	
 	filestream = new fstream(filename,ios::in|ios::binary);
@@ -134,45 +155,130 @@ void Test_WhenItUpdatesBlockSavesHeaderInformation(TestCase* test){
 	//Actualizo el primer bloque
 	createBlockStructuredFileOnDisk(filename,512);
 	file=BlockStructuredFile::Load(filename);
-	test->Assert_inteq(1,file->getBlockCount());
-	file->updateBlock(0,createEmptyByteArray(512));
-	test->Assert_inteq(2,file->getBlockCount());
+	test->Assert_inteq(0,file->getContentBlockCount());
+	file->updateContentBlock(0,createEmptyByteArray(512));
+	test->Assert_inteq(1,file->getContentBlockCount());
 	delete file;
 	
 	loadedfile=BlockStructuredFile::Load(filename);
-	test->Assert_inteq(2,loadedfile->getBlockCount());
+	test->Assert_inteq(1,loadedfile->getContentBlockCount());
 	delete file;
 	
 	
 	//Actualizo el segundo bloque
 	file=BlockStructuredFile::Load(filename);
-	file->updateBlock(1,createEmptyByteArray(512));
-	test->Assert_inteq(3,file->getBlockCount());
+	file->updateContentBlock(1,createEmptyByteArray(512));
+	test->Assert_inteq(2,file->getContentBlockCount());
 	delete file;
 	
 	loadedfile=BlockStructuredFile::Load(filename);
-	test->Assert_inteq(3,loadedfile->getBlockCount());
+	test->Assert_inteq(2,loadedfile->getContentBlockCount());
 	delete file;
 	
 	
 	//Actualizo el primer bloque nuevamente
 	file=BlockStructuredFile::Load(filename);
-	file->updateBlock(0,createEmptyByteArray(512));
-	test->Assert_inteq(3,file->getBlockCount());
+	file->updateContentBlock(0,createEmptyByteArray(512));
+	test->Assert_inteq(2,file->getContentBlockCount());
 	delete file;
 	
 	loadedfile=BlockStructuredFile::Load(filename);
-	test->Assert_inteq(3,loadedfile->getBlockCount());
+	test->Assert_inteq(2,loadedfile->getContentBlockCount());
+	delete file;
+}
+void Test_getContentBlockCount(TestCase* test){
+	BlockStructuredFile* file=NULL;
+	char* filename="Test_getContentBlockCount.bin";
+	
+	//Actualizo el primer bloque
+	createBlockStructuredFileOnDisk(filename,512);
+	file=BlockStructuredFile::Load(filename);
+	test->Assert_inteq(0,file->getContentBlockCount());
 	delete file;
 }
 
+
+void Test_compareByteArray(TestCase* test){
+	char* buffer1=NULL;
+	char* buffer2=NULL;
+	
+	//Creo dos arrays iguales
+	buffer1=(char*)malloc(60);
+	buffer2=(char*)malloc(60);
+	cleararray(buffer1,60);
+	cleararray(buffer2,60);
+	
+	//Verifico que sean iguales
+	test->Assert_True_m(compareByteArray(buffer1,buffer2,60),"Deberian ser iguales");
+	
+	//Modifico el ultimo elemento
+	*(buffer2+59)='a';
+
+	//Verifico que sean distintos
+	test->Assert_True_m(!compareByteArray(buffer1,buffer2,60),"Deberian ser distintos");
+	
+	free (buffer1);
+	free (buffer2);
+}
+
+void Test_getContentBlock(TestCase* test){
+	BlockStructuredFile* file=NULL;
+	BlockStructuredFile* loadedfile=NULL;
+	char* filename="Test_getContentBlock.bin";
+	char* buffer1;
+	char* obtainedbuffer;
+	
+	buffer1=createEmptyByteArray(512);
+	*(buffer1+5)='y';	
+	
+	//Actualizo el primer bloque
+	createBlockStructuredFileOnDisk(filename,512);
+	file=BlockStructuredFile::Load(filename);
+	file->updateContentBlock(0,buffer1);
+	delete file;
+		
+	loadedfile=BlockStructuredFile::Load(filename);
+	obtainedbuffer=loadedfile->getContentBlock(0);
+	
+	test->Assert_True_m(compareByteArray(buffer1,obtainedbuffer,512),"Deberian ser iguales");
+	delete loadedfile;
+	
+	free(buffer1);
+	free(obtainedbuffer);
+}
+
+void Test_GetBlock(TestCase* test){
+	BlockStructuredFile* file=NULL;
+	BlockStructuredFile* loadedfile=NULL;
+	char* filename="Test_getContentBlock.bin";
+	char* buffer1;
+	char* obtainedbuffer;
+	
+	buffer1=createEmptyByteArray(512);
+	*(buffer1+5)='9';	
+	
+	//Actualizo el primer bloque
+	createBlockStructuredFileOnDisk(filename,512);
+	file=BlockStructuredFile::Load(filename);
+	file->updateContentBlock(0,buffer1);
+	delete file;
+		
+	loadedfile=BlockStructuredFile::Load(filename);
+	obtainedbuffer=loadedfile->getBlock(1);
+	
+	test->Assert_True_m(compareByteArray(buffer1,obtainedbuffer,512),"Deberian ser iguales");
+	delete loadedfile;
+	
+	free(buffer1);
+	free(obtainedbuffer);
+}
 
 
 int main(int argc, char* argv[]){
 	int failedTests=0;
 	
 	
-		
+	
 	TestCase* test01=new TestCase("Test_WritesTheHeader",&failedTests);	
 	Test_WritesTheHeader(test01);
 	delete test01;	
@@ -192,6 +298,22 @@ int main(int argc, char* argv[]){
 	TestCase* test05=new TestCase("Test_WhenItUpdatesBlockSavesHeaderInformation",&failedTests);	
 	Test_WhenItUpdatesBlockSavesHeaderInformation(test05);
 	delete test05;
+	
+	TestCase* test06=new TestCase("Test_getContentBlockCount",&failedTests);	
+	Test_getContentBlockCount(test06);
+	delete test06;
+	
+	TestCase* test07=new TestCase("Test_getContentBlock",&failedTests);	
+	Test_getContentBlock(test07);
+	delete test07;
+	
+	TestCase* test08=new TestCase("Test_compareByteArray",&failedTests);	
+	Test_compareByteArray(test08);
+	delete test08;
+	
+	TestCase* test09=new TestCase("Test_GetBlock",&failedTests);	
+	Test_GetBlock(test09);
+	delete test09;
 	
 	delete new TestSuiteResult(failedTests);
 	return 0;
@@ -219,8 +341,8 @@ virtual ~BlockStructuredFile(void);
 clase block??
 >>--Done --> clase header block??
 >>--Done --> Cambiar loadPropertiesFromBuffer por "load header from buffer"
-Aclarar Indices
-
+>>--Done --> Aclarar Indices
+Mover una parte de updateBlock a append block. cosa que el updateBlock solo actue cuando se actualice un bloque. Cuando se está agregando uno hay que llamar al append 
 
 
 

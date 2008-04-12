@@ -102,13 +102,42 @@ void BlockStructuredFile::appendBlock(char* content){
 	free (buffer);
 }
 
-void BlockStructuredFile::updateBlock(T_BLOCKCOUNT blockNumber,char* content){
-	this->_file->seekg(this->getBlockSize()*(blockNumber+1),ios::beg);
+void BlockStructuredFile::updateContentBlock(T_BLOCKCOUNT contentBlockNumber,char* content){
+	this->_file->seekg(this->getBlockFilePositionFromAbsoluteBlockCount(this->getAbsoluteBlockNumberFromContentBlockNumber(contentBlockNumber)),ios::beg);
 	this->_file->write(content,this->getBlockSize());
 	
-	if(blockNumber+1>=this->getBlockCount()){
+	if(contentBlockNumber+1>=this->getContentBlockCount()){
 		this->setBlockCount(this->getBlockCount()+1);
 		this->saveHeader();
 	}	
+}
+
+T_FILESIZE  BlockStructuredFile::getBlockFilePositionFromAbsoluteBlockCount(T_BLOCKCOUNT blockNumber){
+	return this->getBlockSize()*blockNumber;
+}
+
+T_BLOCKCOUNT  BlockStructuredFile::getAbsoluteBlockNumberFromContentBlockNumber(T_BLOCKCOUNT contentBlockNumber){
+	return contentBlockNumber+this->getHeaderBlockCount();
+}
+
+char* BlockStructuredFile::getContentBlock(T_BLOCKCOUNT contentBlockNumber){
+	return getBlock(this->getAbsoluteBlockNumberFromContentBlockNumber(contentBlockNumber));
+}
+
+char* BlockStructuredFile::getBlock(T_BLOCKCOUNT blockNumber){
+	char* buffer;
+	//Cargo todo el bloque en un buffer y cargo las propiedades de ah�
+	buffer=(char*)malloc(this->getBlockSize());
+	this->_file->seekg (this->getBlockFilePositionFromAbsoluteBlockCount(blockNumber), ios::beg);
+	this->_file->read(buffer,this->getBlockSize());	
+	return buffer;
+}
+
+T_BLOCKCOUNT BlockStructuredFile::getHeaderBlockCount(){
+	return 1;
+}
+
+T_BLOCKCOUNT BlockStructuredFile::getContentBlockCount(){
+	return this->getBlockCount()-this->getHeaderBlockCount();
 }
 
