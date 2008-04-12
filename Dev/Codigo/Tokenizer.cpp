@@ -31,6 +31,10 @@ namespace Parsing{
 		}
 	}
 	
+	Token* Tokenizer::getLastToken(){
+		return *((_readTokens->end())-1);
+	}
+		
 	Token* Tokenizer::getNextToken(bool ignoreDelimiters){
 		bool isInString=false;
 		char buffer[128];
@@ -146,4 +150,5 @@ namespace Parsing{
 		}
 		this->_readTokens->clear();
 	}
+	
 }

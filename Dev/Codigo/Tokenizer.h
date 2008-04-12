@@ -33,6 +33,7 @@ namespace Parsing{
 		public:
 		virtual void moveToNextLine();
 		Tokenizer(FileManager::FileInfo *fileInfo, char stringIndicator, char delimiters[], int delimitersSize, char* keyWords[], int keyWorsSize) throw (FileManager::IOException);
+		virtual Token* getLastToken();
 		virtual Token* getNextToken(bool ignoreDelimiters);
 		int getTokenReadCount();
 		virtual ~Tokenizer();

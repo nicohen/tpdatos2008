@@ -24,6 +24,12 @@ void DEBUG(const char* words){
 bool isNumeric(char* word){
 	int i=0;
 	int size =strlen(word);
+	if (size==0){
+		return false;
+	}
+	if ((word[i]=='+')||(word[i]=='-')){
+		i++;
+	}
 	while ((i<size)&& ('0'<=word[i])&&(word[i]<='9')){
 		i++;
 	}
