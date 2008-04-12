@@ -36,9 +36,15 @@ char* BlockStructuredFile::getBlockSizePosition(char* reference){
 }
 
 char* BlockStructuredFile::getBlockCountPosition(char* reference){
-	return reference+0+sizeof(T_BLOCKSIZE);
+	return getBlockSizePosition(reference)+sizeof(T_BLOCKSIZE);
 }
 
+char* BlockStructuredFile::getFirstFreeSpaceListItem(char* reference){
+	return getBlockCountPosition(reference)+sizeof(T_BLOCKCOUNT);
+}
+
+
+//load header from buffer
 void BlockStructuredFile::loadPropertiesFromBuffer(char* buffer){
 	memcpy((char*)&this->_blockSize,this->getBlockSizePosition(buffer),sizeof(T_BLOCKSIZE));
 	memcpy((char*)&this->_blockCount,this->getBlockCountPosition(buffer),sizeof(T_BLOCKCOUNT));
@@ -65,15 +71,27 @@ void BlockStructuredFile::load(){
 }
 
 
+void BlockStructuredFile::saveHeaderToBuffer(char* buffer){
+	T_BLOCKSIZE firstBlockFreeSpace=0;
+	firstBlockFreeSpace=this->_blockSize - sizeof(T_BLOCKSIZE) - sizeof(T_BLOCKCOUNT) - sizeof(T_BLOCKSIZE);
+	//Grabo el tamaño de bloque
+	memcpy(getBlockSizePosition(buffer),&this->_blockSize,sizeof(T_BLOCKSIZE));
 
+	//Grabo la cantidad de bloques
+	memcpy(getBlockCountPosition(buffer),&this->_blockCount,sizeof(T_BLOCKCOUNT));	
+
+	//Grabo el primer elemento de la lista de espacios libres
+	memcpy(getFirstFreeSpaceListItem(buffer),&firstBlockFreeSpace,sizeof(T_BLOCKSIZE));
+
+}
 
 void BlockStructuredFile::create(){
 	char* buffer;
-	char* it_buffer;
-	T_BLOCKSIZE firstBlockFreeSpace=0;	
-	
+	/**char* it_buffer;
+	T_BLOCKSIZE firstBlockFreeSpace=0;
+	*/
 	this->_blockCount=1;
-	firstBlockFreeSpace=this->_blockSize - sizeof(T_BLOCKSIZE) - sizeof(T_BLOCKCOUNT) - sizeof(T_BLOCKSIZE);
+	//firstBlockFreeSpace=this->_blockSize - sizeof(T_BLOCKSIZE) - sizeof(T_BLOCKCOUNT) - sizeof(T_BLOCKSIZE);
 	if(existsFile(this->_filename)){
 		//ERROR
 	}
@@ -81,21 +99,7 @@ void BlockStructuredFile::create(){
 	
 	
 	buffer=(char*)malloc(this->_blockSize);
-	
-	//Muevo el puntero hacia adelante
-	it_buffer=buffer;
-	//Copio una variable local en el buffer
-	memcpy(it_buffer,&this->_blockSize,sizeof(T_BLOCKSIZE));
-
-	//Muevo el puntero hacia adelante
-	it_buffer+=sizeof(T_BLOCKSIZE);
-	//Copio una variable local en el buffer
-	memcpy(it_buffer,&this->_blockCount,sizeof(T_BLOCKCOUNT));	
-
-	//Muevo el puntero hacia adelante
-	it_buffer+=sizeof(T_BLOCKCOUNT);
-	//Copio una variable local en el buffer
-	memcpy(it_buffer,&firstBlockFreeSpace,sizeof(T_BLOCKSIZE));
+	this->saveHeaderToBuffer(buffer);
 
 	this->_file->seekg (0, ios::beg);
 	this->_file->write(buffer,this->_blockSize);
@@ -109,6 +113,14 @@ T_BLOCKCOUNT BlockStructuredFile::getBlockCount(){
 
 T_BLOCKSIZE BlockStructuredFile::getBlockSize(){
 	return this->_blockSize;
+}
+
+void BlockStructuredFile::appendBlock(char* content){
+	char* buffer;
+	buffer=(char*)malloc(this->_blockSize);
+	memcpy(buffer,content,this->_blockSize);
+	this->_blockCount++;
+	free (buffer);
 }
 
 

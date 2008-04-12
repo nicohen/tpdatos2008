@@ -28,8 +28,14 @@ private:
 	void create();
 	void load();
 	void loadPropertiesFromBuffer(char* buffer);
+	void saveHeaderToBuffer(char* buffer);
+	
+	
 	char* getBlockSizePosition(char* reference);
 	char* getBlockCountPosition(char* reference);
+	char* getFirstFreeSpaceListItem(char* reference);
+	
+	
 public:
 
 	static BlockStructuredFile* Load(char* filename);
