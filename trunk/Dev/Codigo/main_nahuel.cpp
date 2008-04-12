@@ -496,12 +496,12 @@ int main(int argc, char **argv) {
 	TestCase* test8=new TestCase("test_TokenizerCreation",&failedTests);	
 	test_TokenizerCreation(test8);
 	delete test8;
-	
+	/*
 	TestCase* test9=new TestCase("test_ParserCreateStatementParsing",&failedTests);	
 	test_ParserCreateStatementParsing(test9);
 	delete test9;
 	
-	
+	*/
 	printf(":::Tests:::.......................\n");
 	if(failedTests>0){
 		printf("!!!!!!FAILED %i TEST/S !!!!!!!!!!\n",failedTests);
