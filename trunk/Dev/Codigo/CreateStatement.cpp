@@ -19,6 +19,7 @@ void CreateStatement::setFileType(int fileType){
 
 CreateStatement::CreateStatement(char* fileName):Statement(fileName){
 	_secondaryFields=new vector<Field*>();
+	_secondaryIndex= NULL;
 }
 
 int CreateStatement::getDataBlockSize(){
@@ -87,7 +88,9 @@ StatementResult* CreateStatement::execute(DataManager* dataManager){
 
 CreateStatement::~CreateStatement()
 {
-	delete(this->_secondaryIndex);	
+	if (_secondaryIndex!=NULL){
+		delete(this->_secondaryIndex);
+	}	
 	clearSecondaryFields(this->_secondaryFields);
 	delete(this->_secondaryFields);
 }
