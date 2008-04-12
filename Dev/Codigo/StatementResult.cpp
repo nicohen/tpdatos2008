@@ -13,7 +13,7 @@ bool StatementResult::wasOk(){
 }
 
 /*
-vector<Registry*>* StatementResult::getFoundRegistries(){
+vector<Record*>* StatementResult::getFoundRegistries(){
 	return 0;
 }
 */

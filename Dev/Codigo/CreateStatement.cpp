@@ -76,7 +76,12 @@ void CreateStatement::writeStatementQuery(OutPutter* outPutter){
 }
 
 StatementResult* CreateStatement::execute(DataManager* dataManager){
-	//Obtiene el resultado utilizando el DataManager
+	DataFile* dataFile = dataManager->getFile(this->getFileName());
+//	Record* record;
+	
+	dataFile->setBlockStructuredFile(dataFile->getBlockStructuredFile()->Create(this->getFileName(),100));
+	
+	dataManager->addFile(dataFile);
 	return new StatementResult();
 }
 
