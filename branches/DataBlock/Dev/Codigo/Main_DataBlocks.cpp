@@ -3,11 +3,11 @@
 
 #include <iostream>
 #include <fstream>
-#include "../TestFramework/TestCase.h"
-#include "../TestFramework/TrueAssertion.h"
-#include "../TestFramework/TestSuiteResult.h"
+#include "TestFramework/TestCase.h"
+#include "TestFramework/TrueAssertion.h"
+#include "TestFramework/TestSuiteResult.h"
 #include <stdio.h>
-#include "../Common.h"
+#include "Common.h"
 
 using namespace std;
 

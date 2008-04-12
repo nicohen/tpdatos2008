@@ -1,9 +1,9 @@
-#include "../TestFramework/TestCase.h"
-#include "../TestFramework/TestSuiteResult.h"
+#include "TestFramework/TestCase.h"
+#include "TestFramework/TestSuiteResult.h"
 #include <iostream>
 #include <fstream>
 #include <stdio.h>
-#include "BlockStructuredFile.h"
+#include "Data/BlockStructuredFile.h"
 
 using namespace std;
 

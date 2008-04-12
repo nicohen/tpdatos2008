@@ -110,7 +110,7 @@ GLOBAL_CPP_H:=	$(CODE_PATH)StatementParserException.h\
 
 MAIN_CLASS= $(CODE_PATH)main.cpp
 MAIN_PABLO= $(CODE_PATH)main.cpp
-MAIN_NAHUEL= $(DATA_PATH)TestSuite_BlockStructuredFile.cpp
+MAIN_NAHUEL= $(CODE_PATH)TestSuite_BlockStructuredFile.cpp
 #$(CODE_PATH)main_nahuel.cpp
 MAIN_NICOLAS= $(CODE_PATH)main.cpp
 
