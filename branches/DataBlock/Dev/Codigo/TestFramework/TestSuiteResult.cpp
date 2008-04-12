@@ -1,5 +1,6 @@
-#include "StdAfx.h"
 #include "TestSuiteResult.h"
+#include <stdlib.h>
+#include <stdio.h>
 
 TestSuiteResult::TestSuiteResult(int failedTests )
 {

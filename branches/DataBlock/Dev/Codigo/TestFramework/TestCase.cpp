@@ -1,6 +1,7 @@
-#include "stdafx.h"
 #include "TestCase.h"
-#include "../Common.h"
+#include "../Utils.h"
+#include <stdlib.h>
+#include <stdio.h>
 
 TestCase::TestCase(char* testName,int* failedTests){
 	_rest=true;
@@ -61,3 +62,4 @@ void TestCase::Assert_streq(char* expected, char* actual){
 void TestCase::Assert_inteq(int expected, int actual){
 	this->reportAssertion(new EqualsIntAssertion(expected,actual));
 }
+

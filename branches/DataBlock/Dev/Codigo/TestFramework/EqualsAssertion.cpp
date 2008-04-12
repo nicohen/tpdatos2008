@@ -1,6 +1,7 @@
-#include "stdafx.h"
 #include "EqualsAssertion.h"
-#include "string.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 
 EqualsAssertion::EqualsAssertion(char* expected, char* actual){
 		_actual=actual;

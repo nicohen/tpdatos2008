@@ -1,5 +1,6 @@
-#include "stdafx.h"
 #include "TrueAssertion.h"
+#include <stdlib.h>
+#include <stdio.h>
 
 TrueAssertion::TrueAssertion(bool expr){
 	_message=0;
@@ -23,7 +24,7 @@ void TrueAssertion::printFailMessage(){
 		if(_message!=0){
 			printf("Expected \"true\" but was \"false\". Msg: \"%s\"",_message);	
 		}else{
-			printf("Expected \"true\" but was \"false\"",_message);	
+			printf("Expected \"true\" but was \"false\"");	
 		}
 	}		
 }

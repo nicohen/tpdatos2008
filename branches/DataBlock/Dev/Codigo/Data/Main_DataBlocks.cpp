@@ -1,12 +1,10 @@
 // AlmacenX.cpp : Defines the entry point for the console application.
 //
 
-#include "stdafx.h"
 #include <iostream>
 #include <fstream>
 #include "../TestFramework/TestCase.h"
 #include "../TestFramework/TrueAssertion.h"
-#include "DataBlock.h"
 #include "../TestFramework/TestSuiteResult.h"
 #include <stdio.h>
 #include "../Common.h"
@@ -21,15 +19,15 @@ char * memblock;
 
 /*
 Escribe el contenido en el archivo con el formato adecuado
-*/
+
 void writeRecord(fstream* file, char* content){
 	char length=0;
 	length=(char)strlen(content);	
 	file->write(&length,1);
 	file->write(content,strlen(content));
 }
-
-
+*/
+/*
 void writeTestFile(char* filename){
 	fstream file (filename,ios::trunc|ios::in|ios::binary|ios::out);
 	if (file.is_open())
@@ -49,6 +47,7 @@ void writeTestFile(char* filename){
 	return;
 }
 
+
 int SIZEOF_RECORD_SIZE_SECTION = 1;
 
 void readFile(char* filename){
@@ -60,9 +59,9 @@ void readFile(char* filename){
 		cout << "File was opened\n";
 		file.seekg(0);
 
-		//Leo la primer seccion que es la seccion de "TAMAÑO". Indica el largo del string
+		//Leo la primer seccion que es la seccion de "TAMAï¿½O". Indica el largo del string
 		file.read(&lenght,SIZEOF_RECORD_SIZE_SECTION);
-		//Me muevo hacia adelante para pararme luego de la seccion de "TAMAÑO". Indica el largo del string
+		//Me muevo hacia adelante para pararme luego de la seccion de "TAMAï¿½O". Indica el largo del string
 		file.seekg(SIZEOF_RECORD_SIZE_SECTION,ios::beg);
 		
 		//Aloco memoria segun el largo del contenido
@@ -117,11 +116,11 @@ void Test_Block_TheClearMethodDoesIt(TestCase* test){
 	block->flush();
 	delete block;
 		
-	//test->Assert_True_m(hadSuccessRemoving(remove(filename)),"El DataBlock no creó ningun archivo");
+	//test->Assert_True_m(hadSuccessRemoving(remove(filename)),"El DataBlock no creï¿½ ningun archivo");
 	fstream file (filename,ios::in|ios::binary);
 	if(file.is_open()){
 		file.seekg (0, ios::end);
-		test->Assert_True_m(blockSize==file.tellg(),"El DataBlock creo un archivo de tamaño distinto a 512");
+		test->Assert_True_m(blockSize==file.tellg(),"El DataBlock creo un archivo de tamaï¿½o distinto a 512");
 		
 		file.seekg (0, ios::beg);
 		for(int i=0;i<blockSize;i++){
@@ -131,11 +130,11 @@ void Test_Block_TheClearMethodDoesIt(TestCase* test){
 				nonSpacesFound++;
 			}
 		}
-		test->Assert_True_m(nonSpacesFound==0,"El DataBlock dejó algunos espacios no vacios");
+		test->Assert_True_m(nonSpacesFound==0,"El DataBlock dejï¿½ algunos espacios no vacios");
 		file.close();
 	}
 	if(REMOVE_TEST_FILES){
-		test->Assert_True_m(hadSuccessRemoving(remove(filename)),"El DataBlock no creó ningun archivo");
+		test->Assert_True_m(hadSuccessRemoving(remove(filename)),"El DataBlock no creï¿½ ningun archivo");
 		remove(filename);
 	}
 }
@@ -150,7 +149,7 @@ Escribe el contenido en el archivo con el formato adecuado
 	file->write(content,strlen(content));
 }
 */
-
+/*
 void Test_Block_WritesRecordCountAtTheBeginingOfTheFile(TestCase* test){
 	char* filename="C:\\temp\\Test_Block_WritesRecordCountAtTheBeginingOfTheFile.bin";
 	DataBlock* block=NULL;
@@ -190,7 +189,8 @@ void Test_Block_WritesRecordCountAtTheBeginingOfTheFile(TestCase* test){
 		remove(filename);
 	}
 }
-
+*/
+/*
 void Test_Block_DoesNotMakesEfectiveUntilTheFlushMethodIsCalled(TestCase* test){
 	char* filename="C:\\temp\\Test_Block_DoesNotMakesEfectiveUntilTheFlushMethodIsCalled.bin";
 	DataBlock* block=NULL;
@@ -213,7 +213,7 @@ void Test_Block_DoesNotMakesEfectiveUntilTheFlushMethodIsCalled(TestCase* test){
 	if(file->is_open()){
 		file->close();
 	}else{
-		test->Assert_True_m(!file->is_open(),"El flush no creó ningun archivo");	
+		test->Assert_True_m(!file->is_open(),"El flush no creï¿½ ningun archivo");	
 	}
 	delete file;
 	delete block;
@@ -222,7 +222,7 @@ void Test_Block_DoesNotMakesEfectiveUntilTheFlushMethodIsCalled(TestCase* test){
 		remove(filename);
 	}
 }
-
+*/
 /*int _tmain(int argc, char* argv[]){
 	int failedTests=0;
 	

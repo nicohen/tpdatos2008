@@ -1,5 +1,6 @@
-#include "stdafx.h"
 #include "EqualsIntAssertion.h"
+#include <stdlib.h>
+#include <stdio.h>
 
 EqualsIntAssertion::EqualsIntAssertion(int expected, int actual){
 		_actual=actual;
@@ -18,3 +19,5 @@ void EqualsIntAssertion::printFailMessage(){
 		printf("Expected: \"%i\",But Was: \"%i\"", this->_expected, this->_actual);	
 	}		
 }
+
+

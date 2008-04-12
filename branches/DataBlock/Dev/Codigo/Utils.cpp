@@ -1,7 +1,9 @@
 #include "Utils.h"
 #include "string.h"
 #include "stdio.h"
+#include <fstream>
 
+using namespace std;
 char* cloneStr(char* source){
 	int len=0;
 	char* clon;
@@ -26,4 +28,23 @@ bool isNumeric(char* word){
 		i++;
 	}
 	return i==size;
+}
+
+bool existsFile(char* filename){
+	fstream* existingFile=NULL;
+	existingFile = new fstream(filename,ios::in|ios::binary);
+	if(existingFile->is_open()){
+		//Error, llamando al crear cuando ya existe el archivo
+		existingFile->close();
+		delete existingFile;
+		return true;
+	}
+	delete existingFile;
+	return false;
+}
+
+
+
+bool hadSuccessRemoving(int removeResponse){
+	return removeResponse==0;
 }

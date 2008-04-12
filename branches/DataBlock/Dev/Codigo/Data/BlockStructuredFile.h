@@ -1,7 +1,6 @@
 #ifndef BlockStructuredFile_H_
 #define BlockStructuredFile_H_
 
-
 #include "Block.h"
 #include <fstream>
 
@@ -48,3 +47,5 @@ public:
 };
 
 #endif /*BlockStructuredFile_H_*/
+
+

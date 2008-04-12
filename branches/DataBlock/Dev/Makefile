@@ -2,6 +2,8 @@
 
 #Es la ruta para llegar a los archivos que estan en el codigo
 CODE_PATH:= Codigo/
+DATA_PATH:= $(CODE_PATH)Data/
+TEST_PATH:= $(CODE_PATH)TestFramework/
 
 #TARGET es una variable que se va a usar mas abajo. Indica el nombre del archivo que se va a ejecutar 
 TARGET:= AlmacenX
@@ -48,7 +50,15 @@ GLOBAL_CPP:=	$(CODE_PATH)StatementParserException.cpp\
 	$(CODE_PATH)StatsStatement.cpp\
 	$(CODE_PATH)UpdateStatement.cpp\
 	$(CODE_PATH)EndStatement.cpp\
-	$(CODE_PATH)ParserException.cpp
+	$(CODE_PATH)ParserException.cpp\
+	$(DATA_PATH)BlockStructuredFile.cpp\
+	$(TEST_PATH)Assertion.cpp\
+	$(TEST_PATH)EqualsAssertion.cpp\
+	$(TEST_PATH)EqualsIntAssertion.cpp\
+	$(TEST_PATH)TrueAssertion.cpp\
+	$(TEST_PATH)TestCase.cpp\
+	$(TEST_PATH)TestSuiteResult.cpp	
+
 
 GLOBAL_CPP_H:=	$(CODE_PATH)StatementParserException.h\
 	$(CODE_PATH)ITokenizer.h\
@@ -87,12 +97,21 @@ GLOBAL_CPP_H:=	$(CODE_PATH)StatementParserException.h\
 	$(CODE_PATH)StatsStatement.h\
 	$(CODE_PATH)UpdateStatement.h\
 	$(CODE_PATH)EndStatement.h\
-	$(CODE_PATH)ParserException.h
+	$(CODE_PATH)ParserException.h\
+	$(DATA_PATH)BlockStructuredFile.h\
+	$(TEST_PATH)Assertion.h\
+	$(TEST_PATH)EqualsAssertion.h\
+	$(TEST_PATH)EqualsIntAssertion.h\
+	$(TEST_PATH)TrueAssertion.h\
+	$(TEST_PATH)TestCase.h\
+	$(TEST_PATH)TestSuiteResult.h
 
 #Si se quiere arrancar usando un "main" propio, crear el archivo con la funcion main adentro y decomentar la linea que corresponda
+
 MAIN_CLASS= $(CODE_PATH)main.cpp
 MAIN_PABLO= $(CODE_PATH)main.cpp
-MAIN_NAHUEL= $(CODE_PATH)main_nahuel.cpp
+MAIN_NAHUEL= $(DATA_PATH)TestSuite_BlockStructuredFile.cpp
+#$(CODE_PATH)main_nahuel.cpp
 MAIN_NICOLAS= $(CODE_PATH)main.cpp
 
 #Lo que esta antes de ":" es una etiqueta. A la derecha de ":" van todos (.h y .cpp) los archivos que se van a usar.
@@ -116,7 +135,8 @@ pablo: $(MAIN_PABLO) $(GLOBAL_CPP_H)
 
 
 nahuel: $(MAIN_NAHUEL) $(GLOBAL_CPP_H)
-	g++ -Wall $(MAIN_NAHUEL) $(GLOBAL_CPP) -o $(TARGET)
+	g++ -Wall $(MAIN_NAHUEL) \
+	$(GLOBAL_CPP) -o $(TARGET)
 
 nicolas: $(MAIN_NICOLAS) $(GLOBAL_CPP_H)
 	g++ -Wall $(MAIN_NICOLAS) $(GLOBAL_CPP) -o $(TARGET)		

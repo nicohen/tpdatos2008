@@ -1,4 +1,5 @@
-#ifndef DataBlock_H_
+/*
+ #ifndef DataBlock_H_
 #define DataBlock_H_
 
 
@@ -19,3 +20,4 @@ public:
 	void flush();
 };
 #endif /*DataBlock*/
+*/

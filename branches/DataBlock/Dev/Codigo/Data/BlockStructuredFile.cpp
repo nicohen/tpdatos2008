@@ -1,7 +1,5 @@
-#include "stdafx.h"
 #include "BlockStructuredFile.h"
-#include "../Common.h"
-
+#include "../Utils.h"
 
 
 BlockStructuredFile* BlockStructuredFile::Load(char* filename){
@@ -58,7 +56,7 @@ void BlockStructuredFile::load(){
 	this->_file->read((char*)&blockSize,sizeof(T_BLOCKSIZE));
 	
 	
-	//Cargo todo el bloque en un buffer y cargo las propiedades de ahí
+	//Cargo todo el bloque en un buffer y cargo las propiedades de ahï¿½
 	buffer=(char*)malloc(blockSize);	
 	this->_file->seekg (0, ios::beg);
 	this->_file->read(buffer,blockSize);	
@@ -135,3 +133,5 @@ T_BLOCKSIZE BlockStructuredFile::getBlockSize(){
 	this->_file->flush();
 
 	delete block;*/
+
+

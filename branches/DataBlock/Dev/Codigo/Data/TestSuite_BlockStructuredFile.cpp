@@ -1,8 +1,3 @@
-// AlmacenX.cpp : Defines the entry point for the console application.
-//
-
-#include "stdafx.h"
-#include "../Common.h"
 #include "../TestFramework/TestCase.h"
 #include "../TestFramework/TestSuiteResult.h"
 #include <iostream>
@@ -13,6 +8,7 @@
 using namespace std;
 
 bool REMOVE_TEST_FILES2=false;
+bool verbose=true;
 
 void REMOVE_OPTINALY(char* filename){
 	if(REMOVE_TEST_FILES2){
@@ -22,7 +18,7 @@ void REMOVE_OPTINALY(char* filename){
 
 void Test_WritesTheHeader(TestCase* test){
 	fstream* file=NULL;
-	char* filename="C:\\temp\\Test_BlockStructuredFile.bin";
+	char* filename="Test_BlockStructuredFile.bin";
 	T_BLOCKSIZE blockSize=0;
 	T_BLOCKCOUNT blockCount=0;
 	T_BLOCKSIZE firstBlockFreeSpace=0;
@@ -53,7 +49,7 @@ void Test_WritesTheHeader(TestCase* test){
 		file->close();
 		delete buffers;
 	}else{
-		test->Assert_True_m(file->is_open(),"El archivo no se creó");
+		test->Assert_True_m(file->is_open(),"El archivo no se creï¿½");
 	}
 	delete file;
 	REMOVE_OPTINALY(filename);
@@ -63,7 +59,7 @@ void Test_WritesTheHeader(TestCase* test){
 void Test_LoadsProperly(TestCase* test){
 	BlockStructuredFile* createdbsfile=NULL;
 	BlockStructuredFile* loadedbsfile=NULL;
-	char* filename="C:\\temp\\Test_LoadsProperly.bin";
+	char* filename="Test_LoadsProperly.bin";
 	remove(filename);
 
 	createdbsfile=BlockStructuredFile::Create(filename,512);
@@ -77,7 +73,7 @@ void Test_LoadsProperly(TestCase* test){
 }
 
 
-int _tmain(int argc, char* argv[]){
+int main(int argc, char* argv[]){
 	int failedTests=0;
 		
 	TestCase* test01=new TestCase("Test_WritesTheHeader",&failedTests);	
@@ -89,6 +85,5 @@ int _tmain(int argc, char* argv[]){
 	delete test02;	
 
 	delete new TestSuiteResult(failedTests);
-	system("pause");
 	return 0;
 }

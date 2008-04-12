@@ -1,5 +1,4 @@
-#include "stdafx.h"
-#include "DataBlock.h"
+/*#include "DataBlock.h"
 
 #include <iostream>
 #include <fstream>
@@ -43,3 +42,4 @@ void DataBlock::flush(){
 	file.write(this->_buffer,this->_size);
 	file.close();	
 }
+*/

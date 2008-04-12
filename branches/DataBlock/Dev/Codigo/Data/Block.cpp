@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "Block.h"
 #include "stdlib.h"
 
