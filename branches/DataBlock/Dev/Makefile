@@ -3,7 +3,7 @@
 #Es la ruta para llegar a los archivos que estan en el codigo
 CODE_PATH:= Codigo/
 DATA_PATH:= $(CODE_PATH)Data/
-TEST_PATH:= $(CODE_PATH)TestFramework/
+TEST_PATH:= $(CODE_PATH)TestingFramework/
 
 #TARGET es una variable que se va a usar mas abajo. Indica el nombre del archivo que se va a ejecutar 
 TARGET:= AlmacenX

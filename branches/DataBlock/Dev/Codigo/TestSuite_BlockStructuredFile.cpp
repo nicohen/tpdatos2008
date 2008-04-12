@@ -1,5 +1,5 @@
-#include "TestFramework/TestCase.h"
-#include "TestFramework/TestSuiteResult.h"
+#include "TestingFramework/TestCase.h"
+#include "TestingFramework/TestSuiteResult.h"
 #include <iostream>
 #include <fstream>
 #include <stdio.h>
