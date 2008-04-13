@@ -9,6 +9,7 @@ class Block
 private:
 	char* _content;
 	T_BLOCKSIZE _size;
+	T_BLOCKSIZE _freeSpace;
 public:
 	Block(T_BLOCKSIZE size);
 	Block(char* content,T_BLOCKSIZE size);
@@ -17,6 +18,8 @@ public:
 	virtual void setContent(char* content);
 	virtual void setFragment(char* content,T_BLOCKSIZE offset,T_BLOCKSIZE size);
 	virtual char* getContent();
+	
+	virtual void setFreeSpace(T_BLOCKSIZE space);
 	virtual T_BLOCKSIZE getSize();	
 	virtual T_BLOCKSIZE getFreeSpace();//Esto deberia ser sobreescrito por otros blocks
 	

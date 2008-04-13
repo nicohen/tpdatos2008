@@ -374,9 +374,14 @@ void Test_Block_SizeAndFreeSpace(TestCase* test){
 	block->getFreeSpace();
 	test->Assert_inteq(0,block->getFreeSpace());
 	test->Assert_inteq(512,block->getSize());
-		
+	block->setFreeSpace(20);
+	test->Assert_inteq(20,block->getFreeSpace());
 	delete block;
 	free(buffer);
+}
+
+void Test_BlockStructured_BUpdateBlock(TestCase* test){
+	
 }
 
 int main(int argc, char* argv[]){

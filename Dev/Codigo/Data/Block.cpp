@@ -5,6 +5,7 @@
 
 Block::Block(T_BLOCKSIZE size){
 	this->_size=size;
+	this->_freeSpace=size;
 	this->_content=(char*)malloc(this->_size);
 }
 
@@ -15,6 +16,7 @@ Block::~Block(){
 
 Block::Block(char* content,T_BLOCKSIZE size){
 	this->_size=size;
+	this->_freeSpace=0;
 	this->_content=(char*)malloc(this->_size);
 	this->setContent(content);
 }
@@ -31,7 +33,11 @@ T_BLOCKSIZE Block::getSize(){
 	return this->_size;
 }
 T_BLOCKSIZE Block::getFreeSpace(){
-	return 0;
+	return this->_freeSpace;
+}
+
+void Block::setFreeSpace(T_BLOCKSIZE space){
+	this->_freeSpace=space;
 }
 
 void Block::setContent(char* content){
