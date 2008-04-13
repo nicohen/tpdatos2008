@@ -158,3 +158,8 @@ Block* BlockStructuredFile::bGetContentBlock(T_BLOCKCOUNT contentBlockNumber){
 	return result;
 }
 
+void BlockStructuredFile::bAppendContentBlock(Block* block){
+	this->appendBlock(block->getContent());
+	//Aca hay que actualizar luego el header para decirle el espacio libre de este bloque. block->getFreeSpace()
+}
+
