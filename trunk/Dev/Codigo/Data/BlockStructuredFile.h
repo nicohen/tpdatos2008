@@ -14,7 +14,6 @@ _
 -
 */
 
-typedef unsigned int T_FILESIZE;//sizeof(T_BLOCKCOUNT) * sizeof(T_BLOCKSIZE)
 class BlockStructuredFile
 {
 
@@ -58,7 +57,7 @@ public:
 	void bUpdateContentBlock(T_BLOCKCOUNT contentBlockNumber,Block* block);	
 	Block* bGetContentBlock(T_BLOCKCOUNT contentBlockNumber);
 	void bAppendContentBlock(Block* block);
-	
+	void removeLastContentBlock();
 	
 	virtual ~BlockStructuredFile(void);
 };

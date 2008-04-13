@@ -3,6 +3,7 @@
 
 typedef unsigned short T_BLOCKSIZE;
 typedef unsigned short T_BLOCKCOUNT;
+typedef unsigned int T_FILESIZE;//sizeof(T_BLOCKCOUNT) * sizeof(T_BLOCKSIZE)
 
 class Block
 {
