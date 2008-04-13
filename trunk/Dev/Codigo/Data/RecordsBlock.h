@@ -2,10 +2,16 @@
 #define RecordsBlock_H_
 
 #include "Block.h"
+#include "RawRecord.h"
+#include <vector>
 
+using namespace std;
 class RecordsBlock: public Block
 {
 private:
+	vector<RawRecord*>* _records;
+	void writeRecord(char* content, T_BLOCKSIZE recordSize,T_BLOCKSIZE offset);
+	void writeAllRecords();
 public:
 	
 	RecordsBlock(T_BLOCKSIZE size);
@@ -20,6 +26,7 @@ public:
 	bool hasNext();
 	void deleteCurrent();
 	virtual T_BLOCKSIZE getFreeSpace();
+	virtual char* getContent();
 
 };
 

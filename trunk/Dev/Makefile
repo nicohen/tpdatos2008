@@ -56,6 +56,7 @@ GLOBAL_CPP:=	$(CODE_PATH)BufferedDataManager.cpp\
 	$(DATA_PATH)BlockStructuredFile.cpp\
 	$(DATA_PATH)BlockStructuredFileHeader.cpp\
 	$(DATA_PATH)MetadataBlock.cpp\
+	$(DATA_PATH)RawRecord.cpp\
 	$(DATA_PATH)Record.cpp\
 	$(TEST_PATH)Assertion.cpp\
 	$(TEST_PATH)EqualsAssertion.cpp\
@@ -106,6 +107,7 @@ GLOBAL_CPP_H:=	$(CODE_PATH)BufferedDataManager.h\
 	$(DATA_PATH)BlockStructuredFile.h\
 	$(DATA_PATH)BlockStructuredFileHeader.h\
 	$(DATA_PATH)MetadataBlock.h\
+	$(DATA_PATH)RawRecord.cpp\
 	$(DATA_PATH)Record.h\
 	$(TEST_PATH)Assertion.h\
 	$(TEST_PATH)EqualsAssertion.h\
