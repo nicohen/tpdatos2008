@@ -381,7 +381,33 @@ void Test_Block_SizeAndFreeSpace(TestCase* test){
 }
 
 void Test_BlockStructured_BUpdateBlock(TestCase* test){
+	BlockStructuredFile* file=NULL;
+	BlockStructuredFile* loadedfile=NULL;
+	Block* block=NULL;
+	Block* obtainedBlock=NULL;
+	char* filename="Test_BlockStructured_BUpdateBlock.bin";
+	char* buffer;
+	//char* obtainedbuffer;
+	buffer=createEmptyByteArray(512);*(buffer)='q';
+	block=new Block(buffer,512);
 	
+	
+	//Actualizo el primer bloque
+	createBlockStructuredFileOnDisk(filename,512);
+	file=BlockStructuredFile::Load(filename);
+	file->bUpdateContentBlock(0,block);
+	delete file;
+		
+	loadedfile=BlockStructuredFile::Load(filename);
+	obtainedBlock=loadedfile->bGetContentBlock(0);
+	
+	test->Assert_True_m(compareByteArray(buffer,obtainedBlock->getContent(),512),"Deberian ser iguales");
+	delete loadedfile;
+
+	free(buffer);
+	//free(obtainedbuffer);
+	delete block;
+	delete obtainedBlock;
 }
 
 int main(int argc, char* argv[]){
@@ -440,6 +466,11 @@ int main(int argc, char* argv[]){
 	TestCase* test13=new TestCase("Test_Block_SizeAndFreeSpace",&failedTests);	
 	Test_Block_SizeAndFreeSpace(test13);
 	delete test13;
+	
+	TestCase* test14=new TestCase("Test_BlockStructured_BUpdateBlock",&failedTests);	
+	Test_BlockStructured_BUpdateBlock(test14);
+	delete test14;
+	
 	
 	
 	delete new TestSuiteResult(failedTests);

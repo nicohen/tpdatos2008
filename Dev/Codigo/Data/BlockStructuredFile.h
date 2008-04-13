@@ -53,6 +53,9 @@ public:
 	void moveBlock(T_BLOCKCOUNT currentContentBlockNumber,T_BLOCKCOUNT destContentBlockNumber);
 	T_BLOCKCOUNT getFirstFreeBlockNumber();
 	
+	//Nuevos metodos que usan Block	
+	void bUpdateContentBlock(T_BLOCKCOUNT contentBlockNumber,Block* block);	
+	Block* bGetContentBlock(T_BLOCKCOUNT contentBlockNumber);
 	virtual ~BlockStructuredFile(void);
 };
 
