@@ -14,6 +14,7 @@ public:
 	char* getContent();
 	
 	virtual ~RawRecord();
+	
 };
 
 #endif /*RAWRECORD_H_*/
