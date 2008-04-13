@@ -4,6 +4,7 @@
 #include <fstream>
 #include <stdio.h>
 #include "Data/BlockStructuredFile.h"
+#include "Data/Block.h"
 
 using namespace std;
 
@@ -21,6 +22,7 @@ bool compareByteArray(char* array1,char* array2,T_BLOCKSIZE size){
 	T_BLOCKSIZE i=0;
 	for (i = 0; i < size; ++i) {
 		if(*(array1+i)!=*(array2+i)){
+			printf("\ncompare arrays false:pos %i, expected '%i'(%i), but was '%i'(%i)",i,*(array1+i),*(array1+i),*(array2+i),*(array2+i));
 			return false;
 		}
 	}
@@ -305,6 +307,78 @@ void Test_Append(TestCase* test){
 	delete appendedContent2;
 }
 
+void Test_Block_setContent(TestCase* test){
+	Block* block=NULL;
+	char* buffer;
+	block=new Block(512);
+	buffer=createEmptyByteArray(512);
+	*(buffer)='q';
+	block->setContent(buffer);
+	test->Assert_True_m(compareByteArray(buffer,block->getContent(),512),"Deberian ser iguales");
+	*(buffer)='o';
+	test->Assert_True_m(!compareByteArray(buffer,block->getContent(),512),"Deberian ser distintos");
+	delete block;
+	free(buffer);
+}
+
+void Test_Block_Constructor(TestCase* test){
+	Block* block=NULL;
+	char* buffer;
+	
+	buffer=createEmptyByteArray(512);
+	*(buffer)='q';
+	block=new Block(buffer,512);
+	test->Assert_True_m(compareByteArray(buffer,block->getContent(),512),"Deberian ser iguales");
+	*(buffer)='o';
+	test->Assert_True_m(!compareByteArray(buffer,block->getContent(),512),"Deberian ser distintos");
+	delete block;
+	free(buffer);
+}
+
+void Test_Block_setFragment(TestCase* test){
+	Block* block=NULL;
+	char* buffer;
+	char* expected;
+	char* fragment;
+	T_BLOCKSIZE offset;
+	buffer=createEmptyByteArray(512);
+	*(buffer)='q';
+	block=new Block(buffer,512);
+	
+	offset=5;
+	fragment=createEmptyByteArray(3);
+	*(fragment+offset)='n';
+	*(fragment+offset+1)='a';
+	*(fragment+offset+2)='h';
+	block->setFragment(fragment,offset,3);
+	
+	expected=createEmptyByteArray(512);
+	*(expected)='q';
+	*(expected+offset)='n';
+	*(expected+offset+1)='a';
+	*(expected+offset+2)='h';
+	test->Assert_True_m(compareByteArray(expected,block->getContent(),512),"Deberian ser iguales");
+		
+	delete block;
+	free(buffer);
+	free(expected);
+	free(fragment);
+}
+
+void Test_Block_SizeAndFreeSpace(TestCase* test){
+	Block* block=NULL;
+	char* buffer;
+	buffer=createEmptyByteArray(512);
+	*(buffer)='q';
+	block=new Block(buffer,512);
+	block->getFreeSpace();
+	test->Assert_inteq(0,block->getFreeSpace());
+	test->Assert_inteq(512,block->getSize());
+		
+	delete block;
+	free(buffer);
+}
+
 int main(int argc, char* argv[]){
 	int failedTests=0;
 	
@@ -349,6 +423,19 @@ int main(int argc, char* argv[]){
 	TestCase* test10=new TestCase("Test_Append",&failedTests);	
 	Test_Append(test10);
 	delete test10;
+	
+	TestCase* test11=new TestCase("Test_Block_Constructor",&failedTests);	
+	Test_Block_Constructor(test11);
+	delete test11;
+
+	TestCase* test12=new TestCase("Test_Block_setContent",&failedTests);	
+	Test_Block_setContent(test12);
+	delete test12;	
+	
+	TestCase* test13=new TestCase("Test_Block_SizeAndFreeSpace",&failedTests);	
+	Test_Block_SizeAndFreeSpace(test13);
+	delete test13;
+	
 	
 	delete new TestSuiteResult(failedTests);
 	return 0;

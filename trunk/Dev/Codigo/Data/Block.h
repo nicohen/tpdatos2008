@@ -3,7 +3,6 @@
 
 typedef unsigned short T_BLOCKSIZE;
 typedef unsigned short T_BLOCKCOUNT;
-//No funciona bien, solo usar la interfaz
 
 class Block
 {
@@ -13,13 +12,13 @@ private:
 public:
 	Block(T_BLOCKSIZE size);
 	Block(char* content,T_BLOCKSIZE size);
-	~Block(void);
+	virtual ~Block(void);
 
-	void set(T_BLOCKSIZE startPos,char* content,int size);
-	char* getContent();
-	int getSize();
-	
-	T_BLOCKSIZE getFreeSpace();//Esto deberia ser sobreescrito por otros blocks
+	virtual void setContent(char* content);
+	virtual void setFragment(char* content,T_BLOCKSIZE offset,T_BLOCKSIZE size);
+	virtual char* getContent();
+	virtual T_BLOCKSIZE getSize();	
+	virtual T_BLOCKSIZE getFreeSpace();//Esto deberia ser sobreescrito por otros blocks
 	
 };
 

@@ -1,5 +1,6 @@
 #include "Block.h"
-#include "stdlib.h"
+#include "../Utils.h"
+
 
 
 Block::Block(T_BLOCKSIZE size){
@@ -8,24 +9,32 @@ Block::Block(T_BLOCKSIZE size){
 }
 
 
+Block::~Block(){
+	free(this->_content);
+}
+
 Block::Block(char* content,T_BLOCKSIZE size){
 	this->_size=size;
 	this->_content=(char*)malloc(this->_size);
-	memcpy(this->_content,&content,sizeof(T_BLOCKSIZE));
+	this->setContent(content);
 }
 
-void Block::set(T_BLOCKSIZE startPos,char* content,int size){
-	memcpy(this->_content+startPos,&content,sizeof(T_BLOCKSIZE));
+void Block::setFragment(char* content,T_BLOCKSIZE offset,T_BLOCKSIZE size){
+	memcpy(this->_content+offset,content,size);
 }
 
 char* Block::getContent(){
 	return this->_content;
 }
 
-
-Block::~Block(void){
-	free(this->_content);
+T_BLOCKSIZE Block::getSize(){
+	return this->_size;
 }
-int Block::getSize(){
+T_BLOCKSIZE Block::getFreeSpace(){
 	return 0;
 }
+
+void Block::setContent(char* content){
+	this->setFragment(content,0,this->_size);
+}
+
