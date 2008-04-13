@@ -73,7 +73,7 @@ void Demon::processInputStatements(BufferedDataManager* bufferedDataManager, Out
 		statement = statementParser->getNext();
 		while (statement != NULL) {
 			bufferedDataManager->executeStatement(statement,outPutter);
-//			delete statement;
+			delete statement;
 			statement = statementParser->getNext();
 		}
 	} catch(KillDaemonException* kde) {

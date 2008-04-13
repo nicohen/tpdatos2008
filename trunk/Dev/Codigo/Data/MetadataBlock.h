@@ -1,24 +1,33 @@
 #ifndef METADATABLOCK_H_
 #define METADATABLOCK_H_
 
-class MetadataBlock
-{
+#include "../Field.h"
+#include "BlockStructuredFileHeader.h"
+#include <vector.h>
+
+class MetadataBlock {
+	
+private:
+	int _indexSize;
+	// {"secuencial","hash","secIndexado","indexado"}
+	int _fileType;
+	int _qtyFields;
+	vector<Field*>* _fields;
+	
 public:
 	MetadataBlock();
 	virtual ~MetadataBlock(void);
-	void load(char* blockContent);
-	char* save();
+	char* serialize();
 
-	//Completar con...
-	//PrimaryFieldType
-	//SecondaryFieldTypes
-	//Etc
-
-	
-	
-	//Las propiedades blockSize, blockCount y fileSize est�n en la clase BlockStructuredFile
-
-
+	int getIndexSize();
+	void setIndexSize(int indexSize);
+	int getFileType();
+	void setFileType(int fileType);
+	int getQtyFields();
+	void setQtyFields(int qtyFields);
+	void setSecondaryField(Field* field);
+	void setSecondaryFields(vector<Field*>* _fields);
+	Field* getNextSecondaryField();
 };
 
 #endif /*METADATABLOCK_H_*/
