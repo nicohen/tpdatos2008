@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include "Data/BlockStructuredFile.h"
 #include "Data/Block.h"
+#include "Data/RecordsBlock.h"
 
 using namespace std;
 
@@ -494,6 +495,17 @@ void Test_BlockStructured_removeLastContentBlock(TestCase* test){
 	delete block2;
 }
 
+
+void Test_RecordsBlock(TestCase* test){
+	RecordsBlock* recordsBlock=NULL;
+	char* buffer=NULL;
+	recordsBlock=new RecordsBlock(5);
+	buffer=createEmptyByteArray(10);
+	recordsBlock->appendRecord(buffer,10);
+	delete recordsBlock;
+	free(buffer);
+}
+
 int main(int argc, char* argv[]){
 	int failedTests=0;
 	
@@ -562,6 +574,10 @@ int main(int argc, char* argv[]){
 	/*TestCase* test16=new TestCase("Test_BlockStructured_removeLastContentBlock",&failedTests);	
 	Test_BlockStructured_removeLastContentBlock(test16);
 	delete test16;*/
+	
+	TestCase* test17=new TestCase("Test_RecordsBlock",&failedTests);	
+	Test_RecordsBlock(test17);
+	delete test17;
 	
 	
 	delete new TestSuiteResult(failedTests);
