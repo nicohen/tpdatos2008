@@ -1,4 +1,5 @@
 #include "DataFile.h"
+#include "string.h"
 
 DataFile::DataFile(char* fileName, int blockSize, int fileType, int indexSize, int secondaryFieldsCount, vector<Field*>* secondaryFields, SecondaryIndex* secondaryIndex) {
 	_fileName = cloneStr(fileName);
@@ -27,7 +28,17 @@ BlockStructuredFile* DataFile::getBlockStructuredFile() {
 
 void DataFile::create() {
 	static int FIRSTBLOCK = 0;
-	this->_blockStructuredFile->Create(this->getFileName(),this->getBlockSize());
+	char* ruta; 
+	string strBuffer;
+
+	//Realiza un append del nombre de la carpeta
+	strBuffer.append("Data/");
+	strBuffer.append(this->getFileName());
+
+	ruta = (char*) malloc(strlen(strBuffer.c_str()));
+	strcpy(ruta,strBuffer.c_str());
+
+	this->_blockStructuredFile->Create(ruta,this->getBlockSize());
 	this->_blockStructuredFile->updateContentBlock(FIRSTBLOCK,this->_metadataBlock->serialize());
 }
 

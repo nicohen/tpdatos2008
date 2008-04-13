@@ -7,7 +7,9 @@ EndStatement::EndStatement(char* filename):Statement(filename){
 
 
 StatementResult* EndStatement::execute(DataManager* anIDataManager){
-	return new StatementResult();
+	StatementResult* sr = new StatementResult();
+	sr->setResult("'Se llamó a la instruccion finalizar'");
+	return sr;
 }
 
 void EndStatement::writeStatementQuery(OutPutter* anOutPutter) {

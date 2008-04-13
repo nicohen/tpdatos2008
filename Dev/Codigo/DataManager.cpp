@@ -6,7 +6,8 @@ DataManager::~DataManager() {}
 
 void DataManager::addFile(DataFile* dataFile) {
 	dataFile->create();
-	this->_dataFiles->push_back(dataFile);
+	DEBUG("Hay que hacer Push Back en DataManager");
+//	this->_dataFiles->push_back(dataFile);
 }
 
 DataFile* DataManager::getFile(char* fileName) {
