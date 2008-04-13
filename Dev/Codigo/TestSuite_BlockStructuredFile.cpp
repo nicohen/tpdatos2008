@@ -452,6 +452,48 @@ void Test_BlockStructured_bAppendContentBlock(TestCase* test){
 	delete obtainedBlock;
 }
 
+Block* getSomeBlock(T_BLOCKSIZE size){
+	Block* res=NULL;
+	char* buffer1;
+	//char* obtainedbuffer;
+	buffer1=createEmptyByteArray(size);*(buffer1+1)='q';
+	res=new Block(buffer1,size);
+	free(buffer1);
+	return res;
+}
+
+void Test_BlockStructured_removeLastContentBlock(TestCase* test){
+	BlockStructuredFile* file=NULL;
+	BlockStructuredFile* loadedfile=NULL;
+	Block* block1=NULL;
+	Block* block2=NULL;
+	char* filename="Test_BlockStructured_removeLastContentBlock.bin";
+	
+	block1=getSomeBlock(512);
+	block2=getSomeBlock(512);
+	
+	//Agrego bloques
+	createBlockStructuredFileOnDisk(filename,512);
+	file=BlockStructuredFile::Load(filename);
+	file->bAppendContentBlock(block1);
+	file->bAppendContentBlock(block2);
+	delete file;
+	
+	loadedfile=BlockStructuredFile::Load(filename);
+	test->Assert_inteq(2,loadedfile->getContentBlockCount());
+	loadedfile->removeLastContentBlock();
+	test->Assert_inteq(1,loadedfile->getContentBlockCount());
+	delete loadedfile;
+	
+	loadedfile=BlockStructuredFile::Load(filename);
+	test->Assert_inteq(1,loadedfile->getContentBlockCount());test->Assert_inteq(1,loadedfile->getContentBlockCount());
+	delete loadedfile;
+	
+
+	delete block1;
+	delete block2;
+}
+
 int main(int argc, char* argv[]){
 	int failedTests=0;
 	
@@ -517,6 +559,9 @@ int main(int argc, char* argv[]){
 	Test_BlockStructured_bAppendContentBlock(test15);
 	delete test15;
 	
+	/*TestCase* test16=new TestCase("Test_BlockStructured_removeLastContentBlock",&failedTests);	
+	Test_BlockStructured_removeLastContentBlock(test16);
+	delete test16;*/
 	
 	
 	delete new TestSuiteResult(failedTests);
@@ -546,7 +591,7 @@ clase block??
 >>--Done --> clase header block??
 >>--Done --> Cambiar loadPropertiesFromBuffer por "load header from buffer"
 >>--Done --> Aclarar Indices
-Mover una parte de updateBlock a append block. cosa que el updateBlock solo actue cuando se actualice un bloque. Cuando se está agregando uno hay que llamar al append 
+>>--Done --> Mover una parte de updateBlock a append block. cosa que el updateBlock solo actue cuando se actualice un bloque. Cuando se está agregando uno hay que llamar al append 
 Que el block count calcule dependiendo del tamaño del archivo
 Espacios libres?
 

@@ -9,7 +9,7 @@ class BlockStructuredFileHeader
 {	
 private:
 	T_BLOCKSIZE _blockSize;	
-	T_BLOCKCOUNT _blockCount;	
+	T_BLOCKCOUNT _blockCount;
 		
 	char* getBlockSizePosition(char* reference);
 	char* getBlockCountPosition(char* reference);

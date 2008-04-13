@@ -28,7 +28,9 @@ BlockStructuredFile* BlockStructuredFile::Load(char* filename){
 	file->seekg (0, ios::beg);	
 	//Leo el primer campo (blockSize) para poder leer
 	file->read((char*)&blockSize,sizeof(T_BLOCKSIZE));
+	
 	delete file;
+	
 	
 	res=new BlockStructuredFile(filename);
 	res->load(blockSize);
@@ -161,5 +163,9 @@ Block* BlockStructuredFile::bGetContentBlock(T_BLOCKCOUNT contentBlockNumber){
 void BlockStructuredFile::bAppendContentBlock(Block* block){
 	this->appendBlock(block->getContent());
 	//Aca hay que actualizar luego el header para decirle el espacio libre de este bloque. block->getFreeSpace()
+}
+
+void BlockStructuredFile::removeLastContentBlock(){
+	
 }
 
