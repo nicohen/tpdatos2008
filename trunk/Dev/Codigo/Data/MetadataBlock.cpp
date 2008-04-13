@@ -22,7 +22,7 @@ char* MetadataBlock::serialize() {
 	int valor = 1;
 	cadena = (char*) malloc(sizeof(char));
 	cadena = (char*)valor;
-	printf("%c",cadena);	
+//	printf("%c",cadena);	
 	return cadena;
 }
 

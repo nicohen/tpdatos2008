@@ -37,7 +37,33 @@ void InsertionStatement::clearValues(vector<DataValue*>* values){
 }
 
 StatementResult* InsertionStatement::execute(DataManager* anIDataManager){
-	return new StatementResult();
+	StatementResult* sr = new StatementResult();
+	
+	char* cadena; 
+	string buffer;
+
+	/**
+	 * Dejo comentado esto
+	 */
+//	DataType* dataType;
+//	vector<DataValue*>::iterator iter;
+//	for (iter = this->getValues()->begin(); iter != this->getValues()->end(); iter++ ) {
+//		 dataType = ((DataValue*)*iter)->getType();
+//		 value = ((DataValue*)*iter)->getType();
+//	}
+	
+	buffer.append("'Se inserto el registro ['");
+//	buffer.append(dataValue->toString());
+	buffer.append("pepito"); //hardcodeado
+	buffer.append("',");
+	buffer.append("5"); //hardcodeado
+	buffer.append(",|...|]' Res=1"); //hardcodeado
+
+	cadena = (char*) malloc(strlen(buffer.c_str()));
+	strcpy(cadena,buffer.c_str());
+
+	sr->setResult(cadena);
+	return sr;
 }
 
 void InsertionStatement::writeStatementQuery(OutPutter* outPutter){

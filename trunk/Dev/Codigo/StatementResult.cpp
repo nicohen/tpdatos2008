@@ -12,11 +12,21 @@ bool StatementResult::wasOk(){
 	return true;
 }
 
+void StatementResult::setResult(char* result) {
+	this->_result = result;
+}
+
+char* StatementResult::getResult() {
+	return this->_result;
+}
 /*
 vector<Record*>* StatementResult::getFoundRegistries(){
 	return 0;
 }
 */
 void StatementResult::write(OutPutter* outputter){
-	//Escribe el resultado en el outputter	
+	outputter->printLine(getResult());
+	DEBUG(getResult());
 }
+
+

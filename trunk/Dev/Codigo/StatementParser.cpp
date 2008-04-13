@@ -3,6 +3,7 @@
 #include "ParserException.h"
 #include "StringValue.h"
 #include "IntValue.h"
+#include <stdlib.h>
 
 using namespace Parsing;
 StatementParser::StatementParser(Parsing::ITokenizer* tokenizer,OutPutter* outputter){

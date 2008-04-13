@@ -37,10 +37,6 @@ void Demon::run(void){
 
 			processInputStatements(bufferedDataManager, outPutter, inputFile);
 
-			outPutter->printLine("Escribo en el archivo Out...");
-			DEBUG("Fin escritura en archivo Out");
-
-			
 			inputFile->close();
 			inputFile->delet();
 			
@@ -68,11 +64,13 @@ void Demon::processInputStatements(BufferedDataManager* bufferedDataManager, Out
  	
  	Parsing::Tokenizer* tokenizer = new Parsing::Tokenizer(inputFile,'\'',delimiters,9,keywords,14);
 	StatementParser* statementParser = new StatementParser(tokenizer,outPutter);
-
+	StatementResult* statementResult = new StatementResult();
+	
 	try {
 		statement = statementParser->getNext();
 		while (statement != NULL) {
-			bufferedDataManager->executeStatement(statement,outPutter);
+			statementResult = bufferedDataManager->executeStatement(statement,outPutter);
+			statementResult->write(outPutter);
 			delete statement;
 			statement = statementParser->getNext();
 		}
