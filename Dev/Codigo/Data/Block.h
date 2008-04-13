@@ -19,6 +19,8 @@ public:
 	char* getContent();
 	int getSize();
 	
+	T_BLOCKSIZE getFreeSpace();//Esto deberia ser sobreescrito por otros blocks
+	
 };
 
 #endif /*Block_H_*/
