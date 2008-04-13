@@ -10,8 +10,10 @@ class RecordsBlock: public Block
 {
 private:
 	vector<RawRecord*>* _records;
-	void writeRecord(char* content, T_BLOCKSIZE recordSize,T_BLOCKSIZE offset);
+	//void writeRecord(char* content, T_BLOCKSIZE recordSize,T_BLOCKSIZE offset);
 	void writeAllRecords();
+	void writeOnBlock(RawRecord* record,Block* block,T_BLOCKSIZE offset);
+	T_BLOCKSIZE getSerializationSize(RawRecord* record);
 public:
 	
 	RecordsBlock(T_BLOCKSIZE size);
@@ -27,6 +29,7 @@ public:
 	void deleteCurrent();
 	virtual T_BLOCKSIZE getFreeSpace();
 	virtual char* getContent();
+	
 
 };
 

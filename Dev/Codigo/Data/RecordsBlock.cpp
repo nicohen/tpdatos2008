@@ -32,14 +32,20 @@ void RecordsBlock::writeAllRecords(){
 	for (iter = this->_records->begin(); iter != this->_records->end(); iter++ )
 	{	
 		irec=(RawRecord*)*iter;
-		this->writeRecord(irec->getContent(),irec->getSize(),offset);
-		offset+=sizeof(T_BLOCKSIZE)+irec->getSize();
+		this->writeOnBlock(irec,this,offset);
+		offset+=this->getSerializationSize(irec);
 	}	
 }
 
-void RecordsBlock::writeRecord(char* content, T_BLOCKSIZE recordSize,T_BLOCKSIZE offset){
-	this->setFragment((char*)&recordSize,offset,sizeof(T_BLOCKSIZE));
-	this->setFragment(content,offset+sizeof(T_BLOCKSIZE),recordSize);
+void RecordsBlock::writeOnBlock(RawRecord* record,Block* block,T_BLOCKSIZE offset){
+	T_BLOCKSIZE recordSize;
+	recordSize=record->getSize();
+	block->setFragment((char*)&recordSize,offset,sizeof(T_BLOCKSIZE));
+	block->setFragment(record->getContent(),offset+sizeof(T_BLOCKSIZE),recordSize);
+}
+
+T_BLOCKSIZE RecordsBlock::getSerializationSize(RawRecord* record){
+	return sizeof(T_BLOCKSIZE)+record->getSize();
 }
 
 void RecordsBlock::appendRecord(char* content,T_BLOCKSIZE recordSize){
