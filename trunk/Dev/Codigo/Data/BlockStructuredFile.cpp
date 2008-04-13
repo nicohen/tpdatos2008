@@ -145,3 +145,16 @@ T_BLOCKCOUNT BlockStructuredFile::getContentBlockCount(){
 	return this->getBlockCount()-this->getHeaderBlockCount();
 }
 
+void BlockStructuredFile::bUpdateContentBlock(T_BLOCKCOUNT contentBlockNumber,Block* block){
+	this->updateContentBlock(contentBlockNumber,block->getContent());
+}
+
+Block* BlockStructuredFile::bGetContentBlock(T_BLOCKCOUNT contentBlockNumber){
+	Block* result=NULL;
+	char* buffer;
+	buffer=this->getContentBlock(contentBlockNumber);
+	result=new Block(buffer,this->getBlockSize());
+	free(buffer);
+	return result;
+}
+
