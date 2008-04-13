@@ -56,6 +56,9 @@ public:
 	//Nuevos metodos que usan Block	
 	void bUpdateContentBlock(T_BLOCKCOUNT contentBlockNumber,Block* block);	
 	Block* bGetContentBlock(T_BLOCKCOUNT contentBlockNumber);
+	void bAppendContentBlock(Block* block);
+	
+	
 	virtual ~BlockStructuredFile(void);
 };
 

@@ -410,6 +410,48 @@ void Test_BlockStructured_BUpdateBlock(TestCase* test){
 	delete obtainedBlock;
 }
 
+
+void Test_BlockStructured_bAppendContentBlock(TestCase* test){
+	BlockStructuredFile* file=NULL;
+	BlockStructuredFile* loadedfile=NULL;
+	Block* block1=NULL;
+	Block* block2=NULL;
+	Block* obtainedBlock=NULL;
+	char* filename="Test_BlockStructured_BAppendBlock.bin";
+	char* buffer1;
+	char* buffer2;
+	//char* obtainedbuffer;
+	buffer1=createEmptyByteArray(512);*(buffer1+1)='q';
+	buffer2=createEmptyByteArray(512);*(buffer2+5)='4';
+
+	
+	block1=new Block(buffer1,512);
+	block2=new Block(buffer2,512);
+	
+	//Agrego bloques
+	createBlockStructuredFileOnDisk(filename,512);
+	file=BlockStructuredFile::Load(filename);
+	file->bAppendContentBlock(block1);
+	file->bAppendContentBlock(block2);
+	delete file;
+	
+	loadedfile=BlockStructuredFile::Load(filename);
+	obtainedBlock=loadedfile->bGetContentBlock(0);	
+	test->Assert_True_m(compareByteArray(buffer1,obtainedBlock->getContent(),512),"Deberian ser iguales");
+	delete obtainedBlock;
+	
+	
+	obtainedBlock=loadedfile->bGetContentBlock(1);
+	test->Assert_True_m(compareByteArray(buffer2,obtainedBlock->getContent(),512),"Deberian ser iguales");
+	delete loadedfile;
+
+	free(buffer1);
+	free(buffer2);
+	delete block1;
+	delete block2;
+	delete obtainedBlock;
+}
+
 int main(int argc, char* argv[]){
 	int failedTests=0;
 	
@@ -470,6 +512,10 @@ int main(int argc, char* argv[]){
 	TestCase* test14=new TestCase("Test_BlockStructured_BUpdateBlock",&failedTests);	
 	Test_BlockStructured_BUpdateBlock(test14);
 	delete test14;
+	
+	TestCase* test15=new TestCase("Test_BlockStructured_BAppendBlock",&failedTests);	
+	Test_BlockStructured_bAppendContentBlock(test15);
+	delete test15;
 	
 	
 	
