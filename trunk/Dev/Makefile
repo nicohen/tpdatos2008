@@ -36,6 +36,7 @@ GLOBAL_CPP:=	$(CODE_PATH)BufferedDataManager.cpp\
 	$(CODE_PATH)KillDaemonException.cpp\
 	$(CODE_PATH)OutPutter.cpp\
 	$(CODE_PATH)ParserException.cpp\
+	$(DATA_PATH)RecordsBlock.cpp\
 	$(CODE_PATH)RemoveStatement.cpp\
 	$(CODE_PATH)SecondaryIndex.cpp\
 	$(CODE_PATH)Statement.cpp\
@@ -86,6 +87,7 @@ GLOBAL_CPP_H:=	$(CODE_PATH)BufferedDataManager.h\
 	$(CODE_PATH)OutPutter.h\
 	$(CODE_PATH)ParserException.h\
 	$(CODE_PATH)QueryStatement.h\
+	$(DATA_PATH)RecordsBlock.h\
 	$(CODE_PATH)RemoveStatement.h\
 	$(CODE_PATH)SecondaryIndex.h\
 	$(CODE_PATH)Statement.h\

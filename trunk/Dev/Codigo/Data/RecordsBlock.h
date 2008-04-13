@@ -1,23 +1,25 @@
 #ifndef RecordsBlock_H_
 #define RecordsBlock_H_
 
-class RecordsBlock
+#include "Block.h"
+
+class RecordsBlock: public Block
 {
-	char* _content;
+private:
 public:
 	
-	RecordsBlock(char* content);
-	RecordsBlock();
+	RecordsBlock(T_BLOCKSIZE size);
+	RecordsBlock(char* content,T_BLOCKSIZE size);
 	virtual ~RecordsBlock(void);
 
-	void appendRecord(char* content);
+	void appendRecord(char* content,T_BLOCKSIZE recordSize);
 	
 	char* moveFirst();
 	char* moveNext();
 	char* getCurrent();
 	bool hasNext();
 	void deleteCurrent();
-	int getFreeSpace();
+	virtual T_BLOCKSIZE getFreeSpace();
 
 };
 
