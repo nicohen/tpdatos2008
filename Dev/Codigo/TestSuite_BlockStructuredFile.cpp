@@ -499,11 +499,30 @@ void Test_BlockStructured_removeLastContentBlock(TestCase* test){
 void Test_RecordsBlock(TestCase* test){
 	RecordsBlock* recordsBlock=NULL;
 	char* buffer=NULL;
+	//char* expected=NULL;
+	char* updatedBuffer=NULL;
+	T_BLOCKSIZE expectedRecordSize=0;
+	T_BLOCKSIZE actualRecordSize=0;
+	
 	recordsBlock=new RecordsBlock(5);
-	buffer=createEmptyByteArray(10);
-	recordsBlock->appendRecord(buffer,10);
+	buffer=createEmptyByteArray(1);
+	//expected=createEmptyByteArray(2);
+	*(buffer)='e';	
+	recordsBlock->appendRecord(buffer,1);
+	updatedBuffer=recordsBlock->getContent();
+	
+	//Creo el array que espero recibir
+	//expectedRecordSize=1;
+	//memcpy(expected,(char*)&expectedRecordSize,sizeof(T_BLOCKSIZE));
+	//*(expected+sizeof(T_BLOCKSIZE))='e';
+	expectedRecordSize=1;
+	memcpy(&actualRecordSize,updatedBuffer,sizeof(T_BLOCKSIZE));
+	test->Assert_inteq(expectedRecordSize,actualRecordSize);
+	test->Assert_True_m(compareByteArray(updatedBuffer+sizeof(T_BLOCKSIZE),"e",1),"Derian ser arrays iguales");
+	
 	delete recordsBlock;
 	free(buffer);
+	free(updatedBuffer);
 }
 
 int main(int argc, char* argv[]){
