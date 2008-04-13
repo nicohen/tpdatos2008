@@ -34,6 +34,7 @@ private:
 	T_FILESIZE  getBlockFilePositionFromAbsoluteBlockCount(T_BLOCKCOUNT contentBlockNumber);
 	void updateBlock(T_BLOCKCOUNT blockNumber,char* content);
 	void notifyBlockUpdated(T_BLOCKCOUNT blockNumber);
+	T_BLOCKCOUNT getLastBlockIndex();
 public:
 	
 	char* getBlock(T_BLOCKCOUNT blockNumber);//ESTO ES PRIVADO

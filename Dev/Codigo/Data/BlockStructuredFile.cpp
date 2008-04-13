@@ -89,12 +89,13 @@ void BlockStructuredFile::saveHeader(){
 	delete buffer;
 }
 
+T_BLOCKCOUNT BlockStructuredFile::getLastBlockIndex(){
+	return this->getBlockCount()-1;
+}
+
 void BlockStructuredFile::appendBlock(char* content){
-	char* buffer;
-	buffer=(char*)malloc(this->getBlockSize());
-	memcpy(buffer,content,this->getBlockSize());
-	this->setBlockCount(this->getBlockCount()+1);
-	free (buffer);
+	this->updateBlock(this->getLastBlockIndex()+1,content);
+	this->notifyBlockUpdated(this->getLastBlockIndex()+1);
 }
 
 void BlockStructuredFile::notifyBlockUpdated(T_BLOCKCOUNT blockNumber){

@@ -273,6 +273,38 @@ void Test_GetBlock(TestCase* test){
 	free(obtainedbuffer);
 }
 
+void Test_Append(TestCase* test){
+	BlockStructuredFile* file=NULL;
+	BlockStructuredFile* loadedfile=NULL;
+	char* filename="Test_Append.bin";
+	char* appendedContent1;
+	char* appendedContent2;
+	char* obtainedbuffer;
+	
+	appendedContent1=createEmptyByteArray(512);
+	appendedContent2=createEmptyByteArray(512);
+	
+	*(appendedContent2+3)='x';
+	//Actualizo el primer bloque
+	createBlockStructuredFileOnDisk(filename,512);
+	file=BlockStructuredFile::Load(filename);
+	file->appendBlock(appendedContent1);
+	test->Assert_inteq(1,file->getContentBlockCount());
+	file->appendBlock(appendedContent2);
+	test->Assert_inteq(2,file->getContentBlockCount());
+	delete file;
+	
+	loadedfile=BlockStructuredFile::Load(filename);
+	test->Assert_inteq(2,loadedfile->getContentBlockCount());
+	obtainedbuffer=loadedfile->getContentBlock(1);
+	test->Assert_True_m(compareByteArray(appendedContent2,obtainedbuffer,512),"Deberian ser iguales");
+	
+	delete loadedfile;
+	delete obtainedbuffer;
+	delete appendedContent1;
+	delete appendedContent2;
+}
+
 int main(int argc, char* argv[]){
 	int failedTests=0;
 	
@@ -314,6 +346,9 @@ int main(int argc, char* argv[]){
 	Test_GetBlock(test09);
 	delete test09;
 	
+	TestCase* test10=new TestCase("Test_Append",&failedTests);	
+	Test_Append(test10);
+	delete test10;
 	
 	delete new TestSuiteResult(failedTests);
 	return 0;
@@ -330,8 +365,8 @@ int main(int argc, char* argv[]){
 >>--Done --> static BlockStructuredFile* Create(char* filename,int blockSize);
 >>--Done --> int getBlockSize();
 >>--Done --> int getBlockCount();
-void appendBlock(char* content); (tener en cuenta que el indice tiene que estar defasado)
-char* getBlock(int blockNumber);
+>>--Done --> void appendBlock(char* content); (tener en cuenta que el indice tiene que estar defasado)
+>>--Done --> char* getBlock(int blockNumber);
 void removeBlock(int blockNumber);
 Actualizar la lista de espacios libres en bloques en cada operacion
 int getFirstFreeBlockNumber();
@@ -343,8 +378,8 @@ clase block??
 >>--Done --> Cambiar loadPropertiesFromBuffer por "load header from buffer"
 >>--Done --> Aclarar Indices
 Mover una parte de updateBlock a append block. cosa que el updateBlock solo actue cuando se actualice un bloque. Cuando se está agregando uno hay que llamar al append 
-
-
+Que el block count calcule dependiendo del tamaño del archivo
+Espacios libres?
 
 VIEJO!!!!VIEJO!!!!VIEJO!!!!VIEJO!!!!VIEJO!!!!
 >>--Done --> Crear un bloque de tama�o N en un archivo dado
