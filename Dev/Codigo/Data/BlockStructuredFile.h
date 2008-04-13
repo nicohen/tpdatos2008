@@ -23,7 +23,6 @@ private:
 	char* _filename;
 	BlockStructuredFileHeader* _header;
 
-	BlockStructuredFile(char* filename);
 	void load(T_BLOCKSIZE blockSize);
 	void saveHeader();
 	
@@ -36,6 +35,8 @@ private:
 	void notifyBlockUpdated(T_BLOCKCOUNT blockNumber);
 	T_BLOCKCOUNT getLastBlockIndex();
 public:
+	
+	BlockStructuredFile(char* filename);
 	
 	static BlockStructuredFile* Load(char* filename);
 	static BlockStructuredFile* Create(char* filename,T_BLOCKSIZE blockSize);

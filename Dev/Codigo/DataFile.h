@@ -8,7 +8,8 @@
 #include "Data/BlockStructuredFile.h"
 #include "Utils.h"
 #include "Data/Record.h"
-#include <vector>
+#include "SecondaryIndex.h"
+#include <vector.h>
 
 class DataFile {
 
@@ -22,9 +23,19 @@ private:
 	
 public:
 	//Constructores y destructores 
-	DataFile(char* filename);
+	DataFile(char* fileName, int blockSize, int fileType, int indexSize, int secondaryFieldsCount, vector<Field*>* secondaryFields, SecondaryIndex* secondaryIndex);
 	virtual ~DataFile();
 	
+	void create();
+	char* getFileName();
+	int getBlockSize();
+	
+	void setBlockStructuredFile(BlockStructuredFile* blockStructuredFile);
+	BlockStructuredFile* getBlockStructuredFile();
+	void setMetadataBlock(MetadataBlock* metadataBlock);
+	MetadataBlock* getMetadataBlock();
+
+	/*
 	void open();
 	void close();
 	void insert(Record* record);
@@ -33,9 +44,7 @@ public:
 	Record* createRecord();
 	int delet(int fieldNumber, DataValue* expectedData);
 	Record* readRecord();
-	void setBlockStructuredFile(BlockStructuredFile* blockStructuredFile);
-	BlockStructuredFile* getBlockStructuredFile();
-
+	*/
 };
 
 #endif /*DATAFILE_H_*/
