@@ -16,6 +16,7 @@ TARGET:= AlmacenX
 #Archivos que estan en producción       
 				
 GLOBAL_CPP:=	$(CODE_PATH)BufferedDataManager.cpp\
+	$(DATA_PATH)Block.cpp\
 	$(CODE_PATH)CreateStatement.cpp\
 	$(CODE_PATH)DataFile.cpp\
 	$(CODE_PATH)DataManager.cpp\
@@ -64,6 +65,7 @@ GLOBAL_CPP:=	$(CODE_PATH)BufferedDataManager.cpp\
 
 
 GLOBAL_CPP_H:=	$(CODE_PATH)BufferedDataManager.h\
+	$(DATA_PATH)Block.h\
 	$(CODE_PATH)CreateStatement.h\
 	$(CODE_PATH)DataFile.h\
 	$(CODE_PATH)DataManager.h\

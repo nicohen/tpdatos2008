@@ -77,7 +77,7 @@ void BlockStructuredFile::load(T_BLOCKSIZE blockSize){
 	buffer=(char*)malloc(blockSize);
 	this->_file->seekg (0, ios::beg);
 	this->_file->read(buffer,blockSize);	
-	this->_header->loadPropertiesFromBuffer(buffer);	
+	this->_header->loadPropertiesFromBuffer(buffer);
 	delete buffer;
 }
 
