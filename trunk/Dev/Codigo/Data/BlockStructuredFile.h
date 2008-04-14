@@ -33,6 +33,10 @@ private:
 	void updateBlock(T_BLOCKCOUNT blockNumber,char* content);
 	void notifyBlockUpdated(T_BLOCKCOUNT blockNumber);
 	T_BLOCKCOUNT getLastBlockIndex();
+	
+	char* getContentBlock(T_BLOCKCOUNT contentBlockNumber);	//El resultado es un puntero alocado en memoria dinamica, por lo tanto hay que eliminarlo
+	void updateContentBlock(T_BLOCKCOUNT contentBlockNumber,char* content);
+	void appendBlock(char* content);
 public:
 	
 	BlockStructuredFile(char* filename);
@@ -41,9 +45,7 @@ public:
 	static BlockStructuredFile* Create(char* filename,T_BLOCKSIZE blockSize);
 
 	char* getBlock(T_BLOCKCOUNT blockNumber);//ESTO ES PRIVADO
-	char* getContentBlock(T_BLOCKCOUNT contentBlockNumber);	//El resultado es un puntero alocado en memoria dinamica, por lo tanto hay que eliminarlo
-	void updateContentBlock(T_BLOCKCOUNT contentBlockNumber,char* content);
-	void appendBlock(char* content);
+	
 	T_BLOCKSIZE getBlockSize();
 	T_BLOCKCOUNT getBlockCount();
 	T_BLOCKCOUNT getContentBlockCount();
