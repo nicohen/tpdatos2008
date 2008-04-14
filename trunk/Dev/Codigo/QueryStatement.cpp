@@ -23,7 +23,7 @@ StatementResult* QueryStatement::execute(DataManager* dataManager) {
 //	//TODO - Meter el BlockStructuredFile dentro del DataFile
 //	BlockStructuredFile* bsf = df->getBlockStructuredFile();
 //	for (int i=0; i<bsf->getContentBlockCount(); i++) {
-//		recordsBlock = (RecordsBlock*)bsf->bGetContentBlock(i,&(df->createRecordsBlock));
+//		recordsBlock = (RecordsBlock*)bsf->bGetContentBlock(i,&(RecordsBlock::createRecordsBlock));
 //		rawRecords = recordsBlock->getRecords();
 //		vector<RawRecord*>::iterator iter;
 //		for(iter = rawRecords->begin(); iter != rawRecords->end(); iter++) {
