@@ -1,4 +1,5 @@
 #include "IntType.h"
+#include <string.h>
 
 IntType::IntType()
 {
@@ -18,4 +19,10 @@ int IntType::getUniqueIdentifier(){
 
 IntType::~IntType()
 {
+}
+
+DataValue* IntType::deserializeValue(char* data){
+	int value;
+	memcpy(&value,data,sizeof(int));
+	return new IntValue(value);
 }

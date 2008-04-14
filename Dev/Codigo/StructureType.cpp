@@ -68,3 +68,7 @@ bool StructureType::isInstanceOf(void* anObject){
 	*/
 	return false;
 }
+
+DataValue* StructureType::deserializeValue(char* data){
+	return new StructureValue();
+}

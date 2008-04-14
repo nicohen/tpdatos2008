@@ -2,6 +2,8 @@
 #define DATAVALUE_H_
 
 #include "DataType.h"
+ 
+class DataType;
 
 class DataValue
 {

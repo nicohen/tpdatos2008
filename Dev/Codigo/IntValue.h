@@ -3,6 +3,7 @@
 
 #include "DataValue.h"
 #include "IntType.h"
+
 class IntValue:public DataValue
 {
 private:

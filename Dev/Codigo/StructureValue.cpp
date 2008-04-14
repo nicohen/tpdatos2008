@@ -1,4 +1,5 @@
 #include "StructureValue.h"
+#include "StructureType.h"
 
 StructureValue::StructureValue()
 {
