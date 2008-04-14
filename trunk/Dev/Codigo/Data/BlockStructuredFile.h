@@ -16,7 +16,7 @@ _
 
 class BlockStructuredFile
 {
-
+	//typedef Block* (*BlockCreatorFunction)(char* content,T_BLOCKSIZE size);
 private: 
 	fstream* _file;
 	char* _filename;
@@ -57,7 +57,7 @@ public:
 	
 	//Nuevos metodos que usan Block	
 	void bUpdateContentBlock(T_BLOCKCOUNT contentBlockNumber,Block* block);	
-	Block* bGetContentBlock(T_BLOCKCOUNT contentBlockNumber);
+	Block* bGetContentBlock(T_BLOCKCOUNT contentBlockNumber,Block* (*BlockCreatorFunction)(char* content,T_BLOCKSIZE size));
 	void bAppendContentBlock(Block* block);
 	void removeLastContentBlock();
 	
