@@ -7,27 +7,30 @@
 QueryStatement::QueryStatement(char* filename):Statement(filename){
 }
 
-
 StatementResult* QueryStatement::execute(DataManager* dataManager) {
 	// obtener bloque por bloque
 	// llenar cada RecordBlock con un bloque
 	// devuelve un array de bytes
 	// tengo que crear un record a partir de un array de bytes que devuelve el recordblock
-	// 
 
-	/**
-	 * Dejo esto comentado
-	 */
-//	char* block;
-//	char* record;
+//	vector<RawRecord*>* rawRecords;
+//	RecordsBlock* recordsBlock;
+//	RawRecord* rawRecord;
+//	Record* record;
+//	DataValue* dataValue;
 //	
 //	DataFile* df = dataManager->getFile(this->getFileName());
+//	//TODO - Meter el BlockStructuredFile dentro del DataFile
 //	BlockStructuredFile* bsf = df->getBlockStructuredFile();
-//	RecordsBlock* rb;
-//	for (int i=1; i<bsf->getBlockCount(); i++) {
-//		block = bsf->getBlock(i);
-//		rb = new RecordsBlock(block,bsf->getBlockSize());
-//		record = rb->getContent();
+//	for (int i=0; i<bsf->getContentBlockCount(); i++) {
+//		recordsBlock = (RecordsBlock*)bsf->bGetContentBlock(i,&(df->createRecordsBlock));
+//		rawRecords = recordsBlock->getRecords();
+//		vector<RawRecord*>::iterator iter;
+//		for(iter = rawRecords->begin(); iter != rawRecords->end(); iter++) {
+//			//Chequear si el contenido concuerda
+//			if (((RawRecord*)*iter)->getContent())
+//			rawRecord = ((RawRecord*)*iter);
+//		}
 //	}
 
 	StatementResult* sr = new StatementResult();
@@ -36,7 +39,6 @@ StatementResult* QueryStatement::execute(DataManager* dataManager) {
 	string buffer;
 	string intToString;
 	stringstream out;
-//	DataValue* dataValue = this->getValue();
 	
 	out<<this->getFieldNumber();
 	intToString = out.str();
