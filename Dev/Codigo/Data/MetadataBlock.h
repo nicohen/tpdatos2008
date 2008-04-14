@@ -3,7 +3,9 @@
 
 #include "../Field.h"
 #include "BlockStructuredFileHeader.h"
-#include <vector.h>
+#include <vector>
+
+using namespace std;
 
 class MetadataBlock {
 	

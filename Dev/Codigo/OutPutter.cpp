@@ -2,7 +2,7 @@
 #include "time.h"
 #include "string.h"
 #include <iostream>
-#include "fstream.h"
+#include <fstream>
 
 using namespace std;
 

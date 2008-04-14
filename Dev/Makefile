@@ -149,4 +149,4 @@ nahuel: $(MAIN_NAHUEL) $(GLOBAL_CPP_H)
 	$(GLOBAL_CPP) -o $(TARGET)
 
 nicolas: $(MAIN_NICOLAS) $(GLOBAL_CPP_H)
-	g++ -Wall $(MAIN_NICOLAS) $(GLOBAL_CPP) -o $(TARGET)		
+	g++ -Wall -g $(MAIN_NICOLAS) $(GLOBAL_CPP) -o $(TARGET)		

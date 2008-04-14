@@ -38,7 +38,7 @@ void Demon::run(void){
 			processInputStatements(bufferedDataManager, outPutter, inputFile);
 
 			inputFile->close();
-			inputFile->delet();
+//			inputFile->delet();
 			
 			delete inputFile;
 			delete outPutter;
