@@ -36,6 +36,6 @@ void Record::clearValues(vector<DataValue*>* values){
 	values->clear();
 }
 
-void deserialize(RawRecord* data){
+void Record::deserialize(RawRecord* data){
 	
 }
