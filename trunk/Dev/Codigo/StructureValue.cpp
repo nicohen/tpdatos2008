@@ -39,3 +39,7 @@ void StructureValue::clear(){
 	this->_dataValues->clear();
 }
 
+bool StructureValue::equals(DataValue* other){
+	return false;
+}
+

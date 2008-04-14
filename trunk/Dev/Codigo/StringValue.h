@@ -14,6 +14,7 @@ public:
 	virtual ~StringValue();
 	
 	//otros
+	virtual bool equals(DataValue* other);
 	virtual DataType* getType();
 	virtual char* toString();
 		
