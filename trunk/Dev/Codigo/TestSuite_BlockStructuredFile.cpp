@@ -654,6 +654,7 @@ void Test_IntValue_SerializeDeserialize(TestCase* test){
 //const INTTYPE 'i';
 typedef unsigned short T_RECORD_F_Q;
 typedef unsigned short T_VALUE_Q;
+typedef unsigned short T_FIELD_TYPE;
 /*
 char intToChar(int i){
 	char result;
@@ -664,24 +665,29 @@ void Test_Record_Serialize(TestCase* test){
 	//Valor para int: "int"
 	//Valor para string: largo,string
 	//Valor para structured: cantidad,{Tipo,Valor}
-	/*
-	 * char INTTYPE='i';
+	T_FIELD_TYPE INTTYPE=1;
 	Record* record=NULL;
-	Record* record2=NULL;
 	char* data;
-	T_RECORD_FQ fieldqty=1;
-	char fieldtype=INTTYPE;
+	T_RECORD_F_Q fieldqty=1;
+	T_VALUE_Q valueqty=1;
+	T_FIELD_TYPE fieldtype=INTTYPE;
 	int intvalue=13;
-	data=(char*)malloc(sizeof(T_RECORD_FQ)+sizeof(char)+sizeof(int));
-	
-	memcpy(data,&fieldqty,sizeof(T_RECORD_FQ));
-	memcpy(data+sizeof(T_RECORD_FQ),&fieldtype,sizeof(char));
-	memcpy(data+sizeof(T_RECORD_FQ)+sizeof(char),&intvalue,sizeof(int));
+	int size=sizeof(T_RECORD_F_Q)+sizeof(T_VALUE_Q)+sizeof(T_FIELD_TYPE)+sizeof(int);
+	data=(char*)malloc(size);
+	int offset=0;
+	memcpy(data+offset,&fieldqty,sizeof(T_RECORD_F_Q));
+	offset+=sizeof(T_RECORD_F_Q);
+	memcpy(data+offset,&valueqty,sizeof(T_VALUE_Q));
+	offset+=sizeof(T_VALUE_Q);
+	memcpy(data+offset,&fieldtype,sizeof(T_FIELD_TYPE));
+	offset+=sizeof(T_FIELD_TYPE);
+	memcpy(data+offset,&intvalue,sizeof(int));
 	record=new Record();
-	record->deserialize(data);
+	printf("\n__%i__",size);
+	record->deserialize(new RawRecord(data,size));
 	//record->addValue(new IntValue(10));
 	delete record;
-	*/
+	
 }
 
 
