@@ -19,7 +19,7 @@ private:
 	void deserializeRecords();
 	RawRecord* deserializeRecord(char* data, T_BLOCKSIZE offset);
 public:
-	
+	static Block* createRecordsBlock(char* content, T_BLOCKSIZE size);
 	RecordsBlock(T_BLOCKSIZE size);
 	RecordsBlock(char* content,T_BLOCKSIZE size);
 	virtual ~RecordsBlock(void);

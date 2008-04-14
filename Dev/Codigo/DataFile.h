@@ -29,7 +29,7 @@ public:
 	void create();
 	char* getFileName();
 	int getBlockSize();
-	Block* createRecordsBlock(char* content, T_BLOCKSIZE size);
+	
 	
 	void setBlockStructuredFile(BlockStructuredFile* blockStructuredFile);
 	BlockStructuredFile* getBlockStructuredFile();
