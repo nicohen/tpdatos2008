@@ -4,7 +4,7 @@
 #include "DataValue.h"
 #include "Utils.h"
 #include "StringType.h"
-
+ 
 class StringValue:public DataValue
 {
 private:

@@ -11,6 +11,7 @@
 #include "IntValue.h"
 #include "StringValue.h"
 #include "StructureValue.h"
+#include "IntType.h"
 
 
 using namespace std;
@@ -625,30 +626,38 @@ void Test_BlockStructured_DataBlockCreation(TestCase* test){
 	delete loadedfile;
 }
 
-void Test_IntValue_Deserialize(TestCase* test){
-	IntValue* iint;
-	int intdata;
-	char* serializedData;
-	intdata=15;
-	serializedData=(char*)malloc(sizeof(int));
-	memcpy(serializedData,(char*)&intdata,sizeof(int));
-	iint=new IntValue(0);
-	iint->deserialize(serializedData);
-	test->Assert_inteq(15,iint->getInt());
-	delete iint;
+char* serializeInt(int value){
+	char* serializedData=(char*)malloc(sizeof(int));
+	memcpy(serializedData,(char*)&value,sizeof(int));
+	return serializedData;
 }
 
-void Test_IntValue_SerializeDeserialize(TestCase* test){
-	IntValue* iint;
+void Test_IntValue_Deserialize(TestCase* test){
+	IntType* intType=NULL;
+	char* serializedData;
+	IntValue* iint=NULL;
+	
+	serializedData=serializeInt(15);	
+	intType=new IntType();
+	iint=(IntValue*)intType->deserializeValue(serializedData);
+	test->Assert_inteq(15,iint->getInt());
+	//delete all
+}
+
+void Test_IntValue_SerializeDeserialize(TestCase* test){	
+	IntValue* inttoserialize;
 	IntValue* deserializedint;
-	iint=new IntValue(10);
-	deserializedint=new IntValue(0);
-	deserializedint->deserialize(iint->serialize());
+	IntType* type=new IntType;
+	
+	inttoserialize=new IntValue(10);
+	deserializedint=(IntValue*)type->deserializeValue(inttoserialize->serialize());
+	
 	test->Assert_inteq(10,deserializedint->getInt());
-	test->Assert_True_m(iint->equals(deserializedint),"El equals deberia dar true");
-	test->Assert_True_m(!(iint->equals(new IntValue(1))),"El equals deberia dar false");
-	delete iint;
+	test->Assert_inteq(inttoserialize->getInt(),deserializedint->getInt());
+	
+	delete inttoserialize;
 	delete deserializedint;
+	delete type;	
 }
 //typedef T_REG
 //const INTTYPE 'i';
@@ -807,7 +816,7 @@ Actualizar la lista de espacios libres en bloques en cada operacion
 int getFirstFreeBlockNumber();
 void moveBlock(int currentBlockNumber,int destBlockNumber);
 virtual ~BlockStructuredFile(void);
->>--Done --> void updateBlock(int blockNumber,char* content);
+>>--Done --> void upElq ue serdateBlock(int blockNumber,char* content);
 clase block??
 >>--Done --> clase header block??
 >>--Done --> Cambiar loadPropertiesFromBuffer por "load header from buffer"
@@ -818,26 +827,7 @@ Que el block count calcule dependiendo del tamaño del archivo
 >>--Done --> Hacer que el record copie el array de chars que recibe
 Hacer un GetSomeBlock(1 o 2 o 3) que de diferentes Blocks hardcoded
 BlockStructuredFile Darle una funcion fabrica de blocks
-
-
-
-
-
-VIEJO!!!!VIEJO!!!!VIEJO!!!!VIEJO!!!!VIEJO!!!!
->>--Done --> Crear un bloque de tama�o N en un archivo dado
->>--Done --> Al escribir se actualiza la cantidad de registros escritos al principipo
-Escribir bytes(registros) en bloque
-Leer bytes(registros) en bloque
-Parametrizar tama�os
-Informacion de llenado
-colchon de 80%
-EliminarRegistros
-Cuando se elimina un registro, el espacio queda libre. Hay que leer hasta el final en busca de registros, es decir, en busca de algun campo que indique el largo de un registro
-generalizar el tama�o del RecordCount dentro de un bloque
-validar que no se quiera meter un registro mas grande que Size-Tama�o de RecordCount
-validar que no se quiera meter un registro mas grande que el espacio libre - Tama�o de RecordLenght
->>--Done --> IMP: hacer todo en memoria y poner un flush()
->>--Done --> cambiar allocateSpace por clear
-
- 
+DataType: El que serializa es el 
+DataType y DataValue: Pasar cosas a superclases 
+DataType: probar equals de
  */

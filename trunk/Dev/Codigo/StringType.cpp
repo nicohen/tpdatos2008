@@ -18,3 +18,7 @@ int StringType::getUniqueIdentifier(){
 StringType::~StringType()
 {
 }
+
+DataValue* StringType::deserializeValue(char* data){
+	return new StringValue("aaa");
+}

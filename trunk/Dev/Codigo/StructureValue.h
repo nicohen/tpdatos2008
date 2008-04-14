@@ -1,9 +1,12 @@
 #ifndef STRUCTUREVALUE_H_
 #define STRUCTUREVALUE_H_
 
-#include "DataValue.h"
-#include "StructureType.h"
+#include <vector>
 
+#include "DataValue.h"
+
+
+using namespace std;
 class StructureValue:public DataValue
 {	
 private:
