@@ -45,6 +45,9 @@ char* createEmptyByteArray(T_BLOCKSIZE size){
 	*(array+size-1)='a';
 	return array;	
 }
+Block* createEmptyBlock(T_BLOCKSIZE size){
+	return new Block(createEmptyByteArray(size),size);
+}
 
 void Test_WritesTheHeader(TestCase* test){
 	fstream* file=NULL;
@@ -123,7 +126,7 @@ void Test_UpdatesBlockCountAfterABlockAppend(TestCase* test){
 	file=BlockStructuredFile::Load(filename);
 	test->Assert_inteq(512,file->getBlockSize());
 	test->Assert_inteq(1,file->getBlockCount());
-	file->appendBlock(createEmptyByteArray(512));
+	file->bAppendContentBlock(createEmptyBlock(512));
 	test->Assert_inteq(2,file->getBlockCount());
 	
 	delete file;
@@ -137,7 +140,7 @@ void Test_WhenItUpdatesBlockRealyWritesOnDisk(TestCase* test){
 	
 	createBlockStructuredFileOnDisk(filename,512);
 	file=BlockStructuredFile::Load(filename);
-	file->updateContentBlock(0,createEmptyByteArray(512));
+	file->bUpdateContentBlock(0,createEmptyBlock(512));
 	delete file;
 	
 	filestream = new fstream(filename,ios::in|ios::binary);
@@ -151,6 +154,7 @@ void Test_WhenItUpdatesBlockRealyWritesOnDisk(TestCase* test){
 	delete filestream;	
 }
 
+
 void Test_WhenItUpdatesBlockSavesHeaderInformation(TestCase* test){
 	BlockStructuredFile* file=NULL;
 	BlockStructuredFile* loadedfile=NULL;
@@ -160,7 +164,7 @@ void Test_WhenItUpdatesBlockSavesHeaderInformation(TestCase* test){
 	createBlockStructuredFileOnDisk(filename,512);
 	file=BlockStructuredFile::Load(filename);
 	test->Assert_inteq(0,file->getContentBlockCount());
-	file->updateContentBlock(0,createEmptyByteArray(512));
+	file->bUpdateContentBlock(0,createEmptyBlock(512));
 	test->Assert_inteq(1,file->getContentBlockCount());
 	delete file;
 	
@@ -171,7 +175,7 @@ void Test_WhenItUpdatesBlockSavesHeaderInformation(TestCase* test){
 	
 	//Actualizo el segundo bloque
 	file=BlockStructuredFile::Load(filename);
-	file->updateContentBlock(1,createEmptyByteArray(512));
+	file->bUpdateContentBlock(1,createEmptyBlock(512));
 	test->Assert_inteq(2,file->getContentBlockCount());
 	delete file;
 	
@@ -182,7 +186,7 @@ void Test_WhenItUpdatesBlockSavesHeaderInformation(TestCase* test){
 	
 	//Actualizo el primer bloque nuevamente
 	file=BlockStructuredFile::Load(filename);
-	file->updateContentBlock(0,createEmptyByteArray(512));
+	file->bUpdateContentBlock(0,createEmptyBlock(512));
 	test->Assert_inteq(2,file->getContentBlockCount());
 	delete file;
 	
@@ -238,17 +242,13 @@ void Test_getContentBlock(TestCase* test){
 	//Actualizo el primer bloque
 	createBlockStructuredFileOnDisk(filename,512);
 	file=BlockStructuredFile::Load(filename);
-	file->updateContentBlock(0,buffer1);
+	file->bUpdateContentBlock(0,new Block(buffer1,512));
 	delete file;
 		
 	loadedfile=BlockStructuredFile::Load(filename);
-	obtainedbuffer=loadedfile->getContentBlock(0);
 	
-	test->Assert_True_m(compareByteArray(buffer1,obtainedbuffer,512),"Deberian ser iguales");
+	test->Assert_True_m(compareByteArray(buffer1,loadedfile->bGetContentBlock(0)->getContent(),512),"Deberian ser iguales");
 	delete loadedfile;
-	
-	free(buffer1);
-	free(obtainedbuffer);
 }
 
 void Test_GetBlock(TestCase* test){
@@ -264,7 +264,7 @@ void Test_GetBlock(TestCase* test){
 	//Actualizo el primer bloque
 	createBlockStructuredFileOnDisk(filename,512);
 	file=BlockStructuredFile::Load(filename);
-	file->updateContentBlock(0,buffer1);
+	file->bUpdateContentBlock(0,new Block(buffer1,512));
 	delete file;
 		
 	loadedfile=BlockStructuredFile::Load(filename);
@@ -281,32 +281,21 @@ void Test_Append(TestCase* test){
 	BlockStructuredFile* file=NULL;
 	BlockStructuredFile* loadedfile=NULL;
 	char* filename="Test_Append.bin";
-	char* appendedContent1;
-	char* appendedContent2;
-	char* obtainedbuffer;
 	
-	appendedContent1=createEmptyByteArray(512);
-	appendedContent2=createEmptyByteArray(512);
-	
-	*(appendedContent2+3)='x';
 	//Actualizo el primer bloque
 	createBlockStructuredFileOnDisk(filename,512);
 	file=BlockStructuredFile::Load(filename);
-	file->appendBlock(appendedContent1);
+	file->bAppendContentBlock(createEmptyBlock(512));
 	test->Assert_inteq(1,file->getContentBlockCount());
-	file->appendBlock(appendedContent2);
+	file->bAppendContentBlock(createEmptyBlock(512));
 	test->Assert_inteq(2,file->getContentBlockCount());
 	delete file;
 	
 	loadedfile=BlockStructuredFile::Load(filename);
 	test->Assert_inteq(2,loadedfile->getContentBlockCount());
-	obtainedbuffer=loadedfile->getContentBlock(1);
-	test->Assert_True_m(compareByteArray(appendedContent2,obtainedbuffer,512),"Deberian ser iguales");
+	test->Assert_True_m(compareByteArray(createEmptyBlock(512)->getContent(),loadedfile->bGetContentBlock(1)->getContent(),512),"Deberian ser iguales");
 	
 	delete loadedfile;
-	delete obtainedbuffer;
-	delete appendedContent1;
-	delete appendedContent2;
 }
 
 void Test_Block_setContent(TestCase* test){
@@ -696,9 +685,10 @@ clase block??
 >>--Done --> Aclarar Indices
 >>--Done --> Mover una parte de updateBlock a append block. cosa que el updateBlock solo actue cuando se actualice un bloque. Cuando se está agregando uno hay que llamar al append 
 Que el block count calcule dependiendo del tamaño del archivo
-Espacios libres?
-Hacer que el record copie el array de chars que recibe
-
+>>--Done --> Espacios libres?
+>>--Done --> Hacer que el record copie el array de chars que recibe
+Hacer un GetSomeBlock(1 o 2 o 3) que de diferentes Blocks hardcoded
+BlockStructuredFile Darle una funcion fabrica de blocks
 
 
 

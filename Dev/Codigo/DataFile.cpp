@@ -39,7 +39,7 @@ void DataFile::create() {
 	strcpy(ruta,strBuffer.c_str());
 
 	this->_blockStructuredFile->Create(ruta,this->getBlockSize());
-	this->_blockStructuredFile->updateContentBlock(FIRSTBLOCK,this->_metadataBlock->serialize());
+	this->_blockStructuredFile->bUpdateContentBlock(FIRSTBLOCK,new Block(this->_metadataBlock->serialize(),this->_blockStructuredFile->getBlockSize()));
 }
 
 char* DataFile::getFileName() {
