@@ -108,3 +108,8 @@ char* RecordsBlock::getContent(){
 vector<RawRecord*>* RecordsBlock::getRecords(){
 	return this->_records;
 }
+
+
+Block* RecordsBlock::createRecordsBlock(char* content, T_BLOCKSIZE size){
+	return new RecordsBlock(content,size);
+}

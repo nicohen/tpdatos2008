@@ -46,10 +46,6 @@ char* DataFile::getFileName() {
 	return this->_fileName;
 }
 
-Block* createRecordsBlock(char* content, T_BLOCKSIZE size){
-	return new RecordsBlock(content,size);
-}
-
 
 int DataFile::getBlockSize() {
 	return this->_blockSize;
