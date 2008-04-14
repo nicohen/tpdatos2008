@@ -24,5 +24,6 @@ public:
 	void addValue(DataValue* aValue);
 	void addValues(vector<DataValue*>* valueList);
 	RawRecord* serialize();
+	void deserialize(RawRecord* data);
 };
 #endif /*RECORD_H_*/

@@ -13,6 +13,7 @@ public:
 	StructureValue();
 	virtual ~StructureValue();
 	
+	virtual bool equals(DataValue* other);
 	virtual DataType* getType();
 	virtual char* toString();
 	

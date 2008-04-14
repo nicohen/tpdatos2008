@@ -17,3 +17,7 @@ char* StringValue::toString(){
 DataType* StringValue::getType(){
 	return (DataType*)new StringType();
 }
+
+bool StringValue::equals(DataValue* other){
+	return false;
+}

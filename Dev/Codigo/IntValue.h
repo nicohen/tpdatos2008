@@ -11,7 +11,10 @@ public:
 	IntValue(int value);
 	virtual ~IntValue();
 	
-	
+	void deserialize(char* data);
+	char* serialize();
+	int getInt();
+	virtual bool equals(DataValue* other);
 	virtual DataType* getType();
 	virtual char* toString();
 	

@@ -7,6 +7,11 @@
 #include "Data/Block.h"
 #include "Data/RecordsBlock.h"
 #include "Data/RawRecord.h"
+#include "Data/Record.h"
+#include "IntValue.h"
+#include "StringValue.h"
+#include "StructureValue.h"
+
 
 using namespace std;
 
@@ -620,6 +625,65 @@ void Test_BlockStructured_DataBlockCreation(TestCase* test){
 	delete loadedfile;
 }
 
+void Test_IntValue_Deserialize(TestCase* test){
+	IntValue* iint;
+	int intdata;
+	char* serializedData;
+	intdata=15;
+	serializedData=(char*)malloc(sizeof(int));
+	memcpy(serializedData,(char*)&intdata,sizeof(int));
+	iint=new IntValue(0);
+	iint->deserialize(serializedData);
+	test->Assert_inteq(15,iint->getInt());
+	delete iint;
+}
+
+void Test_IntValue_SerializeDeserialize(TestCase* test){
+	IntValue* iint;
+	IntValue* deserializedint;
+	iint=new IntValue(10);
+	deserializedint=new IntValue(0);
+	deserializedint->deserialize(iint->serialize());
+	test->Assert_inteq(10,deserializedint->getInt());
+	test->Assert_True_m(iint->equals(deserializedint),"El equals deberia dar true");
+	test->Assert_True_m(!(iint->equals(new IntValue(1))),"El equals deberia dar false");
+	delete iint;
+	delete deserializedint;
+}
+//typedef T_REG
+//const INTTYPE 'i';
+typedef unsigned short T_RECORD_F_Q;
+typedef unsigned short T_VALUE_Q;
+/*
+char intToChar(int i){
+	char result;
+}*/
+
+void Test_Record_Serialize(TestCase* test){
+	//Cantidad,{cantidad de valores para este campo,Tipo,Valor}
+	//Valor para int: "int"
+	//Valor para string: largo,string
+	//Valor para structured: cantidad,{Tipo,Valor}
+	/*
+	 * char INTTYPE='i';
+	Record* record=NULL;
+	Record* record2=NULL;
+	char* data;
+	T_RECORD_FQ fieldqty=1;
+	char fieldtype=INTTYPE;
+	int intvalue=13;
+	data=(char*)malloc(sizeof(T_RECORD_FQ)+sizeof(char)+sizeof(int));
+	
+	memcpy(data,&fieldqty,sizeof(T_RECORD_FQ));
+	memcpy(data+sizeof(T_RECORD_FQ),&fieldtype,sizeof(char));
+	memcpy(data+sizeof(T_RECORD_FQ)+sizeof(char),&intvalue,sizeof(int));
+	record=new Record();
+	record->deserialize(data);
+	//record->addValue(new IntValue(10));
+	delete record;
+	*/
+}
+
 
 int main(int argc, char* argv[]){
 	int failedTests=0;
@@ -706,6 +770,15 @@ int main(int argc, char* argv[]){
 	Test_BlockStructured_DataBlockCreation(test20);
 	delete test20;
 	
+	
+	TestCase* test21=new TestCase("Test_IntValue_Deserialize",&failedTests);	
+	Test_IntValue_Deserialize(test21);
+	delete test21;
+	
+	TestCase* test22=new TestCase("Test_Record_Serialize",&failedTests);	
+	Test_Record_Serialize(test22);
+	delete test22;
+		
 	delete new TestSuiteResult(failedTests);
 	return 0;
 };

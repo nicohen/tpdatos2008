@@ -2,6 +2,7 @@
 using namespace std;
 Record::Record()
 {
+	_values=new vector<DataValue*>();
 }
 
 Record::~Record()
@@ -33,4 +34,8 @@ void Record::clearValues(vector<DataValue*>* values){
 		delete ((DataValue*)*iter);
 	}
 	values->clear();
+}
+
+void deserialize(RawRecord* data){
+	
 }
