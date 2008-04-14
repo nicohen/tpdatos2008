@@ -6,6 +6,7 @@
 #include "Data/BlockStructuredFile.h"
 #include "Data/Block.h"
 #include "Data/RecordsBlock.h"
+#include "Data/RawRecord.h"
 
 using namespace std;
 
@@ -499,30 +500,64 @@ void Test_BlockStructured_removeLastContentBlock(TestCase* test){
 void Test_RecordsBlock(TestCase* test){
 	RecordsBlock* recordsBlock=NULL;
 	char* buffer=NULL;
+	char* buffer2=NULL;
 	//char* expected=NULL;
 	char* updatedBuffer=NULL;
 	T_BLOCKSIZE expectedRecordSize=0;
 	T_BLOCKSIZE actualRecordSize=0;
+	RawRecord* record=NULL;
+	RawRecord* record2=NULL;
 	
-	recordsBlock=new RecordsBlock(5);
+	recordsBlock=new RecordsBlock(100);
 	buffer=createEmptyByteArray(1);
+	buffer2=createEmptyByteArray(1);
 	//expected=createEmptyByteArray(2);
-	*(buffer)='e';	
-	recordsBlock->appendRecord(buffer,1);
+	*(buffer)='e';
+	*(buffer2)='a';
+	record=new RawRecord(buffer,1);
+	record2=new RawRecord(buffer2,1);
+
+	recordsBlock->appendRecord(record);
+	recordsBlock->appendRecord(record2);
+	
 	updatedBuffer=recordsBlock->getContent();
 	
-	//Creo el array que espero recibir
-	//expectedRecordSize=1;
-	//memcpy(expected,(char*)&expectedRecordSize,sizeof(T_BLOCKSIZE));
-	//*(expected+sizeof(T_BLOCKSIZE))='e';
+	updatedBuffer+=sizeof(T_BLOCKSIZE);
 	expectedRecordSize=1;
+	
 	memcpy(&actualRecordSize,updatedBuffer,sizeof(T_BLOCKSIZE));
 	test->Assert_inteq(expectedRecordSize,actualRecordSize);
-	test->Assert_True_m(compareByteArray(updatedBuffer+sizeof(T_BLOCKSIZE),"e",1),"Derian ser arrays iguales");
-	
+	test->Assert_True_m(compareByteArray("e",updatedBuffer+sizeof(T_BLOCKSIZE),1),"Deberian ser arrays iguales");
+	test->Assert_True_m(compareByteArray("a",updatedBuffer+sizeof(T_BLOCKSIZE)+1+sizeof(T_BLOCKSIZE),1),"Deberian ser arrays iguales");
+	test->Assert_inteq(100-2*(1+sizeof(T_BLOCKSIZE)),recordsBlock->getFreeSpace());
 	delete recordsBlock;
 	free(buffer);
-	free(updatedBuffer);
+	free(buffer2);
+	
+}
+
+void Test_RecordsBlock_Deserialization(TestCase* test){
+	RecordsBlock* recordsBlock=NULL;
+	RecordsBlock* deserializedRecordsBlock=NULL;
+	char* updatedBuffer=NULL;
+	RawRecord* record;
+	
+	recordsBlock=new RecordsBlock(100);
+	recordsBlock->appendRecord(new RawRecord("hola",4));
+	recordsBlock->appendRecord(new RawRecord("chau",4));
+	
+	updatedBuffer=(char*)malloc(100);
+	memcpy(updatedBuffer,recordsBlock->getContent(),100);
+	delete recordsBlock;
+	
+	deserializedRecordsBlock=new RecordsBlock(updatedBuffer,100);
+	test->Assert_inteq(2,deserializedRecordsBlock->getRecords()->size());
+	
+	record=deserializedRecordsBlock->getRecords()->at(0);
+	test->Assert_True_m(compareByteArray("hola",record->getContent(),4),"hola_Deberian ser arrays iguales");
+	record=deserializedRecordsBlock->getRecords()->at(1);
+	test->Assert_True_m(compareByteArray("chau",record->getContent(),4),"chau_Deberian ser arrays iguales");
+	delete deserializedRecordsBlock;
 }
 
 int main(int argc, char* argv[]){
@@ -598,6 +633,12 @@ int main(int argc, char* argv[]){
 	Test_RecordsBlock(test17);
 	delete test17;
 	
+	TestCase* test18=new TestCase("Test_RecordsBlock_Deserialization",&failedTests);	
+	Test_RecordsBlock_Deserialization(test18);
+	delete test18;
+	
+	
+	
 	
 	delete new TestSuiteResult(failedTests);
 	return 0;
@@ -629,6 +670,12 @@ clase block??
 >>--Done --> Mover una parte de updateBlock a append block. cosa que el updateBlock solo actue cuando se actualice un bloque. Cuando se está agregando uno hay que llamar al append 
 Que el block count calcule dependiendo del tamaño del archivo
 Espacios libres?
+Hacer que el record copie el array de chars que recibe
+
+
+
+
+
 
 VIEJO!!!!VIEJO!!!!VIEJO!!!!VIEJO!!!!VIEJO!!!!
 >>--Done --> Crear un bloque de tama�o N en un archivo dado
