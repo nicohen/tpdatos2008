@@ -5,6 +5,8 @@
 #include "RawRecord.h"
 #include <vector>
 
+
+//Forma de serializarse: Cantidad de registros| {Tamaño registro siguiente| Datos Registro} 
 using namespace std;
 class RecordsBlock: public Block
 {
@@ -14,13 +16,15 @@ private:
 	void writeAllRecords();
 	void writeOnBlock(RawRecord* record,Block* block,T_BLOCKSIZE offset);
 	T_BLOCKSIZE getSerializationSize(RawRecord* record);
+	void deserializeRecords();
+	RawRecord* deserializeRecord(char* data, T_BLOCKSIZE offset);
 public:
 	
 	RecordsBlock(T_BLOCKSIZE size);
 	RecordsBlock(char* content,T_BLOCKSIZE size);
 	virtual ~RecordsBlock(void);
 
-	void appendRecord(char* content,T_BLOCKSIZE recordSize);
+	void appendRecord(RawRecord* record);
 	
 	char* moveFirst();
 	char* moveNext();
@@ -29,6 +33,10 @@ public:
 	void deleteCurrent();
 	virtual T_BLOCKSIZE getFreeSpace();
 	virtual char* getContent();
+
+	
+	
+	vector<RawRecord*>* getRecords();
 	
 
 };

@@ -1,7 +1,9 @@
 #include "RawRecord.h"
+#include "../Utils.h"
 
 RawRecord::RawRecord(char* content, T_BLOCKSIZE size){
-	this->_content=content;
+	this->_content=(char*) malloc(size);
+	memcpy(this->_content,content,size);
 	this->_size=size;
 }
 T_BLOCKSIZE RawRecord::getSize(){
@@ -13,4 +15,5 @@ char* RawRecord::getContent(){
 
 RawRecord::~RawRecord()
 {
+	free(this->_content);
 }
