@@ -59,6 +59,7 @@ T_BLOCKSIZE RecordsBlock::getFreeSpace(){
 	T_BLOCKSIZE usedSpace=0;
 	RawRecord* each;
 	vector<RawRecord*>::iterator iter;
+	usedSpace+=sizeof(T_BLOCKSIZE);
 	for (iter = this->_records->begin(); iter != this->_records->end(); iter++ )
 	{
 		each=(RawRecord*)*iter;

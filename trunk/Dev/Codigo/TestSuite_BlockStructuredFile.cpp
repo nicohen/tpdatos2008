@@ -499,64 +499,87 @@ void Test_BlockStructured_removeLastContentBlock(TestCase* test){
 
 void Test_RecordsBlock(TestCase* test){
 	RecordsBlock* recordsBlock=NULL;
-	char* buffer=NULL;
-	char* buffer2=NULL;
-	//char* expected=NULL;
 	char* updatedBuffer=NULL;
-	T_BLOCKSIZE expectedRecordSize=0;
-	T_BLOCKSIZE actualRecordSize=0;
-	RawRecord* record=NULL;
-	RawRecord* record2=NULL;
+	T_BLOCKSIZE actualRecord1Size=0;
+	T_BLOCKSIZE actualRecord2Size=0;
+	T_BLOCKSIZE actualRecordsCount=0;	
 	
+	//Creo un bloque de registros
 	recordsBlock=new RecordsBlock(100);
-	buffer=createEmptyByteArray(1);
-	buffer2=createEmptyByteArray(1);
-	//expected=createEmptyByteArray(2);
-	*(buffer)='e';
-	*(buffer2)='a';
-	record=new RawRecord(buffer,1);
-	record2=new RawRecord(buffer2,1);
-
-	recordsBlock->appendRecord(record);
-	recordsBlock->appendRecord(record2);
+	recordsBlock->appendRecord(new RawRecord("e",1));
+	recordsBlock->appendRecord(new RawRecord("a",1));
 	
 	updatedBuffer=recordsBlock->getContent();
 	
+	memcpy(&actualRecordsCount,updatedBuffer,sizeof(T_BLOCKSIZE));
+	//Corro el puntero la cantidad de bytes que ocupa el campo que dice la cantidad de elementos
 	updatedBuffer+=sizeof(T_BLOCKSIZE);
-	expectedRecordSize=1;
-	
-	memcpy(&actualRecordSize,updatedBuffer,sizeof(T_BLOCKSIZE));
-	test->Assert_inteq(expectedRecordSize,actualRecordSize);
+	memcpy(&actualRecord1Size,updatedBuffer,sizeof(T_BLOCKSIZE));
+	memcpy(&actualRecord2Size,updatedBuffer+sizeof(T_BLOCKSIZE)+actualRecord1Size,sizeof(T_BLOCKSIZE));
+	//Verifico el campo que indica la catidad de bloques
+	test->Assert_inteq(2,actualRecordsCount);
+	//Verifico el campo que indica el tamaño del primer registro
+	test->Assert_inteq(1,actualRecord1Size);
+	//Verifico el campo que indica el tamaño del segundo registro
+	test->Assert_inteq(1,actualRecord2Size);
+	//Verifico el campo que guarda el contenido del primer registro
 	test->Assert_True_m(compareByteArray("e",updatedBuffer+sizeof(T_BLOCKSIZE),1),"Deberian ser arrays iguales");
+	//Verifico el campo que guarda el contenido del segundo registro
 	test->Assert_True_m(compareByteArray("a",updatedBuffer+sizeof(T_BLOCKSIZE)+1+sizeof(T_BLOCKSIZE),1),"Deberian ser arrays iguales");
-	test->Assert_inteq(100-2*(1+sizeof(T_BLOCKSIZE)),recordsBlock->getFreeSpace());
+	//Verifico el espacio libre
+	test->Assert_inteq(100-2*(1+sizeof(T_BLOCKSIZE))-sizeof(T_BLOCKSIZE),recordsBlock->getFreeSpace());
 	delete recordsBlock;
-	free(buffer);
-	free(buffer2);
-	
 }
 
 void Test_RecordsBlock_Deserialization(TestCase* test){
 	RecordsBlock* recordsBlock=NULL;
 	RecordsBlock* deserializedRecordsBlock=NULL;
-	char* updatedBuffer=NULL;
-	RawRecord* record;
+	char* serializedData=NULL;
 	
+	//Creo un bloque de registros
 	recordsBlock=new RecordsBlock(100);
+	//Le agrego registros
 	recordsBlock->appendRecord(new RawRecord("hola",4));
 	recordsBlock->appendRecord(new RawRecord("chau",4));
 	
-	updatedBuffer=(char*)malloc(100);
-	memcpy(updatedBuffer,recordsBlock->getContent(),100);
+	//Lo serializo
+	serializedData=(char*)malloc(100);
+	memcpy(serializedData,recordsBlock->getContent(),100);
 	delete recordsBlock;
 	
-	deserializedRecordsBlock=new RecordsBlock(updatedBuffer,100);
+	//Creo un nuevo bloque de registros a partir de la informacion serializada
+	deserializedRecordsBlock=new RecordsBlock(serializedData,100);
 	test->Assert_inteq(2,deserializedRecordsBlock->getRecords()->size());
+	test->Assert_True_m(compareByteArray("hola",((RawRecord*)deserializedRecordsBlock->getRecords()->at(0))->getContent(),4),"hola_Deberian ser arrays iguales");
+	test->Assert_True_m(compareByteArray("chau",((RawRecord*)deserializedRecordsBlock->getRecords()->at(1))->getContent(),4),"chau_Deberian ser arrays iguales");
+	free(serializedData);
+	delete deserializedRecordsBlock;	
+}
+
+void Test_RecordsBlock_RecordsManipulation(TestCase* test){
+	RecordsBlock* recordsBlock=NULL;
+	RecordsBlock* deserializedRecordsBlock=NULL;
+	char* serializedData=NULL;
 	
-	record=deserializedRecordsBlock->getRecords()->at(0);
-	test->Assert_True_m(compareByteArray("hola",record->getContent(),4),"hola_Deberian ser arrays iguales");
-	record=deserializedRecordsBlock->getRecords()->at(1);
-	test->Assert_True_m(compareByteArray("chau",record->getContent(),4),"chau_Deberian ser arrays iguales");
+	//Creo un bloque de registros
+	recordsBlock=new RecordsBlock(100);
+	//Le agrego registros
+	recordsBlock->getRecords()->push_back(new RawRecord("Holaas",6));
+	recordsBlock->getRecords()->push_back(new RawRecord("Haaaeee",7));
+	recordsBlock->getRecords()->push_back(new RawRecord("aax",3));
+	recordsBlock->getRecords()->pop_back();
+	
+	//Lo serializo
+	serializedData=(char*)malloc(100);
+	memcpy(serializedData,recordsBlock->getContent(),100);
+	delete recordsBlock;
+	
+	//Creo un nuevo bloque de registros a partir de la informacion serializada
+	deserializedRecordsBlock=new RecordsBlock(serializedData,100);
+	test->Assert_inteq(2,deserializedRecordsBlock->getRecords()->size());
+	test->Assert_True_m(compareByteArray("Holaas",((RawRecord*)deserializedRecordsBlock->getRecords()->at(0))->getContent(),6),"hola_Deberian ser arrays iguales");
+	test->Assert_True_m(compareByteArray("Haaaeee",((RawRecord*)deserializedRecordsBlock->getRecords()->at(1))->getContent(),7),"chau_Deberian ser arrays iguales");
+	free(serializedData);
 	delete deserializedRecordsBlock;
 }
 
@@ -637,6 +660,10 @@ int main(int argc, char* argv[]){
 	Test_RecordsBlock_Deserialization(test18);
 	delete test18;
 	
+	
+	TestCase* test19=new TestCase("Test_RecordsBlock_RecordsManipulation",&failedTests);	
+	Test_RecordsBlock_RecordsManipulation(test19);
+	delete test19;
 	
 	
 	

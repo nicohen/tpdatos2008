@@ -24,21 +24,10 @@ public:
 	RecordsBlock(char* content,T_BLOCKSIZE size);
 	virtual ~RecordsBlock(void);
 
-	void appendRecord(RawRecord* record);
-	
-	char* moveFirst();
-	char* moveNext();
-	char* getCurrent();
-	bool hasNext();
-	void deleteCurrent();
+	void appendRecord(RawRecord* record);	
 	virtual T_BLOCKSIZE getFreeSpace();
-	virtual char* getContent();
-
-	
-	
+	virtual char* getContent();	
 	vector<RawRecord*>* getRecords();
-	
-
 };
 
 #endif /*RecordsBlock_H_*/
