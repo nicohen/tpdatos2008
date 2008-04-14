@@ -49,6 +49,28 @@ Block* createEmptyBlock(T_BLOCKSIZE size){
 	return new Block(createEmptyByteArray(size),size);
 }
 
+Block* createSomeBlock(T_BLOCKSIZE size,int hardcodedtype){
+	char* content=NULL;
+	content=createEmptyByteArray(size);
+	switch(hardcodedtype){
+		case 1:
+			*content='a';
+			*(content+size-1)='b';
+			break;
+		case 2:
+			*content='c';
+			*(content+size-1)='e';			
+			break;
+		case 3:
+			*content='f';
+			*(content+size-1)='h';		
+			break;	
+	}
+	return new Block(content,size);
+}
+
+
+
 void Test_WritesTheHeader(TestCase* test){
 	fstream* file=NULL;
 	char* filename="Test_BlockStructuredFile.bin";
@@ -64,8 +86,7 @@ void Test_WritesTheHeader(TestCase* test){
 	
 	test->Assert_inteq(1,bsfile->getBlockCount());
 	test->Assert_inteq(512,bsfile->getBlockSize());
-	delete bsfile;
-	
+	delete bsfile;	
 	
 	file = new fstream(filename,ios::in|ios::binary);
 	if(file->is_open()){
@@ -247,7 +268,7 @@ void Test_getContentBlock(TestCase* test){
 		
 	loadedfile=BlockStructuredFile::Load(filename);
 	
-	test->Assert_True_m(compareByteArray(buffer1,loadedfile->bGetContentBlock(0)->getContent(),512),"Deberian ser iguales");
+	test->Assert_True_m(compareByteArray(buffer1,loadedfile->bGetContentBlock(0,NULL)->getContent(),512),"Deberian ser iguales");
 	delete loadedfile;
 }
 
@@ -293,7 +314,7 @@ void Test_Append(TestCase* test){
 	
 	loadedfile=BlockStructuredFile::Load(filename);
 	test->Assert_inteq(2,loadedfile->getContentBlockCount());
-	test->Assert_True_m(compareByteArray(createEmptyBlock(512)->getContent(),loadedfile->bGetContentBlock(1)->getContent(),512),"Deberian ser iguales");
+	test->Assert_True_m(compareByteArray(createEmptyBlock(512)->getContent(),loadedfile->bGetContentBlock(1,NULL)->getContent(),512),"Deberian ser iguales");
 	
 	delete loadedfile;
 }
@@ -390,7 +411,7 @@ void Test_BlockStructured_BUpdateBlock(TestCase* test){
 	delete file;
 		
 	loadedfile=BlockStructuredFile::Load(filename);
-	obtainedBlock=loadedfile->bGetContentBlock(0);
+	obtainedBlock=loadedfile->bGetContentBlock(0,NULL);
 	
 	test->Assert_True_m(compareByteArray(buffer,obtainedBlock->getContent(),512),"Deberian ser iguales");
 	delete loadedfile;
@@ -427,12 +448,12 @@ void Test_BlockStructured_bAppendContentBlock(TestCase* test){
 	delete file;
 	
 	loadedfile=BlockStructuredFile::Load(filename);
-	obtainedBlock=loadedfile->bGetContentBlock(0);	
+	obtainedBlock=loadedfile->bGetContentBlock(0,NULL);	
 	test->Assert_True_m(compareByteArray(buffer1,obtainedBlock->getContent(),512),"Deberian ser iguales");
 	delete obtainedBlock;
 	
 	
-	obtainedBlock=loadedfile->bGetContentBlock(1);
+	obtainedBlock=loadedfile->bGetContentBlock(1,NULL);
 	test->Assert_True_m(compareByteArray(buffer2,obtainedBlock->getContent(),512),"Deberian ser iguales");
 	delete loadedfile;
 
@@ -484,7 +505,6 @@ void Test_BlockStructured_removeLastContentBlock(TestCase* test){
 	delete block1;
 	delete block2;
 }
-
 
 void Test_RecordsBlock(TestCase* test){
 	RecordsBlock* recordsBlock=NULL;
@@ -572,6 +592,35 @@ void Test_RecordsBlock_RecordsManipulation(TestCase* test){
 	delete deserializedRecordsBlock;
 }
 
+
+
+Block* createRecordsBlock(char* content, T_BLOCKSIZE size){
+	printf("\n createRecordsBlock called");
+	return new RecordsBlock(content,size);
+}
+
+void Test_BlockStructured_DataBlockCreation(TestCase* test){
+	BlockStructuredFile* file=NULL;
+	BlockStructuredFile* loadedfile=NULL;
+	RecordsBlock* block;
+	RecordsBlock* loadedblock;
+	//Agrego bloques
+	char* filename="Test_BlockStructured_DataBlockCreation.bin";
+	createBlockStructuredFileOnDisk(filename,512);
+	file=BlockStructuredFile::Load(filename);
+	block=new RecordsBlock(512);
+	block->appendRecord(new RawRecord("aaaa",4));
+	file->bAppendContentBlock(block);
+	file->bAppendContentBlock(createEmptyBlock(512));
+	delete file;
+	
+	loadedfile=BlockStructuredFile::Load(filename);
+	loadedblock = (RecordsBlock*)loadedfile->bGetContentBlock(0,&createRecordsBlock);
+	test->Assert_True_m(compareByteArray("aaaa",((RawRecord*)loadedblock->getRecords()->at(0))->getContent(),4),"Los bloques deberian ser iguales");
+	delete loadedfile;
+}
+
+
 int main(int argc, char* argv[]){
 	int failedTests=0;
 	
@@ -649,12 +698,13 @@ int main(int argc, char* argv[]){
 	Test_RecordsBlock_Deserialization(test18);
 	delete test18;
 	
-	
 	TestCase* test19=new TestCase("Test_RecordsBlock_RecordsManipulation",&failedTests);	
 	Test_RecordsBlock_RecordsManipulation(test19);
 	delete test19;
-	
-	
+		
+	TestCase* test20=new TestCase("Test_BlockStructured_DataBlockCreation",&failedTests);	
+	Test_BlockStructured_DataBlockCreation(test20);
+	delete test20;
 	
 	delete new TestSuiteResult(failedTests);
 	return 0;

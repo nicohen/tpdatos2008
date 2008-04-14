@@ -151,11 +151,16 @@ void BlockStructuredFile::bUpdateContentBlock(T_BLOCKCOUNT contentBlockNumber,Bl
 	this->updateContentBlock(contentBlockNumber,block->getContent());
 }
 
-Block* BlockStructuredFile::bGetContentBlock(T_BLOCKCOUNT contentBlockNumber){
+Block* BlockStructuredFile::bGetContentBlock(T_BLOCKCOUNT contentBlockNumber,Block* (*BlockCreatorFunction)(char* content,T_BLOCKSIZE size)){
 	Block* result=NULL;
 	char* buffer;
 	buffer=this->getContentBlock(contentBlockNumber);
-	result=new Block(buffer,this->getBlockSize());
+	if(BlockCreatorFunction==NULL){
+		result=new Block(buffer,this->getBlockSize());	
+	}else{
+		result=(*BlockCreatorFunction)(buffer,this->getBlockSize());
+	}
+	
 	free(buffer);
 	return result;
 }
