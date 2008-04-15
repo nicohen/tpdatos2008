@@ -25,6 +25,7 @@ public:
 	
 	//Otros metodos
 	bool validate();
+	int serialize(char** result);
 	
 };
 
