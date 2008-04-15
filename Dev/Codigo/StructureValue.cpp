@@ -23,10 +23,6 @@ DataType* StructureValue::getType(){
 	return vvType;
 }
 
-char* StructureValue::toString(){
-	return "";
-}
-
 void StructureValue::addValue(DataValue* aType){
 	this->_dataValues->push_back(aType);
 }
@@ -42,5 +38,9 @@ void StructureValue::clear(){
 
 bool StructureValue::equals(DataValue* other){
 	return false;
+}
+
+char* StructureValue::serialize(){
+	return NULL;
 }
 

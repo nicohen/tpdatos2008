@@ -4,6 +4,8 @@
 #include "DataValue.h"
 #include "Utils.h"
 #include "StringType.h"
+
+typedef unsigned short T_STRING_LENGHT;
  
 class StringValue:public DataValue
 {
@@ -16,8 +18,8 @@ public:
 	//otros
 	virtual bool equals(DataValue* other);
 	virtual DataType* getType();
-	virtual char* toString();
-		
+	virtual char* getString();
+	virtual char* serialize();
 };
 
 
