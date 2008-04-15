@@ -632,33 +632,6 @@ char* serializeInt(int value){
 	return serializedData;
 }
 
-void Test_IntValue_Deserialize(TestCase* test){
-	IntType* intType=NULL;
-	char* serializedData;
-	IntValue* iint=NULL;
-	
-	serializedData=serializeInt(15);	
-	intType=new IntType();
-	iint=(IntValue*)intType->deserializeValue(serializedData);
-	test->Assert_inteq(15,iint->getInt());
-	//delete all
-}
-
-/*void Test_IntValue_SerializeDeserialize(TestCase* test){	
-	IntValue* inttoserialize;
-	IntValue* deserializedint;
-	IntType* type=new IntType;
-	
-	inttoserialize=new IntValue(10);
-	deserializedint=(IntValue*)type->deserializeValue(inttoserialize->serialize());
-	
-	test->Assert_inteq(10,deserializedint->getInt());
-	test->Assert_inteq(inttoserialize->getInt(),deserializedint->getInt());
-	
-	delete inttoserialize;
-	delete deserializedint;
-	delete type;	
-}*/
 void Test_IntValue_SerializeDeserialize(TestCase* test){	
 	IntValue* inttoserialize;
 	IntValue* deserializedint;
@@ -705,6 +678,7 @@ void Test_Record_Serialize(TestCase* test){
 	//Valor para int: "int"
 	//Valor para string: largo,string
 	//Valor para structured: cantidad,{Tipo,Valor}
+	/*
 	T_FIELD_TYPE INTTYPE=1;
 	Record* record=NULL;
 	char* data;
@@ -726,7 +700,8 @@ void Test_Record_Serialize(TestCase* test){
 	printf("\n__%i__",size);
 	record->deserialize(new RawRecord(data,size));
 	//record->addValue(new IntValue(10));
-	delete record;	
+	delete record;
+	*/
 }
 
 int main(int argc, char* argv[]){
@@ -811,11 +786,7 @@ int main(int argc, char* argv[]){
 	TestCase* test20=new TestCase("Test_BlockStructured_DataBlockCreation",&failedTests);	
 	Test_BlockStructured_DataBlockCreation(test20);
 	delete test20;
-		
-	TestCase* test21=new TestCase("Test_IntValue_Deserialize",&failedTests);	
-	Test_IntValue_Deserialize(test21);
-	delete test21;
-	
+
 	TestCase* test21_1=new TestCase("Test_IntValue_SerializeDeserialize",&failedTests);	
 	Test_IntValue_SerializeDeserialize(test21_1);
 	delete test21_1;

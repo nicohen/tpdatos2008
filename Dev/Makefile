@@ -145,7 +145,7 @@ pablo: $(MAIN_PABLO) $(GLOBAL_CPP_H)
 
 
 nahuel: $(MAIN_NAHUEL) $(GLOBAL_CPP_H)
-	g++ -Wall $(MAIN_NAHUEL) \
+	g++ -Wall -g $(MAIN_NAHUEL) \
 	$(GLOBAL_CPP) -o $(TARGET)
 
 nicolas: $(MAIN_NICOLAS) $(GLOBAL_CPP_H)

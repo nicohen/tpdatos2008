@@ -33,14 +33,8 @@ char* StringValue::getString(){
 void StringValue::deserialize(char* data){
 	T_STRING_LENGHT lenght;
 	memcpy(&lenght,data,sizeof(T_STRING_LENGHT));	
-	this->deserializeValue(data,lenght);
+	this->deserializeValue(data+sizeof(T_STRING_LENGHT),lenght);
 }
-
-void StringValue::deserializeValue(char* data,T_STRING_LENGHT dataLenght){
-	this->_value=(char*)malloc(dataLenght);
-	memcpy(this->_value,data+sizeof(T_STRING_LENGHT),dataLenght);
-}
-
 
 char* StringValue::serialize(){
 	char* data;
@@ -51,6 +45,11 @@ char* StringValue::serialize(){
 	
 	this->serializeTo(data+sizeof(T_STRING_LENGHT));
 	return data;
+}
+
+void StringValue::deserializeValue(char* data,T_STRING_LENGHT dataLenght){
+	this->_value=(char*)malloc(dataLenght);
+	memcpy(this->_value,data,dataLenght);
 }
 
 T_STRING_LENGHT StringValue::getSerializationSize(){
