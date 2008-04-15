@@ -644,6 +644,21 @@ void Test_IntValue_Deserialize(TestCase* test){
 	//delete all
 }
 
+/*void Test_IntValue_SerializeDeserialize(TestCase* test){	
+	IntValue* inttoserialize;
+	IntValue* deserializedint;
+	IntType* type=new IntType;
+	
+	inttoserialize=new IntValue(10);
+	deserializedint=(IntValue*)type->deserializeValue(inttoserialize->serialize());
+	
+	test->Assert_inteq(10,deserializedint->getInt());
+	test->Assert_inteq(inttoserialize->getInt(),deserializedint->getInt());
+	
+	delete inttoserialize;
+	delete deserializedint;
+	delete type;	
+}*/
 void Test_IntValue_SerializeDeserialize(TestCase* test){	
 	IntValue* inttoserialize;
 	IntValue* deserializedint;
@@ -651,6 +666,7 @@ void Test_IntValue_SerializeDeserialize(TestCase* test){
 	
 	inttoserialize=new IntValue(10);
 	deserializedint=(IntValue*)type->deserializeValue(inttoserialize->serialize());
+	
 	
 	test->Assert_inteq(10,deserializedint->getInt());
 	test->Assert_inteq(inttoserialize->getInt(),deserializedint->getInt());
@@ -742,8 +758,8 @@ int main(int argc, char* argv[]){
 	
 	TestCase* test07=new TestCase("Test_getContentBlock",&failedTests);	
 	Test_getContentBlock(test07);
-	delete test07;
-	
+	delete test07;	
+										
 	TestCase* test08=new TestCase("Test_compareByteArray",&failedTests);	
 	Test_compareByteArray(test08);
 	delete test08;
@@ -800,10 +816,15 @@ int main(int argc, char* argv[]){
 	Test_IntValue_Deserialize(test21);
 	delete test21;
 	
+	TestCase* test21_1=new TestCase("Test_IntValue_SerializeDeserialize",&failedTests);	
+	Test_IntValue_SerializeDeserialize(test21_1);
+	delete test21_1;
+	
+/*	
 	TestCase* test22=new TestCase("Test_Record_Serialize",&failedTests);	
 	Test_Record_Serialize(test22);
 	delete test22;
-	
+	*/
 	TestCase* test23=new TestCase("Test_StringValue_Deserialize",&failedTests);	
 	Test_StringValue_Deserialize(test23);
 	delete test23;	
@@ -845,4 +866,5 @@ BlockStructuredFile Darle una funcion fabrica de blocks
 DataType: El que serializa es el 
 DataType y DataValue: Pasar cosas a superclases 
 DataType: probar equals de
+getSerializationSize y getContent
  */

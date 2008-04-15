@@ -5,7 +5,7 @@
 #include "Utils.h"
 #include "StringType.h"
 #include <string>
-typedef unsigned short T_STRING_LENGHT;
+
  
 using namespace std;
 class StringValue:public DataValue
@@ -22,6 +22,11 @@ public:
 	virtual void toString(string* buffer);
 	virtual char* getString();
 	virtual char* serialize();
+	
+	void deserialize(char* data);//Esto va en la clase madre (no es virtual)
+	virtual void deserializeValue(char* data,T_STRING_LENGHT dataLenght);
+	virtual T_STRING_LENGHT getSerializationSize();
+	virtual void serializeTo(char* buffer);
 };
 
 

@@ -7,7 +7,7 @@
 using namespace std;
 
 class DataType;
-
+typedef unsigned short T_STRING_LENGHT;
 class DataValue
 {
 public:

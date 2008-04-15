@@ -34,14 +34,28 @@ bool IntValue::equals(DataValue* other){
 }
 
 void IntValue::deserialize(char* data){
-	memcpy(&this->_value,data,sizeof(int));
+	this->deserializeValue(data,sizeof(int));
+}
+
+void IntValue::deserializeValue(char* data,T_STRING_LENGHT dataLenght){
+	memcpy(&this->_value,data,dataLenght);
 }
 
 char* IntValue::serialize(){
 	char* data;
-	data=(char*) malloc(sizeof(int));
+	data=(char*)malloc(sizeof(int));
 	memcpy(data,(char*)&this->_value,sizeof(int));
+	
+	this->serializeTo(data);
 	return data;
+}
+
+T_STRING_LENGHT IntValue::getSerializationSize(){
+	return sizeof(int);
+}
+
+void IntValue::serializeTo(char* buffer){
+	memcpy(buffer,(char*)&this->_value,sizeof(int));
 }
 
 int IntValue::getInt(){
