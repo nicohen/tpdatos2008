@@ -46,7 +46,13 @@ bool StructureValue::equals(DataValue* other){
 	return false;
 }
 
-char* StructureValue::serialize(){
-	return NULL;
+T_STRING_LENGHT StructureValue::getSerializationSize(){
+	
+}
+void StructureValue::serializeTo(char* buffer){
+	
+}	
+void StructureValue::deserializeValue(char* data,T_STRING_LENGHT dataLenght){
+	
 }
 

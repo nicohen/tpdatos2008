@@ -30,23 +30,6 @@ char* StringValue::getString(){
 	return this->_value;
 }
 
-void StringValue::deserialize(char* data){
-	T_STRING_LENGHT lenght;
-	memcpy(&lenght,data,sizeof(T_STRING_LENGHT));	
-	this->deserializeValue(data+sizeof(T_STRING_LENGHT),lenght);
-}
-
-char* StringValue::serialize(){
-	char* data;
-	T_STRING_LENGHT lenght;
-	lenght=this->getSerializationSize();
-	data=(char*)malloc(sizeof(T_STRING_LENGHT)+lenght);
-	memcpy(data,(char*)&lenght,sizeof(T_STRING_LENGHT));
-	
-	this->serializeTo(data+sizeof(T_STRING_LENGHT));
-	return data;
-}
-
 void StringValue::deserializeValue(char* data,T_STRING_LENGHT dataLenght){
 	this->_value=(char*)malloc(dataLenght);
 	memcpy(this->_value,data,dataLenght);

@@ -12,6 +12,12 @@ class StringValue:public DataValue
 {
 private:
 	char* _value;
+	
+protected:
+	virtual T_STRING_LENGHT getSerializationSize();
+	virtual void serializeTo(char* buffer);	
+	virtual void deserializeValue(char* data,T_STRING_LENGHT dataLenght);
+	
 public:
 	StringValue(char* value);
 	virtual ~StringValue();
@@ -21,12 +27,6 @@ public:
 	virtual DataType* getType();
 	virtual void toString(string* buffer);
 	virtual char* getString();
-	virtual char* serialize();
-	
-	void deserialize(char* data);//Esto va en la clase madre (no es virtual)
-	virtual void deserializeValue(char* data,T_STRING_LENGHT dataLenght);
-	virtual T_STRING_LENGHT getSerializationSize();
-	virtual void serializeTo(char* buffer);
 };
 
 

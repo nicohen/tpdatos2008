@@ -11,7 +11,11 @@ class StructureValue:public DataValue
 {	
 private:
 	vector<DataValue*>* _dataValues;
-	void clear();
+	void clear();	
+protected:
+	virtual T_STRING_LENGHT getSerializationSize();
+	virtual void serializeTo(char* buffer);	
+	virtual void deserializeValue(char* data,T_STRING_LENGHT dataLenght);
 public:
 	StructureValue();
 	virtual ~StructureValue();
@@ -19,7 +23,6 @@ public:
 	virtual bool equals(DataValue* other);
 	virtual DataType* getType();
 	virtual void toString(string* buffer);
-	virtual char* serialize();	
 	void addValue(DataValue* aType);
 };
 
