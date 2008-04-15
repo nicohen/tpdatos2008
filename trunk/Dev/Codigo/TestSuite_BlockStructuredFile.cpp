@@ -659,6 +659,21 @@ void Test_IntValue_SerializeDeserialize(TestCase* test){
 	delete deserializedint;
 	delete type;	
 }
+
+void Test_StringValue_Deserialize(TestCase* test){
+	StringValue* strtoserialize=NULL;
+	StringValue* deserializedstr=NULL;
+	StringType* stringType=NULL;
+	
+	stringType=new StringType();
+	//Creo un string cualquiera
+	strtoserialize=new StringValue("abcdefgh123456789");
+	//Serializo
+	deserializedstr=(StringValue*)stringType->deserializeValue(strtoserialize->serialize());
+	//Verifico que sean iguales
+	test->Assert_streq("abcdefgh123456789",deserializedstr->getString());
+}
+
 //typedef T_REG
 //const INTTYPE 'i';
 typedef unsigned short T_RECORD_F_Q;
@@ -695,19 +710,15 @@ void Test_Record_Serialize(TestCase* test){
 	printf("\n__%i__",size);
 	record->deserialize(new RawRecord(data,size));
 	//record->addValue(new IntValue(10));
-	delete record;
-	
+	delete record;	
 }
-
 
 int main(int argc, char* argv[]){
 	int failedTests=0;
 	
-	
-	
 	TestCase* test01=new TestCase("Test_WritesTheHeader",&failedTests);	
 	Test_WritesTheHeader(test01);
-	delete test01;	
+	delete test01;
 
 	TestCase* test02=new TestCase("Test_LoadsProperly",&failedTests);	
 	Test_LoadsProperly(test02);
@@ -784,8 +795,7 @@ int main(int argc, char* argv[]){
 	TestCase* test20=new TestCase("Test_BlockStructured_DataBlockCreation",&failedTests);	
 	Test_BlockStructured_DataBlockCreation(test20);
 	delete test20;
-	
-	
+		
 	TestCase* test21=new TestCase("Test_IntValue_Deserialize",&failedTests);	
 	Test_IntValue_Deserialize(test21);
 	delete test21;
@@ -793,6 +803,11 @@ int main(int argc, char* argv[]){
 	TestCase* test22=new TestCase("Test_Record_Serialize",&failedTests);	
 	Test_Record_Serialize(test22);
 	delete test22;
+	
+	TestCase* test23=new TestCase("Test_StringValue_Deserialize",&failedTests);	
+	Test_StringValue_Deserialize(test23);
+	delete test23;	
+	
 		
 	delete new TestSuiteResult(failedTests);
 	return 0;

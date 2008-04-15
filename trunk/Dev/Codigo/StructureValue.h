@@ -17,10 +17,9 @@ public:
 	virtual ~StructureValue();
 	
 	virtual bool equals(DataValue* other);
-	virtual DataType* getType();
-	virtual char* toString();
-	
-	void addValue(DataValue* aType);
+	virtual DataType* getType();	
+	void addValue(DataValue* aType);	
+	virtual char* serialize();	
 };
 
 #endif /*STRUCTUREVALUE_H_*/

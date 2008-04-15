@@ -6,7 +6,6 @@
 
 class StringValue;
 
-
 class StringType: public DataType
 {
 public:
