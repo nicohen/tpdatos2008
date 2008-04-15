@@ -1,5 +1,7 @@
 #include "Record.h"
+
 using namespace std;
+
 Record::Record()
 {
 	_values=new vector<DataValue*>();
@@ -37,5 +39,17 @@ void Record::clearValues(vector<DataValue*>* values){
 }
 
 void Record::deserialize(RawRecord* data){
-	
 }
+
+void Record::toString(string* buffer) {
+	DataValue* each;	
+	
+	buffer->append("[");
+	vector<DataValue*>::iterator iter;
+	for (iter = _values->begin(); iter != _values->end(); iter++ ) {
+		each = ((DataValue*)*iter);
+		each->toString(buffer);
+	}
+	buffer->append("]");
+}
+

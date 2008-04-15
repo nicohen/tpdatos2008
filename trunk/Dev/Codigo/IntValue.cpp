@@ -1,9 +1,18 @@
 #include "IntValue.h"
 #include "Utils.h"
+#include <sstream>
+
+using namespace std;
 
 IntValue::IntValue(int anInt)
 {
 	this->_value=anInt;
+}
+
+void IntValue::toString(string* buffer) {
+	ostringstream oss;
+	oss<<this->_value;
+	buffer->append(oss.str());
 }
 
 DataType* IntValue::getType(){
