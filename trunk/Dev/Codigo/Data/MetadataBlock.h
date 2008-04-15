@@ -7,22 +7,22 @@
 
 using namespace std;
 
-class MetadataBlock {
+class MetadataBlock: public Block{
 	
 private:
-	int _indexSize;
-	// {"secuencial","hash","secIndexado","indexado"}
-	int _fileType;
+	unsigned short int _fileType;
 	int _qtyFields;
 	vector<Field*>* _fields;
 	
+	void writeOnBlock(Field* field,Block* block,int* offset);	
 public:
-	MetadataBlock();
+	MetadataBlock(T_BLOCKSIZE size);
+	MetadataBlock(char* content,T_BLOCKSIZE size);
 	virtual ~MetadataBlock(void);
 	char* serialize();
 
-	int getIndexSize();
-	void setIndexSize(int indexSize);
+	//int getIndexSize();
+	//void setIndexSize(int indexSize);
 	int getFileType();
 	void setFileType(int fileType);
 	int getQtyFields();
@@ -30,6 +30,15 @@ public:
 	void setSecondaryField(Field* field);
 	void setSecondaryFields(vector<Field*>* _fields);
 	Field* getNextSecondaryField();
+	
+	//METODOS HEREDADOS
+	virtual void setContent(char* content);
+	virtual void setFragment(char* content,T_BLOCKSIZE offset,T_BLOCKSIZE size);
+	virtual char* getContent();
+	
+	virtual void setFreeSpace(T_BLOCKSIZE space);
+	virtual T_BLOCKSIZE getSize();	
+	virtual T_BLOCKSIZE getFreeSpace();
 };
 
 #endif /*METADATABLOCK_H_*/

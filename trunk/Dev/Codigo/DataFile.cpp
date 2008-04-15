@@ -9,8 +9,8 @@ DataFile::DataFile(char* fileName, int blockSize, int fileType, int indexSize, i
 	_blockStructuredFile = new BlockStructuredFile(fileName);
 	
 	//Le seteo el MetadataBlock
-	_metadataBlock = new MetadataBlock();
-	_metadataBlock->setIndexSize(indexSize);
+	_metadataBlock = new MetadataBlock(blockSize);
+	//_metadataBlock->setIndexSize(indexSize);
 	_metadataBlock->setFileType(fileType);
 	_metadataBlock->setSecondaryFields(secondaryFields);
 	_metadataBlock->setQtyFields(secondaryFieldsCount);

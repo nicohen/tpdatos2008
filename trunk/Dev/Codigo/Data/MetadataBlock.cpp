@@ -1,7 +1,13 @@
 #include "MetadataBlock.h"
+#include "../Statement.h"
 
-MetadataBlock::MetadataBlock(void) {
-
+MetadataBlock::MetadataBlock(T_BLOCKSIZE size): Block(size) {
+	_qtyFields=0;
+	_fileType=Statement::OTHER;
+	_fields= new vector<Field*>();
+}
+MetadataBlock::MetadataBlock(char* content,T_BLOCKSIZE size): Block(content,size){
+	setContent(content);
 }
 
 void clearMetadataBlock(vector<Field*>* fields) {
@@ -25,7 +31,7 @@ char* MetadataBlock::serialize() {
 //	printf("%c",cadena);	
 	return cadena;
 }
-
+/*
 int MetadataBlock::getIndexSize() {
 	return this->_indexSize;
 }
@@ -33,7 +39,7 @@ int MetadataBlock::getIndexSize() {
 void MetadataBlock::setIndexSize(int indexSize) {
 	this->_indexSize = indexSize;
 }
-
+*/
 int MetadataBlock::getFileType() {
 	return this->_fileType;
 }
@@ -56,4 +62,44 @@ void MetadataBlock::setSecondaryField(Field* field) {
 
 void MetadataBlock::setSecondaryFields(vector<Field*>* fields) {
 	this->_fields = fields;
+}
+
+// IMPLEMENTAR ESTOS METODOS
+void MetadataBlock::setContent(char* content){
+}
+
+void MetadataBlock::setFragment(char* content,T_BLOCKSIZE offset,T_BLOCKSIZE size){
+}
+
+void MetadataBlock::writeOnBlock(Field* field,Block* block,int* offset){
+	T_BLOCKSIZE fieldSize;
+	char* serializedField;
+	fieldSize= field->serialize(&serializedField);
+	block->setFragment((char*)&fieldSize,*offset,sizeof(T_BLOCKSIZE));
+	*offset+=sizeof(T_BLOCKSIZE);
+	block->setFragment(serializedField,*offset,fieldSize);
+	*offset+=fieldSize;
+}
+
+char* MetadataBlock::getContent(){
+	vector<Field*>::iterator iter;
+	Field* each;
+	int counter= sizeof(T_FILETYPE);
+	this->setFragment((char*)&_fileType,0,counter);
+	for (iter = this->_fields->begin(); iter != this->_fields->end(); iter++ ){	
+		each=(Field*)*iter;
+		this->writeOnBlock(each,this,&counter);
+	}
+	return Block::getContent();
+}
+
+void MetadataBlock::setFreeSpace(T_BLOCKSIZE space){
+}
+
+T_BLOCKSIZE MetadataBlock::getSize(){
+	return Block::getFreeSpace();
+}
+
+T_BLOCKSIZE MetadataBlock::getFreeSpace(){
+	return Block::getSize();
 }
