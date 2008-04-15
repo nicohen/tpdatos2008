@@ -3,6 +3,10 @@
 #include "string.h"
 #include "Data/RecordsBlock.h"
 #include <sstream>
+#include "IntValue.h"
+#include "StringValue.h"
+#include "StructureValue.h"
+
 
 QueryStatement::QueryStatement(char* filename):Statement(filename){
 }
@@ -33,12 +37,24 @@ StatementResult* QueryStatement::execute(DataManager* dataManager) {
 //		}
 //	}
 
+	Record* rec=NULL;
+	StructureValue* struc=NULL;
 	StatementResult* sr = new StatementResult();
 	
 	char* cadena; 
 	string buffer;
 	string intToString;
 	stringstream out;
+	
+	rec=new Record();
+	struc=new StructureValue();
+	struc->addValue(new StringValue("inside struct1"));
+	struc->addValue(new StringValue("inside struct2"));
+	struc->addValue(new StringValue("inside struct3"));
+	rec->addValue(new IntValue(10));
+	rec->addValue(new StringValue("sdasdasd"));	
+	rec->addValue(new IntValue(11));
+	rec->addValue(struc);
 	
 	out<<this->getFieldNumber();
 	intToString = out.str();
@@ -50,18 +66,20 @@ StatementResult* QueryStatement::execute(DataManager* dataManager) {
 //	buffer.append(intToString);
 	buffer.append("0"); //hardcodeado
 	buffer.append("]' ");
-	buffer.append("Res = ['");
+	buffer.append("Res = ");
+	rec->toString(&buffer);
 //	buffer.append(dataValue->toString());
-	buffer.append("pepito"); //hardcodeado
-	buffer.append("',");
+//	buffer.append("pepito"); //hardcodeado
+//	buffer.append("',");
 //	buffer.append(intToString);
-	buffer.append("5"); //hardcodeado
-	buffer.append(",|...|]"); //hardcodeado
+//	buffer.append("5"); //hardcodeado
+//	buffer.append(",|...|]"); //hardcodeado
 
 	cadena = (char*) malloc(strlen(buffer.c_str()));
 	strcpy(cadena,buffer.c_str());
 	sr->setResult(cadena);
 
+	delete rec;
 	return sr;
 }
 

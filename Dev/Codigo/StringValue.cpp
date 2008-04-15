@@ -1,5 +1,7 @@
 #include "StringValue.h"
 #include <string>
+using namespace std;
+
 StringValue::StringValue(char* text)
 {
 	this->_value=cloneStr(text);
@@ -8,6 +10,12 @@ StringValue::StringValue(char* text)
 StringValue::~StringValue()
 {
 	delete(this->_value);
+}
+
+void StringValue::toString(string* buffer) {
+	buffer->append("'");
+	buffer->append(this->_value);
+	buffer->append("'");
 }
 
 DataType* StringValue::getType(){

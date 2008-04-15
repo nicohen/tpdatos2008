@@ -4,6 +4,8 @@
 #include "RawRecord.h"
 #include "../DataValue.h"
 #include <vector>
+#include "string.h"
+
 using namespace std;
 /*
  * Contiene los datos de un registro
@@ -16,14 +18,15 @@ private:
 public:
 	Record();
 	virtual ~Record();
-	char* toString();
 	//Getters
 	vector<DataValue*>* getValues();
+	void toString(string* buffer);
 	
 	//Otros metodos
 	void addValue(DataValue* aValue);
 	void addValues(vector<DataValue*>* valueList);
 	RawRecord* serialize();
 	void deserialize(RawRecord* data);
+
 };
 #endif /*RECORD_H_*/

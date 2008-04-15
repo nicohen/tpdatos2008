@@ -3,6 +3,7 @@
 
 #include "DataValue.h"
 #include "IntType.h"
+#include <string>
 
 class IntValue:public DataValue
 {
@@ -16,6 +17,7 @@ public:
 	int getInt();
 	virtual bool equals(DataValue* other);
 	virtual DataType* getType();
+	virtual void toString(string* buffer);
 	virtual char* serialize();
 	
 };

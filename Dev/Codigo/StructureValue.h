@@ -2,11 +2,11 @@
 #define STRUCTUREVALUE_H_
 
 #include <vector>
-
 #include "DataValue.h"
-
+#include <string>
 
 using namespace std;
+
 class StructureValue:public DataValue
 {	
 private:
@@ -17,9 +17,10 @@ public:
 	virtual ~StructureValue();
 	
 	virtual bool equals(DataValue* other);
-	virtual DataType* getType();	
-	void addValue(DataValue* aType);	
+	virtual DataType* getType();
+	virtual void toString(string* buffer);
 	virtual char* serialize();	
+	void addValue(DataValue* aType);
 };
 
 #endif /*STRUCTUREVALUE_H_*/

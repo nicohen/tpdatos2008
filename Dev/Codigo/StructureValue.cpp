@@ -1,6 +1,8 @@
 #include "StructureValue.h"
 #include "StructureType.h"
 
+using namespace std;
+
 StructureValue::StructureValue()
 {
 	this->_dataValues = new vector<DataValue*>();
@@ -21,6 +23,10 @@ DataType* StructureValue::getType(){
 		vvType->addType(((DataValue*)*iter)->getType());
 	}
 	return vvType;
+}
+
+void StructureValue::toString(string* buffer){
+
 }
 
 void StructureValue::addValue(DataValue* aType){
