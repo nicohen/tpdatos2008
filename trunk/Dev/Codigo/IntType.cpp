@@ -22,7 +22,7 @@ IntType::~IntType()
 }
 
 DataValue* IntType::deserializeValue(char* data){
-	int value;
-	memcpy(&value,data,sizeof(int));
-	return new IntValue(value);
+	IntValue* intvalue=new IntValue(0);
+	intvalue->deserialize(data);
+	return intvalue;
 }
