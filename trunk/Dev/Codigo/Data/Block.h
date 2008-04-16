@@ -23,6 +23,7 @@ public:
 	virtual void setFreeSpace(T_BLOCKSIZE space);
 	virtual T_BLOCKSIZE getSize();	
 	virtual T_BLOCKSIZE getFreeSpace();//Esto deberia ser sobreescrito por otros blocks
+	virtual T_BLOCKSIZE getUsedSpace();//Esto deberia ser sobreescrito por otros blocks
 	
 };
 

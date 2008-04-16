@@ -125,3 +125,7 @@ T_BLOCKSIZE MetadataBlock::getSize(){
 T_BLOCKSIZE MetadataBlock::getFreeSpace(){
 	return Block::getSize();
 }
+
+Block* MetadataBlock::createMetadataBlock(char* content, T_BLOCKSIZE size){
+	return (Block*)new MetadataBlock(content,size);
+}

@@ -16,6 +16,8 @@ private:
 	Field* parseField(char* content, int* offset);
 	void writeOnBlock(Field* field,Block* block,int* offset);	
 public:
+	static Block* createMetadataBlock(char* content, T_BLOCKSIZE size);
+	
 	MetadataBlock(T_BLOCKSIZE size);
 	MetadataBlock(char* content,T_BLOCKSIZE size);
 	virtual ~MetadataBlock(void);

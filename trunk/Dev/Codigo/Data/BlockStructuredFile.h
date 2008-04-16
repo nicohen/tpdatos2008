@@ -39,15 +39,16 @@ private:
 	char* getContentBlock(T_BLOCKCOUNT contentBlockNumber);	//El resultado es un puntero alocado en memoria dinamica, por lo tanto hay que eliminarlo
 	void updateContentBlock(T_BLOCKCOUNT contentBlockNumber,char* content);
 	void appendBlock(char* content);
-public:
 	
 	BlockStructuredFile(char* filename);
+public:
 	
 	static BlockStructuredFile* Load(char* filename);
 	static BlockStructuredFile* Create(char* filename,T_BLOCKSIZE blockSize);
 
 	char* getBlock(T_BLOCKCOUNT blockNumber) throw (BlockStructuredFileException*);//ESTO ES PRIVADO
 	
+	T_FILESIZE getFileSize();
 	T_BLOCKSIZE getBlockSize();
 	T_BLOCKCOUNT getBlockCount();
 	T_BLOCKCOUNT getContentBlockCount();

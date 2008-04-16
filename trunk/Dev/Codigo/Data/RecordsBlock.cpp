@@ -68,6 +68,9 @@ T_BLOCKSIZE RecordsBlock::getFreeSpace(){
 	return this->getSize()-usedSpace;
 }
 
+T_BLOCKSIZE RecordsBlock::getUsedSpace() {
+	return (this->getSize()-this->getFreeSpace());
+}
 
 void RecordsBlock::writeAllRecords(){
 	vector<RawRecord*>::iterator iter;

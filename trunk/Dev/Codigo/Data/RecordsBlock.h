@@ -26,6 +26,7 @@ public:
 
 	void appendRecord(RawRecord* record);	
 	virtual T_BLOCKSIZE getFreeSpace();
+	virtual T_BLOCKSIZE getUsedSpace();
 	virtual char* getContent();	
 	vector<RawRecord*>* getRecords();
 };

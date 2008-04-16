@@ -32,8 +32,13 @@ char* Block::getContent(){
 T_BLOCKSIZE Block::getSize(){
 	return this->_size;
 }
+
 T_BLOCKSIZE Block::getFreeSpace(){
 	return this->_freeSpace;
+}
+
+T_BLOCKSIZE Block::getUsedSpace(){
+	return (this->getSize()-this->getFreeSpace());
 }
 
 void Block::setFreeSpace(T_BLOCKSIZE space){

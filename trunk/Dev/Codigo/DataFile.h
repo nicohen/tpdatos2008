@@ -9,6 +9,7 @@
 #include "Utils.h"
 #include "Data/Record.h"
 #include "SecondaryIndex.h"
+#include "Data/Block.h"
 #include <vector>
 
 class DataFile {
@@ -21,21 +22,28 @@ private:
 	MetadataBlock* _metadataBlock;
 	BlockStructuredFile* _blockStructuredFile;
 	
+	
 public:
+	static DataFile* Load(char* filename);
+	DataFile(char* fileName);
 	//Constructores y destructores 
 	DataFile(char* fileName, int blockSize, int fileType, int indexSize, int secondaryFieldsCount, vector<Field*>* secondaryFields, SecondaryIndex* secondaryIndex);
 	virtual ~DataFile();
 	
 	void create();
 	char* getFileName();
-	int getBlockSize();
-	
 	
 	void setBlockStructuredFile(BlockStructuredFile* blockStructuredFile);
 	BlockStructuredFile* getBlockStructuredFile();
 	void setMetadataBlock(MetadataBlock* metadataBlock);
 	MetadataBlock* getMetadataBlock();
-
+	T_FILESIZE getDataUsedSpace();
+	T_FILESIZE getDataFreeSpace();
+	T_FILESIZE getFileSize();
+	T_BLOCKSIZE getDataRecordsCount();
+	
+	void insertRecord(Record* record);
+	
 	/*
 	void open();
 	void close();
