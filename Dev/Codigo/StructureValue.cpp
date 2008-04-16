@@ -124,13 +124,15 @@ void StructureValue::serializeTo(char* buffer){
 }	
 void StructureValue::deserializeValue(char* data,T_STRING_LENGHT dataLenght){
 	//Recorrer los valores y llamar al deserialize de cada fucking eachhhh
-	this->addValue(new IntValue(10));//Borrar el include
 	DataValue* each=NULL;
 	vector<DataValue*>::iterator iter;
+	char* currentDataPointer=data;
 	for (iter = this->_dataValues->begin(); iter != this->_dataValues->end(); iter++ )
 	{
 		each=((DataValue*)*iter);
 		//((IntValue*)each)
+		each->deserialize(currentDataPointer);
+		currentDataPointer+=each->getSerializationFullSize();
 	}
 }
 
