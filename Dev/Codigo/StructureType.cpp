@@ -91,13 +91,17 @@ DataValue* StructureType::createNullValue(){
 
 
 int StructureType::serialize(char* stream){
-	int counter=sizeof(short);
-	vector<DataType*>::iterator iter;
+	int counter=0;
+	char type= DataType::STRUCTURED_TYPE;
+	memcpy(stream,(char*)&type,sizeof(char));
+	counter+=sizeof(char);
+	vector<DataType*>::iterator iterador;
 	unsigned short length= _dataTypes->size();
-	memcpy(stream,(char*)&length,counter);
+	memcpy(stream+counter,(char*)&length,sizeof(short));
+	counter+=sizeof(short);
 	DataType* each;
-	for (iter = this->_dataTypes->begin(); iter != this->_dataTypes->end(); iter++ ){	
-		each=(DataType*)*iter;
+	for (iterador = this->_dataTypes->begin(); iterador != this->_dataTypes->end(); iterador++ ){	
+		each=(DataType*)*iterador;
 		counter+=each->serialize(stream+counter);
 	}
 	return counter;
