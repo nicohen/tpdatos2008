@@ -10,6 +10,7 @@
 #include "Data/Record.h"
 #include "SecondaryIndex.h"
 #include "Data/Block.h"
+#include "Data/RawRecord.h"
 #include <vector>
 
 class DataFile {
