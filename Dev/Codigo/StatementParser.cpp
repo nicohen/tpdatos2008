@@ -526,6 +526,7 @@ Statement* StatementParser::parseCreateStatement(){
 		delete createStatement; 
 		throw ParserException();
 	}catch(StatementParserException pe){
+		DEBUG("Fin de parseo CREAR correctamente.");
 		return createStatement;
 	}
 	token =	_tokenizer->getNextToken(false);
