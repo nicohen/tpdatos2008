@@ -1,4 +1,5 @@
 #include "DataFile.h"
+#include "Data/RecordsBlock.h"
 #include "string.h"
 
 DataFile::DataFile(char* fileName){
@@ -54,7 +55,7 @@ void DataFile::load(char* folderPath){
 	//Cargo el blockStructureFile
 	this->_blockStructuredFile = BlockStructuredFile::Load(this->_fullPath);
 	//Cargo el MetadataBlock
-	this->_metadataBlock = (MetadataBlock*)_blockStructuredFile->bGetContentBlock(DataFile::FIRSTBLOCK,&MetadataBlock::createMetadataBlock);
+	this->_metadataBlock = (MetadataBlock*)_blockStructuredFile->bGetContentBlock(DataFile::FIRST_BLOCK,&MetadataBlock::createMetadataBlock);
 }
 
 void DataFile::save(char* folderPath) {
@@ -96,6 +97,39 @@ T_FILESIZE DataFile::getDataFreeSpace() {
 	return freeSpace;
 }
 
+T_BLOCKSIZE DataFile::getRecordsBlockCount(){
+	return this->_blockStructuredFile->getContentBlockCount()-1;
+}
+
+vector<Record*>* DataFile::findRecords(int fNumber,DataValue* fValue){
+	// obtener bloque por bloque
+	// llenar cada RecordBlock con un bloque
+	// devuelve un array de bytes
+	// tengo que crear un record a partir de un array de bytes que devuelve el recordblock
+	vector<Record*>* recordsObteined= new vector<Record*>();
+	RecordsBlock *rBlock;
+	int length= this->getRecordsBlockCount();
+	for(int j=1;j<length;j++){
+		rBlock=	this->getRecordBlock(j);
+		vector<RawRecord*>* recordsList= rBlock->getRecords();
+		RawRecord* each=NULL;
+		vector<RawRecord*>::iterator iter;
+		this->getDataStructure();
+		for (iter = recordsList->begin(); iter != recordsList->end(); iter++ ){
+			each=((RawRecord*)*iter);
+			Record* record= new Record();
+			record->deserialize(each,_metadataBlock->GetSecondaryFields());
+			recordsObteined->push_back(record);
+		}		
+	}
+	return recordsObteined;
+}
+
+
+vector<Field*>* DataFile::getDataStructure(){
+	return this->_metadataBlock->GetSecondaryFields();
+}
+	
 T_BLOCKSIZE DataFile::getDataRecordsCount() {
 	//recorrer todos los recordsblock y acumular el getFreeSpace-->implementa
 	int recordsCount = 0;
@@ -124,7 +158,15 @@ void DataFile::insertRecord(Record* record) {
 		this->_blockStructuredFile->bUpdateContentBlock(freeRecordBlockNumber,recordsBlock);
 	} catch(BlockNotFoundException*) {
 		recordsBlock = new RecordsBlock(this->_blockSize);
+		recordsBlock->getRecords()->push_back(rawRecord);
 		this->_blockStructuredFile->bAppendContentBlock(recordsBlock);
 	}
 
 }
+
+RecordsBlock* DataFile::getRecordBlock(int blockNumber){
+	//VALIDAR SI EXISTE ESE NUMERO DE BLOCKE
+	//POR NAHUE
+	return (RecordsBlock*)this->getBlockStructuredFile()->bGetContentBlock(blockNumber,&RecordsBlock::createRecordsBlock);
+}
+
