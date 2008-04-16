@@ -121,7 +121,7 @@ GLOBAL_CPP_H:=	$(CODE_PATH)BufferedDataManager.h\
 #Si se quiere arrancar usando un "main" propio, crear el archivo con la funcion main adentro y decomentar la linea que corresponda
 
 MAIN_CLASS= $(CODE_PATH)main.cpp
-MAIN_PABLO= $(CODE_PATH)main.cpp
+MAIN_PABLO= $(CODE_PATH)main_pablo.cpp
 MAIN_NAHUEL= $(CODE_PATH)TestSuite_BlockStructuredFile.cpp
 #$(CODE_PATH)main_nahuel.cpp
 MAIN_NICOLAS= $(CODE_PATH)main.cpp
