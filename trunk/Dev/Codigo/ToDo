@@ -3,3 +3,5 @@ Validar que los tipos de TODOS en todos los statements tengan sentido
 MemoryLeaks 
 Corregir esto: Falta el nombre del archivo-->[2008-04-16 12:45:29] 'Se creo correctamente el archivo' Res=1
 Corregir el constructor de DataFile
+Nico!->StatsStatement: Escribir en el archivo
+Poner debug en todos los executes para avisar que empezo/terminó
