@@ -22,23 +22,6 @@ MetadataBlock::~MetadataBlock() {
 	delete(this->_fields);
 }
 
-char* MetadataBlock::serialize() {
-	char* cadena;
-	int valor = 1;
-	cadena = (char*) malloc(sizeof(char));
-	cadena = (char*)valor;
-//	printf("%c",cadena);	
-	return cadena;
-}
-/*
-int MetadataBlock::getIndexSize() {
-	return this->_indexSize;
-}
-
-void MetadataBlock::setIndexSize(int indexSize) {
-	this->_indexSize = indexSize;
-}
-*/
 int MetadataBlock::getFileType() {
 	return this->_fileType;
 }

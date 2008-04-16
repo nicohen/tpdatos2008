@@ -77,12 +77,14 @@ void CreateStatement::writeStatementQuery(OutPutter* outPutter){
 }
 
 StatementResult* CreateStatement::execute(DataManager* dataManager){
+	DEBUG("Inicio de la ejecución del CreateStatement");
 	//Creo el DataFile
 	DataFile* dataFile = new DataFile(this->getFileName(),this->getDataBlockSize(),this->getFileType(),this->getIndexSize(),this->getSecondaryFieldCount(),this->getSecondaryFields(),this->getSecondaryIndex());
 	//Creo el archivo en la carpeta correspondiente
 	dataManager->addFile(dataFile);
 	StatementResult* sr = new StatementResult();
 	sr->setResult("'Se creo correctamente el archivo' Res=1");
+	DEBUG("Fin de la ejecución del CreateStatement");
 	return sr;
 }
 

@@ -39,10 +39,11 @@ void InsertionStatement::clearValues(vector<DataValue*>* values){
 }
 
 StatementResult* InsertionStatement::execute(DataManager* dataManager){
-	StatementResult* sr = new StatementResult();
-	
+	StatementResult* sr = new StatementResult();	
 	char* cadena; 
 	string buffer;
+	
+	DEBUG("Inicio de la ejecución del InsertionStatement");
 
 	/**
 	 * Dejo comentado esto
@@ -53,6 +54,8 @@ StatementResult* InsertionStatement::execute(DataManager* dataManager){
 //		 dataType = ((DataValue*)*iter)->getType();
 //		 value = ((DataValue*)*iter)->getType();
 //	}
+	
+	
 	
 	DataFile* dataFile = dataManager->getFile(this->getFileName());
 	Record* record = new Record();
@@ -72,6 +75,7 @@ StatementResult* InsertionStatement::execute(DataManager* dataManager){
 	strcpy(cadena,buffer.c_str());
 
 	sr->setResult(cadena);
+	DEBUG("Fin de la ejecución del InsertionStatement");
 	return sr;
 }
 

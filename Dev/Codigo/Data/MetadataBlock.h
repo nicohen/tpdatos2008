@@ -21,7 +21,7 @@ public:
 	MetadataBlock(T_BLOCKSIZE size);
 	MetadataBlock(char* content,T_BLOCKSIZE size);
 	virtual ~MetadataBlock(void);
-	char* serialize();
+	//char* serialize();
 
 	//int getIndexSize();
 	//void setIndexSize(int indexSize);
