@@ -1,3 +1,5 @@
 Deshardcodear todos los RES
-Validar consistencia de statements
-Validar que los tipos de TODOS en todos los statements tengan sentido 
+Validar que los tipos de TODOS en todos los statements tengan sentido
+MemoryLeaks 
+Corregir esto: Falta el nombre del archivo-->[2008-04-16 12:45:29] 'Se creo correctamente el archivo' Res=1
+Corregir el constructor de DataFile
