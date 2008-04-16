@@ -11,6 +11,7 @@ QueryStatement::QueryStatement(char* filename):Statement(filename){
 }
 
 StatementResult* QueryStatement::execute(DataManager* dataManager) {
+	DEBUG("Inicio de la ejecución del QueryStatement");
 	DataFile* dFile= dataManager->getFile(this->getFileName());
 	vector<Record*>* list= dFile->findRecords(this->getFieldNumber(),this->getValue());
 	Record* each=NULL;
@@ -24,7 +25,7 @@ StatementResult* QueryStatement::execute(DataManager* dataManager) {
 		delete str;
 	}
 	StatementResult* sr= new StatementResult();
-	sr->setResult("SALIO TODO OK!!!!");
+	DEBUG("Fin de la ejecución del QueryStatement");
 	return sr;
 }
 

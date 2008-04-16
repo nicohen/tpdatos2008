@@ -870,21 +870,14 @@ void Test_MetadataBlock_Serialization(TestCase* test){
 
 void Test_Records_Matching(TestCase* test){
 	Record* expected=new Record();
-	Record* actualEqual=new Record();
-	Record* actualNonEqual=new Record();
 		
-	expected->addValues(getDataValueVector(getStructureValue1()));
-	expected->addValues(getDataValueVector(getStructureValue1()));
+	expected->addValue(new IntValue(10));
+	expected->addValue(new StringValue("sadsd"));
 	
-	actualEqual->addValues(getDataValueVector(getStructureValue1()));
-	actualEqual->addValues(getDataValueVector(getStructureValue1()));
-	
-	actualNonEqual->addValues(getDataValueVector(getStructureValue2()));
-	
-	test->Assert_True_m(expected->matchField(0,actualEqual),"Los Records deberian matchear en el campo 0.");
-	test->Assert_True_m(expected->matchField(1,actualEqual),"Los Records deberian matchear en el campo 1.");
-	test->Assert_True_m(!(expected->matchField(3,actualEqual)),"Los Records not deberian matchear en el campo 3 porque de hecho no existe.");
-	test->Assert_True_m(!(expected->matchField(0,actualNonEqual)),"Los Records no deberian matchear en el campo 0.");	
+	test->Assert_True_m(expected->matchField(0,new IntValue(10)),"El campo 1 deberia matchear.");
+	test->Assert_True_m(expected->matchField(1,new StringValue("sadsd")),"El campo 2 deberia matchear.");
+	test->Assert_True_m(!expected->matchField(0,new IntValue(11)),"El campo 1 no deberia matchear.");
+	test->Assert_True_m(!expected->matchField(1,new StringValue("dsd")),"El campo 2 no deberia matchear.");	
 }
 
 int main(int argc, char* argv[]){

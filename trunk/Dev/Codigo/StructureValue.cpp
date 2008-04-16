@@ -122,7 +122,7 @@ void StructureValue::serializeTo(char* buffer){
 	for (iter = this->_dataValues->begin(); iter != this->_dataValues->end(); iter++ )
 	{
 		each=((DataValue*)*iter);
-		eachSerialization=each->serialize();		
+		eachSerialization=each->serialize();
 		memcpy(currentBufferLocation,eachSerialization,each->getSerializationFullSize());
 		currentBufferLocation+=each->getSerializationFullSize();
 		free(eachSerialization);
