@@ -3,7 +3,8 @@
 #include <stdio.h>
 #include "IntValue.h"
 #include "StringValue.h"
-#include "ExecutionException.h"
+#include "Data/TypeMismatchException.h"
+#include "Data/IdentityException.h"
 
 using namespace std;
 
@@ -45,6 +46,8 @@ StatementResult* InsertionStatement::execute(DataManager* dataManager){
 	string buffer;	
 	DEBUG("Inicio de la ejecución del InsertionStatement");
 	
+	buffer.append("Intentando insertar el registro: ");
+	
 	DataFile* dataFile = dataManager->getFile(this->getFileName());
 	Record* record = new Record();
 	DataValue* each=NULL;
@@ -53,16 +56,20 @@ StatementResult* InsertionStatement::execute(DataManager* dataManager){
 	{
 		each=((DataValue*)*iter);
 		record->addValue(each);
-	}
+	}	
+	record->toString(&buffer);	
 	try {
-		dataFile->insertRecord(record);		
-
-		buffer.append("'Se inserto el registro ");
+		dataFile->insertRecord(record);
+		buffer.append(" Se inserto el registro ");
 		record->toString(&buffer);
-		buffer.append("Res=1"); 
+		buffer.append(" Res=1"); 
 		
-	} catch (ExecutionException* e) {
-		buffer.append("'Error al insertar registro (");
+	} catch (TypeMismatchException* e) {
+		buffer.append(" Error al insertar el registro (");
+		buffer.append(e->toString());
+		buffer.append("). Res=0"); 
+	} catch (IdentityException* e) {
+		buffer.append(" Error al insertar el registro (");
 		buffer.append(e->toString());
 		buffer.append("). Res=0"); 
 	}

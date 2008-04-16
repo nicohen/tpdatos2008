@@ -25,10 +25,10 @@ GLOBAL_CPP:=	$(CODE_PATH)BufferedDataManager.cpp\
 	$(CODE_PATH)DeleteStatement.cpp\
 	$(CODE_PATH)Demon.cpp\
 	$(CODE_PATH)EndStatement.cpp\
-	$(CODE_PATH)ExecutionException.cpp\
 	$(CODE_PATH)Field.cpp\
 	$(CODE_PATH)FileManager.cpp\
 	$(CODE_PATH)FileInfo.cpp\
+	$(DATA_PATH)IdentityException.cpp\
 	$(CODE_PATH)InsertionStatement.cpp\
 	$(CODE_PATH)IntType.cpp\
 	$(CODE_PATH)IntValue.cpp\
@@ -66,6 +66,7 @@ GLOBAL_CPP:=	$(CODE_PATH)BufferedDataManager.cpp\
 	$(TEST_PATH)TrueAssertion.cpp\
 	$(TEST_PATH)TestCase.cpp\
 	$(TEST_PATH)TestSuiteResult.cpp\
+	$(DATA_PATH)TypeMismatchException.cpp\
 	$(DATA_PATH)BlockStructuredFileException.cpp
 
 
@@ -79,10 +80,10 @@ GLOBAL_CPP_H:=	$(CODE_PATH)BufferedDataManager.h\
 	$(CODE_PATH)DeleteStatement.h\
 	$(CODE_PATH)Demon.h\
 	$(CODE_PATH)EndStatement.h\
-	$(CODE_PATH)ExecutionException.h\
 	$(CODE_PATH)Field.h\
 	$(CODE_PATH)FileManager.h\
 	$(CODE_PATH)FileInfo.h\
+	$(DATA_PATH)IdentityException.h\
 	$(CODE_PATH)InsertionStatement.h\
 	$(CODE_PATH)IntType.h\
 	$(CODE_PATH)IntValue.h\
@@ -120,6 +121,7 @@ GLOBAL_CPP_H:=	$(CODE_PATH)BufferedDataManager.h\
 	$(TEST_PATH)TrueAssertion.h\
 	$(TEST_PATH)TestCase.h\
 	$(TEST_PATH)TestSuiteResult.h\
+	$(DATA_PATH)TypeMismatchException.h\
 	$(DATA_PATH)BlockStructuredFileException.h
 
 #Si se quiere arrancar usando un "main" propio, crear el archivo con la funcion main adentro y decomentar la linea que corresponda

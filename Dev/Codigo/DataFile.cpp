@@ -1,9 +1,11 @@
 #include "DataFile.h"
 #include "Data/RecordsBlock.h"
 #include "string.h"
-#include "ExecutionException.h"
 #include <vector>
 #include "IntType.h"
+#include "Data/IdentityException.h"
+#include "Data/TypeMismatchException.h"
+
 
 DataFile::DataFile(char* fileName){
 	_fileName = cloneStr(fileName);
@@ -171,6 +173,14 @@ T_FILESIZE DataFile::getFileSize() {
 }
 
 void DataFile::insertRecord(Record* record) {
+	
+	vector<Record*>* sameKeyRecordsfound = this->findRecords(0,(DataValue*)record->getValues()->at(0));
+	if(sameKeyRecordsfound->size()>0){
+		delete sameKeyRecordsfound;
+		throw new IdentityException("Ya existe un registro con la misma clave que el que se quiere insertar");
+	}
+	delete sameKeyRecordsfound;
+	
 	vector<DataValue*>*	recordValues= record->getValues();
 	vector<DataValue*>::iterator recordIter;
 	DataValue* aValue;
@@ -186,7 +196,7 @@ void DataFile::insertRecord(Record* record) {
 			aValue->toString(buffer);
 			delete buffer;
 			if (aField->getDataType()->equals(aValue->getType())==false){
-				throw new ExecutionException("Los datos ingresados no coinciden con la estructura del Archivo.");
+				throw new TypeMismatchException("Los datos ingresados no coinciden con la estructura del Archivo");
 			}
 	}
 	RecordsBlock* recordsBlock = NULL;
