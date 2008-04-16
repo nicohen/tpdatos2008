@@ -65,7 +65,11 @@ BlockStructuredFile::BlockStructuredFile(char* filename) {
 	this->_filename=filename;
 	if(!existsFile(this->_filename)){
 		//ERROR
-		throw "[Exception]: Block Structured file. No se encontró el archivo";
+		string msg;
+		ostringstream os;
+		msg.append("No se encontró el archivo");
+		
+		throw new BlockStructuredFileException((char*)msg.c_str());
 	}
 	//this->_file = new fstream(this->_filename,ios::app|ios::in|ios::out|ios::binary);
 	this->_file = new fstream(this->_filename,ios::in|ios::out|ios::binary);
