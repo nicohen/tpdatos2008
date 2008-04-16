@@ -109,12 +109,11 @@ vector<Record*>* DataFile::findRecords(int fNumber,DataValue* fValue){
 	vector<Record*>* recordsObteined= new vector<Record*>();
 	RecordsBlock *rBlock;
 	int length= this->getRecordsBlockCount();
-	for(int j=1;j<length;j++){
+	for(int j=1;j<=length;j++){
 		rBlock=	this->getRecordBlock(j);
 		vector<RawRecord*>* recordsList= rBlock->getRecords();
 		RawRecord* each=NULL;
 		vector<RawRecord*>::iterator iter;
-		this->getDataStructure();
 		for (iter = recordsList->begin(); iter != recordsList->end(); iter++ ){
 			each=((RawRecord*)*iter);
 			Record* record= new Record();
@@ -150,7 +149,6 @@ T_FILESIZE DataFile::getFileSize() {
 void DataFile::insertRecord(Record* record) {
 	RecordsBlock* recordsBlock = NULL;
 	RawRecord* rawRecord = record->serialize();
-
 	try {
 		T_BLOCKCOUNT freeRecordBlockNumber = this->_blockStructuredFile->getFirstFreeContentBlockNumber(1,record->getSerializationFullSize(),&RecordsBlock::createRecordsBlock);
 		recordsBlock = (RecordsBlock*)this->_blockStructuredFile->bGetContentBlock(freeRecordBlockNumber,&RecordsBlock::createRecordsBlock);
