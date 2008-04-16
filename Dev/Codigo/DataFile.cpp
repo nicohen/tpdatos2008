@@ -22,7 +22,7 @@ DataFile::DataFile(char* fileName, int blockSize, int fileType, int indexSize, i
 	Field* each=NULL;
 	vector<Field*>::iterator iter;
 	for (iter = secondaryFields->begin(); iter != secondaryFields->end(); iter++ ){
-		each=((Field*)*iter);		
+		each=((Field*)*iter);
 		fields->push_back(each);
 	}
 	
@@ -142,7 +142,9 @@ vector<Record*>* DataFile::findRecords(int fNumber,DataValue* fValue){
 			each=((RawRecord*)*iter);
 			Record* record= new Record();
 			record->deserialize(each,this->getFields());
-			recordsObteined->push_back(record);
+			if(record->matchField(fNumber,fValue)){
+				recordsObteined->push_back(record);	
+			}
 		}		
 	}
 	return recordsObteined;
