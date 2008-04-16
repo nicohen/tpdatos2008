@@ -168,7 +168,7 @@ void Test_BlockStructuredFile_RaisesExceptionWhenFileDoesNotExists(TestCase* tes
 		loadedbsfile=BlockStructuredFile::Load("archivo_inexistente.no");	
 		test->Assert_True_m(false,"No arrojó la excepción de archivo no encontrado");
 		delete loadedbsfile;
-	}catch(char* ){
+	}catch(BlockStructuredFileException* ex){
 		
 	}	
 }
