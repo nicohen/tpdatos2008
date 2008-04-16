@@ -13,7 +13,6 @@ DataFile::DataFile(char* fileName, int blockSize, int fileType, int indexSize, i
 	//_metadataBlock->setIndexSize(indexSize);
 	_metadataBlock->setFileType(fileType);
 	_metadataBlock->setSecondaryFields(secondaryFields);
-	_metadataBlock->setQtyFields(secondaryFieldsCount);
 }
 
 DataFile::~DataFile() {}

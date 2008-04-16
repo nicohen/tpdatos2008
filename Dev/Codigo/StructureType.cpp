@@ -72,3 +72,16 @@ bool StructureType::isInstanceOf(void* anObject){
 DataValue* StructureType::deserializeValue(char* data){
 	return new StructureValue();
 }
+
+int StructureType::serialize(char* stream){
+	int counter=sizeof(short);
+	vector<DataType*>::iterator iter;
+	unsigned short length= _dataTypes->size();
+	memcpy(stream,(char*)&length,counter);
+	DataType* each;
+	for (iter = this->_dataTypes->begin(); iter != this->_dataTypes->end(); iter++ ){	
+		each=(DataType*)*iter;
+		counter+=each->serialize(stream+counter);
+	}
+	return counter;
+}

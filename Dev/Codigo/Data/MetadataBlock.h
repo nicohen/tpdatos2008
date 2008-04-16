@@ -11,7 +11,6 @@ class MetadataBlock: public Block{
 	
 private:
 	unsigned short int _fileType;
-	int _qtyFields;
 	vector<Field*>* _fields;
 	
 	void writeOnBlock(Field* field,Block* block,int* offset);	
@@ -26,7 +25,6 @@ public:
 	int getFileType();
 	void setFileType(int fileType);
 	int getQtyFields();
-	void setQtyFields(int qtyFields);
 	void setSecondaryField(Field* field);
 	void setSecondaryFields(vector<Field*>* _fields);
 	Field* getNextSecondaryField();

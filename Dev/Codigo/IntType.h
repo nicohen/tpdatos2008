@@ -13,7 +13,7 @@ public:
 	virtual bool equals(DataType* other);
 	virtual int getUniqueIdentifier();
 	virtual ~IntType();
-	
+	virtual int serialize(char* stream);
 	virtual DataValue* deserializeValue(char* content);
 }; 
 

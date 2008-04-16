@@ -26,3 +26,9 @@ DataValue* IntType::deserializeValue(char* data){
 	intvalue->deserialize(data);
 	return intvalue;
 }
+
+int IntType::serialize(char* stream){
+	char type= DataType::INT_TYPE;
+	memcpy(stream,(char*)&type,sizeof(char));
+	return sizeof(char);
+}

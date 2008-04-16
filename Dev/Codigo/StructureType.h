@@ -23,6 +23,7 @@ public:
 	virtual bool equals(DataType* other);
 	virtual int getUniqueIdentifier();
 	int getCount();
+	virtual int serialize(char* stream);
 	virtual DataValue* deserializeValue(char* content);	
 };
 
