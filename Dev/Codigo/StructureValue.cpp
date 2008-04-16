@@ -26,7 +26,20 @@ DataType* StructureValue::getType(){
 }
 
 void StructureValue::toString(string* buffer){
-
+	DataValue* each;
+	bool firstValue=true;
+	
+	vector<DataValue*>::iterator iter;
+	buffer->append("|");
+	for(iter = this->_dataValues->begin(); iter != this->_dataValues->end(); iter++) {
+		each = (DataValue*)*iter;
+		if(firstValue)
+			firstValue=false;
+		else
+			buffer->append(",");
+		each->toString(buffer);
+	}
+	buffer->append("|");
 }
 
 void StructureValue::addValue(DataValue* aType){

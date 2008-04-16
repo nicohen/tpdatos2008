@@ -53,7 +53,7 @@ void OutPutter::printLine(char* message) {
 	struct tm* timeinfo;
 	char buffer[80];
 	string stringMessage;
-	char* charMsg;
+	char* myMessage = cloneStr(message);
 	
 	time(&rawtime);
 	timeinfo = localtime(&rawtime);
@@ -64,13 +64,10 @@ void OutPutter::printLine(char* message) {
 	stringMessage.append("\n[");
 	stringMessage.append(buffer);
 	stringMessage.append("] ");
-	stringMessage.append(message);
-	
-	charMsg = (char*) malloc(strlen(stringMessage.c_str()));
-	strcpy(charMsg,stringMessage.c_str());
-	
-	this->_fileInfoOut->write(charMsg,strlen(charMsg));
+	stringMessage.append(myMessage);
+		
+	this->_fileInfoOut->write((void*)stringMessage.c_str(),stringMessage.size());
 	this->_fileInfoOut->close();
 
-	free(charMsg);
+	free(myMessage);
 }

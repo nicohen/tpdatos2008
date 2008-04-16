@@ -1,11 +1,11 @@
 #include "BufferedDataManager.h"
 
-BufferedDataManager::BufferedDataManager(DataManager* dataManager)
-{
+BufferedDataManager::BufferedDataManager(DataManager* dataManager) {
+	this->_dataManager = dataManager;
 }
 
-BufferedDataManager::~BufferedDataManager()
-{
+BufferedDataManager::~BufferedDataManager() {
+	delete this->_dataManager;
 }
 
 /*

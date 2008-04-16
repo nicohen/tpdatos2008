@@ -506,7 +506,7 @@ Statement* StatementParser::parseCreateStatement(){
 	// PARSEO EL ";" o "\n"
 	token =	_tokenizer->getNextToken(false);
 	if ((token==NULL)||(token->getType()!=Parsing::ITokenizer::DELIMITER)||!((strcmp(token->getContent(),";")!=0)||(strcmp(token->getContent(),"\n")!=0))){
-		DEBUG("Se esperaba ';' o fin de linead en lugar de:");
+		DEBUG("Se esperaba ';' o fin de linea en lugar de:");
 		DEBUG((token==NULL)?"fin de archivo":token->getContent());
 		delete createStatement; 
 		throw ParserException();	

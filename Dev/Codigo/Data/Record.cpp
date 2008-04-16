@@ -43,11 +43,16 @@ void Record::deserialize(RawRecord* data){
 
 void Record::toString(string* buffer) {
 	DataValue* each;	
+	bool firstValue = true;
 	
 	buffer->append("[");
 	vector<DataValue*>::iterator iter;
 	for (iter = _values->begin(); iter != _values->end(); iter++ ) {
 		each = ((DataValue*)*iter);
+		if (firstValue)
+			firstValue = false;
+		else
+			buffer->append(",");
 		each->toString(buffer);
 	}
 	buffer->append("]");
