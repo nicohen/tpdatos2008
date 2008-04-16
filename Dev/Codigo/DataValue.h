@@ -23,6 +23,7 @@ public:
 	virtual bool equals(DataValue* other);
 	virtual void toString(string* buffer)=0;
 	virtual DataType* getType()=0;
+	T_STRING_LENGHT getSerializationFullSize();
 	char* serialize();	
 	void deserialize(char* data);//Esto va en la clase madre (no es virtual)
 };

@@ -23,8 +23,9 @@ public:
 	virtual bool equals(DataType* other);
 	virtual int getUniqueIdentifier();
 	int getCount();
+	virtual DataValue* deserializeValue(char* content);
+	virtual DataValue* createNullValue();
 	virtual int serialize(char* stream);
-	virtual DataValue* deserializeValue(char* content);	
 };
 
 #endif /*STRUCTURETYPE_H_*/

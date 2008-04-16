@@ -13,6 +13,9 @@ bool DataValue::equals(DataValue* other){
 	return this->getType()->getUniqueIdentifier()==other->getType()->getUniqueIdentifier();
 }
 
+T_STRING_LENGHT DataValue::getSerializationFullSize(){
+	return sizeof(T_STRING_LENGHT)+this->getSerializationSize();
+}
 
 
 void DataValue::deserialize(char* data){

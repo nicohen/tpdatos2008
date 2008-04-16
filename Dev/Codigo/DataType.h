@@ -2,8 +2,11 @@
 #define DATATYPE_H_
 
 #include "DataValue.h"
+
 class DataValue;
-class DataType{
+
+class DataType
+{
 private:
 public:
 	DataType();
@@ -11,6 +14,7 @@ public:
 	virtual bool equals(DataType* other)=0;
 	virtual int getUniqueIdentifier()=0;
 	virtual ~DataType();
+	virtual DataValue* createNullValue()=0;
 	virtual DataValue* deserializeValue(char* content)=0;
 	virtual int serialize(char* stream)=0;
 	static const char STRING_TYPE= 1;

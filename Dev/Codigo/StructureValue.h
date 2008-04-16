@@ -11,7 +11,7 @@ class StructureValue:public DataValue
 {	
 private:
 	vector<DataValue*>* _dataValues;
-	void clear();	
+	void clear();
 protected:
 	virtual T_STRING_LENGHT getSerializationSize();
 	virtual void serializeTo(char* buffer);	

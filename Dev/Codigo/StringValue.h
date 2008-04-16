@@ -12,7 +12,6 @@ class StringValue:public DataValue
 {
 private:
 	char* _value;
-	
 protected:
 	virtual T_STRING_LENGHT getSerializationSize();
 	virtual void serializeTo(char* buffer);	
