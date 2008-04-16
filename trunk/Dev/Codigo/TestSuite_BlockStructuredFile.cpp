@@ -826,6 +826,18 @@ void Test_Integration_BSFandRecordsB_getContentOnAnUninitializedRecordsBlock(Tes
 	//delete filestream;	
 }
 
+void Test_StatementExec_CreateStatement(){
+	/*DataManager* datamanager=new DataManager("Datos/");
+	DataFile* dataFile;
+	datamanager->addFile()*/
+	
+}
+
+void Test_MetadataBlock_Serialization(){
+	//Meta
+	
+}
+
 int main(int argc, char* argv[]){
 	int failedTests=0;
 	
@@ -949,7 +961,9 @@ int main(int argc, char* argv[]){
 	Test_Integration_BSFandRecordsB_getContentOnAnUninitializedRecordsBlock(test29);
 	delete test29;
 	
-	
+	TestCase* test30=new TestCase("Test_StatementExec_CreateStatement",&failedTests);	
+	Test_StatementExec_CreateStatement(test30);
+	delete test30;
 		
 	delete new TestSuiteResult(failedTests);
 	return 0;

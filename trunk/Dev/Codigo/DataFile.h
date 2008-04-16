@@ -21,18 +21,24 @@ private:
 	char* _fileName;
 	MetadataBlock* _metadataBlock;
 	BlockStructuredFile* _blockStructuredFile;
-	
+	char* _fullPath;
 	
 public:
-	static DataFile* Load(char* filename);
-	DataFile(char* fileName);
+	static const int FIRSTBLOCK = 0;
+	//static DataFile* Load(char* filename);
+	//void create();
+	
 	//Constructores y destructores 
 	DataFile(char* fileName, int blockSize, int fileType, int indexSize, int secondaryFieldsCount, vector<Field*>* secondaryFields, SecondaryIndex* secondaryIndex);
+	DataFile(char* fileName);
 	virtual ~DataFile();
 	
-	void create();
-	char* getFileName();
+	void load(char* folderpath);
+	void save(char* folderPath);
+	void setFolder(char* folderPath);
+	char* appendFolder(char* fileName, char* folderPath);
 	
+	char* getFileName();	
 	void setBlockStructuredFile(BlockStructuredFile* blockStructuredFile);
 	BlockStructuredFile* getBlockStructuredFile();
 	void setMetadataBlock(MetadataBlock* metadataBlock);
@@ -40,8 +46,7 @@ public:
 	T_FILESIZE getDataUsedSpace();
 	T_FILESIZE getDataFreeSpace();
 	T_FILESIZE getFileSize();
-	T_BLOCKSIZE getDataRecordsCount();
-	
+	T_BLOCKSIZE getDataRecordsCount();	
 	void insertRecord(Record* record);
 	
 	/*

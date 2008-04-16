@@ -133,7 +133,7 @@ MAIN_NICOLAS= $(CODE_PATH)main.cpp
 
 #El eclipse ejecuta el makefile usando "make all". Y "All" apunta a TARGET. Por lo tanto se ejecuta lo que dice en la etiqueta TARGET
 all: $(MAIN_NICOLAS) $(GLOBAL_CPP_H)
-	g++ -Wall $(MAIN_NICOLAS) $(GLOBAL_CPP) -o $(TARGET)		
+	g++ -Wall -g $(MAIN_NICOLAS) $(GLOBAL_CPP) -o $(TARGET)		
 	
 #Sirve para limpiar. Para ejecutar la limpieza hay que ejecutar "make clean"
 clean:
@@ -143,7 +143,7 @@ clean:
 #	g++ -Wall $(MAIN_CLASS) $(GLOBAL_CPP) -o $(TARGET)
 
 pablo: $(MAIN_PABLO) $(GLOBAL_CPP_H)
-	g++ -Wall $(MAIN_PABLO) $(GLOBAL_CPP) -o $(TARGET)	
+	g++ -Wall -g $(MAIN_PABLO) $(GLOBAL_CPP) -o $(TARGET)	
 
 
 nahuel: $(MAIN_NAHUEL) $(GLOBAL_CPP_H)

@@ -3,17 +3,13 @@
 
 DataFile::DataFile(char* fileName){
 	_fileName = cloneStr(fileName);
-	_blockStructuredFile =BlockStructuredFile::Load(fileName);
-	_metadataBlock=(MetadataBlock*)_blockStructuredFile->bGetContentBlock(0,&MetadataBlock::createMetadataBlock);
+	_fullPath=NULL;
 }
 
 DataFile::DataFile(char* fileName, int blockSize, int fileType, int indexSize, int secondaryFieldsCount, vector<Field*>* secondaryFields, SecondaryIndex* secondaryIndex) {
+	
 	_fileName = cloneStr(fileName);
 	_blockSize = blockSize;
-
-	//Le seteo el BlockStructuredFile
-	_blockStructuredFile = BlockStructuredFile::Create(fileName,_blockSize);
-	
 	//Le seteo el MetadataBlock
 	_metadataBlock = new MetadataBlock(blockSize);
 	//_metadataBlock->setIndexSize(indexSize);
@@ -21,7 +17,12 @@ DataFile::DataFile(char* fileName, int blockSize, int fileType, int indexSize, i
 	_metadataBlock->setSecondaryFields(secondaryFields);
 }
 
-DataFile::~DataFile() {}
+DataFile::~DataFile() {
+	//MATAAAAR
+	if(this->_fullPath!=NULL){
+		free(this->_fullPath);
+	}
+}
 
 void DataFile::setBlockStructuredFile(BlockStructuredFile* blockStructuredFile) {
 	this->_blockStructuredFile = blockStructuredFile;
@@ -31,11 +32,38 @@ BlockStructuredFile* DataFile::getBlockStructuredFile() {
 	return this->_blockStructuredFile;
 }
 
-void DataFile::create() {
-	static int FIRSTBLOCK = 0;
+char* DataFile::appendFolder(char* fileName, char* folderPath){
+	string buffer;
+	char* result;
+	
+	buffer.append(folderPath);
+	buffer.append(fileName);
+	
+	result = (char*) malloc(strlen(buffer.c_str()));
+	strcpy(result,buffer.c_str());
+	return result;	
+}
 
-	this->_blockStructuredFile->Create(this->getFileName(),this->_blockSize);
-	this->_blockStructuredFile->bUpdateContentBlock(FIRSTBLOCK,new Block(this->_metadataBlock->serialize(),this->_blockStructuredFile->getBlockSize()));
+void DataFile::setFolder(char* folderPath){
+	this->_fullPath=appendFolder(this->_fileName,folderPath);
+}
+
+void DataFile::load(char* folderPath){
+	this->setFolder(folderPath);
+	
+	//Cargo el blockStructureFile
+	this->_blockStructuredFile = BlockStructuredFile::Load(this->_fullPath);
+	//Cargo el MetadataBlock
+	this->_metadataBlock = (MetadataBlock*)_blockStructuredFile->bGetContentBlock(DataFile::FIRSTBLOCK,&MetadataBlock::createMetadataBlock);
+}
+
+void DataFile::save(char* folderPath) {
+	this->setFolder(folderPath);	
+	
+	//Creo el blockStructureFile
+	this->_blockStructuredFile = BlockStructuredFile::Create(this->_fullPath,_blockSize);
+	//Guardo el MetadataBlock
+	this->_blockStructuredFile->bAppendContentBlock(this->_metadataBlock);	
 }
 
 char* DataFile::getFileName() {
