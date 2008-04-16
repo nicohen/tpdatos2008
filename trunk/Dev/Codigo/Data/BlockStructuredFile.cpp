@@ -114,7 +114,7 @@ void BlockStructuredFile::appendBlock(char* content){
 }
 
 void BlockStructuredFile::notifyBlockUpdated(T_BLOCKCOUNT blockNumber){
-	if(blockNumber>=this->getContentBlockCount()){
+	if(blockNumber>=this->getBlockCount()){
 		this->setBlockCount(this->getBlockCount()+1);
 		this->saveHeader();
 	}
@@ -194,5 +194,19 @@ void BlockStructuredFile::bAppendContentBlock(Block* block){
 
 void BlockStructuredFile::removeLastContentBlock(){
 	
+}
+
+T_BLOCKCOUNT BlockStructuredFile::getFirstFreeContentBlockNumber(T_BLOCKCOUNT initBlockNumber, T_BLOCKSIZE minRequiredSpace,Block* (*BlockCreatorFunction)(char* content,T_BLOCKSIZE size)) throw (BlockNotFoundException*) {
+	RecordsBlock* recordsBlock = NULL;
+	
+	for (int i=initBlockNumber; i <= this->getContentBlockCount()-1; i++) {
+		recordsBlock = (RecordsBlock*)this->bGetContentBlock(i,BlockCreatorFunction);
+		if (recordsBlock->getFreeSpace()>=minRequiredSpace) {
+			return i;
+		}
+	}
+
+	throw new BlockNotFoundException("[BlockNotFoundException]: No hay espacio libre para insertar el Registro en un bloque existente");
+
 }
 

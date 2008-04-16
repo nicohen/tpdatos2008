@@ -53,6 +53,7 @@ GLOBAL_CPP:=	$(CODE_PATH)BufferedDataManager.cpp\
 	$(CODE_PATH)QueryStatement.cpp\
 	$(CODE_PATH)UpdateStatement.cpp\
 	$(CODE_PATH)Utils.cpp\
+	$(DATA_PATH)BlockNotFoundException.cpp\
 	$(DATA_PATH)BlockStructuredFile.cpp\
 	$(DATA_PATH)BlockStructuredFileHeader.cpp\
 	$(DATA_PATH)MetadataBlock.cpp\
@@ -105,6 +106,7 @@ GLOBAL_CPP_H:=	$(CODE_PATH)BufferedDataManager.h\
 	$(CODE_PATH)Tokenizer.h\
 	$(CODE_PATH)UpdateStatement.h\
 	$(CODE_PATH)Utils.h\
+	$(DATA_PATH)BlockNotFoundException.h\
 	$(DATA_PATH)BlockStructuredFile.h\
 	$(DATA_PATH)BlockStructuredFileHeader.h\
 	$(DATA_PATH)MetadataBlock.h\

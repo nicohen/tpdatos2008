@@ -114,9 +114,17 @@ T_FILESIZE DataFile::getFileSize() {
 }
 
 void DataFile::insertRecord(Record* record) {
-	//agarrar un bloque y le inserto un rawrecord
-	RecordsBlock* recordsBlock = new RecordsBlock(this->_blockStructuredFile->getBlockSize());
-	RawRecord* rawRecord = new RawRecord("nahuequeve",10);
-	recordsBlock->getRecords()->push_back(rawRecord);
-	this->_blockStructuredFile->bAppendContentBlock(recordsBlock);
+	RecordsBlock* recordsBlock = NULL;
+	RawRecord* rawRecord = record->serialize();
+
+	try {
+		T_BLOCKCOUNT freeRecordBlockNumber = this->_blockStructuredFile->getFirstFreeContentBlockNumber(1,record->getSerializationFullSize(),&RecordsBlock::createRecordsBlock);
+		recordsBlock = (RecordsBlock*)this->_blockStructuredFile->bGetContentBlock(freeRecordBlockNumber,&RecordsBlock::createRecordsBlock);
+		recordsBlock->getRecords()->push_back(rawRecord);
+		this->_blockStructuredFile->bUpdateContentBlock(freeRecordBlockNumber,recordsBlock);
+	} catch(BlockNotFoundException*) {
+		recordsBlock = new RecordsBlock(this->_blockSize);
+		this->_blockStructuredFile->bAppendContentBlock(recordsBlock);
+	}
+
 }

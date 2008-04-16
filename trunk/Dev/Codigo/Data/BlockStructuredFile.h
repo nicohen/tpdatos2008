@@ -5,6 +5,8 @@
 #include <fstream>
 #include "BlockStructuredFileHeader.h"
 #include "BlockStructuredFileException.h"
+#include "BlockNotFoundException.h"
+#include "RecordsBlock.h"
 
 using namespace std;
 /*
@@ -56,13 +58,14 @@ public:
 	//No implementados
 	void removeBlock(T_BLOCKCOUNT contentBlockNumber);	
 	void moveBlock(T_BLOCKCOUNT currentContentBlockNumber,T_BLOCKCOUNT destContentBlockNumber);
-	T_BLOCKCOUNT getFirstFreeBlockNumber();
+//	T_BLOCKCOUNT getFirstFreeBlockNumber();
 	
 	//Nuevos metodos que usan Block	
 	void bUpdateContentBlock(T_BLOCKCOUNT contentBlockNumber,Block* block);	
 	Block* bGetContentBlock(T_BLOCKCOUNT contentBlockNumber,Block* (*BlockCreatorFunction)(char* content,T_BLOCKSIZE size));
 	void bAppendContentBlock(Block* block);
 	void removeLastContentBlock();
+	T_BLOCKCOUNT getFirstFreeContentBlockNumber(T_BLOCKCOUNT initBlockNumber, T_BLOCKSIZE minRequiredSpace,Block* (*BlockCreatorFunction)(char* content,T_BLOCKSIZE size)) throw (BlockNotFoundException*);
 	
 	virtual ~BlockStructuredFile(void);
 };
