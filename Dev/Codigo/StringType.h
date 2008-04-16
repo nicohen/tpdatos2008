@@ -12,7 +12,6 @@ public:
 	StringType();
 	virtual ~StringType();
 	//Otros
-	virtual bool isInstanceOf(void* anObject);
 	virtual bool equals(DataType* other);
 	virtual int getUniqueIdentifier();
 	virtual DataValue* deserializeValue(char* content);

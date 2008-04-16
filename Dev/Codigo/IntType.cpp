@@ -1,12 +1,7 @@
 #include "IntType.h"
 #include <string.h>
 
-IntType::IntType()
-{
-}
-
-bool IntType::isInstanceOf(void* anObject){
-	return false;	
+IntType::IntType(){
 }
 
 bool IntType::equals(DataType* other){

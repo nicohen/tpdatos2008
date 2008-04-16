@@ -45,3 +45,7 @@ T_STRING_LENGHT StringValue::getSerializationSize(){
 void StringValue::serializeTo(char* buffer){
 	memcpy(buffer,this->_value,strlen(this->_value)+1);
 }
+
+bool StringValue::isInstanceOf(DataType* dType){
+	return this->getType()->getUniqueIdentifier()==dType->getUniqueIdentifier();
+}

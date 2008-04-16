@@ -26,6 +26,7 @@ public:
 	virtual DataType* getType();
 	virtual void toString(string* buffer);
 	virtual char* getString();
+	virtual bool isInstanceOf(DataType* dType);
 };
 
 

@@ -1,13 +1,9 @@
 #include "StringType.h"
 
 #include <string>
-StringType::StringType()
-{
+StringType::StringType(){
 }
 
-bool StringType::isInstanceOf(void* anObject){
-	return false;	
-}
 bool StringType::equals(DataType* other){
 	return (this->getUniqueIdentifier()==other->getUniqueIdentifier());
 }

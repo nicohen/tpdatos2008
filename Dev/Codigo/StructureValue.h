@@ -27,6 +27,7 @@ public:
 	int getCount();
 	
 	static bool equalsValueVectors(vector<DataValue*>* vec1,vector<DataValue*>* vec2);
+	virtual bool isInstanceOf(DataType* dType);
 };
 
 #endif /*STRUCTUREVALUE_H_*/

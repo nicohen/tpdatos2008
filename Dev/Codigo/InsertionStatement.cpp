@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include "IntValue.h"
 #include "StringValue.h"
+#include "ExecutionException.h"
 
 using namespace std;
 
@@ -53,11 +54,18 @@ StatementResult* InsertionStatement::execute(DataManager* dataManager){
 		each=((DataValue*)*iter);
 		record->addValue(each);
 	}
-	dataFile->insertRecord(record);
-	
-	buffer.append("'Se inserto el registro ");
-	record->toString(&buffer);
-	buffer.append("Res=1"); 
+	try {
+		dataFile->insertRecord(record);		
+
+		buffer.append("'Se inserto el registro ");
+		record->toString(&buffer);
+		buffer.append("Res=1"); 
+		
+	} catch (ExecutionException* e) {
+		buffer.append("'Error al insertar registro (");
+		buffer.append(e->toString());
+		buffer.append("). Res=0"); 
+	}
 
 	cadena = (char*) malloc(strlen(buffer.c_str()));
 	strcpy(cadena,buffer.c_str());
