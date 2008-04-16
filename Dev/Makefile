@@ -25,6 +25,7 @@ GLOBAL_CPP:=	$(CODE_PATH)BufferedDataManager.cpp\
 	$(CODE_PATH)DeleteStatement.cpp\
 	$(CODE_PATH)Demon.cpp\
 	$(CODE_PATH)EndStatement.cpp\
+	$(CODE_PATH)ExecutionException.cpp\
 	$(CODE_PATH)Field.cpp\
 	$(CODE_PATH)FileManager.cpp\
 	$(CODE_PATH)FileInfo.cpp\
@@ -78,6 +79,7 @@ GLOBAL_CPP_H:=	$(CODE_PATH)BufferedDataManager.h\
 	$(CODE_PATH)DeleteStatement.h\
 	$(CODE_PATH)Demon.h\
 	$(CODE_PATH)EndStatement.h\
+	$(CODE_PATH)ExecutionException.h\
 	$(CODE_PATH)Field.h\
 	$(CODE_PATH)FileManager.h\
 	$(CODE_PATH)FileInfo.h\

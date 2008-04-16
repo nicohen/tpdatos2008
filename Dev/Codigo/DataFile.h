@@ -54,6 +54,8 @@ public:
 
 	void insertRecord(Record* record);
 	vector<Record*>* findRecords(int fNumber,DataValue* fValue);
+	
+	bool updateRecord(Record* record);
 	/*
 	void open();
 	void close();

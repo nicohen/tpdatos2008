@@ -210,3 +210,32 @@ RecordsBlock* DataFile::getRecordBlock(int blockNumber){
 	return (RecordsBlock*)this->getBlockStructuredFile()->bGetContentBlock(blockNumber,&RecordsBlock::createRecordsBlock);
 }
 
+bool DataFile::updateRecord(Record* myRecord) {
+	bool found = false;
+
+//	vector<Record*>* recordsObteined= new vector<Record*>();
+	RecordsBlock *rBlock;
+	int length= this->getRecordsBlockCount();
+	for(int j=1;j<=length;j++){
+		rBlock=	this->getRecordBlock(j);
+		vector<RawRecord*>* recordsList = rBlock->getRecords();
+		RawRecord* each=NULL;
+		vector<RawRecord*>::iterator iter;
+		for (iter = recordsList->begin(); iter != recordsList->end(); iter++ ){
+			each=((RawRecord*)*iter);
+			Record* recordToMatch = new Record();
+			recordToMatch->deserialize(each,this->getFields());
+			if(recordToMatch->matchField(0,myRecord->getValues()->at(0))){
+				RawRecord* myRawRecord = myRecord->serialize();
+				recordsList->erase(iter);
+				recordsList->push_back(myRawRecord);
+				this->_blockStructuredFile->bUpdateContentBlock(j,rBlock);
+				found = true;
+				break;
+			}
+		}		
+		if (found)
+			break;
+	}
+	return found;
+}
