@@ -799,6 +799,8 @@ void Test_Record_Serialize(TestCase* test){
 	expectedRecord->addValue(new IntValue(1));
 	expectedRecord->addValue(new IntValue(5));
 	
+	printf("\n__getSerializationFullSize: %i.",expectedRecord->getSerializationFullSize());
+	
 	deserializedRecord->deserialize(expectedRecord->serialize(),recordFields);
 	test->Assert_True_m(expectedRecord->equals(deserializedRecord),"Los records deberian ser iguales.");
 }
@@ -826,16 +828,35 @@ void Test_Integration_BSFandRecordsB_getContentOnAnUninitializedRecordsBlock(Tes
 	//delete filestream;	
 }
 
-void Test_StatementExec_CreateStatement(){
+void Test_StatementExec_CreateStatement(TestCase* test){
 	/*DataManager* datamanager=new DataManager("Datos/");
 	DataFile* dataFile;
 	datamanager->addFile()*/
 	
 }
 
-void Test_MetadataBlock_Serialization(){
+void Test_MetadataBlock_Serialization(TestCase* test){
 	
 	
+}
+
+void Test_Records_Matching(TestCase* test){
+	Record* expected=new Record();
+	Record* actualEqual=new Record();
+	Record* actualNonEqual=new Record();
+		
+	expected->addValues(getDataValueVector(getStructureValue1()));
+	expected->addValues(getDataValueVector(getStructureValue1()));
+	
+	actualEqual->addValues(getDataValueVector(getStructureValue1()));
+	actualEqual->addValues(getDataValueVector(getStructureValue1()));
+	
+	actualNonEqual->addValues(getDataValueVector(getStructureValue2()));
+	
+	test->Assert_True_m(expected->matchField(0,actualEqual),"Los Records deberian matchear en el campo 0.");
+	test->Assert_True_m(expected->matchField(1,actualEqual),"Los Records deberian matchear en el campo 1.");
+	test->Assert_True_m(!(expected->matchField(3,actualEqual)),"Los Records not deberian matchear en el campo 3 porque de hecho no existe.");
+	test->Assert_True_m(!(expected->matchField(0,actualNonEqual)),"Los Records no deberian matchear en el campo 0.");	
 }
 
 int main(int argc, char* argv[]){
@@ -964,6 +985,11 @@ int main(int argc, char* argv[]){
 	TestCase* test30=new TestCase("Test_StatementExec_CreateStatement",&failedTests);	
 	Test_StatementExec_CreateStatement(test30);
 	delete test30;
+	
+	TestCase* test31=new TestCase("Test_Records_Matching",&failedTests);	
+	Test_Records_Matching(test31);
+	delete test31;
+	
 		
 	delete new TestSuiteResult(failedTests);
 	return 0;

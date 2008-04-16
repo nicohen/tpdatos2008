@@ -114,3 +114,20 @@ void Record::toString(string* buffer) {
 	buffer->append("]");
 }
 
+bool Record::matchField(T_BLOCKSIZE fieldNumber,Record* other){
+	DataValue* myValue=NULL;
+	DataValue* otherValue=NULL;
+	if(fieldNumber>=0 && fieldNumber< this->_values->size()){
+		myValue=(DataValue*)this->_values->at(fieldNumber);
+	}else{
+		return false;
+	}
+	
+	if(fieldNumber>=0 && fieldNumber< other->_values->size()){
+		otherValue=(DataValue*)other->_values->at(fieldNumber);
+	}else{
+		return false;
+	}
+	return myValue->equals(otherValue);
+}
+

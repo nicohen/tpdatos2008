@@ -33,5 +33,6 @@ public:
 	void deserialize(RawRecord* data,vector<Field*>* recordFields);
 	bool equals(Record* other);
 	T_BLOCKSIZE getSerializationFullSize();
+	bool matchField(T_BLOCKSIZE fieldNumber,Record* other);
 };
 #endif /*RECORD_H_*/
