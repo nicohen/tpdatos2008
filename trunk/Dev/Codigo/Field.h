@@ -9,8 +9,11 @@ private:
 	bool _isMandatory;
 	bool _isPolyvalent;
 	DataType* _dataType;
+	
+	void decode(char* byteCode);
 public:
 	Field();
+	Field(char* byteCode);
 
 	virtual ~Field();
 	//Getters

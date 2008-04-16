@@ -9,11 +9,13 @@
 
 int main(int argc, char **argv) {
 	FILE* salida;
+	FILE* entrada;
 	Field* field;
 	StringType* sType= new StringType();
 	IntType* iType= new IntType();
 	StructureType* ssType= new StructureType();
 	MetadataBlock* metadata= new MetadataBlock(512);
+	MetadataBlock* metadata2= new MetadataBlock(512);
 	metadata->setFileType(2);
 	/**/
 	ssType->addType(new StringType());
@@ -40,6 +42,14 @@ int main(int argc, char **argv) {
 	salida= fopen("Data/Meta.txt","w+");
 	fwrite (metadata->getContent() , 1 , metadata->getSize() , salida );
 	fclose(salida);
+	
+	entrada= fopen("Data/Meta.txt","r+");
+	char* buffer= (char*)malloc(512*sizeof(char));
+	fread(buffer,1,512,entrada);
+	metadata2->setContent(buffer);	
+	fclose(entrada);
+	free(buffer);
 	delete metadata;
+	delete metadata2;
 	return 0;
 }
