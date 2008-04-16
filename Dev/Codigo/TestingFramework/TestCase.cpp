@@ -22,9 +22,9 @@ void TestCase::printTestStart(){
 
 void TestCase::printTestEnd(){
 	if(this->_rest==true){
-		printf("--->passed\n");
+		printf(">>>>>..::..::..::Passssed::..::..::..\n");
 	}else{
-		printf(">>>>FAILED\n");	
+		printf("#####FAILED#################################################################\n");	
 	}	
 }
 
