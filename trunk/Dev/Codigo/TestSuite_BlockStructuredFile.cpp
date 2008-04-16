@@ -671,12 +671,13 @@ void Test_StructureValue_Serialization(TestCase* test){
 	StructureType* structureType=new StructureType(); 
 	char* data=NULL;
 	structureToSerialize->addValue(new IntValue(10));
+	structureToSerialize->addValue(new StringValue("nicoooo"));
 	structureType->addType(new IntType());
+	structureType->addType(new StringType());
 	
 	data= structureToSerialize->serialize();
 	deserializedStructure=(StructureValue*)structureType->deserializeValue(data);
 	
-//	printf("\nStructureValue: Assert_True_m\n");
 	test->Assert_True_m(deserializedStructure->equals(structureToSerialize),"Deberian ser iguales los StructureValues");
 }
 
