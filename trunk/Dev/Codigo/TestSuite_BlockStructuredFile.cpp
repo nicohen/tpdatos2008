@@ -1,6 +1,7 @@
 #include "TestingFramework/TestCase.h"
 #include "TestingFramework/TestSuiteResult.h"
 #include <iostream>
+#include <vector>
 #include <fstream>
 #include <stdio.h>
 #include "Data/BlockStructuredFile.h"
@@ -13,6 +14,10 @@
 #include "StructureValue.h"
 #include "StructureType.h"
 #include "IntType.h"
+#include "Field.h"
+#include "Data/BlockStructuredFileException.h"
+
+	 
 
 
 using namespace std;
@@ -77,6 +82,22 @@ Block* createSomeBlock(T_BLOCKSIZE size,int hardcodedtype){
 }
 
 
+StructureValue* getStructureValue1(){
+	StructureValue* res=new StructureValue();
+	res->addValue(new IntValue(1));
+	res->addValue(new StringValue("aaaaaaaaa"));
+	res->addValue(new IntValue(2));
+	return res;
+}
+
+StructureValue* getStructureValue2(){
+	StructureValue* res=new StructureValue();
+	res->addValue(new IntValue(1));
+	res->addValue(new StringValue("aaaaaaaab"));
+	res->addValue(new IntValue(2));
+	return res;
+}
+
 
 void Test_WritesTheHeader(TestCase* test){
 	fstream* file=NULL;
@@ -132,8 +153,24 @@ void Test_LoadsProperly(TestCase* test){
 	loadedbsfile=BlockStructuredFile::Load(filename);
 	test->Assert_inteq(512,loadedbsfile->getBlockSize());
 	test->Assert_inteq(1,loadedbsfile->getBlockCount());
+	test->Assert_inteq(0,loadedbsfile->getContentBlockCount());
+	
 	delete loadedbsfile;
 	
+}
+
+void Test_BlockStructuredFile_RaisesExceptionWhenFileDoesNotExists(TestCase* test){
+	BlockStructuredFile* loadedbsfile=NULL;
+	char* filename="archivo_inexistente.no";
+	remove(filename);
+
+	try{
+		loadedbsfile=BlockStructuredFile::Load("archivo_inexistente.no");	
+		test->Assert_True_m(false,"No arrojó la excepción de archivo no encontrado");
+		delete loadedbsfile;
+	}catch(char* ){
+		
+	}	
 }
 
 void createBlockStructuredFileOnDisk(char* filename,T_BLOCKSIZE blockSize){
@@ -555,7 +592,7 @@ void Test_RecordsBlock_Deserialization(TestCase* test){
 	//Creo un bloque de registros
 	recordsBlock=new RecordsBlock(100);
 	//Le agrego registros
-	recordsBlock->appendRecord(new RawRecord("hola",4));
+	recordsBlock->appendRecord(new RawRecord("nahuequeve",10));
 	recordsBlock->appendRecord(new RawRecord("chau",4));
 	
 	//Lo serializo
@@ -566,7 +603,7 @@ void Test_RecordsBlock_Deserialization(TestCase* test){
 	//Creo un nuevo bloque de registros a partir de la informacion serializada
 	deserializedRecordsBlock=new RecordsBlock(serializedData,100);
 	test->Assert_inteq(2,deserializedRecordsBlock->getRecords()->size());
-	test->Assert_True_m(compareByteArray("hola",((RawRecord*)deserializedRecordsBlock->getRecords()->at(0))->getContent(),4),"hola_Deberian ser arrays iguales");
+	test->Assert_True_m(compareByteArray("nahuequeve",((RawRecord*)deserializedRecordsBlock->getRecords()->at(0))->getContent(),10),"hola_Deberian ser arrays iguales");
 	test->Assert_True_m(compareByteArray("chau",((RawRecord*)deserializedRecordsBlock->getRecords()->at(1))->getContent(),4),"chau_Deberian ser arrays iguales");
 	free(serializedData);
 	delete deserializedRecordsBlock;	
@@ -701,68 +738,92 @@ void Test_StringValue_Equals(TestCase* test){
 }
 
 
+
 void Test_StructureValue_Equals(TestCase* test){
-	StructureValue* expected=new StructureValue();
-	StructureValue* actualEqual=new StructureValue();
-	StructureValue* actualNonEqual=new StructureValue();
-	
-	expected->addValue(new IntValue(1));
-	expected->addValue(new StringValue("aaaaaaaaa"));
-	expected->addValue(new IntValue(2));
-	
-	actualEqual->addValue(new IntValue(1));
-	actualEqual->addValue(new StringValue("aaaaaaaaa"));
-	actualEqual->addValue(new IntValue(2));	
-	
-	actualNonEqual->addValue(new IntValue(1));
-	actualNonEqual->addValue(new StringValue("aaaaaaaab"));
-	actualNonEqual->addValue(new IntValue(2));
-	
+	StructureValue* expected=getStructureValue1();
+	StructureValue* actualEqual=getStructureValue1();
+	StructureValue* actualNonEqual=getStructureValue2();
+
 	test->Assert_True_m(expected->equals(actualEqual),"Deberian ser iguales pero son distintos.");
 	test->Assert_True_m(!expected->equals(actualNonEqual),"Deberian ser distintos pero son iguales.");	
 }
 
-
-
+vector<DataValue*>* getDataValueVector(StructureValue* value){
+	vector<DataValue*>* res=new vector<DataValue*>();
+	res->push_back(value);
+	return res;	
+}
+/*
 //typedef T_REG
 //const INTTYPE 'i';
 typedef unsigned short T_RECORD_F_Q;
 typedef unsigned short T_VALUE_Q;
 typedef unsigned short T_FIELD_TYPE;
-/*
+
 char intToChar(int i){
 	char result;
 }*/
+
+void Test_Record_Equals(TestCase* test){
+	Record* expected=new Record();
+	Record* actualEqual=new Record();
+	Record* actualNonEqual=new Record();
+	
+	expected->addValues(getDataValueVector(getStructureValue1()));
+	actualEqual->addValues(getDataValueVector(getStructureValue1()));
+	actualNonEqual->addValues(getDataValueVector(getStructureValue2()));
+	
+	test->Assert_True_m(expected->equals(actualEqual),"Los Record deberian ser iguales pero son distintos.");
+	test->Assert_True_m(!expected->equals(actualNonEqual),"Los Record deberian ser distintos pero son iguales.");
+}
 
 void Test_Record_Serialize(TestCase* test){
 	//Cantidad,{cantidad de valores para este campo,Tipo,Valor}
 	//Valor para int: "int"
 	//Valor para string: largo,string
 	//Valor para structured: cantidad,{Tipo,Valor}
-	/*
-	T_FIELD_TYPE INTTYPE=1;
-	Record* record=NULL;
-	char* data;
-	T_RECORD_F_Q fieldqty=1;
-	T_VALUE_Q valueqty=1;
-	T_FIELD_TYPE fieldtype=INTTYPE;
-	int intvalue=13;
-	int size=sizeof(T_RECORD_F_Q)+sizeof(T_VALUE_Q)+sizeof(T_FIELD_TYPE)+sizeof(int);
-	data=(char*)malloc(size);
-	int offset=0;
-	memcpy(data+offset,&fieldqty,sizeof(T_RECORD_F_Q));
-	offset+=sizeof(T_RECORD_F_Q);
-	memcpy(data+offset,&valueqty,sizeof(T_VALUE_Q));
-	offset+=sizeof(T_VALUE_Q);
-	memcpy(data+offset,&fieldtype,sizeof(T_FIELD_TYPE));
-	offset+=sizeof(T_FIELD_TYPE);
-	memcpy(data+offset,&intvalue,sizeof(int));
-	record=new Record();
-	printf("\n__%i__",size);
-	record->deserialize(new RawRecord(data,size));
-	//record->addValue(new IntValue(10));
-	delete record;
-	*/
+	
+	vector<Field*>* recordFields=new vector<Field*>();
+	IntType* intType=new IntType();
+	Field* intField=new Field();
+	Field* intField2=new Field();
+	Record* deserializedRecord=new Record();
+	Record* expectedRecord=new Record();
+	
+	//Lleno los campo
+	intField->setDataType(intType);
+	intField2->setDataType(new IntType());
+	recordFields->push_back(intField);
+	recordFields->push_back(intField2);
+	
+	expectedRecord->addValue(new IntValue(1));
+	expectedRecord->addValue(new IntValue(5));
+	
+	deserializedRecord->deserialize(expectedRecord->serialize(),recordFields);
+	test->Assert_True_m(expectedRecord->equals(deserializedRecord),"Los records deberian ser iguales.");
+}
+
+void Test_Integration_BSFandRecordsB_getContentOnAnUninitializedRecordsBlock(TestCase* test){
+	BlockStructuredFile* file=NULL;
+	RecordsBlock* rb=NULL;
+	char* filename="Test_Integration_BSFandRecordsB_....bin";
+	fstream* filestream=NULL;
+		
+	//createBlockStructuredFileOnDisk(filename,512);
+	file=BlockStructuredFile::Create(filename,100);
+	//file->bUpdateContentBlock(0,createEmptyBlock(512));
+	//delete file;
+	try{
+		rb=(RecordsBlock*)file->bGetContentBlock(1,&RecordsBlock::createRecordsBlock);
+		rb->getRecords()->push_back(new RawRecord("nicolas",7));
+		file->bUpdateContentBlock(1,rb);
+		test->Assert_True_m(false,"Deberia haber lanzado una excepcion del tipo BlockStructuredFileException");
+	}catch(BlockStructuredFileException* ex){
+		delete ex;
+	}
+	
+	//test->Assert_inteq(0,rb->)
+	//delete filestream;	
 }
 
 int main(int argc, char* argv[]){
@@ -771,6 +832,10 @@ int main(int argc, char* argv[]){
 	TestCase* test01=new TestCase("Test_WritesTheHeader",&failedTests);	
 	Test_WritesTheHeader(test01);
 	delete test01;
+	
+	TestCase* test01_1=new TestCase("Test_BlockStructuredFile_RaisesExceptionWhenFileDoesNotExists",&failedTests);	
+	Test_BlockStructuredFile_RaisesExceptionWhenFileDoesNotExists(test01_1);
+	delete test01_1;	
 
 	TestCase* test02=new TestCase("Test_LoadsProperly",&failedTests);	
 	Test_LoadsProperly(test02);
@@ -852,11 +917,10 @@ int main(int argc, char* argv[]){
 	Test_IntValue_SerializeDeserialize(test21_1);
 	delete test21_1;
 	
-/*	
 	TestCase* test22=new TestCase("Test_Record_Serialize",&failedTests);	
 	Test_Record_Serialize(test22);
 	delete test22;
-	*/
+
 	TestCase* test23=new TestCase("Test_StringValue_Deserialize",&failedTests);	
 	Test_StringValue_Deserialize(test23);
 	delete test23;
@@ -876,6 +940,16 @@ int main(int argc, char* argv[]){
 	TestCase* test27=new TestCase("Test_StructureValue_Equals",&failedTests);	
 	Test_StructureValue_Equals(test27);
 	delete test27;
+	
+	TestCase* test28=new TestCase("Test_Record_Equals",&failedTests);	
+	Test_Record_Equals(test28);
+	delete test28;
+	
+	TestCase* test29=new TestCase("Test_Integration_BSFandRecordsB_getContentOnAnUninitializedRecordsBlock",&failedTests);	
+	Test_Integration_BSFandRecordsB_getContentOnAnUninitializedRecordsBlock(test29);
+	delete test29;
+	
+	
 		
 	delete new TestSuiteResult(failedTests);
 	return 0;
@@ -914,5 +988,5 @@ Hacer un GetSomeBlock(1 o 2 o 3) que de diferentes Blocks hardcoded
 >>--Done --> DataType y DataValue: Pasar cosas a superclases 
 DataType: probar equals de
 DataType: Que el deserialize use un CreateValue virtual puro y luego llame al deserializeValue
- 
+Record.cpp: Quitar #include "IntValue.h"
  */

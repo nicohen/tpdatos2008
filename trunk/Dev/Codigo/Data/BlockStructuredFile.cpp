@@ -1,5 +1,8 @@
 #include "BlockStructuredFile.h"
 #include "../Utils.h"
+#include <string>
+#include <sstream>
+#include "BlockStructuredFileException.h"
 
 
 void BlockStructuredFile::setBlockSize(T_BLOCKSIZE size){
@@ -130,13 +133,22 @@ char* BlockStructuredFile::getContentBlock(T_BLOCKCOUNT contentBlockNumber){
 	return getBlock(this->getAbsoluteBlockNumberFromContentBlockNumber(contentBlockNumber));
 }
 
-char* BlockStructuredFile::getBlock(T_BLOCKCOUNT blockNumber){
-	char* buffer;
-	//Cargo todo el bloque en un buffer y cargo las propiedades de ah�
-	buffer=(char*)malloc(this->getBlockSize());
-	this->_file->seekg (this->getBlockFilePositionFromAbsoluteBlockCount(blockNumber), ios::beg);
-	this->_file->read(buffer,this->getBlockSize());	
-	return buffer;
+char* BlockStructuredFile::getBlock(T_BLOCKCOUNT blockNumber) throw (BlockStructuredFileException*){
+	if(blockNumber>=this->getBlockCount()){
+		string msg;
+		ostringstream os;
+		os<<blockNumber;
+		msg.append("Se pidió un bloque que no existe: num = ");
+		msg.append(os.str());
+		throw new BlockStructuredFileException((char*)msg.c_str());
+	}else{
+		char* buffer;
+		//Cargo todo el bloque en un buffer y cargo las propiedades de ah�
+		buffer=(char*)malloc(this->getBlockSize());
+		this->_file->seekg (this->getBlockFilePositionFromAbsoluteBlockCount(blockNumber), ios::beg);
+		this->_file->read(buffer,this->getBlockSize());	
+		return buffer;
+	}	
 }
 
 T_BLOCKCOUNT BlockStructuredFile::getHeaderBlockCount(){

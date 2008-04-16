@@ -4,6 +4,8 @@
 #include "Block.h"
 #include <fstream>
 #include "BlockStructuredFileHeader.h"
+#include "BlockStructuredFileException.h"
+
 using namespace std;
 /*
 Archivo:
@@ -44,7 +46,7 @@ public:
 	static BlockStructuredFile* Load(char* filename);
 	static BlockStructuredFile* Create(char* filename,T_BLOCKSIZE blockSize);
 
-	char* getBlock(T_BLOCKCOUNT blockNumber);//ESTO ES PRIVADO
+	char* getBlock(T_BLOCKCOUNT blockNumber) throw (BlockStructuredFileException*);//ESTO ES PRIVADO
 	
 	T_BLOCKSIZE getBlockSize();
 	T_BLOCKCOUNT getBlockCount();
