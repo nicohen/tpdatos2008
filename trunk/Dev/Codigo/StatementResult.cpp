@@ -4,8 +4,8 @@ StatementResult::StatementResult()
 {
 }
 
-StatementResult::~StatementResult()
-{
+StatementResult::~StatementResult() {
+	free(this->_result);
 }
 
 bool StatementResult::wasOk(){
@@ -13,7 +13,7 @@ bool StatementResult::wasOk(){
 }
 
 void StatementResult::setResult(char* result) {
-	this->_result = result;
+	this->_result = cloneStr(result);
 }
 
 char* StatementResult::getResult() {

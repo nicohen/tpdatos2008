@@ -48,11 +48,11 @@ StatementResult* QueryStatement::execute(DataManager* dataManager) {
 	
 	rec=new Record();
 	struc=new StructureValue();
-	struc->addValue(new StringValue("inside struct1"));
-	struc->addValue(new StringValue("inside struct2"));
-	struc->addValue(new StringValue("inside struct3"));
+	struc->addValue(new StringValue("inside query struct1"));
+	struc->addValue(new StringValue("inside query struct2"));
+	struc->addValue(new StringValue("inside query struct3"));
 	rec->addValue(new IntValue(10));
-	rec->addValue(new StringValue("sdasdasd"));	
+	rec->addValue(new StringValue("query sdasdasd"));	
 	rec->addValue(new IntValue(11));
 	rec->addValue(struc);
 	
