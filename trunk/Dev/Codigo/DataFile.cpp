@@ -1,6 +1,9 @@
 #include "DataFile.h"
 #include "Data/RecordsBlock.h"
 #include "string.h"
+#include <vector>
+#include "IntType.h"
+
 
 DataFile::DataFile(char* fileName){
 	_fileName = cloneStr(fileName);
@@ -8,18 +11,39 @@ DataFile::DataFile(char* fileName){
 }
 
 DataFile::DataFile(char* fileName, int blockSize, int fileType, int indexSize, int secondaryFieldsCount, vector<Field*>* secondaryFields, SecondaryIndex* secondaryIndex) {
+	//ToDo: Desde afuera matar esto-->secondaryIndex	
+	vector<Field*>* fields=new vector<Field*>();
+	Field* primaryField=new Field();
+	primaryField->setIsMandatory(true);
+	primaryField->setIsPolyvalent(false);
+	primaryField->setDataType(new IntType());
+	fields->push_back(primaryField);
+	
+	Field* each=NULL;
+	vector<Field*>::iterator iter;
+	for (iter = secondaryFields->begin(); iter != secondaryFields->end(); iter++ ){
+		each=((Field*)*iter);		
+		fields->push_back(each);
+	}
 	
 	_fileName = cloneStr(fileName);
 	_blockSize = blockSize;
-	//Le seteo el MetadataBlock
 	_metadataBlock = new MetadataBlock(blockSize);
-	//_metadataBlock->setIndexSize(indexSize);
 	_metadataBlock->setFileType(fileType);
-	_metadataBlock->setSecondaryFields(secondaryFields);
+	_metadataBlock->setSecondaryFields(fields);
+}
+
+Field* DataFile::getPrimaryField(){
+	return (Field*)this->_metadataBlock->GetSecondaryFields()->at(0);	
+}
+
+vector<Field*>* DataFile::getFields(){
+	return this->_metadataBlock->GetSecondaryFields();
 }
 
 DataFile::~DataFile() {
 	//MATAAAAR
+	//_metadataBlock
 	if(this->_fullPath!=NULL){
 		free(this->_fullPath);
 	}
@@ -64,7 +88,7 @@ void DataFile::save(char* folderPath) {
 	//Creo el blockStructureFile
 	this->_blockStructuredFile = BlockStructuredFile::Create(this->_fullPath,_blockSize);
 	//Guardo el MetadataBlock
-	this->_blockStructuredFile->bAppendContentBlock(this->_metadataBlock);	
+	this->_blockStructuredFile->bAppendContentBlock(this->_metadataBlock);
 }
 
 char* DataFile::getFileName() {
@@ -117,17 +141,17 @@ vector<Record*>* DataFile::findRecords(int fNumber,DataValue* fValue){
 		for (iter = recordsList->begin(); iter != recordsList->end(); iter++ ){
 			each=((RawRecord*)*iter);
 			Record* record= new Record();
-			record->deserialize(each,_metadataBlock->GetSecondaryFields());
+			record->deserialize(each,this->getFields());
 			recordsObteined->push_back(record);
 		}		
 	}
 	return recordsObteined;
 }
 
-
+/*
 vector<Field*>* DataFile::getDataStructure(){
 	return this->_metadataBlock->GetSecondaryFields();
-}
+}*/
 	
 T_BLOCKSIZE DataFile::getDataRecordsCount() {
 	//recorrer todos los recordsblock y acumular el getFreeSpace-->implementa

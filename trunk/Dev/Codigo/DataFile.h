@@ -47,7 +47,10 @@ public:
 	T_FILESIZE getFileSize();
 	T_BLOCKSIZE getDataRecordsCount();
 	T_BLOCKSIZE getRecordsBlockCount();
-	vector<Field*>* getDataStructure();
+	
+	//vector<Field*>* getDataStructure();
+	Field* getPrimaryField();
+	vector<Field*>* getFields();
 
 	void insertRecord(Record* record);
 	vector<Record*>* findRecords(int fNumber,DataValue* fValue);

@@ -7,3 +7,9 @@ Nico!->StatsStatement: Escribir en el archivo
 Poner debug en todos los executes para avisar que empezo/terminó
 Cambiar throw BlockStructuredFileException  por throw block not found
 BlockStructuredFile: en cada update de bloques verificar si quedó vacío el bloque, para luego eliminarlo
+Matar el DataFile
+
+Las claves son numericas
+
+ARCHIVO DE CONSIDERACIONES
+Las claves son numericas

@@ -9,11 +9,7 @@ using namespace std;
 class DataManager{
 	
 private:
-	vector<DataFile*>* _dataFiles;
-	char* _basePath;
-	
-	void clearFiles(vector<DataFile*>* dataFiles);
-	
+	char* _basePath;	
 public:
 	DataManager(char* basePath);
 	virtual ~DataManager();
