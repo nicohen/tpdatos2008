@@ -663,6 +663,64 @@ void Test_StringValue_Deserialize(TestCase* test){
 	test->Assert_streq("abcdefgh123456789",deserializedstr->getString());
 }
 
+void Test_StructureValue_Serialization(TestCase* test){
+	/*
+	StructureValue* structureToSerialize=new StructureValue();
+	StructureValue* deserializedStructure=new StructureValue();
+	char* data=NULL;
+	IntValue* deserializedInt=NULL;
+	structureToSerialize->addValue(new IntValue(10));
+	
+	data= structureToSerialize->serialize();
+	deserializedStructure->deserialize(data);
+	
+	test->Assert_True_m(deserializedStructure->equals(structureToSerialize),"Deberian ser iguales los StructureValues");
+	*/
+}
+
+void Test_IntValue_Equals(TestCase* test){
+	IntValue* expectedInt=new IntValue(10);
+	IntValue* actualEqualInt=new IntValue(10);
+	IntValue* actualNonEqualInt=new IntValue(999);
+	
+	test->Assert_True_m(expectedInt->equals(actualEqualInt),"Deberian ser iguales pero son distintos.");
+	test->Assert_True_m(!expectedInt->equals(actualNonEqualInt),"Deberian ser distintos pero son iguales.");
+}
+
+
+void Test_StringValue_Equals(TestCase* test){
+	StringValue* expected=new StringValue("aaaa");
+	StringValue* actualEqual=new StringValue("aaaa");
+	StringValue* actualNonEqual=new StringValue("aaba");
+	
+	test->Assert_True_m(expected->equals(actualEqual),"Deberian ser iguales pero son distintos.");
+	test->Assert_True_m(!expected->equals(actualNonEqual),"Deberian ser distintos pero son iguales.");
+}
+
+
+void Test_StructureValue_Equals(TestCase* test){
+	StructureValue* expected=new StructureValue();
+	StructureValue* actualEqual=new StructureValue();
+	StructureValue* actualNonEqual=new StructureValue();
+	
+	expected->addValue(new IntValue(1));
+	expected->addValue(new StringValue("aaaaaaaaa"));
+	expected->addValue(new IntValue(2));
+	
+	actualEqual->addValue(new IntValue(1));
+	actualEqual->addValue(new StringValue("aaaaaaaaa"));
+	actualEqual->addValue(new IntValue(2));	
+	
+	actualNonEqual->addValue(new IntValue(1));
+	actualNonEqual->addValue(new StringValue("aaaaaaaab"));
+	actualNonEqual->addValue(new IntValue(2));
+	
+	test->Assert_True_m(expected->equals(actualEqual),"Deberian ser iguales pero son distintos.");
+	test->Assert_True_m(!expected->equals(actualNonEqual),"Deberian ser distintos pero son iguales.");	
+}
+
+
+
 //typedef T_REG
 //const INTTYPE 'i';
 typedef unsigned short T_RECORD_F_Q;
@@ -798,8 +856,23 @@ int main(int argc, char* argv[]){
 	*/
 	TestCase* test23=new TestCase("Test_StringValue_Deserialize",&failedTests);	
 	Test_StringValue_Deserialize(test23);
-	delete test23;	
+	delete test23;
 	
+	TestCase* test24=new TestCase("Test_StructureValue_Serialization",&failedTests);	
+	Test_StructureValue_Serialization(test24);
+	delete test24;
+	
+	TestCase* test25=new TestCase("Test_IntValue_Equals",&failedTests);	
+	Test_IntValue_Equals(test25);
+	delete test25;
+	
+	TestCase* test26=new TestCase("Test_StringValue_Equals",&failedTests);	
+	Test_StringValue_Equals(test26);
+	delete test26;
+	
+	TestCase* test27=new TestCase("Test_StructureValue_Equals",&failedTests);	
+	Test_StructureValue_Equals(test27);
+	delete test27;
 		
 	delete new TestSuiteResult(failedTests);
 	return 0;
@@ -833,9 +906,10 @@ Que el block count calcule dependiendo del tamaño del archivo
 >>--Done --> Espacios libres?
 >>--Done --> Hacer que el record copie el array de chars que recibe
 Hacer un GetSomeBlock(1 o 2 o 3) que de diferentes Blocks hardcoded
-BlockStructuredFile Darle una funcion fabrica de blocks
-DataType: El que serializa es el 
-DataType y DataValue: Pasar cosas a superclases 
+>>--Done -->(no es necesario): BlockStructuredFile Darle una funcion fabrica de blocks
+>>--Done -->DataType: El que serializa es el getSerializationSize y getContent 
+>>--Done --> DataType y DataValue: Pasar cosas a superclases 
 DataType: probar equals de
-getSerializationSize y getContent
+DataType: Que el deserialize use un CreateValue virtual puro y luego llame al deserializeValue
+ 
  */

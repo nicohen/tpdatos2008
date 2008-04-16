@@ -9,6 +9,12 @@ DataValue::~DataValue()
 }
 
 
+bool DataValue::equals(DataValue* other){
+	return this->getType()->getUniqueIdentifier()==other->getType()->getUniqueIdentifier();
+}
+
+
+
 void DataValue::deserialize(char* data){
 	T_STRING_LENGHT lenght;
 	memcpy(&lenght,data,sizeof(T_STRING_LENGHT));	

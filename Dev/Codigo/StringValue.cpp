@@ -23,6 +23,9 @@ DataType* StringValue::getType(){
 }
 
 bool StringValue::equals(DataValue* other){
+	if(DataValue::equals(other)){
+		return (strcmp(this->getString(),((StringValue*)other)->getString())==0);
+	}
 	return false;
 }
 
