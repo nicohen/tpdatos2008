@@ -49,16 +49,12 @@ int Field::serialize(char** result){
 	
 	char* buffer= (char*)malloc(50*sizeof(char));
 	int length=0;
-	memcpy(buffer,(char*)_isMandatory,sizeof(bool));
+	memcpy(buffer,(char*)&_isMandatory,sizeof(bool));
 	length+=sizeof(bool);
-	memcpy(buffer+length,(char*)_isMandatory,sizeof(bool));
+	memcpy(buffer+length,(char*)&_isPolyvalent,sizeof(bool));
 	length+=sizeof(bool);
-	if (dynamic_cast<StringType*>(_dataType)==0){
-		
-	}else if (dynamic_cast<IntType*>(_dataType)==0){
-	
-	}else if (dynamic_cast<StructureType*>(_dataType)==0){
-		
-	}		
+	length+=_dataType->serialize(buffer+length);
+	buffer[length]=0;
+	*result=buffer;
 	return length;
 }

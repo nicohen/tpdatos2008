@@ -1,31 +1,45 @@
-#include "Tokenizer.h"
-#include "Token.h"
 #include "stdio.h"
 #include "stdlib.h"
-#include "FileInfo.h"
+#include "Data/MetadataBlock.h"
 #include "FileManager.h"
+#include "Field.h"
+#include "StringType.h"
+#include "IntType.h"
+#include "StructureType.h"
 
 int main(int argc, char **argv) {
-	FileManager::FileManager* fileManager = new FileManager::FileManager();
-	FileManager::FileInfo *input;
-	char SEPARATORS[]= {' ','!','\n'};
- 	char* KEYW[]= {"Hello","CONSULTAR"};
- 	Parsing::Tokenizer *tokenizer;
-	Parsing::Token *token;
-
-	input = fileManager->CreateFileInfo("In/Comandos.7506");
-	try{
-		tokenizer = new Parsing::Tokenizer(input,'\'',SEPARATORS,3,KEYW ,2);
-		token = tokenizer->getNextToken(false);
-		while (token!=NULL){
-			printf("(%d)%s ",token->getType(),token->getContent());
-			//Ya no harian falta eliminarlos
-			//delete(token);
-			token = tokenizer->getNextToken(false);
-		}
-		delete(tokenizer);
-	}catch(FileManager::IOException e){}
-	delete input;
-	delete fileManager;
+	FILE* salida;
+	Field* field;
+	StringType* sType= new StringType();
+	IntType* iType= new IntType();
+	StructureType* ssType= new StructureType();
+	MetadataBlock* metadata= new MetadataBlock(512);
+	metadata->setFileType(2);
+	/**/
+	ssType->addType(sType);
+	ssType->addType(iType);
+	/**/
+	field= new Field();
+	field->setIsMandatory(true);
+	field->setIsPolyvalent(true);
+	field->setDataType(sType);
+	metadata->setSecondaryField(field);
+	/**/
+	field= new Field();
+	field->setIsMandatory(true);
+	field->setIsPolyvalent(true);
+	field->setDataType(iType);
+	metadata->setSecondaryField(field);
+	/**/
+	field= new Field();
+	field->setIsMandatory(true);
+	field->setIsPolyvalent(true);
+	field->setDataType(ssType);
+	metadata->setSecondaryField(field);
+	/**/
+	salida= fopen("Data/Meta.txt","w+");
+	fwrite (metadata->getContent() , 1 , metadata->getSize() , salida );
+	fclose(salida);
+	delete metadata;
 	return 0;
 }

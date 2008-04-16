@@ -16,6 +16,7 @@ public:
 	virtual bool equals(DataType* other);
 	virtual int getUniqueIdentifier();
 	virtual DataValue* deserializeValue(char* content);
+	virtual int serialize(char* stream);
 };
 
 #endif /*STRINGTYPE_H_*/

@@ -25,3 +25,9 @@ DataValue* StringType::deserializeValue(char* content){
 	res->deserialize(content);
 	return res;
 }
+
+int StringType::serialize(char* stream){
+	char type= DataType::STRING_TYPE;
+	memcpy(stream,(char*)&type,sizeof(char));
+	return sizeof(char);
+}
