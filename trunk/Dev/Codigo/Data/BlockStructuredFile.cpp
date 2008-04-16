@@ -19,7 +19,9 @@ T_BLOCKCOUNT BlockStructuredFile::getBlockCount(){
 }
 
 T_FILESIZE BlockStructuredFile::getFileSize() {
-	return this->getBlockCount()*this->getBlockSize();
+	//return this->getBlockCount()*this->getBlockSize();
+	this->_file->seekg (0, ios::end);
+	return this->_file->tellg();
 }
 
 T_BLOCKSIZE BlockStructuredFile::getBlockSize(){
@@ -156,7 +158,7 @@ char* BlockStructuredFile::getBlock(T_BLOCKCOUNT blockNumber) throw (BlockStruct
 		//Cargo todo el bloque en un buffer y cargo las propiedades de ah�
 		buffer=(char*)malloc(this->getBlockSize());
 		this->_file->seekg (this->getBlockFilePositionFromAbsoluteBlockCount(blockNumber), ios::beg);
-		this->_file->read(buffer,this->getBlockSize());	
+		this->_file->read(buffer,this->getBlockSize());
 		return buffer;
 	}	
 }

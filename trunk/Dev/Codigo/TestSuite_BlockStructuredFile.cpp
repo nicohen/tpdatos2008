@@ -753,6 +753,34 @@ vector<DataValue*>* getDataValueVector(StructureValue* value){
 	res->push_back(value);
 	return res;	
 }
+
+
+void Test_BlockStructured_DeleteBlocks(TestCase* test){
+	/*
+	BlockStructuredFile* file=NULL;
+	RecordsBlock* block;
+	//Agrego bloques
+	
+	char* filename="Test_BlockStructured_DeleteBlocks.bin";
+	remove(filename);
+	createBlockStructuredFileOnDisk(filename,512);
+	file=BlockStructuredFile::Load(filename);
+	
+	block=new RecordsBlock(512);
+	block->appendRecord(new RawRecord("aaaa",4));
+	file->bAppendContentBlock(block);
+	file->bAppendContentBlock(createEmptyBlock(512));
+	file->bAppendContentBlock(createEmptyBlock(512));
+	
+	test->Assert_inteq(4*512,file->getFileSize());
+	//Elimino
+	//file->deleteFree(3);
+	test->Assert_inteq(3*512,file->getFileSize());
+	delete file;
+	*/
+}
+
+
 /*
 //typedef T_REG
 //const INTTYPE 'i';
@@ -990,7 +1018,11 @@ int main(int argc, char* argv[]){
 	Test_Records_Matching(test31);
 	delete test31;
 	
-		
+	TestCase* test32=new TestCase("Test_BlockStructured_DeleteBlocks",&failedTests);	
+	Test_BlockStructured_DeleteBlocks(test32);
+	delete test32;
+	
+	
 	delete new TestSuiteResult(failedTests);
 	return 0;
 };
