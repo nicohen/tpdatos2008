@@ -20,6 +20,7 @@ public:
 	virtual ~DataValue();
 	
 	//otros
+	virtual bool isInstanceOf(DataType* dType)=0;
 	virtual bool equals(DataValue* other);
 	virtual void toString(string* buffer)=0;
 	virtual DataType* getType()=0;

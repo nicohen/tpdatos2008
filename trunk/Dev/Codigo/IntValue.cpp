@@ -45,3 +45,7 @@ void IntValue::serializeTo(char* buffer){
 int IntValue::getInt(){
 	return this->_value;
 }
+
+bool IntValue::isInstanceOf(DataType* dType){
+	return this->getType()->getUniqueIdentifier()==dType->getUniqueIdentifier();
+}

@@ -1,9 +1,9 @@
 #include "DataFile.h"
 #include "Data/RecordsBlock.h"
 #include "string.h"
+#include "ExecutionException.h"
 #include <vector>
 #include "IntType.h"
-
 
 DataFile::DataFile(char* fileName){
 	_fileName = cloneStr(fileName);
@@ -22,7 +22,7 @@ DataFile::DataFile(char* fileName, int blockSize, int fileType, int indexSize, i
 	Field* each=NULL;
 	vector<Field*>::iterator iter;
 	for (iter = secondaryFields->begin(); iter != secondaryFields->end(); iter++ ){
-		each=((Field*)*iter);
+		each=((Field*)*iter);		
 		fields->push_back(each);
 	}
 	
@@ -142,9 +142,7 @@ vector<Record*>* DataFile::findRecords(int fNumber,DataValue* fValue){
 			each=((RawRecord*)*iter);
 			Record* record= new Record();
 			record->deserialize(each,this->getFields());
-			if(record->matchField(fNumber,fValue)){
-				recordsObteined->push_back(record);	
-			}
+			recordsObteined->push_back(record);
 		}		
 	}
 	return recordsObteined;
@@ -173,6 +171,24 @@ T_FILESIZE DataFile::getFileSize() {
 }
 
 void DataFile::insertRecord(Record* record) {
+	vector<DataValue*>*	recordValues= record->getValues();
+	vector<DataValue*>::iterator recordIter;
+	DataValue* aValue;
+	vector<Field*>* fileFields= this->_metadataBlock->GetSecondaryFields();
+	vector<Field*>::iterator fieldIter;
+	Field* aField;
+	for(recordIter= recordValues->begin(), fieldIter= fileFields->begin();
+		recordIter< recordValues->end() && fieldIter< fileFields->end();
+		recordIter++, fieldIter++){
+			aValue= (DataValue*)*recordIter;
+			aField= (Field*)*fieldIter;
+			string* buffer= new string();
+			aValue->toString(buffer);
+			delete buffer;
+			if (aField->getDataType()->equals(aValue->getType())==false){
+				throw new ExecutionException("Los datos ingresados no coinciden con la estructura del Archivo.");
+			}
+	}
 	RecordsBlock* recordsBlock = NULL;
 	RawRecord* rawRecord = record->serialize();
 	try {

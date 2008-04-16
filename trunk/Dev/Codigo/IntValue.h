@@ -20,7 +20,8 @@ public:
 	int getInt();
 	virtual bool equals(DataValue* other);
 	virtual DataType* getType();
-	virtual void toString(string* buffer);		
+	virtual void toString(string* buffer);
+	virtual bool isInstanceOf(DataType* dType);
 };
 
 #endif /*INTVALUE_H_*/

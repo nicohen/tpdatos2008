@@ -55,20 +55,6 @@ int StructureType::getUniqueIdentifier(){
 	return 3;
 }
 
-bool StructureType::isInstanceOf(void* anObject){
-	/*
-	//verificar que anObject se pueda convertir en vector, recorrerlo y validar
-	vector<DataType*>::iterator iter;
-	for (iter = this->_dataTypes->begin(); iter != this->_dataTypes->end(); iter++ )
-	{
-		if(((DataType*)*iter)->isInstanceOf(anObject)==false){
-			return false;
-		}
-	}
-	*/
-	return false;
-}
-
 DataValue* StructureType::deserializeValue(char* content){
 	DataValue* res=NULL;
 	res=this->createNullValue();

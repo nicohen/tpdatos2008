@@ -19,7 +19,6 @@ public:
 	
 	//Otros
 	void addType(DataType* aType);
-	virtual bool isInstanceOf(void* anObject);
 	virtual bool equals(DataType* other);
 	virtual int getUniqueIdentifier();
 	int getCount();

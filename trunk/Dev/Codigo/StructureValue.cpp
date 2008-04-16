@@ -140,4 +140,6 @@ void StructureValue::deserializeValue(char* data,T_STRING_LENGHT dataLenght){
 		currentDataPointer+=each->getSerializationFullSize();
 	}
 }
-
+bool StructureValue::isInstanceOf(DataType* dType){
+	return this->getType()->equals(dType);
+}
