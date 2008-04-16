@@ -13,8 +13,13 @@ void BlockStructuredFile::setBlockCount(T_BLOCKCOUNT count){
 	//this->_bblockCount=count;
 	this->_header->setBlockCount(count);	
 }
+
 T_BLOCKCOUNT BlockStructuredFile::getBlockCount(){
 	return this->_header->getBlockCount();
+}
+
+T_FILESIZE BlockStructuredFile::getFileSize() {
+	return this->getBlockCount()*this->getBlockSize();
 }
 
 T_BLOCKSIZE BlockStructuredFile::getBlockSize(){
@@ -60,6 +65,7 @@ BlockStructuredFile::BlockStructuredFile(char* filename) {
 	this->_filename=filename;
 	if(!existsFile(this->_filename)){
 		//ERROR
+		throw "[Exception]: Block Structured file. No se encontró el archivo";
 	}
 	//this->_file = new fstream(this->_filename,ios::app|ios::in|ios::out|ios::binary);
 	this->_file = new fstream(this->_filename,ios::in|ios::out|ios::binary);

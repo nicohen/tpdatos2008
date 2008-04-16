@@ -1,6 +1,8 @@
 #include "InsertionStatement.h"
 #include "Utils.h"
 #include <stdio.h>
+#include "IntValue.h"
+#include "StringValue.h"
 
 using namespace std;
 
@@ -36,7 +38,7 @@ void InsertionStatement::clearValues(vector<DataValue*>* values){
 	values->clear();
 }
 
-StatementResult* InsertionStatement::execute(DataManager* anIDataManager){
+StatementResult* InsertionStatement::execute(DataManager* dataManager){
 	StatementResult* sr = new StatementResult();
 	
 	char* cadena; 
@@ -51,6 +53,13 @@ StatementResult* InsertionStatement::execute(DataManager* anIDataManager){
 //		 dataType = ((DataValue*)*iter)->getType();
 //		 value = ((DataValue*)*iter)->getType();
 //	}
+	
+	DataFile* dataFile = dataManager->getFile(this->getFileName());
+	Record* record = new Record();
+	record->addValue(new IntValue(10));
+	record->addValue(new StringValue("Quevedo"));
+	record->addValue(new IntValue(20));
+	dataFile->insertRecord(record);
 	
 	buffer.append("'Se inserto el registro ['");
 //	buffer.append(dataValue->toString());

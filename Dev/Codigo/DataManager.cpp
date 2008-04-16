@@ -26,12 +26,16 @@ DataManager::~DataManager() {
 
 void DataManager::addFile(DataFile* dataFile) {
 	dataFile->create();
-	DEBUG("Hay que hacer Push Back en DataManager");
+//	DEBUG("Hay que hacer Push Back en DataManager");
 //	this->_dataFiles->push_back(dataFile);
 }
 
 DataFile* DataManager::getFile(char* fileName) {
 	DataFile* dataFile;
+	string* buffer = new string();
+	char* absoluteFilePath;
+	
+	//Lo trae del vector
 	vector<DataFile*>::iterator iter;
 	for (iter = _dataFiles->begin(); iter != _dataFiles->end(); iter++ ) {
 		dataFile = ((DataFile*)*iter);
@@ -39,7 +43,16 @@ DataFile* DataManager::getFile(char* fileName) {
 			return dataFile;
 		}
 	}
-	throw "[Excepcion]:No se encontro el archivo en DataFile.getFile";
+
+//	buffer->append(_basePath);
+	buffer->append(fileName);
+	absoluteFilePath = (char*) malloc(strlen(buffer->c_str()));
+	strcpy(absoluteFilePath,buffer->c_str());
+
+	//Si no esta en el vector, lo trae de disco
+	dataFile = new DataFile(absoluteFilePath);
+	return dataFile;
+	//throw "[Excepcion]:No se encontro el archivo en DataFile.getFile";
 }
 
 bool DataManager::removeFile(char* fileName) {

@@ -15,6 +15,7 @@ private:
 	char* getBlockCountPosition(char* reference);
 	char* getFirstFreeSpaceListItem(char* reference);
 public:	
+	
 	T_BLOCKSIZE getBlockSize();
 	T_BLOCKCOUNT getBlockCount();
 	void setBlockSize(T_BLOCKSIZE size);
