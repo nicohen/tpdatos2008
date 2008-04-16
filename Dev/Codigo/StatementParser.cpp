@@ -283,6 +283,9 @@ std::vector<Field*>* StatementParser::parseFields(){
 int StatementParser::parseFileType(){
 	int fileType;
 	Parsing::Token* token =	_tokenizer->getNextToken(false);
+	if ((token!=NULL) && (strcmp(token->getContent(),"\n")==0)){
+		throw StatementParserException("No lleva indice secundario");
+	}
 	if ((token==NULL) || (token->getType()!=Parsing::ITokenizer::KEYWORD)){
 		DEBUG("Se esperaba el tipo de organización en lugar de:");
 		DEBUG((token==NULL)?"fin de archivo":token->getContent());
@@ -477,7 +480,7 @@ Statement* StatementParser::parseCreateStatement(){
 	// PARSEO EL TIPO DE ARCHIVO
 	try{
 		createStatement->setFileType(parseFileType());
-	}catch(ParserException pe){
+	}catch(StatementParserException pe){
 		delete createStatement; 
 		throw ParserException();
 	}
@@ -522,6 +525,8 @@ Statement* StatementParser::parseCreateStatement(){
 	}catch(ParserException pe){
 		delete createStatement; 
 		throw ParserException();
+	}catch(StatementParserException pe){
+		return createStatement;
 	}
 	token =	_tokenizer->getNextToken(false);
 	if ((token->getType()==Parsing::ITokenizer::DELIMITER)&&(strcmp(token->getContent(),";")==0)){
