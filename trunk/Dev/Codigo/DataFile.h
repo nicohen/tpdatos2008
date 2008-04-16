@@ -16,8 +16,6 @@
 class DataFile {
 
 private:
-	DataType* _keyField;
-	vector<DataType*>* _secondaryFields;
 	int _blockSize;
 	char* _fileName;
 	MetadataBlock* _metadataBlock;
@@ -25,7 +23,7 @@ private:
 	char* _fullPath;
 	
 public:
-	static const int FIRSTBLOCK = 0;
+	static const int FIRST_BLOCK = 0;
 	//static DataFile* Load(char* filename);
 	//void create();
 	
@@ -43,13 +41,16 @@ public:
 	void setBlockStructuredFile(BlockStructuredFile* blockStructuredFile);
 	BlockStructuredFile* getBlockStructuredFile();
 	void setMetadataBlock(MetadataBlock* metadataBlock);
-	MetadataBlock* getMetadataBlock();
+	RecordsBlock* getRecordBlock(int blockNumber);
 	T_FILESIZE getDataUsedSpace();
 	T_FILESIZE getDataFreeSpace();
 	T_FILESIZE getFileSize();
-	T_BLOCKSIZE getDataRecordsCount();	
+	T_BLOCKSIZE getDataRecordsCount();
+	T_BLOCKSIZE getRecordsBlockCount();
+	vector<Field*>* getDataStructure();
+
 	void insertRecord(Record* record);
-	
+	vector<Record*>* findRecords(int fNumber,DataValue* fValue);
 	/*
 	void open();
 	void close();

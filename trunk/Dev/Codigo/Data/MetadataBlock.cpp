@@ -42,6 +42,11 @@ void MetadataBlock::setSecondaryField(Field* field) {
 void MetadataBlock::setSecondaryFields(vector<Field*>* fields) {
 	this->_fields = fields;
 }
+
+vector<Field*>* MetadataBlock::GetSecondaryFields(){
+	return this->_fields;
+}
+	
 Field* MetadataBlock::parseField(char* content, int* offset){
 	Field* field;
 	unsigned short length;

@@ -30,6 +30,7 @@ public:
 	int getQtyFields();
 	void setSecondaryField(Field* field);
 	void setSecondaryFields(vector<Field*>* _fields);
+	vector<Field*>* GetSecondaryFields();
 	Field* getNextSecondaryField();
 	
 	//METODOS HEREDADOS
