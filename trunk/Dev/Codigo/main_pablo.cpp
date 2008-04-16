@@ -16,8 +16,8 @@ int main(int argc, char **argv) {
 	MetadataBlock* metadata= new MetadataBlock(512);
 	metadata->setFileType(2);
 	/**/
-	ssType->addType(sType);
-	ssType->addType(iType);
+	ssType->addType(new StringType());
+	ssType->addType(new IntType());
 	/**/
 	field= new Field();
 	field->setIsMandatory(true);

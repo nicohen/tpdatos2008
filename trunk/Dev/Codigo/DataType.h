@@ -19,6 +19,7 @@ public:
 	virtual int serialize(char* stream)=0;
 	static const char STRING_TYPE= 1;
 	static const char INT_TYPE= 2;
+	static const char STRUCTURED_TYPE= 3;
 };
 
 #endif /*DATATYPE_H_*/
