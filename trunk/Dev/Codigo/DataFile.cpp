@@ -75,7 +75,7 @@ T_FILESIZE DataFile::getDataUsedSpace() {
 	int usedSpace = 0;
 	RecordsBlock* recordsBlock;
 	
-	for (int i=1; i <= this->_blockStructuredFile->getContentBlockCount(); i++) {
+	for (int i=1; i <= this->_blockStructuredFile->getContentBlockCount()-1; i++) {
 		recordsBlock = (RecordsBlock*)this->_blockStructuredFile->bGetContentBlock(i,&(RecordsBlock::createRecordsBlock));
 		usedSpace += recordsBlock->getUsedSpace();
 	}
@@ -88,7 +88,7 @@ T_FILESIZE DataFile::getDataFreeSpace() {
 	int freeSpace = 0;
 	RecordsBlock* recordsBlock;
 	
-	for (int i=1; i <= this->_blockStructuredFile->getContentBlockCount(); i++) {
+	for (int i=1; i <= this->_blockStructuredFile->getContentBlockCount()-1; i++) {
 		recordsBlock = (RecordsBlock*)this->_blockStructuredFile->bGetContentBlock(i,&(RecordsBlock::createRecordsBlock));
 		freeSpace += recordsBlock->getFreeSpace();
 	}
@@ -101,7 +101,7 @@ T_BLOCKSIZE DataFile::getDataRecordsCount() {
 	int recordsCount = 0;
 	RecordsBlock* recordsBlock;
 	
-	for (int i=1; i <= this->_blockStructuredFile->getContentBlockCount(); i++) {
+	for (int i=1; i <= this->_blockStructuredFile->getContentBlockCount()-1; i++) {
 		recordsBlock = (RecordsBlock*)this->_blockStructuredFile->bGetContentBlock(i,&(RecordsBlock::createRecordsBlock));
 		recordsCount += recordsBlock->getRecords()->size();
 	}

@@ -34,6 +34,7 @@ public:
 	
 	//METODOS HEREDADOS
 	virtual void setContent(char* content);
+	void deserialize(char* content);
 	virtual void setFragment(char* content,T_BLOCKSIZE offset,T_BLOCKSIZE size);
 	virtual char* getContent();
 	

@@ -6,6 +6,9 @@
 #include "StringType.h"
 #include "IntType.h"
 #include "StructureType.h"
+#include "Utils.h"
+
+bool verbose = false;
 
 int main(int argc, char **argv) {
 	FILE* salida;
@@ -46,10 +49,11 @@ int main(int argc, char **argv) {
 	entrada= fopen("Data/Meta.txt","r+");
 	char* buffer= (char*)malloc(512*sizeof(char));
 	fread(buffer,1,512,entrada);
-	metadata2->setContent(buffer);	
+	metadata2=new MetadataBlock(buffer,512);	
 	fclose(entrada);
 	free(buffer);
 	delete metadata;
 	delete metadata2;
+	printf("sdasdasd");
 	return 0;
 }
