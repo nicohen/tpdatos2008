@@ -41,39 +41,26 @@ void InsertionStatement::clearValues(vector<DataValue*>* values){
 StatementResult* InsertionStatement::execute(DataManager* dataManager){
 	StatementResult* sr = new StatementResult();	
 	char* cadena; 
-	string buffer;
-	
+	string buffer;	
 	DEBUG("Inicio de la ejecución del InsertionStatement");
-
-	/**
-	 * Dejo comentado esto
-	 */
-//	DataType* dataType;
-//	vector<DataValue*>::iterator iter;
-//	for (iter = this->getValues()->begin(); iter != this->getValues()->end(); iter++ ) {
-//		 dataType = ((DataValue*)*iter)->getType();
-//		 value = ((DataValue*)*iter)->getType();
-//	}
-	
-	
 	
 	DataFile* dataFile = dataManager->getFile(this->getFileName());
 	Record* record = new Record();
-	record->addValue(new IntValue(10));
-	record->addValue(new StringValue("Quevedo"));
-	record->addValue(new IntValue(20));
+	DataValue* each=NULL;
+	vector<DataValue*>::iterator iter;
+	for (iter = this->_values->begin(); iter != this->_values->end(); iter++ )
+	{
+		each=((DataValue*)*iter);
+		record->addValue(each);
+	}
 	dataFile->insertRecord(record);
 	
-	buffer.append("'Se inserto el registro ['");
-//	buffer.append(dataValue->toString());
-	buffer.append("pepito"); //hardcodeado
-	buffer.append("',");
-	buffer.append("5"); //hardcodeado
-	buffer.append(",|...|]' Res=1"); //hardcodeado
+	buffer.append("'Se inserto el registro ");
+	record->toString(&buffer);
+	buffer.append("Res=1"); 
 
 	cadena = (char*) malloc(strlen(buffer.c_str()));
 	strcpy(cadena,buffer.c_str());
-
 	sr->setResult(cadena);
 	DEBUG("Fin de la ejecución del InsertionStatement");
 	return sr;
