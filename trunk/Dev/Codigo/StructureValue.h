@@ -24,6 +24,7 @@ public:
 	virtual DataType* getType();
 	virtual void toString(string* buffer);
 	void addValue(DataValue* aType);
+	int getCount();
 };
 
 #endif /*STRUCTUREVALUE_H_*/

@@ -24,12 +24,10 @@ IntValue::~IntValue()
 }
 
 bool IntValue::equals(DataValue* other){
-	IntValue* otherint;
-	if(this->getType()->getUniqueIdentifier()!=other->getType()->getUniqueIdentifier()){
-		return false;
+	if(DataValue::equals(other)){
+		return this->getInt()==((IntValue*)other)->getInt();
 	}else{
-		otherint=(IntValue*)other;
-		return this->getInt()==otherint->getInt();
+		return false;	
 	}
 }
 

@@ -20,7 +20,7 @@ public:
 	virtual ~DataValue();
 	
 	//otros
-	virtual bool equals(DataValue* other)=0;
+	virtual bool equals(DataValue* other);
 	virtual void toString(string* buffer)=0;
 	virtual DataType* getType()=0;
 	char* serialize();	
