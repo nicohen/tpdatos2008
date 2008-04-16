@@ -69,9 +69,26 @@ bool StructureType::isInstanceOf(void* anObject){
 	return false;
 }
 
-DataValue* StructureType::deserializeValue(char* data){
-	return new StructureValue();
+DataValue* StructureType::deserializeValue(char* content){
+	DataValue* res=NULL;
+	res=this->createNullValue();
+	res->deserialize(content);
+	return res;
 }
+
+DataValue* StructureType::createNullValue(){
+	StructureValue* res=NULL;
+	vector<DataType*>::iterator iter;
+	DataType* each=NULL;
+	res=new StructureValue();
+	for (iter = this->_dataTypes->begin(); iter != this->_dataTypes->end(); iter++)
+	{
+		each=(DataType*)*iter;
+		res->addValue(each->createNullValue());
+	}
+	return res;
+}
+
 
 int StructureType::serialize(char* stream){
 	int counter=sizeof(short);

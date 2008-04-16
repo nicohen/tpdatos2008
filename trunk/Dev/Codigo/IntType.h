@@ -7,6 +7,7 @@
 
 class IntType:public DataType
 {
+
 public:
 	IntType();
 	virtual bool isInstanceOf(void* anObject);
@@ -15,6 +16,7 @@ public:
 	virtual ~IntType();
 	virtual int serialize(char* stream);
 	virtual DataValue* deserializeValue(char* content);
+	virtual DataValue* createNullValue();
 }; 
 
 #endif /*INTTYPE_H_*/

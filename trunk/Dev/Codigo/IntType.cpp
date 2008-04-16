@@ -21,10 +21,15 @@ IntType::~IntType()
 {
 }
 
-DataValue* IntType::deserializeValue(char* data){
-	IntValue* intvalue=new IntValue(0);
-	intvalue->deserialize(data);
-	return intvalue;
+DataValue* IntType::deserializeValue(char* content){
+	DataValue* res=NULL;
+	res=this->createNullValue();
+	res->deserialize(content);
+	return res;
+}
+
+DataValue* IntType::createNullValue(){
+	return new IntValue(0);
 }
 
 int IntType::serialize(char* stream){

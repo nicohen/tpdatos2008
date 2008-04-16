@@ -1,5 +1,6 @@
 #include "StructureValue.h"
 #include "StructureType.h"
+#include "IntValue.h"
 
 using namespace std;
 
@@ -94,12 +95,42 @@ bool StructureValue::equals(DataValue* other){
 }
 
 T_STRING_LENGHT StructureValue::getSerializationSize(){
-	
+	DataValue* each=NULL;
+	vector<DataValue*>::iterator iter;
+	T_STRING_LENGHT size;
+	size=0;
+	for (iter = this->_dataValues->begin(); iter != this->_dataValues->end(); iter++ )
+	{
+		each=((DataValue*)*iter);
+		size+=each->getSerializationFullSize();
+	}
+	return size;
 }
+
 void StructureValue::serializeTo(char* buffer){
-	
+	DataValue* each=NULL;
+	vector<DataValue*>::iterator iter;
+	char* eachSerialization=NULL;
+	char* currentBufferLocation=NULL;
+	currentBufferLocation=buffer;
+	for (iter = this->_dataValues->begin(); iter != this->_dataValues->end(); iter++ )
+	{
+		each=((DataValue*)*iter);
+		eachSerialization=each->serialize();		
+		memcpy(currentBufferLocation,eachSerialization,each->getSerializationFullSize());
+		currentBufferLocation+=each->getSerializationFullSize();
+		free(eachSerialization);
+	}
 }	
 void StructureValue::deserializeValue(char* data,T_STRING_LENGHT dataLenght){
-	
+	//Recorrer los valores y llamar al deserialize de cada fucking eachhhh
+	this->addValue(new IntValue(10));//Borrar el include
+	DataValue* each=NULL;
+	vector<DataValue*>::iterator iter;
+	for (iter = this->_dataValues->begin(); iter != this->_dataValues->end(); iter++ )
+	{
+		each=((DataValue*)*iter);
+		//((IntValue*)each)
+	}
 }
 

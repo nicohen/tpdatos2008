@@ -20,10 +20,14 @@ StringType::~StringType(){
 }
 
 DataValue* StringType::deserializeValue(char* content){
-	StringValue* res=NULL;
-	res=new StringValue("");
+	DataValue* res=NULL;
+	res=this->createNullValue();
 	res->deserialize(content);
 	return res;
+}
+
+DataValue* StringType::createNullValue(){
+	return new StringValue("");
 }
 
 int StringType::serialize(char* stream){

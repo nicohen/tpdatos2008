@@ -11,6 +11,7 @@
 #include "IntValue.h"
 #include "StringValue.h"
 #include "StructureValue.h"
+#include "StructureType.h"
 #include "IntType.h"
 
 
@@ -176,7 +177,7 @@ void Test_WhenItUpdatesBlockRealyWritesOnDisk(TestCase* test){
 		test->Assert_inteq(1024,filestream->tellg());
 		filestream->close();
 	}else{
-		test->Assert_True_m(filestream->is_open(),"El archivo no se cre�");
+		test->Assert_True_m(filestream->is_open(),"El archivo no se creó");
 	}	
 	delete filestream;	
 }
@@ -664,18 +665,19 @@ void Test_StringValue_Deserialize(TestCase* test){
 }
 
 void Test_StructureValue_Serialization(TestCase* test){
-	/*
+	
 	StructureValue* structureToSerialize=new StructureValue();
 	StructureValue* deserializedStructure=new StructureValue();
+	StructureType* structureType=new StructureType(); 
 	char* data=NULL;
-	IntValue* deserializedInt=NULL;
 	structureToSerialize->addValue(new IntValue(10));
+	structureType->addType(new IntType());
 	
 	data= structureToSerialize->serialize();
-	deserializedStructure->deserialize(data);
+	deserializedStructure=(StructureValue*)structureType->deserializeValue(data);
 	
+//	printf("\nStructureValue: Assert_True_m\n");
 	test->Assert_True_m(deserializedStructure->equals(structureToSerialize),"Deberian ser iguales los StructureValues");
-	*/
 }
 
 void Test_IntValue_Equals(TestCase* test){

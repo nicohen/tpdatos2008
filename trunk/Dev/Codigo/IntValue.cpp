@@ -19,8 +19,7 @@ DataType* IntValue::getType(){
 	return (DataType*)new IntType();
 }
 
-IntValue::~IntValue()
-{
+IntValue::~IntValue(){
 }
 
 bool IntValue::equals(DataValue* other){
