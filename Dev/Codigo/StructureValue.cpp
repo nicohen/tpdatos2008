@@ -1,6 +1,5 @@
 #include "StructureValue.h"
 #include "StructureType.h"
-#include "IntValue.h"
 
 using namespace std;
 
@@ -60,34 +59,41 @@ int StructureValue::getCount(){
 	return this->_dataValues->size();
 }
 
-bool StructureValue::equals(DataValue* other){
-	StructureValue* otherStructure=NULL;
-	
+bool StructureValue::equalsValueVectors(vector<DataValue*>* vec1,vector<DataValue*>* vec2){
 	DataValue* each=NULL;
 	DataValue* eachOther=NULL;
 	
 	vector<DataValue*>::iterator ownIter;
 	vector<DataValue*>::iterator otherIter;
 	
+	if(vec1->size()!=vec2->size()){
+		printf("\nFINAL 1 \n");
+		return false;
+	}
+	for (ownIter = vec1->begin(),otherIter = vec2->begin();
+		ownIter != vec1->end();
+		ownIter++,otherIter++)
+	{
+		each=((DataValue*)*ownIter);
+		eachOther=((DataValue*)*otherIter);
+		if(!each->equals(eachOther)){
+			printf("\nFINAL 2 \n");
+			return false;	
+		}			
+	}
+	printf("\nFINAL 3 \n");
+	return true;
+}
+
+bool StructureValue::equals(DataValue* other){
+	StructureValue* otherStructure=NULL;
+	
+	vector<DataValue*>::iterator ownIter;
+	vector<DataValue*>::iterator otherIter;
+	
 	otherStructure=(StructureValue*) other;
 	if(DataValue::equals(other)){
-		if(this->getCount()!=otherStructure->getCount()){
-			printf("\nFINAL 1 \n");
-			return false;
-		}
-		for (ownIter = this->_dataValues->begin(),otherIter = otherStructure->_dataValues->begin();
-			ownIter != this->_dataValues->end();
-			ownIter++,otherIter++)
-		{
-			each=((DataValue*)*ownIter);
-			eachOther=((DataValue*)*otherIter);
-			if(!each->equals(eachOther)){
-				printf("\nFINAL 2 \n");
-				return false;	
-			}			
-		}
-		printf("\nFINAL 3 \n");
-		return true;
+		return equalsValueVectors(this->_dataValues,otherStructure->_dataValues);
 	}else{
 		printf("\nFINAL 4 \n");
 		return false;	
@@ -130,7 +136,6 @@ void StructureValue::deserializeValue(char* data,T_STRING_LENGHT dataLenght){
 	for (iter = this->_dataValues->begin(); iter != this->_dataValues->end(); iter++ )
 	{
 		each=((DataValue*)*iter);
-		//((IntValue*)each)
 		each->deserialize(currentDataPointer);
 		currentDataPointer+=each->getSerializationFullSize();
 	}

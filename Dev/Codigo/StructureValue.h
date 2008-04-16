@@ -25,6 +25,8 @@ public:
 	virtual void toString(string* buffer);
 	void addValue(DataValue* aType);
 	int getCount();
+	
+	static bool equalsValueVectors(vector<DataValue*>* vec1,vector<DataValue*>* vec2);
 };
 
 #endif /*STRUCTUREVALUE_H_*/

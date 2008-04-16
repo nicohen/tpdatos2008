@@ -5,11 +5,14 @@
 #include "../DataValue.h"
 #include <vector>
 #include "string.h"
+#include "../Field.h"
 
 using namespace std;
 /*
  * Contiene los datos de un registro
  * */
+typedef unsigned short T_RECORD_SIZE; 
+
 class Record
 {
 private:
@@ -25,8 +28,10 @@ public:
 	//Otros metodos
 	void addValue(DataValue* aValue);
 	void addValues(vector<DataValue*>* valueList);
-	RawRecord* serialize();
-	void deserialize(RawRecord* data);
-
+	
+	RawRecord* serialize();	
+	void deserialize(RawRecord* data,vector<Field*>* recordFields);
+	bool equals(Record* other);
+	T_BLOCKSIZE getSerializationFullSize();
 };
 #endif /*RECORD_H_*/
