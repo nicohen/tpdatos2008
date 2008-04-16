@@ -6,7 +6,8 @@ MetadataBlock::MetadataBlock(T_BLOCKSIZE size): Block(size) {
 	_fields= new vector<Field*>();
 }
 MetadataBlock::MetadataBlock(char* content,T_BLOCKSIZE size): Block(content,size){
-	setContent(content);
+	_fields= new vector<Field*>();
+	this->deserialize(Block::getContent());
 }
 
 void clearMetadataBlock(vector<Field*>* fields) {
@@ -56,6 +57,10 @@ Field* MetadataBlock::parseField(char* content, int* offset){
 // IMPLEMENTAR ESTOS METODOS
 void MetadataBlock::setContent(char* content){
 	Block::setContent(content);
+	this->deserialize(content);
+}
+
+void MetadataBlock::deserialize(char* content){
 	int counter=0;
 	unsigned short qtyField=0;
 	memcpy(&(this->_fileType),content,sizeof(short));
