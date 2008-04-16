@@ -58,9 +58,30 @@ void MetadataBlock::setSecondaryField(Field* field) {
 void MetadataBlock::setSecondaryFields(vector<Field*>* fields) {
 	this->_fields = fields;
 }
-
+Field* MetadataBlock::parseField(char* content, int* offset){
+	Field* field;
+	unsigned short length;
+	memcpy(&length,content+*offset,sizeof(short));
+	*offset+=sizeof(short);
+	char* byteCode= (char*)malloc(sizeof(char)*length);
+	memcpy(byteCode,content+*offset,sizeof(char)*length);
+	*offset+=sizeof(char)*length;
+	field= new Field(byteCode);
+	free(byteCode);	
+	return field;
+}
 // IMPLEMENTAR ESTOS METODOS
 void MetadataBlock::setContent(char* content){
+	Block::setContent(content);
+	int counter=0;
+	unsigned short qtyField=0;
+	memcpy(&(this->_fileType),content,sizeof(short));
+	counter+=sizeof(short);
+	memcpy(&qtyField,content+counter,sizeof(short));
+	counter+=sizeof(short);
+	for (int j=0;j<qtyField;j++){
+		this->setSecondaryField(this->parseField(content,&counter));
+	}
 }
 
 void MetadataBlock::setFragment(char* content,T_BLOCKSIZE offset,T_BLOCKSIZE size){

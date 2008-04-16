@@ -13,6 +13,7 @@ private:
 	unsigned short int _fileType;
 	vector<Field*>* _fields;
 	
+	Field* parseField(char* content, int* offset);
 	void writeOnBlock(Field* field,Block* block,int* offset);	
 public:
 	MetadataBlock(T_BLOCKSIZE size);
