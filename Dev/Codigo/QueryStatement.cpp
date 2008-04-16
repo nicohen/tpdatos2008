@@ -11,20 +11,30 @@ QueryStatement::QueryStatement(char* filename):Statement(filename){
 }
 
 StatementResult* QueryStatement::execute(DataManager* dataManager) {
+	string buffer;
+	ostringstream ss;
 	DEBUG("Inicio de la ejecución del QueryStatement");
+	
+	buffer.append("Buscando registros que coincidan con [");
+	ss<<this->_fieldNumber;
+	buffer.append(ss.str());
+	buffer.append(",");
+	this->_value->toString(&buffer);
+	buffer.append("] ");
+	
 	DataFile* dFile= dataManager->getFile(this->getFileName());
 	vector<Record*>* list= dFile->findRecords(this->getFieldNumber(),this->getValue());
 	Record* each=NULL;
 	vector<Record*>::iterator iter;
-	printf("Elementos encontrados %d\n",list->size());
+	buffer.append(". Elementos encontrados: ");
 	for (iter = list->begin(); iter != list->end(); iter++ ){
 		each=((Record*)*iter);
-		string* str= new string();
-		each->toString(str);
-		DEBUG(str->c_str());
-		delete str;
+		each->toString(&buffer);
 	}
+	
+	//Preparo el resultado
 	StatementResult* sr= new StatementResult();
+	sr->setResult((char*)buffer.c_str());
 	DEBUG("Fin de la ejecución del QueryStatement");
 	return sr;
 }

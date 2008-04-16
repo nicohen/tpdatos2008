@@ -195,13 +195,13 @@ void DataFile::insertRecord(Record* record) {
 		T_BLOCKCOUNT freeRecordBlockNumber = this->_blockStructuredFile->getFirstFreeContentBlockNumber(1,record->getSerializationFullSize(),&RecordsBlock::createRecordsBlock);
 		recordsBlock = (RecordsBlock*)this->_blockStructuredFile->bGetContentBlock(freeRecordBlockNumber,&RecordsBlock::createRecordsBlock);
 		recordsBlock->getRecords()->push_back(rawRecord);
-		this->_blockStructuredFile->bUpdateContentBlock(freeRecordBlockNumber,recordsBlock);
-	} catch(BlockNotFoundException*) {
-		recordsBlock = new RecordsBlock(this->_blockSize);
+		this->_blockStructuredFile->bUpdateContentBlock(freeRecordBlockNumber,recordsBlock);		
+	} catch(BlockNotFoundException* ex) {
+		recordsBlock = new RecordsBlock(this->_blockStructuredFile->getBlockSize());
 		recordsBlock->getRecords()->push_back(rawRecord);
 		this->_blockStructuredFile->bAppendContentBlock(recordsBlock);
+		delete ex;
 	}
-
 }
 
 RecordsBlock* DataFile::getRecordBlock(int blockNumber){
