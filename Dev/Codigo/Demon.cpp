@@ -71,6 +71,7 @@ void Demon::processInputStatements(BufferedDataManager* bufferedDataManager, Out
 		while (statement != NULL) {
 			statementResult = bufferedDataManager->executeStatement(statement,outPutter);
 			statementResult->write(outPutter);
+			delete statementResult;
 			delete statement;
 			statement = statementParser->getNext();
 		}

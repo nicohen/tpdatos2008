@@ -161,6 +161,33 @@ vector<Record*>* DataFile::findRecords(int fNumber,DataValue* fValue){
 	return recordsObteined;
 }
 
+int DataFile::removeRecord(int fNumber,DataValue* fValue){
+	int found=0;
+	bool actualize=false;
+	RecordsBlock *rBlock;
+	int length= this->getRecordsBlockCount();
+	for(int j=1;j<=length;j++){
+		rBlock=	this->getRecordBlock(j);
+		vector<RawRecord*>* recordsList= rBlock->getRecords();
+		RawRecord* each=NULL;
+		vector<RawRecord*>::iterator iter;
+		for (iter = recordsList->begin(); iter != recordsList->end(); iter++ ){
+			each=((RawRecord*)*iter);
+			Record* record= new Record();
+			record->deserialize(each,this->getFields());
+			if(record->matchField(fNumber,fValue)){
+				recordsList->erase(iter);
+				actualize=true;
+				found++;
+			}
+		}
+		if (actualize){
+			this->_blockStructuredFile->bUpdateContentBlock(j,rBlock);
+			actualize=false;
+		}
+	}
+	return found;
+}
 /*
 vector<Field*>* DataFile::getDataStructure(){
 	return this->_metadataBlock->GetSecondaryFields();
