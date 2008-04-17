@@ -19,29 +19,25 @@ StatementResult* UpdateStatement::execute(DataManager* anIDataManager) {
 	bool hasUpdated = false;
 	Record* record  = new Record();
 	record->addValues(this->_values);
-	DataFile* dataFile = anIDataManager->getFile(this->getFileName());
-	hasUpdated = dataFile->updateRecord(record);
-	
-	StatementResult* sr = new StatementResult();
-	
-	char* cadena; 
 	string buffer;
-	
-//	vector<DataValue*>* dataValues = record->getValues();
-//	DataValue* each;
-	buffer.append("'Actualizacion de registro ");
-//	vector<DataValue*>::iterator iter;
-//	for (iter = dataValues->begin(); iter != dataValues->end(); iter++ ){
-//		each=((DataValue*)*iter);
-//		each->toString(&buffer);
-//	}
-	record->toString(&buffer);
-	buffer.append(" Res = ");
-	if (hasUpdated)
-		buffer.append("1");
-	else
-		buffer.append("0");
-
+	char* cadena;
+	StatementResult* sr = new StatementResult();
+	try{
+		DataFile* dataFile = anIDataManager->getFile(this->getFileName());
+		hasUpdated = dataFile->updateRecord(record);
+		buffer.append("'Actualizacion de registro ");
+		record->toString(&buffer);
+		buffer.append(" Res = ");
+		if (hasUpdated)
+			buffer.append("1");
+		else
+			buffer.append("0");
+	}catch(FileNotFoundException* ex){
+		buffer.append(" Error al actualizar registro(");
+		buffer.append(ex->toString());
+		buffer.append("). Res=0"); 
+		delete ex;
+	}
 	cadena = (char*) malloc(strlen(buffer.c_str()));
 	strcpy(cadena,buffer.c_str());
 	sr->setResult(cadena);

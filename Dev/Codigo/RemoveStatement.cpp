@@ -11,15 +11,22 @@ RemoveStatement::RemoveStatement(char* filename):Statement(filename){
 
 
 StatementResult* RemoveStatement::execute(DataManager* anIDataManager){
-	DataFile* dataFile= anIDataManager->getFile(this->getFileName());
-	int counter = dataFile->removeRecord(_fieldNumber,_value);
 	string buffer;
-	buffer.append("Se eliminarion ");
-	ostringstream ss;
-	ss<<counter;
-	buffer.append(ss.str());
-	buffer.append(" registros del archivo. RES=");
-	buffer.append(counter?"1":"0");	
+	try{
+		DataFile* dataFile= anIDataManager->getFile(this->getFileName());
+		int counter = dataFile->removeRecord(_fieldNumber,_value);		
+		buffer.append("Se eliminarion ");
+		ostringstream ss;
+		ss<<counter;
+		buffer.append(ss.str());
+		buffer.append(" registros del archivo. RES=");
+		buffer.append(counter?"1":"0");	
+	}catch(FileNotFoundException* ex){
+		buffer.append(" Error al eliminar registros (");
+		buffer.append(ex->toString());
+		buffer.append("). Res=0"); 
+		delete ex;
+	}	
 	StatementResult* sr= new StatementResult();
 	sr->setResult((char*)buffer.c_str());
 	return sr;

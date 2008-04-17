@@ -21,16 +21,22 @@ StatementResult* QueryStatement::execute(DataManager* dataManager) {
 	buffer.append(",");
 	this->_value->toString(&buffer);
 	buffer.append("] ");
-	
-	DataFile* dFile= dataManager->getFile(this->getFileName());
-	vector<Record*>* list= dFile->findRecords(this->getFieldNumber(),this->getValue());
-	Record* each=NULL;
-	vector<Record*>::iterator iter;
-	buffer.append(". Elementos encontrados: ");
-	for (iter = list->begin(); iter != list->end(); iter++ ){
-		each=((Record*)*iter);
-		each->toString(&buffer);
-	}
+	try{
+		DataFile* dFile= dataManager->getFile(this->getFileName());
+		vector<Record*>* list= dFile->findRecords(this->getFieldNumber(),this->getValue());
+		Record* each=NULL;
+		vector<Record*>::iterator iter;
+		buffer.append(". Elementos encontrados: ");
+		for (iter = list->begin(); iter != list->end(); iter++ ){
+			each=((Record*)*iter);
+			each->toString(&buffer);
+		}
+	}catch(FileNotFoundException* ex){
+		buffer.append(" Error al buscar registros(");
+		buffer.append(ex->toString());
+		buffer.append("). Res=0");
+		delete ex;
+	}	
 	
 	//Preparo el resultado
 	StatementResult* sr= new StatementResult();
