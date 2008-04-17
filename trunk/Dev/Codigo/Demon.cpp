@@ -26,7 +26,7 @@ void Demon::run(void){
 	for(int i=1;!_finishDaemon;i++) {
 		try{
 			printf("Iteracion: %i\n",i);
-			inputFile = fileManager->CreateFileInfo("In/Comandos.7506");
+			inputFile = fileManager->CreateFileInfo("In/Comando.7506");
 			
 			inputFile->open();
 			
@@ -38,7 +38,7 @@ void Demon::run(void){
 			processInputStatements(bufferedDataManager, outPutter, inputFile);
 
 			inputFile->close();
-//			inputFile->delet();
+			inputFile->delet();
 			
 			delete inputFile;
 			delete outPutter;
