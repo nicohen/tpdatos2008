@@ -12,13 +12,20 @@ RemoveStatement::RemoveStatement(char* filename):Statement(filename){
 
 StatementResult* RemoveStatement::execute(DataManager* anIDataManager){
 	string buffer;
+	ostringstream ss;
+	buffer.append("Buscando registros que coincidan con [");
+	ss<<this->_fieldNumber;
+	buffer.append(ss.str());
+	buffer.append(",");
+	this->_value->toString(&buffer);
+	buffer.append("] ");
 	try{
 		DataFile* dataFile= anIDataManager->getFile(this->getFileName());
 		int counter = dataFile->removeRecord(_fieldNumber,_value);		
 		buffer.append("Se eliminarion ");
-		ostringstream ss;
-		ss<<counter;
-		buffer.append(ss.str());
+		ostringstream sss;
+		sss<<counter;
+		buffer.append(sss.str());
 		buffer.append(" registros del archivo. RES=");
 		buffer.append(counter?"1":"0");	
 	}catch(FileNotFoundException* ex){

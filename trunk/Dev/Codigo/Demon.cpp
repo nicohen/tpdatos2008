@@ -25,7 +25,6 @@ void Demon::run(void){
 	
 	for(int i=1;!_finishDaemon;i++) {
 		try{
-			printf("Iteracion: %i\n",i);
 			inputFile = fileManager->CreateFileInfo("In/Comando.7506");
 			
 			inputFile->open();
@@ -44,7 +43,6 @@ void Demon::run(void){
 			delete outPutter;
 
 		} catch (FileManager::IOException e){
-			printf("file not found!\n");
 		} 
 		sleep(_sleepTime);
 

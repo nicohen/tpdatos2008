@@ -857,10 +857,12 @@ Statement* StatementParser::getNext() {
 	try{
 		// VALIDA EL COMIENZO DEL STATEMENT
 		while ((token!=NULL)&&(token->getType()!=_tokenizer->KEYWORD)){
-			DEBUG("Se esperaba KEYWORD en lugar de:");
-			DEBUG(token->getContent());
 			if (strcmp(token->getContent(),"\n")!=0){
-				_tokenizer->moveToNextLine();
+				DEBUG("Se esperaba KEYWORD en lugar de:");
+				DEBUG(token->getContent());
+				if (strcmp(token->getContent(),"\n")!=0){
+					_tokenizer->moveToNextLine();
+				}
 			}
 			token= _tokenizer->getNextToken(false);
 		}
