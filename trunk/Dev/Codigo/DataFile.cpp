@@ -5,7 +5,9 @@
 #include "IntType.h"
 #include "Data/IdentityException.h"
 #include "Data/TypeMismatchException.h"
-
+#include "Utils.h"
+#include "Data/FileNotFoundException.h"
+#include "Data/FileDoesAlreadyExistsException.h"
 
 DataFile::DataFile(char* fileName){
 	_fileName = cloneStr(fileName);
@@ -77,7 +79,9 @@ void DataFile::setFolder(char* folderPath){
 
 void DataFile::load(char* folderPath){
 	this->setFolder(folderPath);
-	
+	if(!existsFile(this->_fullPath)){
+		throw new FileNotFoundException("Se intento cargar un archivo que no existe");
+	}
 	//Cargo el blockStructureFile
 	this->_blockStructuredFile = BlockStructuredFile::Load(this->_fullPath);
 	//Cargo el MetadataBlock
@@ -87,6 +91,9 @@ void DataFile::load(char* folderPath){
 void DataFile::save(char* folderPath) {
 	this->setFolder(folderPath);	
 	
+	if(existsFile(this->_fullPath)){
+		throw new FileDoesAlreadyExistsException("No se puede crear el archivo porque ya existe uno con el mismo nombre");
+	}
 	//Creo el blockStructureFile
 	this->_blockStructuredFile = BlockStructuredFile::Create(this->_fullPath,_blockSize);
 	//Guardo el MetadataBlock
@@ -144,7 +151,11 @@ vector<Record*>* DataFile::findRecords(int fNumber,DataValue* fValue){
 			each=((RawRecord*)*iter);
 			Record* record= new Record();
 			record->deserialize(each,this->getFields());
-			recordsObteined->push_back(record);
+			if(record->matchField(fNumber,fValue)){
+				recordsObteined->push_back(record);
+			}else{
+				delete record;
+			}
 		}		
 	}
 	return recordsObteined;

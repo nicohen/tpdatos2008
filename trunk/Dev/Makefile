@@ -28,6 +28,8 @@ GLOBAL_CPP:=	$(CODE_PATH)BufferedDataManager.cpp\
 	$(CODE_PATH)Field.cpp\
 	$(CODE_PATH)FileManager.cpp\
 	$(CODE_PATH)FileInfo.cpp\
+	$(DATA_PATH)FileNotFoundException.cpp\
+	$(DATA_PATH)FileDoesAlreadyExistsException.cpp\
 	$(DATA_PATH)IdentityException.cpp\
 	$(CODE_PATH)InsertionStatement.cpp\
 	$(CODE_PATH)IntType.cpp\
@@ -83,6 +85,8 @@ GLOBAL_CPP_H:=	$(CODE_PATH)BufferedDataManager.h\
 	$(CODE_PATH)Field.h\
 	$(CODE_PATH)FileManager.h\
 	$(CODE_PATH)FileInfo.h\
+	$(DATA_PATH)FileNotFoundException.h\
+	$(DATA_PATH)FileDoesAlreadyExistsException.h\
 	$(DATA_PATH)IdentityException.h\
 	$(CODE_PATH)InsertionStatement.h\
 	$(CODE_PATH)IntType.h\
