@@ -20,7 +20,6 @@ StatementResult* UpdateStatement::execute(DataManager* anIDataManager) {
 	Record* record  = new Record();
 	record->addValues(this->_values);
 	string buffer;
-	char* cadena;
 	StatementResult* sr = new StatementResult();
 	try{
 		DataFile* dataFile = anIDataManager->getFile(this->getFileName());
@@ -38,12 +37,7 @@ StatementResult* UpdateStatement::execute(DataManager* anIDataManager) {
 		buffer.append("). Res=0"); 
 		delete ex;
 	}
-	cadena = (char*) malloc(strlen(buffer.c_str()));
-	strcpy(cadena,buffer.c_str());
-	sr->setResult(cadena);
-
-	free(cadena);
-	
+	sr->setResult((char*)buffer.c_str());	
 	return sr;
 }
 
