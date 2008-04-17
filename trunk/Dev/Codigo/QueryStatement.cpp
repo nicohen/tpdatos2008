@@ -26,10 +26,15 @@ StatementResult* QueryStatement::execute(DataManager* dataManager) {
 		vector<Record*>* list= dFile->findRecords(this->getFieldNumber(),this->getValue());
 		Record* each=NULL;
 		vector<Record*>::iterator iter;
-		buffer.append(". Elementos encontrados: ");
-		for (iter = list->begin(); iter != list->end(); iter++ ){
-			each=((Record*)*iter);
-			each->toString(&buffer);
+		if (list->size()==0){
+			buffer.append(". No se encontraron registros que coincidan. RES=0.");
+		}else{
+			buffer.append(". Elementos encontrados: ");
+			for (iter = list->begin(); iter != list->end(); iter++ ){
+				each=((Record*)*iter);
+				each->toString(&buffer);
+			}
+			buffer.append(". RES=1.");
 		}
 	}catch(FileNotFoundException* ex){
 		buffer.append(" Error al buscar registros(");
