@@ -1,6 +1,7 @@
 #include "CreateStatement.h"
 #include "Utils.h"
 #include <stdio.h>
+#include "Data/FileDoesAlreadyExistsException.h"
 #include <sstream>
 
 using namespace std;
@@ -85,7 +86,11 @@ StatementResult* CreateStatement::execute(DataManager* dataManager){
 	//Creo el DataFile
 	DataFile* dataFile = new DataFile(this->getFileName(),this->getDataBlockSize(),this->getFileType(),this->getIndexSize(),this->getSecondaryFieldCount(),this->getSecondaryFields(),this->getSecondaryIndex());
 	//Creo el archivo en la carpeta correspondiente
-	dataManager->addFile(dataFile);
+	try{
+		dataManager->addFile(dataFile);	
+	}catch(FileDoesAlreadyExistsException* ex){
+		//escribir aqui
+	}	
 	StatementResult* sr = new StatementResult();
 	buffer.append("'Se creo correctamente el archivo ");
 	
