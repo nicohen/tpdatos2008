@@ -47,30 +47,34 @@ StatementResult* InsertionStatement::execute(DataManager* dataManager){
 	DEBUG("Inicio de la ejecución del InsertionStatement");
 	
 	buffer.append("Intentando insertar el registro: ");
-	
-	DataFile* dataFile = dataManager->getFile(this->getFileName());
-	Record* record = new Record();
-	DataValue* each=NULL;
-	vector<DataValue*>::iterator iter;
-	for (iter = this->_values->begin(); iter != this->_values->end(); iter++ )
-	{
-		each=((DataValue*)*iter);
-		record->addValue(each);
-	}	
-	record->toString(&buffer);	
 	try {
+		DataFile* dataFile = dataManager->getFile(this->getFileName());
+		Record* record = new Record();
+		DataValue* each=NULL;
+		vector<DataValue*>::iterator iter;
+		for (iter = this->_values->begin(); iter != this->_values->end(); iter++ )
+		{
+			each=((DataValue*)*iter);
+			record->addValue(each);
+		}	
+		record->toString(&buffer);	
+	
 		dataFile->insertRecord(record);
 		buffer.append(" Se inserto el registro ");
 		record->toString(&buffer);
 		buffer.append(" Res=1"); 
 		
-	} catch (TypeMismatchException* e) {
+	} catch (TypeMismatchException* e1) {
 		buffer.append(" Error al insertar el registro (");
-		buffer.append(e->toString());
+		buffer.append(e1->toString());
 		buffer.append("). Res=0"); 
-	} catch (IdentityException* e) {
+	} catch (IdentityException* e2) {
 		buffer.append(" Error al insertar el registro (");
-		buffer.append(e->toString());
+		buffer.append(e2->toString());
+		buffer.append("). Res=0"); 
+	} catch(FileNotFoundException* e3){
+		buffer.append(" Error al insertar el registro (");
+		buffer.append(e3->toString());
 		buffer.append("). Res=0"); 
 	}
 

@@ -3,6 +3,7 @@
 #include "OutPutter.h"
 #include "StatementResult.h"
 #include "DataManager.h"
+#include "Data/FileNotFoundException.h"
 
 typedef unsigned short int T_FILETYPE;
 
