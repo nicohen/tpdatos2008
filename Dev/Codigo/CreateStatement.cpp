@@ -1,6 +1,7 @@
 #include "CreateStatement.h"
 #include "Utils.h"
 #include <stdio.h>
+#include <sstream>
 
 using namespace std;
 
@@ -77,13 +78,21 @@ void CreateStatement::writeStatementQuery(OutPutter* outPutter){
 }
 
 StatementResult* CreateStatement::execute(DataManager* dataManager){
+	ostringstream ss;
+	
+	string buffer;
 	DEBUG("Inicio de la ejecución del CreateStatement");
 	//Creo el DataFile
 	DataFile* dataFile = new DataFile(this->getFileName(),this->getDataBlockSize(),this->getFileType(),this->getIndexSize(),this->getSecondaryFieldCount(),this->getSecondaryFields(),this->getSecondaryIndex());
 	//Creo el archivo en la carpeta correspondiente
 	dataManager->addFile(dataFile);
 	StatementResult* sr = new StatementResult();
-	sr->setResult("'Se creo correctamente el archivo' Res=1");
+	buffer.append("'Se creo correctamente el archivo ");
+	
+	ss<<this->getFileName();
+	buffer.append(ss.str());
+	buffer.append("' Res=1");
+	sr->setResult((char*)buffer.c_str());
 	DEBUG("Fin de la ejecución del CreateStatement");
 	return sr;
 }
