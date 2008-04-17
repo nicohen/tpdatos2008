@@ -28,14 +28,16 @@ StatementResult* StatsStatement::execute(DataManager* dataManager) {
 	ostringstream fileSize;
 	ostringstream dataFreeSpace;
 	ostringstream dataRecordsCount;
-
+	
 	DataFile* dataFile = dataManager->getFile(this->getFileName());
 	dataUsedSpace<<dataFile->getDataUsedSpace();
 	fileSize<<dataFile->getFileSize();
 	dataFreeSpace<<dataFile->getDataFreeSpace();
 	dataRecordsCount<<dataFile->getDataRecordsCount();
 	
-	buffer->append("Estadisticas solicitadas.\nOCUPADO:\n");
+	buffer->append("'Estadisticas solicitadas del archivo: ");
+	buffer->append(this->getFileName());
+	buffer->append("'\nOCUPADO:\n");
 	buffer->append("\tDatos------> ");
 	buffer->append(dataUsedSpace.str());
 	buffer->append(" bytes\n");
