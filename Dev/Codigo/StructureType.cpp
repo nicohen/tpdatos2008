@@ -52,7 +52,7 @@ bool StructureType::equals(DataType* other){
 }
 
 int StructureType::getUniqueIdentifier(){
-	return 3;
+	return STRUCTURED_TYPE;
 }
 
 DataValue* StructureType::deserializeValue(char* content){
@@ -91,4 +91,8 @@ int StructureType::serialize(char* stream){
 		counter+=each->serialize(stream+counter);
 	}
 	return counter;
+}
+
+DataType* StructureType::getItem(int typeIndex){
+	return this->_dataTypes->at(typeIndex);
 }

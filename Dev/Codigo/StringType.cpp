@@ -9,7 +9,7 @@ bool StringType::equals(DataType* other){
 }
 
 int StringType::getUniqueIdentifier(){
-	return 2;
+	return STRING_TYPE;
 }
 
 StringType::~StringType(){
