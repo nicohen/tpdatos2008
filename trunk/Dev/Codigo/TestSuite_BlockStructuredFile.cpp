@@ -756,41 +756,9 @@ vector<DataValue*>* getDataValueVector(StructureValue* value){
 
 
 void Test_BlockStructured_DeleteBlocks(TestCase* test){
-	/*
-	BlockStructuredFile* file=NULL;
-	RecordsBlock* block;
-	//Agrego bloques
 	
-	char* filename="Test_BlockStructured_DeleteBlocks.bin";
-	remove(filename);
-	createBlockStructuredFileOnDisk(filename,512);
-	file=BlockStructuredFile::Load(filename);
-	
-	block=new RecordsBlock(512);
-	block->appendRecord(new RawRecord("aaaa",4));
-	file->bAppendContentBlock(block);
-	file->bAppendContentBlock(createEmptyBlock(512));
-	file->bAppendContentBlock(createEmptyBlock(512));
-	
-	test->Assert_inteq(4*512,file->getFileSize());
-	//Elimino
-	//file->deleteFree(3);
-	test->Assert_inteq(3*512,file->getFileSize());
-	delete file;
-	*/
 }
 
-
-/*
-//typedef T_REG
-//const INTTYPE 'i';
-typedef unsigned short T_RECORD_F_Q;
-typedef unsigned short T_VALUE_Q;
-typedef unsigned short T_FIELD_TYPE;
-
-char intToChar(int i){
-	char result;
-}*/
 
 void Test_Record_Equals(TestCase* test){
 	Record* expected=new Record();
@@ -879,6 +847,71 @@ void Test_Records_Matching(TestCase* test){
 	test->Assert_True_m(!expected->matchField(0,new IntValue(11)),"El campo 1 no deberia matchear.");
 	test->Assert_True_m(!expected->matchField(1,new StringValue("dsd")),"El campo 2 no deberia matchear.");	
 }
+
+void Test_StructureValue_IsInstanceOfType_SingleStructure(TestCase* test){
+	StructureValue* singleStructure=new StructureValue();
+	StructureType* singleStructureType=new StructureType();
+	
+	singleStructureType->addType(new IntType());
+	singleStructureType->addType(new StringType());
+	singleStructureType->addType(new IntType());
+	
+	
+	singleStructure->addValue(new IntValue(1));
+	singleStructure->addValue(new StringValue("Hola"));
+	singleStructure->addValue(new IntValue(3));
+	
+	test->Assert_True_m(singleStructure->isInstanceOf(singleStructureType),"Se esperaban que sean del mismo tipo");
+	
+}
+
+
+void Test_StructureValue_IsInstanceOfType_ArrayStructure(TestCase* test){
+	StructureValue* arrayStructureTypeA=new StructureValue();
+	StructureValue* arrayStructureTypeB=new StructureValue();
+	StructureValue* arrayStructureTypeC=new StructureValue();
+	StructureType* typeA=new StructureType();
+	
+	typeA->addType(new IntType());
+	typeA->addType(new StringType());
+	
+	
+	arrayStructureTypeA->addValue(new IntValue(1));
+	arrayStructureTypeA->addValue(new StringValue("Hola"));
+	arrayStructureTypeA->addValue(new IntValue(4));
+	arrayStructureTypeA->addValue(new StringValue("Chau"));
+	arrayStructureTypeA->addValue(new IntValue(66));
+	arrayStructureTypeA->addValue(new StringValue("QueTal"));
+	
+	arrayStructureTypeA->addValue(new IntValue(1));
+	arrayStructureTypeB->addValue(new StringValue("Hola"));
+	arrayStructureTypeB->addValue(new IntValue(4));
+	
+	arrayStructureTypeC->addValue(new StringValue("Hola"));
+	arrayStructureTypeC->addValue(new IntValue(1));
+	arrayStructureTypeC->addValue(new StringValue("Chau"));
+	arrayStructureTypeC->addValue(new IntValue(4));
+	arrayStructureTypeC->addValue(new StringValue("QueTal"));
+	arrayStructureTypeC->addValue(new IntValue(66));
+	
+	test->Assert_True_m(arrayStructureTypeA->isInstanceOf(typeA),"Se esperaban que la estructura A sea de tipo A");
+	test->Assert_True_m(!(arrayStructureTypeB->isInstanceOf(typeA)),"Se esperaban que la estructura B no sea de tipo A");
+	test->Assert_True_m(!(arrayStructureTypeC->isInstanceOf(typeA)),"Se esperaban que la estructura C no sea de tipo A");
+}
+
+
+void Test_StructureValue_IsInstanceOfType_EmptyStructure(TestCase* test){
+	StructureValue* arrayStructureTypeA=new StructureValue();
+	StructureValue* arrayStructureTypeB=new StructureValue();
+	StructureType* typeA=new StructureType();
+	
+	arrayStructureTypeB->addValue(new StringValue("Hola"));
+		
+	test->Assert_True_m(arrayStructureTypeA->isInstanceOf(typeA),"Se esperaban que la estructura A sea de tipo A");
+	test->Assert_True_m(!(arrayStructureTypeB->isInstanceOf(typeA)),"Se esperaban que la estructura B no sea de tipo A");
+}
+
+
 
 int main(int argc, char* argv[]){
 	int failedTests=0;
@@ -1014,6 +1047,19 @@ int main(int argc, char* argv[]){
 	TestCase* test32=new TestCase("Test_BlockStructured_DeleteBlocks",&failedTests);	
 	Test_BlockStructured_DeleteBlocks(test32);
 	delete test32;
+	
+	TestCase* test33=new TestCase("Test_StructureValue_IsInstanceOfType",&failedTests);	
+	Test_StructureValue_IsInstanceOfType_SingleStructure(test33);
+	delete test33;
+	
+	TestCase* test34=new TestCase("Test_StructureValue_IsInstanceOfType_ArrayStructure",&failedTests);	
+	Test_StructureValue_IsInstanceOfType_ArrayStructure(test34);
+	delete test34;
+	
+	TestCase* test35=new TestCase("Test_StructureValue_IsInstanceOfType_EmptyStructure",&failedTests);	
+	Test_StructureValue_IsInstanceOfType_EmptyStructure(test35);
+	delete test35;
+	
 	
 	
 	delete new TestSuiteResult(failedTests);

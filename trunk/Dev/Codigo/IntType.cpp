@@ -9,7 +9,7 @@ bool IntType::equals(DataType* other){
 }
 
 int IntType::getUniqueIdentifier(){
-	return 1;
+	return INT_TYPE;
 }
 
 IntType::~IntType()

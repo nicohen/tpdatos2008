@@ -141,5 +141,25 @@ void StructureValue::deserializeValue(char* data,T_STRING_LENGHT dataLenght){
 	}
 }
 bool StructureValue::isInstanceOf(DataType* dType){
-	return this->getType()->equals(dType);
+	StructureType* type=NULL;
+	int valueIndex=0;
+	int typeIndex=0;
+	if(dType->getUniqueIdentifier()!=DataType::STRUCTURED_TYPE){
+		return false;
+	}
+	type=(StructureType*) dType;
+	
+	//Si alguno de los dos tiene cero elementos, y son tienen diferente cantidad de elementos, entonces no es de ese tipo 
+	if((type->getCount()==0 || this->getCount()==0) && type->getCount() != this->getCount() ){
+		return false;
+	}
+	for (valueIndex = 0; valueIndex < this->_dataValues->size(); ++valueIndex) {
+		if(! ((DataValue*)this->_dataValues->at(valueIndex))->isInstanceOf(type->getItem(typeIndex))){
+			return false;
+		}		
+		if(++typeIndex>=type->getCount()){
+			typeIndex=0;
+		}
+	}
+	return true;
 }
