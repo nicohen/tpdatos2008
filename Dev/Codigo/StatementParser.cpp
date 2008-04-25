@@ -384,8 +384,6 @@ std::vector<DataValue*>* StatementParser::parseValues(){
 				try{
 				dValue= parseStructuredValue();
 				}catch(ParserException pe){
-					DEBUG("Se esperaba un valor o '|' en lugar de:");
-					DEBUG((token==NULL)?"fin de archivo":token->getContent());	
 					delete dValue;
 					throw pe;
 				}
@@ -635,7 +633,7 @@ Statement* StatementParser::parseQueryStatement(){
 	}
 	//PARCEO EL VALOR
 	token =	_tokenizer->getNextToken(false);
-	if ((token==NULL)||!((token->getType()==Parsing::ITokenizer::NUMBER)||(token->getType()==Parsing::ITokenizer::STRING))){
+	if ((token==NULL)||!((token->getType()==Parsing::ITokenizer::NUMBER)||(token->getType()==Parsing::ITokenizer::STRING)||(strcmp(token->getContent(),"|")==0))){
 		DEBUG("Se esperaba valor en lugar de:");
 		DEBUG((token==NULL)?"fin de archivo":token->getContent());
 		delete statement; 
@@ -645,6 +643,13 @@ Statement* StatementParser::parseQueryStatement(){
 		statement->setValue(new IntValue(atol(token->getContent())));
 	}else if (token->getType()==Parsing::ITokenizer::STRING){
 		statement->setValue(new StringValue(token->getContent()));
+	}else{
+		try{
+			statement->setValue(parseStructuredValue());
+		}catch(ParserException ex){
+			delete statement;
+			throw ex;
+		}
 	}
 	
 	//PARCEO "]"
@@ -718,7 +723,7 @@ Statement* StatementParser::parseRemoveStatement(){
 	}
 	//PARCEO EL VALOR
 	token =	_tokenizer->getNextToken(false);
-	if ((token==NULL)||!((token->getType()==Parsing::ITokenizer::NUMBER)||(token->getType()==Parsing::ITokenizer::STRING))){
+	if ((token==NULL)||!((token->getType()==Parsing::ITokenizer::NUMBER)||(token->getType()==Parsing::ITokenizer::STRING)||(strcmp(token->getContent(),"|")==0))){
 		DEBUG("Se esperaba valor en lugar de:");
 		DEBUG((token==NULL)?"fin de archivo":token->getContent());
 		delete statement; 
@@ -728,6 +733,13 @@ Statement* StatementParser::parseRemoveStatement(){
 		statement->setValue(new IntValue(atol(token->getContent())));
 	}else if (token->getType()==Parsing::ITokenizer::STRING){
 		statement->setValue(new StringValue(token->getContent()));
+	}else{
+		try{
+			statement->setValue(parseStructuredValue());
+		}catch(ParserException ex){
+			delete statement;
+			throw ex;
+		}
 	}
 	
 	//PARCEO "]"
