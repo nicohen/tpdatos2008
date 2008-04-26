@@ -913,6 +913,58 @@ void Test_StructureValue_IsInstanceOfType_EmptyStructure(TestCase* test){
 
 
 
+void Test_RecordsBlock_Remove(TestCase* test){
+	RecordsBlock* recordsBlock=NULL;
+	RecordsBlock* deserializedRecordsBlock=NULL;
+	RecordsBlock* deserializedRecordsBlock2=NULL;
+	char* serializedData=NULL;
+	
+	//Creo un bloque de registros
+	recordsBlock=new RecordsBlock(100);
+	//Le agrego registros
+	recordsBlock->appendRecord(new RawRecord("nahuequeve",10));
+	recordsBlock->appendRecord(new RawRecord("chau",4));
+	recordsBlock->appendRecord(new RawRecord("cu",4));
+	
+	//Lo serializo
+	serializedData=(char*)malloc(100);
+	memcpy(serializedData,recordsBlock->getContent(),100);
+	delete recordsBlock;
+	
+	//Creo un nuevo bloque de registros a partir de la informacion serializada
+	deserializedRecordsBlock=new RecordsBlock(serializedData,100);
+	test->Assert_inteq(3,deserializedRecordsBlock->getRecords()->size());
+	deserializedRecordsBlock->getRecords()->clear();
+	test->Assert_inteq(0,deserializedRecordsBlock->getRecords()->size());
+	
+	//Lo serializo
+	serializedData=(char*)malloc(100);
+	memcpy(serializedData,recordsBlock->getContent(),100);
+	delete deserializedRecordsBlock;
+	
+	deserializedRecordsBlock2=new RecordsBlock(serializedData,100);	
+	test->Assert_inteq(0,deserializedRecordsBlock2->getRecords()->size());
+	
+	
+	free(serializedData);
+	delete deserializedRecordsBlock2;	
+}
+
+void Test_DataType_createType(TestCase* test){
+	test->Assert_True_m((DataType::createType(DataType::STRING_TYPE))->equals(new StringType()),"type no es StringType");
+	test->Assert_True_m((DataType::createType(DataType::INT_TYPE))->equals(new IntType()),"type no es IntType");
+	test->Assert_True_m((DataType::createType(DataType::STRUCTURED_TYPE))->equals(new StructureType()),"type no es StructureType");
+	try{
+		DataType::createType('x');
+		test->Assert_True_m(false,"Se esperaba excepcion");	
+	}catch(const char* ){
+		
+	}
+	
+	
+}
+
+
 int main(int argc, char* argv[]){
 	int failedTests=0;
 	
@@ -1060,6 +1112,13 @@ int main(int argc, char* argv[]){
 	Test_StructureValue_IsInstanceOfType_EmptyStructure(test35);
 	delete test35;
 	
+	TestCase* test36=new TestCase("Test_RecordsBlock_Remove",&failedTests);	
+	Test_RecordsBlock_Remove(test36);
+	delete test36;
+	
+	TestCase* test37=new TestCase("Test_DataType_createType",&failedTests);	
+	Test_DataType_createType(test37);
+	delete test37;
 	
 	
 	delete new TestSuiteResult(failedTests);
