@@ -46,7 +46,6 @@ StatementResult* InsertionStatement::execute(DataManager* dataManager){
 	string buffer;	
 	DEBUG("Inicio de la ejecución del InsertionStatement");
 	
-	buffer.append("Intentando insertar el registro: ");
 	try {
 		DataFile* dataFile = dataManager->getFile(this->getFileName());
 		Record* record = new Record();
@@ -57,25 +56,24 @@ StatementResult* InsertionStatement::execute(DataManager* dataManager){
 			each=((DataValue*)*iter);
 			record->addValue(each);
 		}	
-		record->toString(&buffer);	
 	
 		dataFile->insertRecord(record);
-		buffer.append(" Se inserto el registro ");
+		buffer.append("'Se inserto el registro ");
 		record->toString(&buffer);
-		buffer.append(" Res=1"); 
+		buffer.append("' Res = 1"); 
 		
 	} catch (TypeMismatchException* e1) {
-		buffer.append(" Error al insertar el registro (");
+		buffer.append("'Error al insertar el registro (");
 		buffer.append(e1->toString());
-		buffer.append("). Res=0"); 
+		buffer.append(")' Res = 0"); 
 	} catch (IdentityException* e2) {
-		buffer.append(" Error al insertar el registro (");
+		buffer.append("'Error al insertar el registro (");
 		buffer.append(e2->toString());
-		buffer.append("). Res=0"); 
+		buffer.append(")' Res = 0"); 
 	} catch(FileNotFoundException* e3){
-		buffer.append(" Error al insertar el registro (");
+		buffer.append("'Error al insertar el registro (");
 		buffer.append(e3->toString());
-		buffer.append("). Res=0"); 
+		buffer.append(")' Res = 0"); 
 	}
 
 	cadena = (char*) malloc(strlen(buffer.c_str()));

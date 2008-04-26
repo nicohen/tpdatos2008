@@ -18,15 +18,15 @@ StatementResult* DeleteStatement::execute(DataManager* dataManager) {
 	buffer = new string();
 	
 	if (wasSuccessful) {
-		buffer->append("Se eliminó correctamente el archivo: ");
+		buffer->append("'Se eliminó correctamente el archivo ");
 	} else {
-		buffer->append("Se eliminó incorrectamente el archivo: ");
+		buffer->append("'Se eliminó incorrectamente el archivo ");
 	}
 	buffer->append(this->getFileName());
 	if (wasSuccessful) {
-		buffer->append(" RES=1");
+		buffer->append("' Res = 1");
 	} else {
-		buffer->append(" RES=0");
+		buffer->append("' Res = 0");
 	}
 	
 	cadena = (char*) malloc(strlen(buffer->c_str()));

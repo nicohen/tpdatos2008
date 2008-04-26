@@ -8,7 +8,8 @@ EndStatement::EndStatement(char* filename):Statement(filename){
 
 StatementResult* EndStatement::execute(DataManager* anIDataManager){
 	StatementResult* sr = new StatementResult();
-	sr->setResult("'Se llamó a la instruccion finalizar'");
+	
+	sr->setResult("El programa finaliza su ejecución");
 	return sr;
 }
 

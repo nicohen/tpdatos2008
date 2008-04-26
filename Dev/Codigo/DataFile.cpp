@@ -161,12 +161,14 @@ vector<Record*>* DataFile::findRecords(int fNumber,DataValue* fValue){
 	return recordsObteined;
 }
 
-int DataFile::removeRecord(int fNumber,DataValue* fValue){
-	int found=0;
+vector<Record*>* DataFile::removeRecord(int fNumber,DataValue* fValue){
 	bool actualize=false;
 	RecordsBlock *rBlock;
+	int cantidad = 1;
+	vector<Record*>* removedRecords = new vector<Record*>();
 	int length= this->getRecordsBlockCount();
 	for(int j=1;j<=length;j++){
+		cantidad = 1;
 		rBlock=	this->getRecordBlock(j);
 		vector<RawRecord*>* recordsList= rBlock->getRecords();
 		RawRecord* each=NULL;
@@ -176,9 +178,9 @@ int DataFile::removeRecord(int fNumber,DataValue* fValue){
 			Record* record= new Record();
 			record->deserialize(each,this->getFields());
 			if(record->matchField(fNumber,fValue)){
+				removedRecords->push_back(record);
 				recordsList->erase(iter);
 				actualize=true;
-				found++;
 			}
 		}
 		if (actualize){
@@ -186,7 +188,7 @@ int DataFile::removeRecord(int fNumber,DataValue* fValue){
 			actualize=false;
 		}
 	}
-	return found;
+	return removedRecords;
 }
 /*
 vector<Field*>* DataFile::getDataStructure(){

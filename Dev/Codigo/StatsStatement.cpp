@@ -36,9 +36,9 @@ StatementResult* StatsStatement::execute(DataManager* dataManager) {
 		dataFreeSpace<<dataFile->getDataFreeSpace();
 		dataRecordsCount<<dataFile->getDataRecordsCount();
 		
-		buffer->append("'Estadisticas solicitadas del archivo: ");
+		buffer->append("'Estadisticas solicitadas del archivo ");
 		buffer->append(this->getFileName());
-		buffer->append("'\nOCUPADO:\n");
+		buffer->append("'\nOCUPADO\n");
 		buffer->append("\tDatos------> ");
 		buffer->append(dataUsedSpace.str());
 		buffer->append(" bytes\n");
@@ -46,12 +46,12 @@ StatementResult* StatsStatement::execute(DataManager* dataManager) {
 		buffer->append("\tNeto-------> ");
 		buffer->append(fileSize.str());
 		buffer->append(" bytes\n");
-		buffer->append("LIBRE:\n");
+		buffer->append("LIBRE\n");
 		buffer->append("\tDatos------> ");
 		buffer->append(dataFreeSpace.str());
 		buffer->append(" bytes\n");
 		buffer->append("\tIndice-----> 0 bytes\n");
-		buffer->append("CANTIDAD REGISTROS/ENTRADAS:\n");
+		buffer->append("CANTIDAD REGISTROS/ENTRADAS\n");
 		buffer->append("\tDatos------> ");
 		buffer->append(dataRecordsCount.str());
 		buffer->append(" registros\n");

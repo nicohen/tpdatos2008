@@ -11,27 +11,34 @@ RemoveStatement::RemoveStatement(char* filename):Statement(filename){
 
 
 StatementResult* RemoveStatement::execute(DataManager* anIDataManager){
+	vector<Record*>* removedRecords = NULL;
 	string buffer;
 	ostringstream ss;
-	buffer.append("Buscando registros que coincidan con [");
+	buffer.append("'Se eliminan registros con valor [");
+	this->_value->toString(&buffer);
+	buffer.append("] en el campo [");
 	ss<<this->_fieldNumber;
 	buffer.append(ss.str());
-	buffer.append(",");
-	this->_value->toString(&buffer);
-	buffer.append("] ");
+	buffer.append("]' ");
 	try{
 		DataFile* dataFile= anIDataManager->getFile(this->getFileName());
-		int counter = dataFile->removeRecord(_fieldNumber,_value);		
-		buffer.append("Se eliminarion ");
-		ostringstream sss;
-		sss<<counter;
-		buffer.append(sss.str());
-		buffer.append(" registros del archivo. RES=");
-		buffer.append(counter?"1":"0");	
+		removedRecords = dataFile->removeRecord(_fieldNumber,_value);		
+//		buffer.append("Se eliminarion ");
+//		ostringstream sss;
+//		sss<<counter;
+//		buffer.append(sss.str());
+		buffer.append("Res = ");
+		Record* each = NULL;
+		vector<Record*>::iterator iter;
+		for (iter = removedRecords->begin(); iter != removedRecords->end(); iter++ ){
+			each=((Record*)*iter);
+			each->toString(&buffer);
+		}
+		buffer.append(removedRecords->size()?"":"0");	
 	}catch(FileNotFoundException* ex){
 		buffer.append(" Error al eliminar registros (");
 		buffer.append(ex->toString());
-		buffer.append("). Res=0"); 
+		buffer.append("). Res = 0"); 
 		delete ex;
 	}	
 	StatementResult* sr= new StatementResult();
