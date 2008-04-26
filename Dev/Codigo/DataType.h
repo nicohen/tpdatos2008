@@ -9,6 +9,7 @@ class DataType
 {
 private:
 public:
+	
 	DataType();
 	virtual bool equals(DataType* other)=0;
 	virtual int getUniqueIdentifier()=0;
@@ -19,6 +20,7 @@ public:
 	static const char STRING_TYPE= 1;
 	static const char INT_TYPE= 2;
 	static const char STRUCTURED_TYPE= 3;
+	static DataType* createType(char type);
 };
 
 #endif /*DATATYPE_H_*/
