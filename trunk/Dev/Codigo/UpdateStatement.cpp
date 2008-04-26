@@ -24,9 +24,9 @@ StatementResult* UpdateStatement::execute(DataManager* anIDataManager) {
 	try{
 		DataFile* dataFile = anIDataManager->getFile(this->getFileName());
 		hasUpdated = dataFile->updateRecord(record);
-		buffer.append("'Actualizacion de registro ");
+		buffer.append("'Registro actualizado ");
 		record->toString(&buffer);
-		buffer.append(" Res = ");
+		buffer.append("' Res = ");
 		if (hasUpdated)
 			buffer.append("1");
 		else
@@ -34,7 +34,7 @@ StatementResult* UpdateStatement::execute(DataManager* anIDataManager) {
 	}catch(FileNotFoundException* ex){
 		buffer.append(" Error al actualizar registro(");
 		buffer.append(ex->toString());
-		buffer.append("). Res=0"); 
+		buffer.append("). Res = 0"); 
 		delete ex;
 	}
 	sr->setResult((char*)buffer.c_str());	

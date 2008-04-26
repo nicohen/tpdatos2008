@@ -89,18 +89,18 @@ StatementResult* CreateStatement::execute(DataManager* dataManager){
 	StatementResult* sr = new StatementResult();
 	ss<<this->getFileName();
 
-	buffer.append("'Intentando crear el archivo: ");
-	buffer.append(this->getFileName());
-	buffer.append("'\n");
+//	buffer.append("'Intentando crear el archivo: ");
+//	buffer.append(this->getFileName());
+//	buffer.append("'\n");
 	try{
 		dataManager->addFile(dataFile);	
 		buffer.append("'Se creo correctamente el archivo: ");
 		buffer.append(ss.str());
-		buffer.append("' Res=1");
+		buffer.append("' Res = 1");
 	}catch(FileDoesAlreadyExistsException* ex){
 		buffer.append("'No se logro crear el archivo: ");
 		buffer.append(ex->toString());
-		buffer.append("' Res=0");
+		buffer.append("' Res = 0");
 	}	
 	sr->setResult((char*)buffer.c_str());
 	DEBUG("Fin de la ejecución del CreateStatement");

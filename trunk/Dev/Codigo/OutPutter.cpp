@@ -25,12 +25,12 @@ void OutPutter::writeOutputFile(FileManager::FileInfo* inputFile) {
 	//Crea el time y lo formatea 
 	time(&rawtime);
 	timeinfo = localtime(&rawtime);
-	strftime(buffer,80,"%Y-%m-%d %H:%M:%S",timeinfo);
+	strftime(buffer,80,"%Y%m%d_%H%M%S",timeinfo);
 
 	//Realiza un append del nombre de la carpeta formateado
-	strBuffer.append("Out/[");
+	strBuffer.append("Out/Resultados_");
 	strBuffer.append(buffer);
-	strBuffer.append("] Comandos.7506");
+	strBuffer.append(".7506");
 
 	fileNameOut = (char*) malloc(strlen(strBuffer.c_str()));
 	strcpy(fileNameOut,strBuffer.c_str());
@@ -57,7 +57,7 @@ void OutPutter::printLine(char* message) {
 	
 	time(&rawtime);
 	timeinfo = localtime(&rawtime);
-	strftime(buffer,80,"%Y-%m-%d %H:%M:%S",timeinfo);
+	strftime(buffer,80,"%Y%m%d_%H%M%S",timeinfo);
 	
 	this->_fileInfoOut->open("ab");
 

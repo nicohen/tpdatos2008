@@ -15,31 +15,30 @@ StatementResult* QueryStatement::execute(DataManager* dataManager) {
 	ostringstream ss;
 	DEBUG("Inicio de la ejecución del QueryStatement");
 	
-	buffer.append("Buscando registros que coincidan con [");
+	buffer.append("'Se consultó por registros con valor [");
+	this->_value->toString(&buffer);
+	buffer.append("] en campo [");
 	ss<<this->_fieldNumber;
 	buffer.append(ss.str());
-	buffer.append(",");
-	this->_value->toString(&buffer);
-	buffer.append("] ");
+	buffer.append("]' ");
 	try{
 		DataFile* dFile= dataManager->getFile(this->getFileName());
 		vector<Record*>* list= dFile->findRecords(this->getFieldNumber(),this->getValue());
 		Record* each=NULL;
 		vector<Record*>::iterator iter;
 		if (list->size()==0){
-			buffer.append(". No se encontraron registros que coincidan. RES=0.");
+			buffer.append("Res = 0");
 		}else{
-			buffer.append(". Elementos encontrados: ");
+			buffer.append("Res = ");
 			for (iter = list->begin(); iter != list->end(); iter++ ){
 				each=((Record*)*iter);
 				each->toString(&buffer);
 			}
-			buffer.append(". RES=1.");
 		}
 	}catch(FileNotFoundException* ex){
 		buffer.append(" Error al buscar registros(");
 		buffer.append(ex->toString());
-		buffer.append("). Res=0");
+		buffer.append("). Res = 0");
 		delete ex;
 	}	
 	
