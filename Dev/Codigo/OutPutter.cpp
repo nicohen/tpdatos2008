@@ -48,12 +48,11 @@ void OutPutter::writeOutputFile(FileManager::FileInfo* inputFile) {
 
 }
 
-void OutPutter::printLine(char* message) {
+void OutPutter::printLine(const char* message) {
 	time_t rawtime;
 	struct tm* timeinfo;
 	char buffer[80];
 	string stringMessage;
-	char* myMessage = cloneStr(message);
 	
 	time(&rawtime);
 	timeinfo = localtime(&rawtime);
@@ -64,10 +63,8 @@ void OutPutter::printLine(char* message) {
 	stringMessage.append("\n[");
 	stringMessage.append(buffer);
 	stringMessage.append("] ");
-	stringMessage.append(myMessage);
+	stringMessage.append(message);
 		
 	this->_fileInfoOut->write((void*)stringMessage.c_str(),stringMessage.size());
 	this->_fileInfoOut->close();
-
-	free(myMessage);
 }

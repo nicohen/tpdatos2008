@@ -14,6 +14,6 @@ class OutPutter{
 	OutPutter(FileManager::FileManager* aFileManager);
 	virtual ~OutPutter();
 	void writeOutputFile(FileManager::FileInfo* inputFile);
-	void printLine(char* aMessage);	
+	void printLine(const char* aMessage);
 };
 #endif /*OUTPUTTER_*/

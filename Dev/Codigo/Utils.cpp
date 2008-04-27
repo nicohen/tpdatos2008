@@ -4,7 +4,7 @@
 #include <fstream>
 
 using namespace std;
-char* cloneStr(char* source){
+char* cloneStr(const char* source){
 	int len=0;
 	char* clon;
 	len= strlen(source);

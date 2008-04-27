@@ -864,77 +864,96 @@ Statement* StatementParser::parseUpdateStatement(){
 	return statement;
 }
 
-Statement* StatementParser::getNext() {
+Statement* StatementParser::getNext(){
 	Parsing::Token* token =	_tokenizer->getNextToken(false);
+	Statement* statement= NULL;
+	char* statementType;
+	string buffer;
+
+	// VALIDA EL COMIENZO DEL STATEMENT
+	while ((token!=NULL)&&(strcmp(token->getContent(),"\n")==0)){
+		token= _tokenizer->getNextToken(false);
+	}
+	
+	if (token->getType()!=Parsing::ITokenizer::KEYWORD){
+		DEBUG("Se esperaba KEYWORD en lugar de:");
+		DEBUG(token->getContent());
+		buffer.append("Sentecia desconocida: ");
+		buffer.append(token->getContent());
+		_tokenizer->moveToNextLine();
+		throw new StatementParserException(buffer.c_str());
+	}
+	
+	if (token==NULL){
+		return NULL;
+	}
+	statementType= cloneStr(token->getContent());
 	try{
-		// VALIDA EL COMIENZO DEL STATEMENT
-		while ((token!=NULL)&&(token->getType()!=_tokenizer->KEYWORD)){
-			if (strcmp(token->getContent(),"\n")!=0){
-				DEBUG("Se esperaba KEYWORD en lugar de:");
-				DEBUG(token->getContent());
-				if (strcmp(token->getContent(),"\n")!=0){
-					_tokenizer->moveToNextLine();
-				}
-			}
-			token= _tokenizer->getNextToken(false);
+		// IDENTIFICA EL TIPO DE STATEMENT Y DERIVO AL METODO CORRECTO
+		if (strcmp(token->getContent(),"CREAR")==0){
+			DEBUG("Inicio del parseo de CREAR.");
+			statement= parseCreateStatement();
 		}
-		if (token==NULL){
-			return NULL;
+		if (strcmp(token->getContent(),"INGRESAR")==0){
+			DEBUG("Inicio del parseo de INGRESAR.");
+			statement= parseInsertionStatement();
 		}
-			// IDENTIFICA EL TIPO DE STATEMENT Y DERIVO AL METODO CORRECTO
-			if (strcmp(token->getContent(),"CREAR")==0){
-				DEBUG("Inicio del parseo de CREAR.");
-				return parseCreateStatement();
-			}
-			if (strcmp(token->getContent(),"INGRESAR")==0){
-				DEBUG("Inicio del parseo de INGRESAR.");
-				return parseInsertionStatement();
-			}
-			if (strcmp(token->getContent(),"CONSULTA")==0){
-				DEBUG("Inicio del parseo de CONSULTA.");
-				return parseQueryStatement();
-			}
-			if (strcmp(token->getContent(),"QUITAR")==0){
-				DEBUG("Inicio del parseo de QUITAR.");
-				return parseRemoveStatement();
-			}
-			if (strcmp(token->getContent(),"ELIMINAR")==0){
-				DEBUG("Inicio del parseo de ELIMINAR.");
-				return parseDeleteStatement();
-			}
-			if (strcmp(token->getContent(),"ESTADISTICA")==0){
-				DEBUG("Inicio del parseo de ESTADISTICA.");
-				return parseStatsStatement();
-			}
-			if (strcmp(token->getContent(),"FINALIZAR")==0){
-				DEBUG("Inicio del parseo de FINALIZAR.");
-				throw new KillDaemonException();
-			}
-			if (strcmp(token->getContent(),"ACTUALIZAR")==0){
-				DEBUG("Inicio del parseo de ACTUALIZAR.");
-				return parseUpdateStatement();
-			}
-			throw new StatementParserException("Tipo de statement desconocido\n");
-			DEBUG("Tipo de statement desconocido:");
-			DEBUG((token==NULL)?"fin de archivo":token->getContent());
-			return NULL;
+		if (strcmp(token->getContent(),"CONSULTA")==0){
+			DEBUG("Inicio del parseo de CONSULTA.");
+			statement= parseQueryStatement();
+		}
+		if (strcmp(token->getContent(),"QUITAR")==0){
+			DEBUG("Inicio del parseo de QUITAR.");
+			statement= parseRemoveStatement();
+		}
+		if (strcmp(token->getContent(),"ELIMINAR")==0){
+			DEBUG("Inicio del parseo de ELIMINAR.");
+			statement= parseDeleteStatement();
+		}
+		if (strcmp(token->getContent(),"ESTADISTICA")==0){
+			DEBUG("Inicio del parseo de ESTADISTICA.");
+			statement= parseStatsStatement();
+		}
+		if (strcmp(token->getContent(),"FINALIZAR")==0){
+			DEBUG("Inicio del parseo de FINALIZAR.");
+			free(statementType);
+			throw new KillDaemonException();
+		}
+		if (strcmp(token->getContent(),"ACTUALIZAR")==0){
+			DEBUG("Inicio del parseo de ACTUALIZAR.");
+			statement= parseUpdateStatement();
+		}
+		free(statementType);
+		return statement;
 	}catch(StatementParserException* e){
-		//TODO: Llamar al tokenizer y decirle que vaya hasta el proximo \n
 		DEBUG("La linea es incorrecta. Se continuará parseando la proxima linea.\n");
 		if (strcmp(_tokenizer->getLastToken()->getContent(),"\n")!=0){
 			_tokenizer->moveToNextLine();
 		}
-		
-		return getNext();
+		buffer.append("Error al parsear sentecia ");
+		buffer.append(statementType);
+		free(statementType);
+		throw new StatementParserException(buffer.c_str());
 	}catch(ParserException e1){
 		//TODO: Llamar al tokenizer y decirle que vaya hasta el proximo \n
 		DEBUG("La linea es incorrecta. Se continuará parseando la proxima linea.\n");
 		if (strcmp(_tokenizer->getLastToken()->getContent(),"\n")!=0){
 			_tokenizer->moveToNextLine();
 		}
-		return getNext();
+		buffer.append("Error al parsear sentecia ");
+		buffer.append(statementType);
+		free(statementType);
+		throw new StatementParserException(buffer.c_str());
 	}
-	return NULL;
+	DEBUG("Tipo de statement desconocido:");
+	DEBUG((token==NULL)?"fin de archivo":token->getContent());
+	if (strcmp(_tokenizer->getLastToken()->getContent(),"\n")!=0){
+		_tokenizer->moveToNextLine();
+	}
+	buffer.append("Sentecia desconocida: ");
+	buffer.append(statementType);
+	free(statementType);
+	throw new StatementParserException(buffer.c_str());
 }
 
 StatementParser::~StatementParser(){
