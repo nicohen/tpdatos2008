@@ -180,6 +180,7 @@ vector<Record*>* DataFile::removeRecord(int fNumber,DataValue* fValue){
 			if(record->matchField(fNumber,fValue)){
 				removedRecords->push_back(record);
 				recordsList->erase(iter);
+				iter--;
 				actualize=true;
 			}
 		}
