@@ -73,15 +73,19 @@ namespace Parsing{
 		}else{
 			try{
 				_fileInfo->read(&_current,1);
-				while ((isInString && (_current!=_sIndicator))||(!isInString && !this->isDelimiter(_current))){
+				while ((isInString && ((_current!='\n')))||(!isInString && !this->isDelimiter(_current))){
 					if (_current==_sIndicator){
 						isInString= false;
+						break;
 					}else{
 						buffer[i]=_current;
 						i++;
 					}
 					_fileInfo->read(&_current,1);
-				}	
+				}
+				if (isInString==true){
+					type=OTHER;
+				}
 			}catch (FileManager::IOException e){
 				_current=0;
 			}

@@ -4,7 +4,7 @@
 #include "string.h"
 #include "stdlib.h"
 
-char* cloneStr(char* source);
+char* cloneStr(const char* source);
 bool isNumeric(char* word);
 void DEBUG(const char* word);
 bool existsFile(char* filename);

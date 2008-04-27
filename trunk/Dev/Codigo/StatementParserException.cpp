@@ -1,7 +1,6 @@
 #include "StatementParserException.h"
 
-StatementParserException::StatementParserException(char* msg)
-{
+StatementParserException::StatementParserException(const char* msg){
 	this->_msg=msg;
 }
 

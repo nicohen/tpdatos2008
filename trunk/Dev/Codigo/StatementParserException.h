@@ -4,9 +4,10 @@
 class StatementParserException
 {
 private:
-	char* _msg;
+	const char* _msg;
 public:
-	StatementParserException(char* msg);
+	StatementParserException(const char* msg);
+	const char* getMessage(){return _msg;};
 	virtual ~StatementParserException();
 };
 

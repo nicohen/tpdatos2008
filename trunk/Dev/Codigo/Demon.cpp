@@ -25,7 +25,7 @@ void Demon::run(void){
 	
 	for(int i=1;!_finishDaemon;i++) {
 		try{
-			inputFile = fileManager->CreateFileInfo("In/Comando.7506");
+			inputFile = fileManager->CreateFileInfo("In/Comandos.7506");
 			
 			inputFile->open();
 			
@@ -56,6 +56,7 @@ Demon::~Demon(){
 
 void Demon::processInputStatements(BufferedDataManager* bufferedDataManager, OutPutter* outPutter, FileManager::FileInfo* inputFile) {
 	Statement* statement = NULL;
+	bool fin=false;
 
 	char delimiters[]= {' ','[',']',';',',','\n','|','+','*'};
 	char* keywords[]= {"CREAR","CONSULTA","hash","INGRESAR","QUITAR","ELIMINAR","ESTADISTICA","FINALIZAR","ACTUALIZAR","secuencial","indexado","secIndexado","int","string"};
@@ -64,20 +65,30 @@ void Demon::processInputStatements(BufferedDataManager* bufferedDataManager, Out
 	StatementParser* statementParser = new StatementParser(tokenizer,outPutter);
 	StatementResult* statementResult = new StatementResult();
 	
-	try {
-		statement = statementParser->getNext();
-		while (statement != NULL) {
+	while (!fin) {
+		try {
+			statement = statementParser->getNext();
+			if(statement==NULL){
+				fin=true;
+				break;
+			}
 			statementResult = bufferedDataManager->executeStatement(statement,outPutter);
 			statementResult->write(outPutter);
 			delete statementResult;
 			delete statement;
-			statement = statementParser->getNext();
+		} catch(KillDaemonException* kde) {
+			DEBUG("KILL DAEMON");
+			_finishDaemon = true;
+			fin=true;
+			delete kde;
+		} catch(FileManager::IOException* ioe) {
+			DEBUG("Fin de archivo.");
+			fin=true;
+			delete ioe;
+		} catch(StatementParserException* spe) {
+			outPutter->printLine(spe->getMessage());
+			delete spe;
 		}
-	} catch(KillDaemonException* kde) {
-		DEBUG("KILL DAEMON");
-		_finishDaemon = true;
-	} catch(FileManager::IOException* ioe) {
-		DEBUG("Fin de archivo.");
 	}
 	
 	delete statementParser;
