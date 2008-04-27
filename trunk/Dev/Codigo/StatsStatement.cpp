@@ -63,11 +63,8 @@ StatementResult* StatsStatement::execute(DataManager* dataManager) {
 		delete ex;
 	}	
 	
-	cadena = (char*) malloc(strlen(buffer->c_str()));
-	strcpy(cadena,buffer->c_str());
-
+	cadena = cloneStr(buffer->c_str()); 
 	statementResult->setResult(cadena);
-	
 	free(cadena);
 	delete buffer;
 	return statementResult;

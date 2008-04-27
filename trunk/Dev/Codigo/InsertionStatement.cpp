@@ -76,10 +76,10 @@ StatementResult* InsertionStatement::execute(DataManager* dataManager){
 		buffer.append(")' Res = 0"); 
 	}
 
-	cadena = (char*) malloc(strlen(buffer.c_str()));
-	strcpy(cadena,buffer.c_str());
+	cadena = cloneStr(buffer.c_str());
 	sr->setResult(cadena);
 	DEBUG("Fin de la ejecución del InsertionStatement");
+	free(cadena);
 	return sr;
 }
 
