@@ -960,10 +960,28 @@ void Test_DataType_createType(TestCase* test){
 	}catch(const char* ){
 		
 	}
-	
-	
 }
-
+//voy a probar que el deserialize value del StructureType funciona correctamente
+void Test_StructureType_deserializeValue(TestCase* test){
+	StructureValue* serializedStructure=new StructureValue();
+	StructureValue* deserializedStructure=NULL;//new StructureValue();
+	StructureType* typeA=new StructureType();
+	
+	typeA->addType(new IntType());
+	typeA->addType(new StringType());
+	typeA->addType(new IntType());
+	
+	
+	serializedStructure->addValue(new IntValue(1));
+	serializedStructure->addValue(new StringValue("Hola"));
+	serializedStructure->addValue(new IntValue(4));
+	
+	deserializedStructure=(StructureValue*)typeA->deserializeValue(serializedStructure->serialize());
+	
+	test->Assert_inteq(serializedStructure->getCount(),deserializedStructure->getCount());
+	test->Assert_True_m(serializedStructure->equals(deserializedStructure), "Se esperaba que la estructura serializada y la deserializada sen iguales");
+	
+} 
 
 int main(int argc, char* argv[]){
 	int failedTests=0;
@@ -1120,6 +1138,10 @@ int main(int argc, char* argv[]){
 	Test_DataType_createType(test37);
 	delete test37;
 	
+	TestCase* test38=new TestCase("Test_StructureType_deserializeValue",&failedTests);	
+	Test_StructureType_deserializeValue(test38);
+	delete test38;
+	
 	
 	delete new TestSuiteResult(failedTests);
 	return 0;
@@ -1159,4 +1181,5 @@ Hacer un GetSomeBlock(1 o 2 o 3) que de diferentes Blocks hardcoded
 DataType: probar equals de
 DataType: Que el deserialize use un CreateValue virtual puro y luego llame al deserializeValue
 Record.cpp: Quitar #include "IntValue.h"
+borrar el getType de los values
  */
