@@ -214,7 +214,7 @@ T_FILESIZE DataFile::getFileSize() {
 }
 
 
-bool DataFile::isInstanceOf(vector<Field*>* fields, vector<DataValue*>* values){
+bool DataFile::isArrayOf(vector<Field*>* fields, vector<DataValue*>* values){
 	Field* aField;
 	DataValue* aValue;
 	vector<Field*>::iterator fieldIter;
@@ -224,10 +224,12 @@ bool DataFile::isInstanceOf(vector<Field*>* fields, vector<DataValue*>* values){
 		valueIter++, fieldIter++){
 			aValue= (DataValue*)*valueIter;
 			aField= (Field*)*fieldIter;
-			if ((aField->isMandatory()==false)&&(aValue->isInstanceOf(aField->getDataType()))==false){
-				valueIter--;
-			}else if (aValue->isInstanceOf(aField->getDataType())==false){
-				return false;
+			if (aValue->isInstanceOf(aField->getDataType())==false){
+				if(aField->isMandatory()==false){
+					valueIter--;
+				}else{
+					return false;
+				}
 			}		
 	}
 	if (fieldIter== fields->end()){
@@ -255,7 +257,7 @@ void DataFile::insertRecord(Record* record) {
 	}
 	delete sameKeyRecordsfound;
 	
-	if (this->isInstanceOf(this->_metadataBlock->GetSecondaryFields(),record->getValues())==false){
+	if (this->isArrayOf(this->_metadataBlock->GetSecondaryFields(),record->getValues())==false){
 		throw new TypeMismatchException("Los datos ingresados no coinciden con la estructura del Archivo");
 	}
 	RecordsBlock* recordsBlock = NULL;
