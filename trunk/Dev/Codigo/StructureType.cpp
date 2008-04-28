@@ -96,3 +96,7 @@ int StructureType::serialize(char* stream){
 DataType* StructureType::getItem(int typeIndex){
 	return this->_dataTypes->at(typeIndex);
 }
+
+char StructureType::getCharType(){
+	return DataType::STRUCTURED_TYPE;
+};

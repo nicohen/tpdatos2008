@@ -705,16 +705,16 @@ void Test_StructureValue_Serialization(TestCase* test){
 	
 	StructureValue* structureToSerialize=new StructureValue();
 	StructureValue* deserializedStructure=new StructureValue();
-	StructureType* structureType=new StructureType(); 
 	char* data=NULL;
-	structureToSerialize->addValue(new IntValue(10));
-	structureToSerialize->addValue(new StringValue("nicoooo"));
-	structureType->addType(new IntType());
-	structureType->addType(new StringType());
+	structureToSerialize->addValue(new IntValue(1));
+	structureToSerialize->addValue(new IntValue(1));
+	structureToSerialize->addValue(new StringValue("hola aaaaaaaaaaaaaa"));
+	structureToSerialize->addValue(new IntValue(2));
 	
 	data= structureToSerialize->serialize();
-	deserializedStructure=(StructureValue*)structureType->deserializeValue(data);
-	
+	deserializedStructure->deserialize(data);
+	free(data);
+	test->Assert_inteq(structureToSerialize->getCount(),deserializedStructure->getCount());
 	test->Assert_True_m(deserializedStructure->equals(structureToSerialize),"Deberian ser iguales los StructureValues");
 }
 

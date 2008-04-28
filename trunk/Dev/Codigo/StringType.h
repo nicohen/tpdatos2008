@@ -17,6 +17,7 @@ public:
 	virtual DataValue* deserializeValue(char* content);
 	virtual DataValue* createNullValue();
 	virtual int serialize(char* stream);
+	virtual char getCharType();
 };
 
 #endif /*STRINGTYPE_H_*/

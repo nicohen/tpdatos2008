@@ -26,6 +26,7 @@ public:
 	virtual DataValue* createNullValue();
 	virtual int serialize(char* stream);
 	virtual DataType* getItem(int typeIndex);
+	virtual char getCharType();
 };
 
 #endif /*STRUCTURETYPE_H_*/

@@ -26,7 +26,7 @@ public:
 	virtual DataType* getType()=0;
 	T_STRING_LENGHT getSerializationFullSize();
 	char* serialize();	
-	void deserialize(char* data);//Esto va en la clase madre (no es virtual)
+	char* deserialize(char* data);//Esto va en la clase madre (no es virtual)
 };
 
 #endif /*DATAVALUE_H_*/
