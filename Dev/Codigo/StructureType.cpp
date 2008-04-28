@@ -63,16 +63,7 @@ DataValue* StructureType::deserializeValue(char* content){
 }
 
 DataValue* StructureType::createNullValue(){
-	StructureValue* res=NULL;
-	vector<DataType*>::iterator iter;
-	DataType* each=NULL;
-	res=new StructureValue();
-	for (iter = this->_dataTypes->begin(); iter != this->_dataTypes->end(); iter++)
-	{
-		each=(DataType*)*iter;
-		res->addValue(each->createNullValue());
-	}
-	return res;
+	return new StructureValue();
 }
 
 
