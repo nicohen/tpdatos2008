@@ -31,3 +31,7 @@ int StringType::serialize(char* stream){
 	memcpy(stream,(char*)&type,sizeof(char));
 	return sizeof(char);
 }
+
+char StringType::getCharType(){
+	return DataType::STRING_TYPE;
+};

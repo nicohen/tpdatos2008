@@ -21,6 +21,8 @@ public:
 	static const char INT_TYPE= 2;
 	static const char STRUCTURED_TYPE= 3;
 	static DataType* createType(char type);
+	virtual char getCharType()=0;
+
 };
 
 #endif /*DATATYPE_H_*/

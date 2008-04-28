@@ -12,6 +12,7 @@ DataType::~DataType()
 {
 }
 
+
 DataType* DataType::createType(char type){
 	if(type==DataType::STRING_TYPE){
 		return new StringType();

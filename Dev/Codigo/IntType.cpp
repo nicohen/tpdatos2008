@@ -32,3 +32,8 @@ int IntType::serialize(char* stream){
 	memcpy(stream,(char*)&type,sizeof(char));
 	return sizeof(char);
 }
+
+
+char IntType::getCharType(){
+	return DataType::INT_TYPE;
+};

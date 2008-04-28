@@ -1,5 +1,8 @@
 #include "StructureValue.h"
 #include "StructureType.h"
+#include "IntValue.h"
+#include "Data/Record.h"
+#include "DataType.h"
 
 using namespace std;
 
@@ -17,11 +20,6 @@ StructureValue::~StructureValue()
 DataType* StructureValue::getType(){
 	StructureType* vvType=NULL;
 	vvType=new StructureType();
-	vector<DataValue*>::iterator iter;
-	for (iter = this->_dataValues->begin(); iter != this->_dataValues->end(); iter++ )
-	{
-		vvType->addType(((DataValue*)*iter)->getType());
-	}
 	return vvType;
 }
 
@@ -67,7 +65,7 @@ bool StructureValue::equalsValueVectors(vector<DataValue*>* vec1,vector<DataValu
 	vector<DataValue*>::iterator otherIter;
 	
 	if(vec1->size()!=vec2->size()){
-		printf("\nFINAL 1 \n");
+		//printf("\nFINAL 1 \n");
 		return false;
 	}
 	for (ownIter = vec1->begin(),otherIter = vec2->begin();
@@ -77,11 +75,11 @@ bool StructureValue::equalsValueVectors(vector<DataValue*>* vec1,vector<DataValu
 		each=((DataValue*)*ownIter);
 		eachOther=((DataValue*)*otherIter);
 		if(!each->equals(eachOther)){
-			printf("\nFINAL 2 \n");
+			//printf("\nFINAL 2 \n");
 			return false;	
 		}			
 	}
-	printf("\nFINAL 3 \n");
+	//printf("\nFINAL 3 \n");
 	return true;
 }
 
@@ -103,12 +101,14 @@ bool StructureValue::equals(DataValue* other){
 T_STRING_LENGHT StructureValue::getSerializationSize(){
 	DataValue* each=NULL;
 	vector<DataValue*>::iterator iter;
-	T_STRING_LENGHT size;
+	T_RECORD_SIZE size;
 	size=0;
+	size+=sizeof(T_RECORD_SIZE);
 	for (iter = this->_dataValues->begin(); iter != this->_dataValues->end(); iter++ )
 	{
 		each=((DataValue*)*iter);
-		size+=each->getSerializationFullSize();
+		size+=each->getSerializationFullSize()
+		+1;//le sumo un espacio para guardar el tipo
 	}
 	return size;
 }
@@ -119,9 +119,23 @@ void StructureValue::serializeTo(char* buffer){
 	char* eachSerialization=NULL;
 	char* currentBufferLocation=NULL;
 	currentBufferLocation=buffer;
+	T_RECORD_SIZE valueCount;
+	
+	valueCount=this->getCount();
+	
+	//Serializo la cantidad de elementos
+	memcpy(currentBufferLocation,(char*)&valueCount,sizeof(T_RECORD_SIZE));
+	currentBufferLocation+=sizeof(T_RECORD_SIZE);
+	
 	for (iter = this->_dataValues->begin(); iter != this->_dataValues->end(); iter++ )
 	{
 		each=((DataValue*)*iter);
+		
+		//Serializo el tipo del dataValue
+		*currentBufferLocation=each->getType()->getCharType();
+		currentBufferLocation+=1;
+		
+		//Serializo el contenido del dataValue
 		eachSerialization=each->serialize();
 		memcpy(currentBufferLocation,eachSerialization,each->getSerializationFullSize());
 		currentBufferLocation+=each->getSerializationFullSize();
@@ -129,18 +143,29 @@ void StructureValue::serializeTo(char* buffer){
 	}
 }	
 void StructureValue::deserializeValue(char* data,T_STRING_LENGHT dataLenght){
-	//Recorrer los valores y llamar al deserialize de cada fucking eachhhh
-	DataValue* each=NULL;
-	vector<DataValue*>::iterator iter;
-	char* currentDataPointer=data;
-	for (iter = this->_dataValues->begin(); iter != this->_dataValues->end(); iter++ )
-	{
-		each=((DataValue*)*iter);
-		each->deserialize(currentDataPointer);
-		currentDataPointer+=each->getSerializationFullSize();
-	}
+	char* currentDataPointer;
+	T_RECORD_SIZE valueCount;
+	T_RECORD_SIZE i;
+	DataValue* desderializedValue;
+	DataType* currentValueType;	
+	currentDataPointer=data;
+	memcpy(&valueCount,currentDataPointer,sizeof(T_RECORD_SIZE));
+	currentDataPointer+=sizeof(T_RECORD_SIZE);
+	
+	for (i = 0; i < valueCount; ++i) {
+		//deserializo el tipo 
+		currentValueType=DataType::createType(*currentDataPointer);
+		currentDataPointer+=1;
+			
+		//deserializo el valor
+		desderializedValue=currentValueType->createNullValue();
+		currentDataPointer=desderializedValue->deserialize(currentDataPointer);
+		this->addValue(desderializedValue);
+		delete currentValueType;
+	}	
 }
-/*
+
+
 bool StructureValue::isInstanceOf(DataType* dType){
 	StructureType* type=NULL;
 	int valueIndex=0;
@@ -163,7 +188,8 @@ bool StructureValue::isInstanceOf(DataType* dType){
 		}
 	}
 	return true;
-}*/
+}
+/*
 bool StructureValue::isInstanceOf(DataType* dType){
 	StructureType* type=NULL;
 	int ocurrencias=0;
@@ -187,4 +213,4 @@ bool StructureValue::isInstanceOf(DataType* dType){
 		}
 	}
 	return true;
-}
+}*/
