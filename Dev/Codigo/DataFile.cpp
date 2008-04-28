@@ -213,6 +213,39 @@ T_FILESIZE DataFile::getFileSize() {
 	return this->_blockStructuredFile->getFileSize();
 }
 
+
+bool DataFile::isInstanceOf(vector<Field*>* fields, vector<DataValue*>* values){
+	Field* aField;
+	DataValue* aValue;
+	vector<Field*>::iterator fieldIter;
+	vector<DataValue*>::iterator valueIter;
+	for(valueIter= values->begin(), fieldIter= fields->begin();
+		valueIter< values->end() && fieldIter< fields->end();
+		valueIter++, fieldIter++){
+			aValue= (DataValue*)*valueIter;
+			aField= (Field*)*fieldIter;
+			if ((aField->isMandatory()==false)&&(aValue->isInstanceOf(aField->getDataType()))==false){
+				valueIter--;
+			}else if (aValue->isInstanceOf(aField->getDataType())==false){
+				return false;
+			}		
+	}
+	if (fieldIter== fields->end()){
+		if (valueIter != values->end()){
+			return false;
+		}
+	}else{
+		while (fieldIter!=fields->end()){
+			aField= (Field*)*fieldIter;
+			if (aField->isMandatory()==true){
+				return false;
+			}
+			fieldIter++;
+		}
+	}
+	return true;	
+}
+
 void DataFile::insertRecord(Record* record) {
 	
 	vector<Record*>* sameKeyRecordsfound = this->findRecords(0,(DataValue*)record->getValues()->at(0));
@@ -222,23 +255,8 @@ void DataFile::insertRecord(Record* record) {
 	}
 	delete sameKeyRecordsfound;
 	
-	vector<DataValue*>*	recordValues= record->getValues();
-	vector<DataValue*>::iterator recordIter;
-	DataValue* aValue;
-	vector<Field*>* fileFields= this->_metadataBlock->GetSecondaryFields();
-	vector<Field*>::iterator fieldIter;
-	Field* aField;
-	for(recordIter= recordValues->begin(), fieldIter= fileFields->begin();
-		recordIter< recordValues->end() && fieldIter< fileFields->end();
-		recordIter++, fieldIter++){
-			aValue= (DataValue*)*recordIter;
-			aField= (Field*)*fieldIter;
-			string* buffer= new string();
-			aValue->toString(buffer);
-			delete buffer;
-			if (aField->getDataType()->equals(aValue->getType())==false){
-				throw new TypeMismatchException("Los datos ingresados no coinciden con la estructura del Archivo");
-			}
+	if (this->isInstanceOf(this->_metadataBlock->GetSecondaryFields(),record->getValues())==false){
+		throw new TypeMismatchException("Los datos ingresados no coinciden con la estructura del Archivo");
 	}
 	RecordsBlock* recordsBlock = NULL;
 	RawRecord* rawRecord = record->serialize();

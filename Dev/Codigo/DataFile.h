@@ -22,6 +22,7 @@ private:
 	BlockStructuredFile* _blockStructuredFile;
 	char* _fullPath;
 	
+	bool isInstanceOf(vector<Field*>* fields, vector<DataValue*>* values);
 public:
 	static const int FIRST_BLOCK = 0;
 	//static DataFile* Load(char* filename);
