@@ -23,7 +23,7 @@ public:
 	
 	//otros
 	virtual bool equals(DataValue* other);
-	virtual DataType* getType();
+	virtual char getCharType();
 	virtual void toString(string* buffer);
 	virtual char* getString();
 	virtual bool isInstanceOf(DataType* dType);

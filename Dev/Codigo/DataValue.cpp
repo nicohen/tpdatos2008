@@ -10,7 +10,7 @@ DataValue::~DataValue()
 
 
 bool DataValue::equals(DataValue* other){
-	return this->getType()->getUniqueIdentifier()==other->getType()->getUniqueIdentifier();
+	return this->getCharType()==other->getCharType();
 }
 
 T_STRING_LENGHT DataValue::getSerializationFullSize(){
