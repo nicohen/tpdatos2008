@@ -20,7 +20,6 @@ public:
 	//Otros
 	void addType(DataType* aType);
 	virtual bool equals(DataType* other);
-	virtual int getUniqueIdentifier();
 	int getCount();
 	virtual DataValue* deserializeValue(char* content);
 	virtual DataValue* createNullValue();

@@ -15,8 +15,8 @@ void IntValue::toString(string* buffer) {
 	buffer->append(oss.str());
 }
 
-DataType* IntValue::getType(){
-	return (DataType*)new IntType();
+char IntValue::getCharType(){
+	return DataType::INT_TYPE;
 }
 
 IntValue::~IntValue(){
@@ -47,5 +47,5 @@ int IntValue::getInt(){
 }
 
 bool IntValue::isInstanceOf(DataType* dType){
-	return this->getType()->getUniqueIdentifier()==dType->getUniqueIdentifier();
+	return this->getCharType()==dType->getCharType();
 }

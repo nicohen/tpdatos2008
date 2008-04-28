@@ -12,7 +12,7 @@ public:
 	
 	DataType();
 	virtual bool equals(DataType* other)=0;
-	virtual int getUniqueIdentifier()=0;
+	//virtual int getUniqueIdentifier()=0;
 	virtual ~DataType();
 	virtual DataValue* createNullValue()=0;
 	virtual DataValue* deserializeValue(char* content)=0;

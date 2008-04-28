@@ -18,8 +18,8 @@ void StringValue::toString(string* buffer) {
 	buffer->append("'");
 }
 
-DataType* StringValue::getType(){
-	return (DataType*)new StringType();
+char StringValue::getCharType(){
+	return DataType::STRING_TYPE;
 }
 
 bool StringValue::equals(DataValue* other){
@@ -47,5 +47,5 @@ void StringValue::serializeTo(char* buffer){
 }
 
 bool StringValue::isInstanceOf(DataType* dType){
-	return this->getType()->getUniqueIdentifier()==dType->getUniqueIdentifier();
+	return this->getCharType() ==dType->getCharType();
 }

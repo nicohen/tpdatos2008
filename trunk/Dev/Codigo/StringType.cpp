@@ -5,11 +5,7 @@ StringType::StringType(){
 }
 
 bool StringType::equals(DataType* other){
-	return (this->getUniqueIdentifier()==other->getUniqueIdentifier());
-}
-
-int StringType::getUniqueIdentifier(){
-	return STRING_TYPE;
+	return (this->getCharType()==other->getCharType());
 }
 
 StringType::~StringType(){

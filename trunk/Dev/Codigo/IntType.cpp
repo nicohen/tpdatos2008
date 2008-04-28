@@ -5,12 +5,9 @@ IntType::IntType(){
 }
 
 bool IntType::equals(DataType* other){
-	return (this->getUniqueIdentifier()==other->getUniqueIdentifier());
+	return (this->getCharType()==other->getCharType());
 }
 
-int IntType::getUniqueIdentifier(){
-	return INT_TYPE;
-}
 
 IntType::~IntType()
 {

@@ -17,10 +17,8 @@ StructureValue::~StructureValue()
 	delete(this->_dataValues);
 }
 
-DataType* StructureValue::getType(){
-	StructureType* vvType=NULL;
-	vvType=new StructureType();
-	return vvType;
+char StructureValue::getCharType(){
+	return DataType::STRUCTURED_TYPE;
 }
 
 void StructureValue::toString(string* buffer){
@@ -132,7 +130,7 @@ void StructureValue::serializeTo(char* buffer){
 		each=((DataValue*)*iter);
 		
 		//Serializo el tipo del dataValue
-		*currentBufferLocation=each->getType()->getCharType();
+		*currentBufferLocation=each->getCharType();
 		currentBufferLocation+=1;
 		
 		//Serializo el contenido del dataValue
@@ -170,7 +168,7 @@ bool StructureValue::isInstanceOf(DataType* dType){
 	StructureType* type=NULL;
 	int valueIndex=0;
 	int typeIndex=0;
-	if(dType->getUniqueIdentifier()!=DataType::STRUCTURED_TYPE){
+	if(dType->getCharType()!=DataType::STRUCTURED_TYPE){
 		return false;
 	}
 	type=(StructureType*) dType;

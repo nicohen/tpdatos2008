@@ -29,7 +29,7 @@ int StructureType::getCount(){
 }
 
 bool StructureType::equals(DataType* other){
-	if (this->getUniqueIdentifier()!=other->getUniqueIdentifier()){
+	if (this->getCharType()!=other->getCharType()){
 		return false;
 	}else{
 		StructureType* otherStructureType=(StructureType*)other;
@@ -49,10 +49,6 @@ bool StructureType::equals(DataType* other){
 			return true;
 		}
 	}
-}
-
-int StructureType::getUniqueIdentifier(){
-	return STRUCTURED_TYPE;
 }
 
 DataValue* StructureType::deserializeValue(char* content){
