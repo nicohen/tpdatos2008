@@ -3,6 +3,7 @@
 #Es la ruta para llegar a los archivos que estan en el codigo
 CODE_PATH:= Codigo/
 DATA_PATH:= $(CODE_PATH)Data/
+BUFFER_PATH:= $(CODE_PATH)Buffer/
 TEST_PATH:= $(CODE_PATH)TestingFramework/
 
 #TARGET es una variable que se va a usar mas abajo. Indica el nombre del archivo que se va a ejecutar 
@@ -17,6 +18,7 @@ TARGET:= AlmacenX
 				
 GLOBAL_CPP:=	$(CODE_PATH)BufferedDataManager.cpp\
 	$(DATA_PATH)Block.cpp\
+	$(BUFFER_PATH)BufferKey.cpp\
 	$(CODE_PATH)CreateStatement.cpp\
 	$(CODE_PATH)DataFile.cpp\
 	$(CODE_PATH)DataManager.cpp\
@@ -51,6 +53,7 @@ GLOBAL_CPP:=	$(CODE_PATH)BufferedDataManager.cpp\
 	$(CODE_PATH)StringValue.cpp\
 	$(CODE_PATH)StructureType.cpp\
 	$(CODE_PATH)StructureValue.cpp\
+	$(BUFFER_PATH)SystemBuffer.cpp\
 	$(CODE_PATH)Token.cpp\
 	$(CODE_PATH)Tokenizer.cpp\
 	$(CODE_PATH)QueryStatement.cpp\
@@ -70,10 +73,12 @@ GLOBAL_CPP:=	$(CODE_PATH)BufferedDataManager.cpp\
 	$(TEST_PATH)TestSuiteResult.cpp\
 	$(DATA_PATH)TypeMismatchException.cpp\
 	$(DATA_PATH)BlockStructuredFileException.cpp
+	
 
 
 GLOBAL_CPP_H:=	$(CODE_PATH)BufferedDataManager.h\
 	$(DATA_PATH)Block.h\
+	$(BUFFER_PATH)BufferKey.cpp\
 	$(CODE_PATH)CreateStatement.h\
 	$(CODE_PATH)DataFile.h\
 	$(CODE_PATH)DataManager.h\
@@ -109,6 +114,7 @@ GLOBAL_CPP_H:=	$(CODE_PATH)BufferedDataManager.h\
 	$(CODE_PATH)StringValue.h\
 	$(CODE_PATH)StructureType.h\
 	$(CODE_PATH)StructureValue.h\
+	$(BUFFER_PATH)SystemBuffer.cpp\
 	$(CODE_PATH)Token.h\
 	$(CODE_PATH)Tokenizer.h\
 	$(CODE_PATH)UpdateStatement.h\
