@@ -1,7 +1,7 @@
 #ifndef BUFFERKEY_H_
 #define BUFFERKEY_H_
 
-#include "IComparable.h";
+#include "IComparable.h"
 
 class BufferKey:public IComparable{
 	private:

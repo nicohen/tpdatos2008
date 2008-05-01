@@ -33,4 +33,4 @@ int IntType::serialize(char* stream){
 
 char IntType::getCharType(){
 	return DataType::INT_TYPE;
-};
+}

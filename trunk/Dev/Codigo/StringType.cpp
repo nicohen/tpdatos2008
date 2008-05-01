@@ -30,4 +30,4 @@ int StringType::serialize(char* stream){
 
 char StringType::getCharType(){
 	return DataType::STRING_TYPE;
-};
+}
