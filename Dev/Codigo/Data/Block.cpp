@@ -49,3 +49,4 @@ void Block::setContent(char* content){
 	this->setFragment(content,0,this->_size);
 }
 
+

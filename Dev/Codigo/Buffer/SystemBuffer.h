@@ -5,29 +5,30 @@
 #include "BufferKey.h"
 #include "map.h"
 #include "ReplacementSelector.h"
-#include "../Data/Block.h"
-#include "../DataFile.h"
+#include "IComparable.h"
+#include "IBuffereable.h"
 
 struct bufferKeyCmp {
-	bool operator()( BufferKey* key1, BufferKey* key2 ) const {
+	bool operator()( IComparable* key1, IComparable* key2 ) const {
 		key1->isLowerThan(key2);
-	}
+	};
 };
 
 class SystemBuffer{
 	private:
-		map<BufferKey*, Block*, bufferKeyCmp> _buffer;
+		map<IComparable*, IBuffereable*, bufferKeyCmp> _buffer;
 		unsigned int _bufferSize;
 		unsigned int _bufferCurrentSize;
 		ReplacementSelector replacementCriteria;
 		
-		void removeElement(BufferKey* bk);
+		void removeElement(IComparable* bk);
 		void makeSpace(int elementSize);
+		
 	public:
 		SystemBuffer(int size);
-		void addBlock(DataFile* file, int blockNumber, Block* block);
-		Block* getBlock(DataFile* file, int blockNumber);
-		bool isInBuffer(DataFile* file, int blockNumber);
+		void addElement(IComparable* key, IBuffereable* value);
+		IBuffereable* getElement(IComparable* key);
+		bool isInBuffer(IComparable* key);
 		virtual ~SystemBuffer();
 };
 

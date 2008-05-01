@@ -1,11 +1,12 @@
 #ifndef Block_H_
 #define Block_H_
 
+#include "../Buffer/IBuffereable.h"
 typedef unsigned short T_BLOCKSIZE;
 typedef unsigned short T_BLOCKCOUNT;
 typedef unsigned int T_FILESIZE;//sizeof(T_BLOCKCOUNT) * sizeof(T_BLOCKSIZE)
 
-class Block
+class Block:public IBuffereable
 {
 private:
 	char* _content;
@@ -24,7 +25,6 @@ public:
 	virtual T_BLOCKSIZE getSize();	
 	virtual T_BLOCKSIZE getFreeSpace();//Esto deberia ser sobreescrito por otros blocks
 	virtual T_BLOCKSIZE getUsedSpace();//Esto deberia ser sobreescrito por otros blocks
-	
 };
 
 #endif /*Block_H_*/
