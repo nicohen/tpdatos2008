@@ -16,9 +16,8 @@
 #include "IntType.h"
 #include "Field.h"
 #include "Data/BlockStructuredFileException.h"
-
-	 
-
+#include "Buffer/ReplacementSelector.h"
+#include "Buffer/ComparableExample.h"
 
 using namespace std;
 
@@ -983,6 +982,44 @@ void Test_StructureType_deserializeValue(TestCase* test){
 	
 } 
 
+void Test_ReplacementSelector(TestCase* test){
+	ReplacementSelector* rs = new ReplacementSelector();
+	ComparableExample* c1 = new ComparableExample(20);
+	ComparableExample* c2 = new ComparableExample(30);
+	ComparableExample* c3 = new ComparableExample(10);
+	ComparableExample* c4 = new ComparableExample(50);
+	ComparableExample* c5 = new ComparableExample(25);
+	
+	rs->setItem(c1);
+	rs->setItem(c2);
+	rs->setItem(c3);
+	rs->setItem(c4);
+	rs->setItem(c5);
+	rs->notifyHit(c2);
+	rs->notifyHit(c5);
+	rs->notifyHit(c2);
+	rs->notifyHit(c4);
+	rs->notifyHit(c1);
+	rs->notifyHit(c1);
+	test->Assert_inteq(10,((ComparableExample*)rs->getUnusedItem())->_number);
+	rs->notifyHit(c4);
+	rs->notifyHit(c2);
+	rs->notifyHit(c4);
+	rs->notifyHit(c5);
+	rs->notifyHit(c5);
+	rs->notifyHit(c4);
+	rs->notifyHit(c4);
+	test->Assert_inteq(10,((ComparableExample*)rs->getUnusedItem())->_number);
+	
+	delete rs;
+	delete c1;
+	delete c2;
+	delete c3;
+	delete c4;
+	delete c5;
+} 
+
+
 int main(int argc, char* argv[]){
 	int failedTests=0;
 	
@@ -1142,6 +1179,9 @@ int main(int argc, char* argv[]){
 	Test_StructureType_deserializeValue(test38);
 	delete test38;
 	
+	TestCase* test39=new TestCase("Test_ReplacementSelector",&failedTests);	
+	Test_ReplacementSelector(test39);
+	delete test39;
 	
 	delete new TestSuiteResult(failedTests);
 	return 0;

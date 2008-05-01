@@ -1,12 +1,12 @@
 #ifndef REPLACEMENTSELECTOR_H_
 #define REPLACEMENTSELECTOR_H_
-#include <iostream.h>
+#include <iostream>
 #include <map>
 #include "IComparable.h"
 
 using namespace std;
 
-struct strCmp {
+struct Comparator {
 	bool operator() (IComparable* i1, IComparable* i2) const {
 		return i1->isLowerThan(i2);
 	}
@@ -15,7 +15,7 @@ struct strCmp {
 class ReplacementSelector {
 
 private:
-	map<IComparable*, int, strCmp>* _itemsMap;
+	map<IComparable*, int, Comparator>* _itemsMap;
 	
 public:
 	ReplacementSelector();

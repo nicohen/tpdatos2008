@@ -1,7 +1,7 @@
 #include "ReplacementSelector.h"
 
 ReplacementSelector::ReplacementSelector() {
-	this->_itemsMap = new map<IComparable*, int, strCmp>();
+	this->_itemsMap = new map<IComparable*, int, Comparator>();
 }
 
 ReplacementSelector::~ReplacementSelector() {
@@ -26,7 +26,7 @@ IComparable* ReplacementSelector::getUnusedItem() {
 	int minValue = 0;
 	bool firstElement = true;
 	
-	for (map<IComparable*, int, strCmp>::iterator iter = this->_itemsMap->begin(); iter!=this->_itemsMap->end(); iter++) {
+	for (map<IComparable*, int, Comparator>::iterator iter = this->_itemsMap->begin(); iter!=this->_itemsMap->end(); iter++) {
 		if (firstElement) {
 			unusedItem = ((*iter).first);
 			minValue = ((*iter).second);
