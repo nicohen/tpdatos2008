@@ -76,6 +76,8 @@ GLOBAL_CPP:=	$(CODE_PATH)BufferedDataManager.cpp\
 	$(BUFFER_PATH)ComparableExample.cpp\
 	$(DATA_PATH)BlockStructuredFileException.cpp\
 	$(BUFFER_PATH)ReplacementSelector.cpp\
+	$(BUFFER_PATH)IBuffereable.cpp\
+	$(BUFFER_PATH)BlocksBuffer.cpp
 	
 
 
@@ -138,7 +140,10 @@ GLOBAL_CPP_H:=	$(CODE_PATH)BufferedDataManager.h\
 	$(DATA_PATH)BlockStructuredFileException.h\
 	$(BUFFER_PATH)IComparable.h\
 	$(BUFFER_PATH)ComparableExample.h\
-	$(BUFFER_PATH)ReplacementSelector.h
+	$(BUFFER_PATH)ReplacementSelector.h\
+	$(BUFFER_PATH)IBuffereable.h\
+	$(BUFFER_PATH)BlocksBuffer.h
+	
 	
 	
 	

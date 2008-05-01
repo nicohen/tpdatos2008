@@ -20,6 +20,7 @@
 #include "Buffer/SystemBuffer.h"
 #include "Buffer/ReplacementSelector.h"
 #include "Buffer/ComparableExample.h"
+#include "Buffer/BlocksBuffer.h"
 
 	 
 
@@ -991,7 +992,7 @@ void Test_StructureType_deserializeValue(TestCase* test){
 
 
 void Test1_SystemBuffer(TestCase* test){
-	SystemBuffer sbuffer(10);
+	BlocksBuffer sbuffer(10);
 	DataFile dataFile("test.txt");
 	RecordsBlock* rb= new RecordsBlock(1);
 	RecordsBlock* rb2= new RecordsBlock(2);
@@ -1012,7 +1013,7 @@ void Test1_SystemBuffer(TestCase* test){
 }
 
 void Test2_SystemBuffer(TestCase* test){
-	SystemBuffer sbuffer(4);
+	BlocksBuffer sbuffer(4);
 	DataFile dataFile("test.txt");
 	RecordsBlock* rb= new RecordsBlock(1);
 	RecordsBlock* rb2= new RecordsBlock(2);
@@ -1029,10 +1030,6 @@ void Test2_SystemBuffer(TestCase* test){
 	sbuffer.addBlock(&dataFile,4,rb4);
 	test->Assert_True(!sbuffer.isInBuffer(&dataFile,3));
 	test->Assert_True(sbuffer.isInBuffer(&dataFile,4));
-	delete rb;
-	delete rb2;
-	delete rb3;
-	delete rb4;
 }
 
 void Test_ReplacementSelector(TestCase* test){

@@ -1,4 +1,5 @@
 #include "SystemBuffer.h"
+#include "../Utils.h"
 
 SystemBuffer::SystemBuffer(int size){
 	_bufferSize=size;
@@ -7,56 +8,49 @@ SystemBuffer::SystemBuffer(int size){
 
 SystemBuffer::~SystemBuffer(){
 }
-bool SystemBuffer::isInBuffer(DataFile* file,int blockNumber){
-	BufferKey* bk= new BufferKey(file->getFileName(),blockNumber);
-	bool found= (this->_buffer.count(bk)>0);
-	delete bk;
-	return found; 
+bool SystemBuffer::isInBuffer(IComparable* key){
+	return (this->_buffer.count(key)>0); 
 }
 
-void SystemBuffer::addBlock(DataFile* file, int blockNumber, Block* block){
-	BufferKey* bk= new BufferKey(file->getFileName(),blockNumber);
-	if (this->_buffer.count(bk)>0){
-		this->removeElement(bk);
+void SystemBuffer::addElement(IComparable* key, IBuffereable* value){
+	if (this->_buffer.count(key)>0){
+		this->removeElement(key);
 	}
-	if (this->_bufferSize<block->getSize()){
+	if (this->_bufferSize<value->getSize()){
 		//throw new BufferException("Tamaño de bloque mayor al del buffer");;
 		DEBUG("Tamaño de bloque mayor al del buffer");
 		return;
 	}
-	if ((this->_bufferCurrentSize+block->getSize())>this->_bufferSize){
-		this->makeSpace(this->_bufferSize);
+	if ((this->_bufferCurrentSize+value->getSize())>this->_bufferSize){
+		this->makeSpace(value->getSize());
 	}
-	this->_buffer[bk]=block;
-	this->_bufferCurrentSize+=block->getSize();
-	this->replacementCriteria.setItem(bk);
+	this->_buffer[key]=value;
+	this->_bufferCurrentSize+=value->getSize();
+	this->replacementCriteria.setItem(key);
 }
 
-Block* SystemBuffer::getBlock(DataFile* file, int blockNumber){
-	BufferKey* bk= new BufferKey(file->getFileName(),blockNumber);
-	if (this->_buffer.count(bk)>0){
-		Block* oldBlock;
-		oldBlock= this->_buffer[bk];
-		this->replacementCriteria.notifyHit(bk);
-		delete bk;
+IBuffereable* SystemBuffer::getElement(IComparable* key){
+	if (this->_buffer.count(key)>0){
+		IBuffereable* oldBlock;
+		oldBlock= this->_buffer[key];
+		this->replacementCriteria.notifyHit(key);
 		return oldBlock;
 	}else{
-		delete bk;
 		return NULL;
 	}
 }
 
 void SystemBuffer::makeSpace(int elementSize){
 	while ((this->_bufferCurrentSize+elementSize)>this->_bufferSize){
-		BufferKey* bk= (BufferKey*)this->replacementCriteria.getUnusedItem();
+		IComparable* bk= (IComparable*)this->replacementCriteria.getUnusedItem();
 		this->removeElement(bk);
 	}	
 }
 
-void SystemBuffer::removeElement(BufferKey* bk){
-	BufferKey* key;
-	Block* value;
-	map<BufferKey*, Block*, bufferKeyCmp>::iterator iter = this->_buffer.find(bk);
+void SystemBuffer::removeElement(IComparable* bk){
+	IComparable* key;
+	IBuffereable* value;
+	map<IComparable*, IBuffereable*, bufferKeyCmp>::iterator iter = this->_buffer.find(bk);
 	if( iter != this->_buffer.end() ) {
 		this->replacementCriteria.notifyDelete(bk);
 		key= iter->first;

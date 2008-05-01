@@ -2,6 +2,8 @@
 #define BUFFERKEY_H_
 
 #include "IComparable.h"
+#include "string.h"
+#include <sstream>
 
 class BufferKey:public IComparable{
 	private:
@@ -13,6 +15,7 @@ public:
 	int getBlockNumber(void);
 	virtual ~BufferKey();
 	bool isLowerThan(IComparable* other);
+	char* toString();
 };
 
 #endif /*BUFFERKEY_H_*/
