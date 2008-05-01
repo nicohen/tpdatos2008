@@ -74,7 +74,8 @@ GLOBAL_CPP:=	$(CODE_PATH)BufferedDataManager.cpp\
 	$(DATA_PATH)TypeMismatchException.cpp\
 	$(BUFFER_PATH)IComparable.cpp\
 	$(BUFFER_PATH)ComparableExample.cpp\
-	$(DATA_PATH)BlockStructuredFileException.cpp
+	$(DATA_PATH)BlockStructuredFileException.cpp\
+	$(BUFFER_PATH)ReplacementSelector.cpp\
 	
 
 
@@ -136,7 +137,8 @@ GLOBAL_CPP_H:=	$(CODE_PATH)BufferedDataManager.h\
 	$(DATA_PATH)TypeMismatchException.h\
 	$(DATA_PATH)BlockStructuredFileException.h\
 	$(BUFFER_PATH)IComparable.h\
-	$(BUFFER_PATH)ComparableExample.h
+	$(BUFFER_PATH)ComparableExample.h\
+	$(BUFFER_PATH)ReplacementSelector.h
 	
 	
 	
