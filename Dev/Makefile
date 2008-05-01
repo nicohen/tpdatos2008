@@ -72,6 +72,8 @@ GLOBAL_CPP:=	$(CODE_PATH)BufferedDataManager.cpp\
 	$(TEST_PATH)TestCase.cpp\
 	$(TEST_PATH)TestSuiteResult.cpp\
 	$(DATA_PATH)TypeMismatchException.cpp\
+	$(CODE_PATH)Buffer/IComparable.cpp\
+	$(CODE_PATH)Buffer/ComparableExample.cpp\
 	$(DATA_PATH)BlockStructuredFileException.cpp
 	
 
@@ -132,8 +134,12 @@ GLOBAL_CPP_H:=	$(CODE_PATH)BufferedDataManager.h\
 	$(TEST_PATH)TestCase.h\
 	$(TEST_PATH)TestSuiteResult.h\
 	$(DATA_PATH)TypeMismatchException.h\
-	$(DATA_PATH)BlockStructuredFileException.h
-
+	$(DATA_PATH)BlockStructuredFileException.h\
+	$(CODE_PATH)Buffer/IComparable.h\
+	$(CODE_PATH)Buffer/ComparableExample.h
+	
+	
+	
 #Si se quiere arrancar usando un "main" propio, crear el archivo con la funcion main adentro y decomentar la linea que corresponda
 
 MAIN_CLASS= $(CODE_PATH)main.cpp
