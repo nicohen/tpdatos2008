@@ -1,7 +1,9 @@
 #ifndef BUFFERKEY_H_
 #define BUFFERKEY_H_
 
-class BufferKey{
+#include "IComparable.h";
+
+class BufferKey:public IComparable{
 	private:
 		char* _fileName;
 		int _blockNumber;
@@ -10,6 +12,7 @@ public:
 	char* getFileName(void);
 	int getBlockNumber(void);
 	virtual ~BufferKey();
+	bool isLowerThan(IComparable* other);
 };
 
 #endif /*BUFFERKEY_H_*/

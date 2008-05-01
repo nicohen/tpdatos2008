@@ -2,6 +2,7 @@
 
 SystemBuffer::SystemBuffer(int size){
 	_bufferSize=size;
+	this->_bufferCurrentSize=0;
 }
 
 SystemBuffer::~SystemBuffer(){
@@ -16,18 +17,13 @@ bool SystemBuffer::isInBuffer(DataFile* file,int blockNumber){
 void SystemBuffer::addBlock(DataFile* file, int blockNumber, Block* block){
 	BufferKey* bk= new BufferKey(file->getFileName(),blockNumber);
 	if (this->_buffer.count(bk)>0){
-		/*VERIFICAR TAMAÑO*/
-		Block* oldBlock;
-		oldBlock= this->_buffer[bk];
-		//delete oldBlock; 
-		this->_buffer[bk]=block;
-		return;
+		this->removeElement(bk);
 	}
-	if ((this->_buffer.size()+/*CAMBIAR*/10)>this->_bufferSize){
-		/*RESOLVER REEMPLASO*/
+	if ((this->_bufferCurrentSize+block->getSize())>this->_bufferSize){
+		this->makeSpace(this->_bufferSize);
 	}
 	this->_buffer[bk]=block;
-	delete bk;
+	this->replacementCriteria.setItem(bk);
 }
 
 Block* SystemBuffer::getBlock(DataFile* file, int blockNumber){
@@ -35,9 +31,23 @@ Block* SystemBuffer::getBlock(DataFile* file, int blockNumber){
 	if (this->_buffer.count(bk)>0){
 		Block* oldBlock;
 		oldBlock= this->_buffer[bk];
+		this->replacementCriteria.notifyHit(bk);
 		delete bk;
 		return oldBlock;
 	}else{
+		delete bk;
 		return NULL;
+	}
+}
+
+void SystemBuffer::makeSpace(int elementSize){
+	
+}
+
+void SystemBuffer::removeElement(BufferKey* bk){
+	map<BufferKey*, Block*, bufferKeyCmp>::iterator iter = this->_buffer.find(bk);
+	if( iter != this->_buffer.end() ) {
+		delete(iter->first);
+		delete(iter->second);
 	}
 }

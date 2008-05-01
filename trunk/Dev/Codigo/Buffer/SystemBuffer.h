@@ -4,15 +4,13 @@
 #include "string.h"
 #include "BufferKey.h"
 #include "map.h"
+#include "ReplacementSelector.h"
 #include "../Data/Block.h"
 #include "../DataFile.h"
 
 struct bufferKeyCmp {
 	bool operator()( BufferKey* key1, BufferKey* key2 ) const {
-		if (strcmp( key1->getFileName(), key2->getFileName() ) < 0){
-			return true;
-		}
-		return (key1->getBlockNumber()<key2->getBlockNumber());
+		key1->isLowerThan(key2);
 	}
 };
 
@@ -20,6 +18,11 @@ class SystemBuffer{
 	private:
 		map<BufferKey*, Block*, bufferKeyCmp> _buffer;
 		unsigned int _bufferSize;
+		unsigned int _bufferCurrentSize;
+		ReplacementSelector replacementCriteria;
+		
+		void removeElement(BufferKey* bk);
+		void makeSpace(int elementSize);
 	public:
 		SystemBuffer(int size);
 		void addBlock(DataFile* file, int blockNumber, Block* block);
