@@ -86,4 +86,4 @@ DataType* StructureType::getItem(int typeIndex){
 
 char StructureType::getCharType(){
 	return DataType::STRUCTURED_TYPE;
-};
+}

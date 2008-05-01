@@ -19,10 +19,16 @@ void SystemBuffer::addBlock(DataFile* file, int blockNumber, Block* block){
 	if (this->_buffer.count(bk)>0){
 		this->removeElement(bk);
 	}
+	if (this->_bufferSize<block->getSize()){
+		//throw new BufferException("Tamaño de bloque mayor al del buffer");;
+		DEBUG("Tamaño de bloque mayor al del buffer");
+		return;
+	}
 	if ((this->_bufferCurrentSize+block->getSize())>this->_bufferSize){
 		this->makeSpace(this->_bufferSize);
 	}
 	this->_buffer[bk]=block;
+	this->_bufferCurrentSize+=block->getSize();
 	this->replacementCriteria.setItem(bk);
 }
 
@@ -41,13 +47,23 @@ Block* SystemBuffer::getBlock(DataFile* file, int blockNumber){
 }
 
 void SystemBuffer::makeSpace(int elementSize){
-	
+	while ((this->_bufferCurrentSize+elementSize)>this->_bufferSize){
+		BufferKey* bk= (BufferKey*)this->replacementCriteria.getUnusedItem();
+		this->removeElement(bk);
+	}	
 }
 
 void SystemBuffer::removeElement(BufferKey* bk){
+	BufferKey* key;
+	Block* value;
 	map<BufferKey*, Block*, bufferKeyCmp>::iterator iter = this->_buffer.find(bk);
 	if( iter != this->_buffer.end() ) {
-		delete(iter->first);
-		delete(iter->second);
+		this->replacementCriteria.notifyDelete(bk);
+		key= iter->first;
+		value= iter->second;
+		this->_buffer.erase(bk);
+		delete key;
+		this->_bufferCurrentSize-=value->getSize();
+		delete value;
 	}
 }
