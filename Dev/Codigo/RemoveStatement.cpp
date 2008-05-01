@@ -23,15 +23,12 @@ StatementResult* RemoveStatement::execute(DataManager* anIDataManager){
 	try{
 		DataFile* dataFile= anIDataManager->getFile(this->getFileName());
 		removedRecords = dataFile->removeRecord(_fieldNumber,_value);		
-//		buffer.append("Se eliminarion ");
-//		ostringstream sss;
-//		sss<<counter;
-//		buffer.append(sss.str());
 		buffer.append("Res = ");
 		Record* each = NULL;
 		vector<Record*>::iterator iter;
 		for (iter = removedRecords->begin(); iter != removedRecords->end(); iter++ ){
 			each=((Record*)*iter);
+			buffer.append(" - ");
 			each->toString(&buffer);
 		}
 		buffer.append(removedRecords->size()?"":"0");	
