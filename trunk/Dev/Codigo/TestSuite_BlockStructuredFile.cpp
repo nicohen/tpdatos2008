@@ -16,8 +16,13 @@
 #include "IntType.h"
 #include "Field.h"
 #include "Data/BlockStructuredFileException.h"
+#include "DataFile.h"
+#include "Buffer/SystemBuffer.h"
 #include "Buffer/ReplacementSelector.h"
 #include "Buffer/ComparableExample.h"
+
+	 
+
 
 using namespace std;
 
@@ -298,7 +303,6 @@ void Test_getContentBlock(TestCase* test){
 	BlockStructuredFile* loadedfile=NULL;
 	char* filename="Test_getContentBlock.bin";
 	char* buffer1;
-	char* obtainedbuffer;
 	
 	buffer1=createEmptyByteArray(512);
 	*(buffer1+5)='y';	
@@ -804,8 +808,7 @@ void Test_Integration_BSFandRecordsB_getContentOnAnUninitializedRecordsBlock(Tes
 	BlockStructuredFile* file=NULL;
 	RecordsBlock* rb=NULL;
 	char* filename="Test_Integration_BSFandRecordsB_....bin";
-	fstream* filestream=NULL;
-		
+			
 	//createBlockStructuredFileOnDisk(filename,512);
 	file=BlockStructuredFile::Create(filename,100);
 	//file->bUpdateContentBlock(0,createEmptyBlock(512));
@@ -982,6 +985,56 @@ void Test_StructureType_deserializeValue(TestCase* test){
 	
 } 
 
+
+
+
+
+
+void Test1_SystemBuffer(TestCase* test){
+	SystemBuffer sbuffer(10);
+	DataFile dataFile("test.txt");
+	RecordsBlock* rb= new RecordsBlock(1);
+	RecordsBlock* rb2= new RecordsBlock(2);
+	RecordsBlock* rb3= new RecordsBlock(3);
+	RecordsBlock* rb4= new RecordsBlock(4);
+	sbuffer.addBlock(&dataFile,1,rb);
+	sbuffer.addBlock(&dataFile,2,rb2);
+	sbuffer.addBlock(&dataFile,3,rb3);
+	sbuffer.addBlock(&dataFile,4,rb4);
+	test->Assert_True(rb==(RecordsBlock*)sbuffer.getBlock(&dataFile,1));
+	test->Assert_True(rb2==(RecordsBlock*)sbuffer.getBlock(&dataFile,2));
+	test->Assert_True(rb3==(RecordsBlock*)sbuffer.getBlock(&dataFile,3));
+	test->Assert_True(rb4==(RecordsBlock*)sbuffer.getBlock(&dataFile,4));
+	delete rb;
+	delete rb2;
+	delete rb3;
+	delete rb4;
+}
+
+void Test2_SystemBuffer(TestCase* test){
+	SystemBuffer sbuffer(4);
+	DataFile dataFile("test.txt");
+	RecordsBlock* rb= new RecordsBlock(1);
+	RecordsBlock* rb2= new RecordsBlock(2);
+	RecordsBlock* rb3= new RecordsBlock(3);
+	RecordsBlock* rb4= new RecordsBlock(4);
+	sbuffer.addBlock(&dataFile,1,rb);
+	sbuffer.addBlock(&dataFile,2,rb2);
+	test->Assert_True(sbuffer.isInBuffer(&dataFile,1));
+	test->Assert_True(sbuffer.isInBuffer(&dataFile,2));
+	sbuffer.addBlock(&dataFile,3,rb3);
+	test->Assert_True(!sbuffer.isInBuffer(&dataFile,1));
+	test->Assert_True(!sbuffer.isInBuffer(&dataFile,2));
+	test->Assert_True(sbuffer.isInBuffer(&dataFile,3));
+	sbuffer.addBlock(&dataFile,4,rb4);
+	test->Assert_True(!sbuffer.isInBuffer(&dataFile,3));
+	test->Assert_True(sbuffer.isInBuffer(&dataFile,4));
+	delete rb;
+	delete rb2;
+	delete rb3;
+	delete rb4;
+}
+
 void Test_ReplacementSelector(TestCase* test){
 	ReplacementSelector* rs = new ReplacementSelector();
 	ComparableExample* c1 = new ComparableExample(20);
@@ -1018,7 +1071,6 @@ void Test_ReplacementSelector(TestCase* test){
 	delete c4;
 	delete c5;
 } 
-
 
 int main(int argc, char* argv[]){
 	int failedTests=0;
@@ -1155,6 +1207,7 @@ int main(int argc, char* argv[]){
 	Test_BlockStructured_DeleteBlocks(test32);
 	delete test32;
 	
+	
 	TestCase* test33=new TestCase("Test_StructureValue_IsInstanceOfType",&failedTests);	
 	Test_StructureValue_IsInstanceOfType_SingleStructure(test33);
 	delete test33;
@@ -1182,6 +1235,17 @@ int main(int argc, char* argv[]){
 	TestCase* test39=new TestCase("Test_ReplacementSelector",&failedTests);	
 	Test_ReplacementSelector(test39);
 	delete test39;
+	
+	
+	
+	TestCase* test40=new TestCase("Test1_SystemBuffer",&failedTests);	
+	Test1_SystemBuffer(test40);
+	delete test40;
+	
+	TestCase* test41=new TestCase("Test2_SystemBuffer",&failedTests);	
+	Test2_SystemBuffer(test41);
+	delete test41;
+	
 	
 	delete new TestSuiteResult(failedTests);
 	return 0;
