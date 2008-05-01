@@ -72,8 +72,8 @@ GLOBAL_CPP:=	$(CODE_PATH)BufferedDataManager.cpp\
 	$(TEST_PATH)TestCase.cpp\
 	$(TEST_PATH)TestSuiteResult.cpp\
 	$(DATA_PATH)TypeMismatchException.cpp\
-	$(CODE_PATH)Buffer/IComparable.cpp\
-	$(CODE_PATH)Buffer/ComparableExample.cpp\
+	$(BUFFER_PATH)IComparable.cpp\
+	$(BUFFER_PATH)ComparableExample.cpp\
 	$(DATA_PATH)BlockStructuredFileException.cpp
 	
 
@@ -135,8 +135,8 @@ GLOBAL_CPP_H:=	$(CODE_PATH)BufferedDataManager.h\
 	$(TEST_PATH)TestSuiteResult.h\
 	$(DATA_PATH)TypeMismatchException.h\
 	$(DATA_PATH)BlockStructuredFileException.h\
-	$(CODE_PATH)Buffer/IComparable.h\
-	$(CODE_PATH)Buffer/ComparableExample.h
+	$(BUFFER_PATH)IComparable.h\
+	$(BUFFER_PATH)ComparableExample.h
 	
 	
 	
