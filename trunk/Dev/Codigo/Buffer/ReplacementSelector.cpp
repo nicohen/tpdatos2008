@@ -17,6 +17,10 @@ void ReplacementSelector::notifyHit(IComparable* key) {
 	(*this->_itemsMap)[key]++;
 }
 
+void ReplacementSelector::notifyDelete(IComparable* key) {
+	this->_itemsMap->erase(key);
+}
+
 IComparable* ReplacementSelector::getUnusedItem() {
 	IComparable* unusedItem = NULL;
 	int minValue = 0;

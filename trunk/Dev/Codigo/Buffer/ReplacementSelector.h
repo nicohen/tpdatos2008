@@ -22,6 +22,7 @@ public:
 	virtual ~ReplacementSelector();
 	void setItem(IComparable* key);
 	void notifyHit(IComparable* key);
+	void notifyDelete(IComparable* key);
 	IComparable* getUnusedItem();	
 };
 
