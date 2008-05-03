@@ -190,6 +190,10 @@ bool StructureValue::isInstanceOf(DataType* dType){
 	}
 	return true;
 }
+
+bool StructureValue::isNull(){
+	return this->getCount()==0;
+}
 /*
 bool StructureValue::isInstanceOf(DataType* dType){
 	StructureType* type=NULL;

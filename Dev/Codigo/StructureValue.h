@@ -28,6 +28,8 @@ public:
 	
 	static bool equalsValueVectors(vector<DataValue*>* vec1,vector<DataValue*>* vec2);
 	virtual bool isInstanceOf(DataType* dType);
+	
+	virtual bool isNull();
 };
 
 #endif /*STRUCTUREVALUE_H_*/
