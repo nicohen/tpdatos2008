@@ -10,6 +10,10 @@ bool ComparableExample::isLowerThan(IComparable* other){
 	return (this->_number<otherComparableExample->_number);
 }
 
+char* ComparableExample::toString() {
+	return "ComparableExample";
+}
+
 ComparableExample::~ComparableExample()
 {
 }
