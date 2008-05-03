@@ -16,7 +16,7 @@ TARGET:= AlmacenX
  
 #Archivos que estan en producción       
 				
-GLOBAL_CPP:=	$(CODE_PATH)BufferedDataManager.cpp\
+GLOBAL_CPP:= $(CODE_PATH)BufferedDataManager.cpp\
 	$(DATA_PATH)Block.cpp\
 	$(BUFFER_PATH)BufferKey.cpp\
 	$(CODE_PATH)CreateStatement.cpp\
@@ -81,7 +81,7 @@ GLOBAL_CPP:=	$(CODE_PATH)BufferedDataManager.cpp\
 	
 
 
-GLOBAL_CPP_H:=	$(CODE_PATH)BufferedDataManager.h\
+GLOBAL_CPP_H:= $(CODE_PATH)BufferedDataManager.h\
 	$(DATA_PATH)Block.h\
 	$(BUFFER_PATH)BufferKey.cpp\
 	$(CODE_PATH)CreateStatement.h\
@@ -143,7 +143,6 @@ GLOBAL_CPP_H:=	$(CODE_PATH)BufferedDataManager.h\
 	$(BUFFER_PATH)ReplacementSelector.h\
 	$(BUFFER_PATH)IBuffereable.h\
 	$(BUFFER_PATH)BlocksBuffer.h
-	
 	
 	
 	

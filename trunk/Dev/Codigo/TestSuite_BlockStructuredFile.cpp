@@ -22,9 +22,6 @@
 #include "Buffer/ComparableExample.h"
 #include "Buffer/BlocksBuffer.h"
 
-	 
-
-
 using namespace std;
 
 bool REMOVE_TEST_FILES2=false;
@@ -790,7 +787,7 @@ void Test_Record_Serialize(TestCase* test){
 	Record* deserializedRecord=new Record();
 	Record* expectedRecord=new Record();
 	
-	//Lleno los campo
+	//Lleno los campos
 	intField->setDataType(intType);
 	intField2->setDataType(new IntType());
 	recordFields->push_back(intField);
@@ -974,7 +971,6 @@ void Test_StructureType_deserializeValue(TestCase* test){
 	typeA->addType(new StringType());
 	typeA->addType(new IntType());
 	
-	
 	serializedStructure->addValue(new IntValue(1));
 	serializedStructure->addValue(new StringValue("Hola"));
 	serializedStructure->addValue(new IntValue(4));
@@ -985,12 +981,6 @@ void Test_StructureType_deserializeValue(TestCase* test){
 	test->Assert_True_m(serializedStructure->equals(deserializedStructure), "Se esperaba que la estructura serializada y la deserializada sen iguales");
 	
 } 
-
-
-
-
-
-
 void Test1_SystemBuffer(TestCase* test){
 	BlocksBuffer sbuffer(10);
 	DataFile dataFile("test.txt");
@@ -1067,7 +1057,42 @@ void Test_ReplacementSelector(TestCase* test){
 	delete c3;
 	delete c4;
 	delete c5;
-} 
+}
+
+
+void Test_NullValue(TestCase* test){
+	StructureValue* actual=new StructureValue();//Esto es un nulo
+	StructureValue* deserialized=new StructureValue();
+	StructureType* type=new StructureType();
+	char* serializedData=actual->serialize();
+	deserialized= (StructureValue*)type->deserializeValue(serializedData);
+	
+	test->Assert_True_m(actual->equals(deserialized),"deberian ser structurevalues iguales");	
+}
+
+void Test_RecordWithNullValues(TestCase* test){
+	vector<Field*>* recordFields=new vector<Field*>();
+	Field* field1=new Field();
+	Field* field2=new Field();
+	Record* deserializedRecord=new Record();
+	Record* expectedRecord=new Record();
+	
+	//Lleno los campos
+	//field1->setDataType(new StructureType());
+	field1->setDataType(new StructureType());
+	field2->setDataType(new IntType());
+	recordFields->push_back(field1);
+	recordFields->push_back(field2);
+	
+	expectedRecord->addValue(new StructureValue());
+	expectedRecord->addValue(new IntValue(1));
+	
+	printf("\n__getSerializationFullSize: %i.",expectedRecord->getSerializationFullSize());
+	
+	deserializedRecord->deserialize(expectedRecord->serialize(),recordFields);
+	test->Assert_True_m(expectedRecord->equals(deserializedRecord),"Los records deberian ser iguales.");
+	
+}
 
 void Test_BufferHitsMissAndSize(TestCase* test) {
 	BlocksBuffer* blocksBuffer = new BlocksBuffer(512);
@@ -1285,6 +1310,14 @@ int main(int argc, char* argv[]){
 	TestCase* test42=new TestCase("Test_BufferHitsMissAndSize",&failedTests);	
 	Test_BufferHitsMissAndSize(test42);
 	delete test42;
+	
+	TestCase* test_nahue_01=new TestCase("Test_NullValue",&failedTests);	
+	Test_NullValue(test_nahue_01);
+	delete test_nahue_01;
+	
+	TestCase* test_nahue_02=new TestCase("Test_RecordWithNullValues",&failedTests);	
+	Test_RecordWithNullValues(test_nahue_02);
+	delete test_nahue_02;	
 	
 	delete new TestSuiteResult(failedTests);
 	return 0;

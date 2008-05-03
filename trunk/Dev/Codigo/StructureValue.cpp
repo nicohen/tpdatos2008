@@ -173,8 +173,11 @@ bool StructureValue::isInstanceOf(DataType* dType){
 	}
 	type=(StructureType*) dType;
 	
-	//Si alguno de los dos tiene cero elementos, y son tienen diferente cantidad de elementos, entonces no es de ese tipo 
-	if((type->getCount()==0 || this->getCount()==0) && type->getCount() != this->getCount() ){
+	//Un structureValue sin elementos se considera como nulo de cualquier structureType
+	if(this->getCount()==0){
+		return true;
+	}
+	if(type->getCount()==0){
 		return false;
 	}
 	for (valueIndex = 0; valueIndex < this->_dataValues->size(); ++valueIndex) {
