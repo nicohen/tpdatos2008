@@ -3,7 +3,7 @@
 
 #include "string.h"
 #include "BufferKey.h"
-#include "map.h"
+#include <map>
 #include "ReplacementSelector.h"
 #include "IComparable.h"
 #include "IBuffereable.h"
