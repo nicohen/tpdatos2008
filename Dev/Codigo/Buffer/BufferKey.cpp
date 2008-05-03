@@ -1,7 +1,6 @@
 #include "BufferKey.h"
-#include "string.h"
-#include <sstream>
 #include "../Utils.h"
+#include "stdio.h"
 
 BufferKey::BufferKey(char* fileName, int block){
 	_fileName= cloneStr(fileName);
@@ -26,15 +25,10 @@ bool BufferKey::isLowerThan(IComparable* other){
 }
 
 char* BufferKey::toString() {
-//	string buffer;
-//	ostringstream ss;
-//	buffer.append("[FileName:");
-//	buffer.append(this->_fileName);
-//	buffer.append("] [BlockNumber:");
-//	ss<<this->_blockNumber;
-//	buffer.append("]");
-//	buffer.append(ss.str());
-	return "";
+	char* cadena = (char*)malloc(strlen(this->_fileName)+30);
+	
+	sprintf(cadena,"[FileName:%s] [BlockNumber:%d]",this->_fileName,this->_blockNumber);
+	return cadena;
 }
 
 BufferKey::~BufferKey(){

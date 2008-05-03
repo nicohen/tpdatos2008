@@ -43,14 +43,46 @@ void SystemBuffer::addElement(IComparable* key, IBuffereable* value){
 }
 
 IBuffereable* SystemBuffer::getElement(IComparable* key){
+	string buffer;
+	ostringstream sshits;
+	ostringstream ssmiss;
+
 	if (this->_buffer.count(key)>0){
 		IBuffereable* oldBlock;
 		oldBlock= this->_buffer[key];
 		this->replacementCriteria.notifyHit(key);
 		_hits++;
+
+		sshits<<_hits;
+		ssmiss<<_miss;
+		
+		buffer.append("Hit consultando: ");
+		buffer.append(key->toString());
+		buffer.append(" [HITS acumulados:");
+		buffer.append(sshits.str());
+		buffer.append("]");
+		buffer.append(" [MISS acumulados:");
+		buffer.append(ssmiss.str());
+		buffer.append("]");
+		DEBUG(buffer.c_str());
+
 		return oldBlock;
-	}else{
+	} else {
 		_miss++;
+		
+		sshits<<_hits;
+		ssmiss<<_miss;
+		
+		buffer.append("Miss consultando: ");
+		buffer.append(key->toString());
+		buffer.append(" [HITS acumulados:");
+		buffer.append(sshits.str());
+		buffer.append("]");
+		buffer.append(" [MISS acumulados:");
+		buffer.append(ssmiss.str());
+		buffer.append("]");
+		DEBUG(buffer.c_str());
+
 		return NULL;
 	}
 }
