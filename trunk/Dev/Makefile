@@ -1,22 +1,17 @@
-#Esto es un comentario
+CC=g++
+LDFLAGS= -Wall -g
+EXECUTABLE=AlmacenX
 
-#Es la ruta para llegar a los archivos que estan en el codigo
 CODE_PATH:= Codigo/
 DATA_PATH:= $(CODE_PATH)Data/
 BUFFER_PATH:= $(CODE_PATH)Buffer/
 TEST_PATH:= $(CODE_PATH)TestingFramework/
 
-#TARGET es una variable que se va a usar mas abajo. Indica el nombre del archivo que se va a ejecutar 
-TARGET:= AlmacenX
+MAIN_CLASS= $(CODE_PATH)main.cpp
+MAIN_PABLO= $(CODE_PATH)main_pablo.cpp
+MAIN_NAHUEL= $(CODE_PATH)TestSuite_BlockStructuredFile.cpp
 
-#Una variable que no se usa
-#OBJ =
-
-
- 
-#Archivos que estan en producción       
-				
-GLOBAL_CPP:= $(CODE_PATH)BufferedDataManager.cpp\
+SOURCES:=	$(CODE_PATH)BufferedDataManager.cpp\
 	$(DATA_PATH)Block.cpp\
 	$(BUFFER_PATH)BufferKey.cpp\
 	$(CODE_PATH)CreateStatement.cpp\
@@ -77,106 +72,33 @@ GLOBAL_CPP:= $(CODE_PATH)BufferedDataManager.cpp\
 	$(DATA_PATH)BlockStructuredFileException.cpp\
 	$(BUFFER_PATH)ReplacementSelector.cpp\
 	$(BUFFER_PATH)IBuffereable.cpp\
-	$(BUFFER_PATH)BlocksBuffer.cpp
+	$(BUFFER_PATH)BlocksBuffer.cpp\
 	
+OBJECTS=$(SOURCES:.cpp=.o)
 
-
-GLOBAL_CPP_H:= $(CODE_PATH)BufferedDataManager.h\
-	$(DATA_PATH)Block.h\
-	$(BUFFER_PATH)BufferKey.cpp\
-	$(CODE_PATH)CreateStatement.h\
-	$(CODE_PATH)DataFile.h\
-	$(CODE_PATH)DataManager.h\
-	$(CODE_PATH)DataType.h\
-	$(CODE_PATH)DataValue.h\
-	$(CODE_PATH)DeleteStatement.h\
-	$(CODE_PATH)Demon.h\
-	$(CODE_PATH)EndStatement.h\
-	$(CODE_PATH)Field.h\
-	$(CODE_PATH)FileManager.h\
-	$(CODE_PATH)FileInfo.h\
-	$(DATA_PATH)FileNotFoundException.h\
-	$(DATA_PATH)FileDoesAlreadyExistsException.h\
-	$(DATA_PATH)IdentityException.h\
-	$(CODE_PATH)InsertionStatement.h\
-	$(CODE_PATH)IntType.h\
-	$(CODE_PATH)IntValue.h\
-	$(CODE_PATH)IOException.h\
-	$(CODE_PATH)ITokenizer.h\
-	$(CODE_PATH)KillDaemonException.h\
-	$(CODE_PATH)OutPutter.h\
-	$(CODE_PATH)ParserException.h\
-	$(CODE_PATH)QueryStatement.h\
-	$(DATA_PATH)RecordsBlock.h\
-	$(CODE_PATH)RemoveStatement.h\
-	$(CODE_PATH)SecondaryIndex.h\
-	$(CODE_PATH)Statement.h\
-	$(CODE_PATH)StatementParser.h\
-	$(CODE_PATH)StatementParserException.h\
-	$(CODE_PATH)StatementResult.h\
-	$(CODE_PATH)StatsStatement.h\
-	$(CODE_PATH)StringType.h\
-	$(CODE_PATH)StringValue.h\
-	$(CODE_PATH)StructureType.h\
-	$(CODE_PATH)StructureValue.h\
-	$(BUFFER_PATH)SystemBuffer.cpp\
-	$(CODE_PATH)Token.h\
-	$(CODE_PATH)Tokenizer.h\
-	$(CODE_PATH)UpdateStatement.h\
-	$(CODE_PATH)Utils.h\
-	$(DATA_PATH)BlockNotFoundException.h\
-	$(DATA_PATH)BlockStructuredFile.h\
-	$(DATA_PATH)BlockStructuredFileHeader.h\
-	$(DATA_PATH)MetadataBlock.h\
-	$(DATA_PATH)RawRecord.cpp\
-	$(DATA_PATH)Record.h\
-	$(TEST_PATH)Assertion.h\
-	$(TEST_PATH)EqualsAssertion.h\
-	$(TEST_PATH)EqualsIntAssertion.h\
-	$(TEST_PATH)TrueAssertion.h\
-	$(TEST_PATH)TestCase.h\
-	$(TEST_PATH)TestSuiteResult.h\
-	$(DATA_PATH)TypeMismatchException.h\
-	$(DATA_PATH)BlockStructuredFileException.h\
-	$(BUFFER_PATH)IComparable.h\
-	$(BUFFER_PATH)ComparableExample.h\
-	$(BUFFER_PATH)ReplacementSelector.h\
-	$(BUFFER_PATH)IBuffereable.h\
-	$(BUFFER_PATH)BlocksBuffer.h
-	
-	
 	
 #Si se quiere arrancar usando un "main" propio, crear el archivo con la funcion main adentro y decomentar la linea que corresponda
 
-MAIN_CLASS= $(CODE_PATH)main.cpp
-MAIN_PABLO= $(CODE_PATH)main_pablo.cpp
-MAIN_NAHUEL= $(CODE_PATH)TestSuite_BlockStructuredFile.cpp
-#$(CODE_PATH)main_nahuel.cpp
-MAIN_NICOLAS= $(CODE_PATH)main.cpp
-
-#Lo que esta antes de ":" es una etiqueta. A la derecha de ":" van todos (.h y .cpp) los archivos que se van a usar.
-#$(TARGET): $(MAIN_CLASS) $(CODE_PATH)StringType.cpp $(CODE_PATH)StringType.h $(CODE_PATH)DataType.cpp $(CODE_PATH)DataType.h $(CODE_PATH)IntType.h $(CODE_PATH)IntType.cpp $(CODE_PATH)SecondaryIndex.h $(CODE_PATH)SecondaryIndex.cpp $(CODE_PATH)Utils.h    $(CODE_PATH)Utils.cpp    $(CODE_PATH)IOException.h    $(CODE_PATH)IOException.cpp    $(CODE_PATH)FileManager.h    $(CODE_PATH)FileManager.cpp    $(CODE_PATH)FileInfo.h    $(CODE_PATH)FileInfo.cpp    $(CODE_PATH)Demon.h    $(CODE_PATH)Demon.cpp
-#Aca se le da la instrucción al compilador para que compile todos los cpp
-#	g++ -Wall $(MAIN_CLASS) $(CODE_PATH)StringType.cpp $(CODE_PATH)DataType.cpp $(CODE_PATH)IntType.cpp $(CODE_PATH)Utils.cpp $(CODE_PATH)SecondaryIndex.cpp $(CODE_PATH)IOException.cpp $(CODE_PATH)FileManager.cpp $(CODE_PATH)FileInfo.cpp $(CODE_PATH)Demon.cpp
-
-#El eclipse ejecuta el makefile usando "make all". Y "All" apunta a TARGET. Por lo tanto se ejecuta lo que dice en la etiqueta TARGET
-all: $(MAIN_NICOLAS) $(GLOBAL_CPP_H)
-	g++ -Wall -g $(MAIN_NICOLAS) $(GLOBAL_CPP) -o $(TARGET)		
+all: $(SOURCES) $(EXECUTABLE)
 	
-#Sirve para limpiar. Para ejecutar la limpieza hay que ejecutar "make clean"
+$(EXECUTABLE): $(OBJECTS)
+	$(CC) $(LDFLAGS) $(MAIN_CLASS) $(OBJECTS) -o $@
+
+nahuel: $(OBJECTS) 
+	$(CC) $(LDFLAGS) $(MAIN_NAHUEL) $(OBJECTS) -o $@
+
+pablo: $(OBJECTS) 
+	$(CC) $(LDFLAGS) $(MAIN_PABLO) $(OBJECTS) -o $@
+
+.cpp.o:
+	$(CC) $(LDFLAGS) $< -c -o $@
+
 clean:
-	rm -f $(TARGET)
-	
-#all: $(MAIN_NAHUEL) $(GLOBAL_CPP_H)
-#	g++ -Wall $(MAIN_CLASS) $(GLOBAL_CPP) -o $(TARGET)
+	rm -f $(EXECUTABLE)
 
-pablo: $(MAIN_PABLO) $(GLOBAL_CPP_H)
-	g++ -Wall -g $(MAIN_PABLO) $(GLOBAL_CPP) -o $(TARGET)	
-
-
-nahuel: $(MAIN_NAHUEL) $(GLOBAL_CPP_H)
-	g++ -Wall -g $(MAIN_NAHUEL) \
-	$(GLOBAL_CPP) -o $(TARGET)
-
-nicolas: $(MAIN_NICOLAS) $(GLOBAL_CPP_H)
-	g++ -Wall -g $(MAIN_NICOLAS) $(GLOBAL_CPP) -o $(TARGET)		
+clean-all:
+	rm -f $(EXECUTABLE)
+	rm -f $(CODE_PATH)*.o
+	rm -f $(DATA_PATH)*.o
+	rm -f $(BUFFER_PATH)*.o
+	rm -f $(TEST_PATH)*.o
