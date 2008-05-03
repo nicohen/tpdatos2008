@@ -11,8 +11,7 @@ class DataManager{
 	
 private:
 	char* _basePath;
-	int _bufferSize;
-	BlocksBuffer* _blocksBuffer;
+	BlocksBuffer _blocksBuffer;
 public:
 	DataManager(char* basePath, int bufferSize);
 	virtual ~DataManager();
