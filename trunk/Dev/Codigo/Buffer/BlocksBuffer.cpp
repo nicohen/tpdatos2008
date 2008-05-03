@@ -35,3 +35,11 @@ unsigned int BlocksBuffer::getMiss() {
 unsigned int BlocksBuffer::getTotalSize() {
 	return _systemBuffer.getTotalSize();
 }
+
+unsigned int BlocksBuffer::getCurrentSize() {
+	return _systemBuffer.getCurrentSize();
+}
+
+unsigned int BlocksBuffer::getBlocksCount() {
+	return _systemBuffer.getElementsCount();
+}

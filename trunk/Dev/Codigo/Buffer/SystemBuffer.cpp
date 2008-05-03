@@ -3,11 +3,14 @@
 
 SystemBuffer::SystemBuffer(int size){
 	_bufferSize=size;
+	_hits = 0;
+	_miss = 0;
 	this->_bufferCurrentSize=0;
 }
 
 SystemBuffer::~SystemBuffer(){
 }
+
 bool SystemBuffer::isInBuffer(IComparable* key){
 	if (this->_buffer.count(key)>0) {
 		this->_hits++;
@@ -68,14 +71,18 @@ void SystemBuffer::removeElement(IComparable* bk){
 	}
 }
 
+unsigned int SystemBuffer::getCurrentSize() {
+//	unsigned int totalSize = 0;
+//	
+//	for (map<IComparable*, IBuffereable*, bufferKeyCmp>::iterator iter = this->_buffer.begin(); iter!=this->_buffer.end(); iter++) {
+//		totalSize += ((*iter).second)->getSize();
+//	}
+//	
+	return _bufferCurrentSize/*totalSize*/;
+}
+
 unsigned int SystemBuffer::getTotalSize() {
-	unsigned int totalSize = 0;
-	
-	for (map<IComparable*, IBuffereable*, bufferKeyCmp>::iterator iter = this->_buffer.begin(); iter!=this->_buffer.end(); iter++) {
-		totalSize += ((*iter).second)->getSize();
-	}
-	
-	return totalSize;
+	return _bufferSize;
 }
 
 unsigned int SystemBuffer::getHits() {
@@ -84,4 +91,8 @@ unsigned int SystemBuffer::getHits() {
 
 unsigned int SystemBuffer::getMiss() { 
 	return this->_miss;
+}
+
+unsigned int SystemBuffer::getElementsCount() {
+	return _buffer.size();;
 }

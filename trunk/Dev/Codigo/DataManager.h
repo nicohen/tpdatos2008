@@ -24,6 +24,8 @@ public:
 	unsigned int getBufferHitsCount();
 	unsigned int getBufferMissCount();
 	unsigned int getBufferTotalSize();
+	unsigned int getBufferCurrentSize();
+	unsigned int getBufferBlocksCount();
  
 };
 
