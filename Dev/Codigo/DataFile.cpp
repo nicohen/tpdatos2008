@@ -37,6 +37,10 @@ DataFile::DataFile(char* fileName, int blockSize, int fileType, int indexSize, i
 	_metadataBlock->setSecondaryFields(fields);
 }
 
+void DataFile::setBlocksBuffer(BlocksBuffer* blocksBuffer){
+	_blocksBuffer=blocksBuffer;
+}
+
 Field* DataFile::getPrimaryField(){
 	return (Field*)this->_metadataBlock->GetSecondaryFields()->at(0);	
 }
@@ -101,7 +105,7 @@ void DataFile::save(char* folderPath) {
 }
 
 char* DataFile::getFileName() {
-	return this->_fileName;
+	return this->_fullPath;
 }
 
 T_FILESIZE DataFile::getDataUsedSpace() {
@@ -110,7 +114,8 @@ T_FILESIZE DataFile::getDataUsedSpace() {
 	RecordsBlock* recordsBlock;
 	
 	for (int i=1; i <= this->_blockStructuredFile->getContentBlockCount()-1; i++) {
-		recordsBlock = (RecordsBlock*)this->_blockStructuredFile->bGetContentBlock(i,&(RecordsBlock::createRecordsBlock));
+		recordsBlock = this->getRecordBlock(i);
+		//recordsBlock = (RecordsBlock*)this->_blockStructuredFile->bGetContentBlock(i,&(RecordsBlock::createRecordsBlock));
 		usedSpace += recordsBlock->getUsedSpace();
 	}
 	
@@ -123,7 +128,8 @@ T_FILESIZE DataFile::getDataFreeSpace() {
 	RecordsBlock* recordsBlock;
 	
 	for (int i=1; i <= this->_blockStructuredFile->getContentBlockCount()-1; i++) {
-		recordsBlock = (RecordsBlock*)this->_blockStructuredFile->bGetContentBlock(i,&(RecordsBlock::createRecordsBlock));
+		recordsBlock = this->getRecordBlock(i);
+		//	(RecordsBlock*)this->_blockStructuredFile->bGetContentBlock(i,&(RecordsBlock::createRecordsBlock));
 		freeSpace += recordsBlock->getFreeSpace();
 	}
 	
@@ -185,6 +191,7 @@ vector<Record*>* DataFile::removeRecord(int fNumber,DataValue* fValue){
 			}
 		}
 		if (actualize){
+			//this->_blocksBuffer->addBlock(this->getFileName(),j,rBlock);
 			this->_blockStructuredFile->bUpdateContentBlock(j,rBlock);
 			actualize=false;
 		}
@@ -202,7 +209,8 @@ T_BLOCKSIZE DataFile::getDataRecordsCount() {
 	RecordsBlock* recordsBlock;
 	
 	for (int i=1; i <= this->_blockStructuredFile->getContentBlockCount()-1; i++) {
-		recordsBlock = (RecordsBlock*)this->_blockStructuredFile->bGetContentBlock(i,&(RecordsBlock::createRecordsBlock));
+		recordsBlock =  this->getRecordBlock(i);
+			//(RecordsBlock*)this->_blockStructuredFile->bGetContentBlock(i,&(RecordsBlock::createRecordsBlock));
 		recordsCount += recordsBlock->getRecords()->size();
 	}
 	
@@ -263,22 +271,29 @@ void DataFile::insertRecord(Record* record) {
 	RecordsBlock* recordsBlock = NULL;
 	RawRecord* rawRecord = record->serialize();
 	try {
+		//NAHUE: PASAR ESTO AL DATAFILE
 		T_BLOCKCOUNT freeRecordBlockNumber = this->_blockStructuredFile->getFirstFreeContentBlockNumber(1,record->getSerializationFullSize(),&RecordsBlock::createRecordsBlock);
-		recordsBlock = (RecordsBlock*)this->_blockStructuredFile->bGetContentBlock(freeRecordBlockNumber,&RecordsBlock::createRecordsBlock);
+		recordsBlock = this->getRecordBlock(freeRecordBlockNumber); 
+			//(RecordsBlock*)this->_blockStructuredFile->bGetContentBlock(freeRecordBlockNumber,&RecordsBlock::createRecordsBlock);
 		recordsBlock->getRecords()->push_back(rawRecord);
+		//this->_blocksBuffer->addBlock(this->getFileName(),freeRecordBlockNumber,recordsBlock);
 		this->_blockStructuredFile->bUpdateContentBlock(freeRecordBlockNumber,recordsBlock);		
 	} catch(BlockNotFoundException* ex) {
 		recordsBlock = new RecordsBlock(this->_blockStructuredFile->getBlockSize());
 		recordsBlock->getRecords()->push_back(rawRecord);
+		this->_blocksBuffer->addBlock(this->getFileName(),this->getRecordsBlockCount()+1,recordsBlock);
 		this->_blockStructuredFile->bAppendContentBlock(recordsBlock);
 		delete ex;
 	}
 }
 
 RecordsBlock* DataFile::getRecordBlock(int blockNumber){
-	//VALIDAR SI EXISTE ESE NUMERO DE BLOCKE
-	//POR NAHUE
-	return (RecordsBlock*)this->getBlockStructuredFile()->bGetContentBlock(blockNumber,&RecordsBlock::createRecordsBlock);
+	Block* result= this->_blocksBuffer->getBlock(this->getFileName(),blockNumber);
+	if (result==NULL){
+		result= this->getBlockStructuredFile()->bGetContentBlock(blockNumber,&RecordsBlock::createRecordsBlock);
+		this->_blocksBuffer->addBlock(this->getFileName(),blockNumber,result);
+	}
+	return (RecordsBlock*)result;
 }
 
 bool DataFile::updateRecord(Record* myRecord) {
@@ -300,6 +315,7 @@ bool DataFile::updateRecord(Record* myRecord) {
 				RawRecord* myRawRecord = myRecord->serialize();
 				recordsList->erase(iter);
 				recordsList->push_back(myRawRecord);
+				//this->_blocksBuffer->addBlock(this->getFileName(),j,rBlock);
 				this->_blockStructuredFile->bUpdateContentBlock(j,rBlock);
 				found = true;
 				break;

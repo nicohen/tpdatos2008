@@ -5,10 +5,8 @@
 
 using namespace std;
 
-DataManager::DataManager(char* basePath, int bufferSize) {
+DataManager::DataManager(char* basePath, int bufferSize):_blocksBuffer(bufferSize) {
 	this->_basePath = cloneStr(basePath);
-	this->_bufferSize = bufferSize;
-	this->_blocksBuffer = new BlocksBuffer(this->_bufferSize);
 }
 
 DataManager::~DataManager() {
@@ -24,6 +22,7 @@ DataFile* DataManager::getFile(char* fileName) {
 	//Si no esta en el vector, lo trae de disco
 	dataFile = new DataFile(fileName);
 	dataFile->load(this->_basePath);
+	dataFile->setBlocksBuffer(&_blocksBuffer);
 	return dataFile;
 	//throw "[Excepcion]:No se encontro el archivo en DataFile.getFile";
 }
@@ -51,21 +50,21 @@ char* DataManager::getBasePath() {
 }
 
 unsigned int DataManager::getBufferHitsCount() {
-	return this->_blocksBuffer->getHits();
+	return this->_blocksBuffer.getHits();
 }
 
 unsigned int DataManager::getBufferMissCount() {
-	return this->_blocksBuffer->getMiss();
+	return this->_blocksBuffer.getMiss();
 }
 
 unsigned int DataManager::getBufferTotalSize() {
-	return this->_blocksBuffer->getTotalSize();
+	return this->_blocksBuffer.getTotalSize();
 }
 
 unsigned int DataManager::getBufferCurrentSize() {
-	return this->_blocksBuffer->getCurrentSize();
+	return this->_blocksBuffer.getCurrentSize();
 }
 
 unsigned int DataManager::getBufferBlocksCount() {
-	return this->_blocksBuffer->getBlocksCount();
+	return this->_blocksBuffer.getBlocksCount();
 }

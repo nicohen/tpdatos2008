@@ -12,6 +12,7 @@
 #include "Data/Block.h"
 #include "Data/RawRecord.h"
 #include <vector>
+#include "Buffer/BlocksBuffer.h"
 
 class DataFile {
 
@@ -21,6 +22,7 @@ private:
 	MetadataBlock* _metadataBlock;
 	BlockStructuredFile* _blockStructuredFile;
 	char* _fullPath;
+	BlocksBuffer* _blocksBuffer;
 	
 	bool isArrayOf(vector<Field*>* fields, vector<DataValue*>* values);
 public:
@@ -33,6 +35,7 @@ public:
 	DataFile(char* fileName);
 	virtual ~DataFile();
 	
+	void setBlocksBuffer(BlocksBuffer* blocksBuffer);
 	void load(char* folderpath);
 	void save(char* folderPath);
 	void setFolder(char* folderPath);

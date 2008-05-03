@@ -6,7 +6,6 @@
 #include <map>
 #include "ReplacementSelector.h"
 #include "../Data/Block.h"
-#include "../DataFile.h"
 #include "SystemBuffer.h"
 
 class  BlocksBuffer{

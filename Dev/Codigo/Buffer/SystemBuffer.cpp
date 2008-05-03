@@ -23,7 +23,7 @@ bool SystemBuffer::isInBuffer(IComparable* key){
 
 void SystemBuffer::addElement(IComparable* key, IBuffereable* value){
 	if (this->_buffer.count(key)>0){
-		this->removeElement(key);
+		return;
 	}
 	if (this->_bufferSize<value->getSize()){
 		//throw new BufferException("Tamaño de bloque mayor al del buffer");;
