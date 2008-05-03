@@ -20,6 +20,8 @@ class SystemBuffer{
 		unsigned int _bufferSize;
 		unsigned int _bufferCurrentSize;
 		ReplacementSelector replacementCriteria;
+		unsigned int _hits;
+		unsigned int _miss;
 		
 		void removeElement(IComparable* bk);
 		void makeSpace(int elementSize);
@@ -29,6 +31,9 @@ class SystemBuffer{
 		void addElement(IComparable* key, IBuffereable* value);
 		IBuffereable* getElement(IComparable* key);
 		bool isInBuffer(IComparable* key);
+		unsigned int getTotalSize();
+		unsigned int getHits();
+		unsigned int getMiss();
 		virtual ~SystemBuffer();
 };
 

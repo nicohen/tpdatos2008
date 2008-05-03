@@ -9,7 +9,13 @@ SystemBuffer::SystemBuffer(int size){
 SystemBuffer::~SystemBuffer(){
 }
 bool SystemBuffer::isInBuffer(IComparable* key){
-	return (this->_buffer.count(key)>0); 
+	if (this->_buffer.count(key)>0) {
+		this->_hits++;
+		return true;
+	} else {
+		this->_miss++;
+		return false;
+	}
 }
 
 void SystemBuffer::addElement(IComparable* key, IBuffereable* value){
@@ -60,4 +66,22 @@ void SystemBuffer::removeElement(IComparable* bk){
 		this->_bufferCurrentSize-=value->getSize();
 		delete value;
 	}
+}
+
+unsigned int SystemBuffer::getTotalSize() {
+	unsigned int totalSize = 0;
+	
+	for (map<IComparable*, IBuffereable*, bufferKeyCmp>::iterator iter = this->_buffer.begin(); iter!=this->_buffer.end(); iter++) {
+		totalSize += ((*iter).second)->getSize();
+	}
+	
+	return totalSize;
+}
+
+unsigned int SystemBuffer::getHits() {
+	return this->_hits;
+}
+
+unsigned int SystemBuffer::getMiss() { 
+	return this->_miss;
 }

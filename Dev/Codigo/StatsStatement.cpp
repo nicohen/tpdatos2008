@@ -28,6 +28,9 @@ StatementResult* StatsStatement::execute(DataManager* dataManager) {
 	ostringstream fileSize;
 	ostringstream dataFreeSpace;
 	ostringstream dataRecordsCount;
+	ostringstream hitsCount;
+	ostringstream missCount;
+	ostringstream bufferBlocksSize;
 	
 	try{
 		DataFile* dataFile = dataManager->getFile(this->getFileName());
@@ -35,10 +38,13 @@ StatementResult* StatsStatement::execute(DataManager* dataManager) {
 		fileSize<<dataFile->getFileSize();
 		dataFreeSpace<<dataFile->getDataFreeSpace();
 		dataRecordsCount<<dataFile->getDataRecordsCount();
-		
+		hitsCount<<dataManager->getBufferHitsCount();
+		missCount<<dataManager->getBufferMissCount();
+		bufferBlocksSize<<dataManager->getBufferTotalSize();
+
 		buffer->append("'Estadisticas solicitadas del archivo ");
 		buffer->append(this->getFileName());
-		buffer->append("'\nOCUPADO\n");
+		buffer->append("'\nESPACIO OCUPADO\n");
 		buffer->append("\tDatos------> ");
 		buffer->append(dataUsedSpace.str());
 		buffer->append(" bytes\n");
@@ -46,7 +52,7 @@ StatementResult* StatsStatement::execute(DataManager* dataManager) {
 		buffer->append("\tNeto-------> ");
 		buffer->append(fileSize.str());
 		buffer->append(" bytes\n");
-		buffer->append("LIBRE\n");
+		buffer->append("ESPACIO LIBRE\n");
 		buffer->append("\tDatos------> ");
 		buffer->append(dataFreeSpace.str());
 		buffer->append(" bytes\n");
@@ -56,6 +62,16 @@ StatementResult* StatsStatement::execute(DataManager* dataManager) {
 		buffer->append(dataRecordsCount.str());
 		buffer->append(" registros\n");
 		buffer->append("\tIndice-----> 0 registros\n");
+		buffer->append("BUFFER\n");
+		//Cantidad de Hits
+		buffer->append("\tHits-------> ");
+		buffer->append(hitsCount.str());
+		//Cantidad de Miss
+		buffer->append("\n\tMiss-------> ");
+		buffer->append(missCount.str());
+		//Cantidad de Bloques
+		buffer->append("\n\tBloques----> ");
+		buffer->append(bufferBlocksSize.str());
 	}catch(FileNotFoundException* ex){
 		buffer->append(" Error al buscar registros(");
 		buffer->append(ex->toString());

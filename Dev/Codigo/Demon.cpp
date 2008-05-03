@@ -20,7 +20,7 @@ void Demon::run(void){
 	FileManager::FileManager* fileManager = new FileManager::FileManager();
 	FileManager::FileInfo* inputFile = NULL;
 	OutPutter::OutPutter* outPutter = NULL;
-	DataManager* dataManager = new DataManager("Data/");
+	DataManager* dataManager = new DataManager("Data/",_bufferSize);
 	BufferedDataManager* bufferedDataManager = new BufferedDataManager(dataManager); 
 	
 	for(int i=1;!_finishDaemon;i++) {
