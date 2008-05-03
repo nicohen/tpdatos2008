@@ -875,7 +875,7 @@ Statement* StatementParser::getNext(){
 		token= _tokenizer->getNextToken(false);
 	}
 	
-	if (token->getType()!=Parsing::ITokenizer::KEYWORD){
+	if ((token!=NULL)&&(token->getType()!=Parsing::ITokenizer::KEYWORD)){
 		DEBUG("Se esperaba KEYWORD en lugar de:");
 		DEBUG(token->getContent());
 		buffer.append("Sentecia desconocida: ");

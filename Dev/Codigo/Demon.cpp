@@ -37,7 +37,7 @@ void Demon::run(void){
 			processInputStatements(bufferedDataManager, outPutter, inputFile);
 
 			inputFile->close();
-			//inputFile->delet();
+			inputFile->delet();
 			
 			delete inputFile;
 			delete outPutter;
@@ -81,10 +81,9 @@ void Demon::processInputStatements(BufferedDataManager* bufferedDataManager, Out
 			_finishDaemon = true;
 			fin=true;
 			delete kde;
-		} catch(FileManager::IOException* ioe) {
+		} catch(FileManager::IOException ioe) {
 			DEBUG("Fin de archivo.");
 			fin=true;
-			delete ioe;
 		} catch(StatementParserException* spe) {
 			outPutter->printLine(spe->getMessage());
 			delete spe;
