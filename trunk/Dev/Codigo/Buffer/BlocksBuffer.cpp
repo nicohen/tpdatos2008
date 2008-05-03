@@ -23,3 +23,15 @@ Block* BlocksBuffer::getBlock(DataFile* file, int blockNumber){
 	delete bk;
 	return (Block*)element; 
 }
+
+unsigned int BlocksBuffer::getHits() {
+	return _systemBuffer.getHits();
+}
+
+unsigned int BlocksBuffer::getMiss() {
+	return _systemBuffer.getMiss();
+}
+
+unsigned int BlocksBuffer::getTotalSize() {
+	return _systemBuffer.getTotalSize();
+}

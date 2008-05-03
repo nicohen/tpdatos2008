@@ -5,8 +5,10 @@
 
 using namespace std;
 
-DataManager::DataManager(char* basePath) {
+DataManager::DataManager(char* basePath, int bufferSize) {
 	this->_basePath = cloneStr(basePath);
+	this->_bufferSize = bufferSize;
+	this->_blocksBuffer = new BlocksBuffer(this->_bufferSize);
 }
 
 DataManager::~DataManager() {
@@ -46,4 +48,16 @@ bool DataManager::removeFile(char* fileName) {
 
 char* DataManager::getBasePath() {
 	return this->_basePath;
+}
+
+unsigned int DataManager::getBufferHitsCount() {
+	return this->_blocksBuffer->getHits();
+}
+
+unsigned int DataManager::getBufferMissCount() {
+	return this->_blocksBuffer->getMiss();
+}
+
+unsigned int DataManager::getBufferTotalSize() {
+	return this->_blocksBuffer->getTotalSize();
 }
