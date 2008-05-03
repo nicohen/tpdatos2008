@@ -82,13 +82,13 @@ OBJECTS=$(SOURCES:.cpp=.o)
 all: $(SOURCES) $(EXECUTABLE)
 	
 $(EXECUTABLE): $(OBJECTS)
-	$(CC) $(LDFLAGS) $(MAIN_CLASS) $(OBJECTS) -o $@
+	$(CC) $(LDFLAGS) $(MAIN_CLASS) $(OBJECTS) -o $(EXECUTABLE)
 
 nahuel: $(OBJECTS) 
-	$(CC) $(LDFLAGS) $(MAIN_NAHUEL) $(OBJECTS) -o $@
+	$(CC) $(LDFLAGS) $(MAIN_NAHUEL) $(OBJECTS) -o $(EXECUTABLE)
 
 pablo: $(OBJECTS) 
-	$(CC) $(LDFLAGS) $(MAIN_PABLO) $(OBJECTS) -o $@
+	$(CC) $(LDFLAGS) $(MAIN_PABLO) $(OBJECTS) -o $(EXECUTABLE)
 
 .cpp.o:
 	$(CC) $(LDFLAGS) $< -c -o $@

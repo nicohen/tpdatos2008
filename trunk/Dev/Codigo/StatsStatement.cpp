@@ -68,7 +68,7 @@ StatementResult* StatsStatement::execute(DataManager* dataManager) {
 		buffer->append("\tIndice-----> 0 registros\n");
 		buffer->append("BUFFER\n");
 		//Cantidad de Hits
-		buffer->append("\tHits---------------> ");
+		buffer->append("\tHits-------------> ");
 		buffer->append(hitsCount.str());
 		//Cantidad de Miss
 		buffer->append("\n\tMiss-------------> ");

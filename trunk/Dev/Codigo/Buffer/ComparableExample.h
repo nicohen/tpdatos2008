@@ -9,6 +9,7 @@ public:
 	int _number;
 	ComparableExample(int number);
 	virtual bool isLowerThan(IComparable* other);
+	virtual char* toString();
 	virtual ~ComparableExample();
 };
 

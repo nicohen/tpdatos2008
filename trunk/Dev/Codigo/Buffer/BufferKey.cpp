@@ -1,7 +1,7 @@
 #include "BufferKey.h"
-#include "../Utils.h"
-#include <string>
+#include "string.h"
 #include <sstream>
+#include "../Utils.h"
 
 BufferKey::BufferKey(char* fileName, int block){
 	_fileName= cloneStr(fileName);
@@ -25,14 +25,15 @@ bool BufferKey::isLowerThan(IComparable* other){
 	return (key1->getBlockNumber()<key2->getBlockNumber());
 }
 
-char* BufferKey::toString(){
-	/*string str;
-	ostringstream ss;
-	str.append(this->_fileName);
-	str.append(" ");
-	ss<<this->_blockNumber;
-	str.append(ss.str());
-	return str.c_str();*/
+char* BufferKey::toString() {
+//	string buffer;
+//	ostringstream ss;
+//	buffer.append("[FileName:");
+//	buffer.append(this->_fileName);
+//	buffer.append("] [BlockNumber:");
+//	ss<<this->_blockNumber;
+//	buffer.append("]");
+//	buffer.append(ss.str());
 	return "";
 }
 

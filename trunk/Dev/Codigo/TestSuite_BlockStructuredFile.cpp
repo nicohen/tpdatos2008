@@ -1100,39 +1100,93 @@ void Test_BufferHitsMissAndSize(TestCase* test) {
 	RecordsBlock* rb2= new RecordsBlock(2);
 	RecordsBlock* rb3= new RecordsBlock(3);
 	RecordsBlock* rb4= new RecordsBlock(4);
+	RecordsBlock* rb5= new RecordsBlock(5);
+	RecordsBlock* rb6= new RecordsBlock(6);
+	RecordsBlock* rb7= new RecordsBlock(491);
+	RecordsBlock* rb8= new RecordsBlock(1);
+	RecordsBlock* rb9= new RecordsBlock(14);
 	
+	//Inserto bloque 1
 	blocksBuffer->addBlock("datos.dat",1,rb1);
 	test->Assert_inteq(0,blocksBuffer->getHits());
 	test->Assert_inteq(0,blocksBuffer->getMiss());
 	test->Assert_inteq(1,blocksBuffer->getBlocksCount());
 	test->Assert_inteq(1,blocksBuffer->getCurrentSize());
 	test->Assert_inteq(512,blocksBuffer->getTotalSize());
-	//	blocksBuffer->addBlock("datos.dat",2,rb2);
-//	test->Assert_inteq(2,blocksBuffer->getHits());
-//	test->Assert_inteq(0,blocksBuffer->getMiss());
-//	test->Assert_inteq(2,blocksBuffer->getTotalSize());
-//	blocksBuffer->addBlock("datos.dat",3,rb3);
-//	test->Assert_inteq(3,blocksBuffer->getHits());
-//	test->Assert_inteq(0,blocksBuffer->getMiss());
-//	test->Assert_inteq(3,blocksBuffer->getTotalSize());
-//	blocksBuffer->addBlock("datos.dat",4,rb4);
-//	test->Assert_inteq(4,blocksBuffer->getHits());
-//	test->Assert_inteq(0,blocksBuffer->getMiss());
-//	test->Assert_inteq(4,blocksBuffer->getTotalSize());
-//	blocksBuffer->getBlock("datos.dat",1);
-//	test->Assert_inteq(4,blocksBuffer->getHits());
-//	test->Assert_inteq(0,blocksBuffer->getMiss());
-//	test->Assert_inteq(4,blocksBuffer->getTotalSize());
-//	blocksBuffer->getBlock("datos.dat",5);
-//	test->Assert_inteq(4,blocksBuffer->getHits());
-//	test->Assert_inteq(1,blocksBuffer->getMiss());
-//	test->Assert_inteq(4,blocksBuffer->getTotalSize());
-	
-	delete blocksBuffer;
-	delete rb1;
-	delete rb2;
-	delete rb3;
-	delete rb4;
+	//Traigo bloque 1
+	blocksBuffer->getBlock("datos.dat",1);
+	test->Assert_inteq(1,blocksBuffer->getHits());
+	test->Assert_inteq(0,blocksBuffer->getMiss());
+	test->Assert_inteq(1,blocksBuffer->getBlocksCount());
+	test->Assert_inteq(1,blocksBuffer->getCurrentSize());
+	test->Assert_inteq(512,blocksBuffer->getTotalSize());
+	//Traigo bloque 2
+	blocksBuffer->getBlock("datos.dat",2);
+	test->Assert_inteq(1,blocksBuffer->getHits());
+	test->Assert_inteq(1,blocksBuffer->getMiss());
+	test->Assert_inteq(1,blocksBuffer->getBlocksCount());
+	test->Assert_inteq(1,blocksBuffer->getCurrentSize());
+	test->Assert_inteq(512,blocksBuffer->getTotalSize());
+	//Inserto bloque 2
+	blocksBuffer->addBlock("datos.dat",2,rb2);
+	test->Assert_inteq(1,blocksBuffer->getHits());
+	test->Assert_inteq(1,blocksBuffer->getMiss());
+	test->Assert_inteq(2,blocksBuffer->getBlocksCount());
+	test->Assert_inteq(3,blocksBuffer->getCurrentSize());
+	test->Assert_inteq(512,blocksBuffer->getTotalSize());
+	//Traigo bloque 2
+	blocksBuffer->getBlock("datos.dat",2);
+	test->Assert_inteq(2,blocksBuffer->getHits());
+	test->Assert_inteq(1,blocksBuffer->getMiss());
+	test->Assert_inteq(2,blocksBuffer->getBlocksCount());
+	test->Assert_inteq(3,blocksBuffer->getCurrentSize());
+	test->Assert_inteq(512,blocksBuffer->getTotalSize());
+	//Insert bloque 3,4,5,6
+	blocksBuffer->addBlock("datos.dat",3,rb3);
+	blocksBuffer->addBlock("datos.dat",4,rb4);
+	blocksBuffer->addBlock("datos.dat",5,rb5);
+	blocksBuffer->addBlock("datos.dat",6,rb6);
+	blocksBuffer->getBlock("datos.dat",3);
+	blocksBuffer->getBlock("datos.dat",4);
+	blocksBuffer->getBlock("datos.dat",7);
+	blocksBuffer->getBlock("datos.dat",8);
+	test->Assert_inteq(4,blocksBuffer->getHits());
+	test->Assert_inteq(3,blocksBuffer->getMiss());
+	test->Assert_inteq(6,blocksBuffer->getBlocksCount());
+	test->Assert_inteq(21,blocksBuffer->getCurrentSize());
+	test->Assert_inteq(512,blocksBuffer->getTotalSize());
+	//Inserto bloque 7 para llenar el buffer
+	blocksBuffer->addBlock("datos.dat",7,rb7);
+	blocksBuffer->getBlock("datos.dat",6);
+	test->Assert_inteq(5,blocksBuffer->getHits());
+	test->Assert_inteq(3,blocksBuffer->getMiss());
+	test->Assert_inteq(7,blocksBuffer->getBlocksCount());
+	test->Assert_inteq(512,blocksBuffer->getCurrentSize());
+	test->Assert_inteq(512,blocksBuffer->getTotalSize());
+	//Inserto bloque 8 para desbordar el buffer
+	blocksBuffer->addBlock("datos.dat",8,rb8);
+	test->Assert_inteq(5,blocksBuffer->getHits());
+	test->Assert_inteq(3,blocksBuffer->getMiss());
+	test->Assert_inteq(7,blocksBuffer->getBlocksCount());
+	test->Assert_inteq(508,blocksBuffer->getCurrentSize());
+	test->Assert_inteq(512,blocksBuffer->getTotalSize());
+	blocksBuffer->addBlock("datos.dat",9,rb9);
+	test->Assert_inteq(5,blocksBuffer->getHits());
+	test->Assert_inteq(3,blocksBuffer->getMiss());
+	test->Assert_inteq(5,blocksBuffer->getBlocksCount());
+	test->Assert_inteq(31,blocksBuffer->getCurrentSize());
+	test->Assert_inteq(512,blocksBuffer->getTotalSize());
+
+//	delete rb1;
+//	delete rb2;
+//	delete rb3;
+//	delete rb4;
+//	delete rb5;
+//	delete rb6;
+//	delete rb7;
+//	delete rb8;
+//	delete rb9;
+//	delete blocksBuffer;
 }
 
 int main(int argc, char* argv[]){

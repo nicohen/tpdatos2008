@@ -5,9 +5,9 @@ class IComparable
 {
 public:
 	IComparable();
-	
-	virtual bool isLowerThan(IComparable* other)=0;
 	virtual ~IComparable();
+	virtual char* toString()=0;
+	virtual bool isLowerThan(IComparable* other)=0;
 };
 
 #endif /*ICOMPARABLE_H_*/

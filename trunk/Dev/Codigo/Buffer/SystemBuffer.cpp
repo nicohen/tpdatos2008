@@ -1,5 +1,7 @@
 #include "SystemBuffer.h"
 #include "../Utils.h"
+#include "string.h"
+#include <sstream>
 
 SystemBuffer::SystemBuffer(int size){
 	_bufferSize=size;
@@ -12,16 +14,13 @@ SystemBuffer::~SystemBuffer(){
 }
 
 bool SystemBuffer::isInBuffer(IComparable* key){
-	if (this->_buffer.count(key)>0) {
-		this->_hits++;
-		return true;
-	} else {
-		this->_miss++;
-		return false;
-	}
+	return (this->_buffer.count(key)>0);
 }
 
 void SystemBuffer::addElement(IComparable* key, IBuffereable* value){
+	string buffer;
+	ostringstream ss;
+	
 	if (this->_buffer.count(key)>0){
 		return;
 	}
@@ -30,7 +29,12 @@ void SystemBuffer::addElement(IComparable* key, IBuffereable* value){
 		DEBUG("Tamaño de bloque mayor al del buffer");
 		return;
 	}
-	if ((this->_bufferCurrentSize+value->getSize())>this->_bufferSize){
+	if ((this->_bufferCurrentSize+value->getSize())>this->_bufferSize) {
+		buffer.append("BUFFER: Se intenta hacer espacio de ");
+		ss<<value->getSize();
+		buffer.append(ss.str());
+		buffer.append(" bytes");
+		DEBUG(buffer.c_str());
 		this->makeSpace(value->getSize());
 	}
 	this->_buffer[key]=value;
@@ -43,15 +47,22 @@ IBuffereable* SystemBuffer::getElement(IComparable* key){
 		IBuffereable* oldBlock;
 		oldBlock= this->_buffer[key];
 		this->replacementCriteria.notifyHit(key);
+		_hits++;
 		return oldBlock;
 	}else{
+		_miss++;
 		return NULL;
 	}
 }
 
-void SystemBuffer::makeSpace(int elementSize){
-	while ((this->_bufferCurrentSize+elementSize)>this->_bufferSize){
+void SystemBuffer::makeSpace(int elementSize) {
+	string buffer;
+	
+	while ((this->_bufferCurrentSize+elementSize)>this->_bufferSize) {
 		IComparable* bk= (IComparable*)this->replacementCriteria.getUnusedItem();
+		buffer.append("BUFFER: Se libera el elemento: ");
+		buffer.append(bk->toString());
+		DEBUG(buffer.c_str());
 		this->removeElement(bk);
 	}	
 }
