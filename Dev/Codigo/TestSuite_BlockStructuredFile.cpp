@@ -998,14 +998,14 @@ void Test1_SystemBuffer(TestCase* test){
 	RecordsBlock* rb2= new RecordsBlock(2);
 	RecordsBlock* rb3= new RecordsBlock(3);
 	RecordsBlock* rb4= new RecordsBlock(4);
-	sbuffer.addBlock(&dataFile,1,rb);
-	sbuffer.addBlock(&dataFile,2,rb2);
-	sbuffer.addBlock(&dataFile,3,rb3);
-	sbuffer.addBlock(&dataFile,4,rb4);
-	test->Assert_True(rb==(RecordsBlock*)sbuffer.getBlock(&dataFile,1));
-	test->Assert_True(rb2==(RecordsBlock*)sbuffer.getBlock(&dataFile,2));
-	test->Assert_True(rb3==(RecordsBlock*)sbuffer.getBlock(&dataFile,3));
-	test->Assert_True(rb4==(RecordsBlock*)sbuffer.getBlock(&dataFile,4));
+	sbuffer.addBlock("test.txt",1,rb);
+	sbuffer.addBlock("test.txt",2,rb2);
+	sbuffer.addBlock("test.txt",3,rb3);
+	sbuffer.addBlock("test.txt",4,rb4);
+	test->Assert_True(rb==(RecordsBlock*)sbuffer.getBlock("test.txt",1));
+	test->Assert_True(rb2==(RecordsBlock*)sbuffer.getBlock("test.txt",2));
+	test->Assert_True(rb3==(RecordsBlock*)sbuffer.getBlock("test.txt",3));
+	test->Assert_True(rb4==(RecordsBlock*)sbuffer.getBlock("test.txt",4));
 	delete rb;
 	delete rb2;
 	delete rb3;
@@ -1019,17 +1019,17 @@ void Test2_SystemBuffer(TestCase* test){
 	RecordsBlock* rb2= new RecordsBlock(2);
 	RecordsBlock* rb3= new RecordsBlock(3);
 	RecordsBlock* rb4= new RecordsBlock(4);
-	sbuffer.addBlock(&dataFile,1,rb);
-	sbuffer.addBlock(&dataFile,2,rb2);
-	test->Assert_True(sbuffer.isInBuffer(&dataFile,1));
-	test->Assert_True(sbuffer.isInBuffer(&dataFile,2));
-	sbuffer.addBlock(&dataFile,3,rb3);
-	test->Assert_True(!sbuffer.isInBuffer(&dataFile,1));
-	test->Assert_True(!sbuffer.isInBuffer(&dataFile,2));
-	test->Assert_True(sbuffer.isInBuffer(&dataFile,3));
-	sbuffer.addBlock(&dataFile,4,rb4);
-	test->Assert_True(!sbuffer.isInBuffer(&dataFile,3));
-	test->Assert_True(sbuffer.isInBuffer(&dataFile,4));
+	sbuffer.addBlock("test.txt",1,rb);
+	sbuffer.addBlock("test.txt",2,rb2);
+	test->Assert_True(sbuffer.isInBuffer("test.txt",1));
+	test->Assert_True(sbuffer.isInBuffer("test.txt",2));
+	sbuffer.addBlock("test.txt",3,rb3);
+	test->Assert_True(!sbuffer.isInBuffer("test.txt",1));
+	test->Assert_True(!sbuffer.isInBuffer("test.txt",2));
+	test->Assert_True(sbuffer.isInBuffer("test.txt",3));
+	sbuffer.addBlock("test.txt",4,rb4);
+	test->Assert_True(!sbuffer.isInBuffer("test.txt",3));
+	test->Assert_True(sbuffer.isInBuffer("test.txt",4));
 }
 
 void Test_ReplacementSelector(TestCase* test){
@@ -1068,6 +1068,47 @@ void Test_ReplacementSelector(TestCase* test){
 	delete c4;
 	delete c5;
 } 
+
+void Test_BufferHitsMissAndSize(TestCase* test) {
+	BlocksBuffer* blocksBuffer = new BlocksBuffer(512);
+	RecordsBlock* rb1= new RecordsBlock(1);
+	RecordsBlock* rb2= new RecordsBlock(2);
+	RecordsBlock* rb3= new RecordsBlock(3);
+	RecordsBlock* rb4= new RecordsBlock(4);
+	
+	blocksBuffer->addBlock("datos.dat",1,rb1);
+	test->Assert_inteq(0,blocksBuffer->getHits());
+	test->Assert_inteq(0,blocksBuffer->getMiss());
+	test->Assert_inteq(1,blocksBuffer->getBlocksCount());
+	test->Assert_inteq(1,blocksBuffer->getCurrentSize());
+	test->Assert_inteq(512,blocksBuffer->getTotalSize());
+	//	blocksBuffer->addBlock("datos.dat",2,rb2);
+//	test->Assert_inteq(2,blocksBuffer->getHits());
+//	test->Assert_inteq(0,blocksBuffer->getMiss());
+//	test->Assert_inteq(2,blocksBuffer->getTotalSize());
+//	blocksBuffer->addBlock("datos.dat",3,rb3);
+//	test->Assert_inteq(3,blocksBuffer->getHits());
+//	test->Assert_inteq(0,blocksBuffer->getMiss());
+//	test->Assert_inteq(3,blocksBuffer->getTotalSize());
+//	blocksBuffer->addBlock("datos.dat",4,rb4);
+//	test->Assert_inteq(4,blocksBuffer->getHits());
+//	test->Assert_inteq(0,blocksBuffer->getMiss());
+//	test->Assert_inteq(4,blocksBuffer->getTotalSize());
+//	blocksBuffer->getBlock("datos.dat",1);
+//	test->Assert_inteq(4,blocksBuffer->getHits());
+//	test->Assert_inteq(0,blocksBuffer->getMiss());
+//	test->Assert_inteq(4,blocksBuffer->getTotalSize());
+//	blocksBuffer->getBlock("datos.dat",5);
+//	test->Assert_inteq(4,blocksBuffer->getHits());
+//	test->Assert_inteq(1,blocksBuffer->getMiss());
+//	test->Assert_inteq(4,blocksBuffer->getTotalSize());
+	
+	delete blocksBuffer;
+	delete rb1;
+	delete rb2;
+	delete rb3;
+	delete rb4;
+}
 
 int main(int argc, char* argv[]){
 	int failedTests=0;
@@ -1233,8 +1274,6 @@ int main(int argc, char* argv[]){
 	Test_ReplacementSelector(test39);
 	delete test39;
 	
-	
-	
 	TestCase* test40=new TestCase("Test1_SystemBuffer",&failedTests);	
 	Test1_SystemBuffer(test40);
 	delete test40;
@@ -1242,7 +1281,10 @@ int main(int argc, char* argv[]){
 	TestCase* test41=new TestCase("Test2_SystemBuffer",&failedTests);	
 	Test2_SystemBuffer(test41);
 	delete test41;
-	
+
+	TestCase* test42=new TestCase("Test_BufferHitsMissAndSize",&failedTests);	
+	Test_BufferHitsMissAndSize(test42);
+	delete test42;
 	
 	delete new TestSuiteResult(failedTests);
 	return 0;

@@ -30,7 +30,9 @@ StatementResult* StatsStatement::execute(DataManager* dataManager) {
 	ostringstream dataRecordsCount;
 	ostringstream hitsCount;
 	ostringstream missCount;
-	ostringstream bufferBlocksSize;
+	ostringstream bufferBlocksCount;
+	ostringstream bufferBlocksCurrentSize;
+	ostringstream bufferBlocksTotalSize;
 	
 	try{
 		DataFile* dataFile = dataManager->getFile(this->getFileName());
@@ -40,7 +42,9 @@ StatementResult* StatsStatement::execute(DataManager* dataManager) {
 		dataRecordsCount<<dataFile->getDataRecordsCount();
 		hitsCount<<dataManager->getBufferHitsCount();
 		missCount<<dataManager->getBufferMissCount();
-		bufferBlocksSize<<dataManager->getBufferTotalSize();
+		bufferBlocksCount<<dataManager->getBufferBlocksCount();
+		bufferBlocksCurrentSize<<dataManager->getBufferCurrentSize();
+		bufferBlocksTotalSize<<dataManager->getBufferTotalSize();
 
 		buffer->append("'Estadisticas solicitadas del archivo ");
 		buffer->append(this->getFileName());
@@ -64,14 +68,20 @@ StatementResult* StatsStatement::execute(DataManager* dataManager) {
 		buffer->append("\tIndice-----> 0 registros\n");
 		buffer->append("BUFFER\n");
 		//Cantidad de Hits
-		buffer->append("\tHits-------> ");
+		buffer->append("\tHits---------------> ");
 		buffer->append(hitsCount.str());
 		//Cantidad de Miss
-		buffer->append("\n\tMiss-------> ");
+		buffer->append("\n\tMiss-------------> ");
 		buffer->append(missCount.str());
 		//Cantidad de Bloques
-		buffer->append("\n\tBloques----> ");
-		buffer->append(bufferBlocksSize.str());
+		buffer->append("\n\tBloques----------> ");
+		buffer->append(bufferBlocksCount.str());
+		//Cantidad de Bloques
+		buffer->append("\n\tTamaño actual----> ");
+		buffer->append(bufferBlocksCurrentSize.str());
+		//Cantidad de Bloques
+		buffer->append("\n\tTamaño total-----> ");
+		buffer->append(bufferBlocksTotalSize.str());
 	}catch(FileNotFoundException* ex){
 		buffer->append(" Error al buscar registros(");
 		buffer->append(ex->toString());

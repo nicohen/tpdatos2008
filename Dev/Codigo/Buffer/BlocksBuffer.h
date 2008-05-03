@@ -21,6 +21,8 @@ class  BlocksBuffer{
 		unsigned int getHits();
 		unsigned int getMiss();
 		unsigned int getTotalSize();
+		unsigned int getCurrentSize();
+		unsigned int getBlocksCount();
 		virtual ~BlocksBuffer();
 };
 

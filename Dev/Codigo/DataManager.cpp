@@ -61,3 +61,11 @@ unsigned int DataManager::getBufferMissCount() {
 unsigned int DataManager::getBufferTotalSize() {
 	return this->_blocksBuffer->getTotalSize();
 }
+
+unsigned int DataManager::getBufferCurrentSize() {
+	return this->_blocksBuffer->getCurrentSize();
+}
+
+unsigned int DataManager::getBufferBlocksCount() {
+	return this->_blocksBuffer->getBlocksCount();
+}

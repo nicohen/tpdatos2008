@@ -31,9 +31,11 @@ class SystemBuffer{
 		void addElement(IComparable* key, IBuffereable* value);
 		IBuffereable* getElement(IComparable* key);
 		bool isInBuffer(IComparable* key);
+		unsigned int getCurrentSize();
 		unsigned int getTotalSize();
 		unsigned int getHits();
 		unsigned int getMiss();
+		unsigned int getElementsCount();
 		virtual ~SystemBuffer();
 };
 
