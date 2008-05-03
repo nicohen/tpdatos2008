@@ -1173,20 +1173,9 @@ void Test_BufferHitsMissAndSize(TestCase* test) {
 	blocksBuffer->addBlock("datos.dat",9,rb9);
 	test->Assert_inteq(5,blocksBuffer->getHits());
 	test->Assert_inteq(3,blocksBuffer->getMiss());
-	test->Assert_inteq(5,blocksBuffer->getBlocksCount());
+	test->Assert_inteq(7,blocksBuffer->getBlocksCount());
 	test->Assert_inteq(31,blocksBuffer->getCurrentSize());
 	test->Assert_inteq(512,blocksBuffer->getTotalSize());
-
-//	delete rb1;
-//	delete rb2;
-//	delete rb3;
-//	delete rb4;
-//	delete rb5;
-//	delete rb6;
-//	delete rb7;
-//	delete rb8;
-//	delete rb9;
-//	delete blocksBuffer;
 }
 
 int main(int argc, char* argv[]){
