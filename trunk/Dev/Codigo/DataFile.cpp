@@ -326,3 +326,15 @@ bool DataFile::updateRecord(Record* myRecord) {
 	}
 	return found;
 }
+T_BLOCKCOUNT DataFile::getFirstFreeContentBlockNumber(T_BLOCKCOUNT initBlockNumber, T_BLOCKSIZE minRequiredSpace) throw (BlockNotFoundException*) {
+	RecordsBlock* recordsBlock = NULL;
+	for (int i=initBlockNumber; i <= this->getDataRecordsCount(); i++) {
+		recordsBlock = this->getRecordBlock(i);
+		if (recordsBlock->getFreeSpace()>=minRequiredSpace) {
+			return i;
+		}
+	}
+
+	throw new BlockNotFoundException("[BlockNotFoundException]: No hay espacio libre para insertar el Registro en un bloque existente");
+
+}

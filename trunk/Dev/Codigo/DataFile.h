@@ -25,6 +25,7 @@ private:
 	BlocksBuffer* _blocksBuffer;
 	
 	bool isArrayOf(vector<Field*>* fields, vector<DataValue*>* values);
+	T_BLOCKCOUNT getFirstFreeContentBlockNumber(T_BLOCKCOUNT initBlockNumber, T_BLOCKSIZE minRequiredSpace) throw (BlockNotFoundException*);
 public:
 	static const int FIRST_BLOCK = 0;
 	//static DataFile* Load(char* filename);
