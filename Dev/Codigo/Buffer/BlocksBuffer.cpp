@@ -5,20 +5,20 @@ BlocksBuffer::BlocksBuffer(int size):_systemBuffer(size){
 BlocksBuffer::~BlocksBuffer(){
 }
 
-bool BlocksBuffer::isInBuffer(DataFile* file,int blockNumber){
-	BufferKey* bk= new BufferKey(file->getFileName(),blockNumber);
+bool BlocksBuffer::isInBuffer(char* fileName,int blockNumber){
+	BufferKey* bk= new BufferKey(fileName,blockNumber);
 	bool found= this->_systemBuffer.isInBuffer(bk);
 	delete bk;
 	return found;
 }
 
-void BlocksBuffer::addBlock(DataFile* file, int blockNumber, Block* block){
-	BufferKey* bk= new BufferKey(file->getFileName(),blockNumber);
+void BlocksBuffer::addBlock(char* fileName, int blockNumber, Block* block){
+	BufferKey* bk= new BufferKey(fileName,blockNumber);
 	this->_systemBuffer.addElement(bk,block);
 }
 
-Block* BlocksBuffer::getBlock(DataFile* file, int blockNumber){
-	BufferKey* bk= new BufferKey(file->getFileName(),blockNumber);
+Block* BlocksBuffer::getBlock(char* fileName, int blockNumber){
+	BufferKey* bk= new BufferKey(fileName,blockNumber);
 	IBuffereable* element=	this->_systemBuffer.getElement(bk);
 	delete bk;
 	return (Block*)element; 

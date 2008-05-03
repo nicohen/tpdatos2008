@@ -15,9 +15,9 @@ class  BlocksBuffer{
 
 	public:
 		BlocksBuffer(int size);
-		void addBlock(DataFile* file, int blockNumber, Block* block);
-		Block* getBlock(DataFile* file, int blockNumber);
-		bool isInBuffer(DataFile* file, int blockNumber);
+		void addBlock(char* fileName, int blockNumber, Block* block);
+		Block* getBlock(char* fileName, int blockNumber);
+		bool isInBuffer(char* fileName, int blockNumber);
 		unsigned int getHits();
 		unsigned int getMiss();
 		unsigned int getTotalSize();
