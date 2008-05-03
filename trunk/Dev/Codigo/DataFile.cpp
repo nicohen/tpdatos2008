@@ -233,12 +233,12 @@ bool DataFile::isArrayOf(vector<Field*>* fields, vector<DataValue*>* values){
 			aValue= (DataValue*)*valueIter;
 			aField= (Field*)*fieldIter;
 			if (aValue->isInstanceOf(aField->getDataType())==false){
-				if(aField->isMandatory()==false){
-					valueIter--;
-				}else{
+				return false;
+			}else{
+				if(aField->isMandatory() && aValue->isNull()){
 					return false;
 				}
-			}		
+			}
 	}
 	if (fieldIter== fields->end()){
 		if (valueIter != values->end()){

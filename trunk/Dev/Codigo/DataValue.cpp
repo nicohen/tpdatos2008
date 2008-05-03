@@ -40,3 +40,7 @@ char* DataValue::serialize(){
 	this->serializeTo(data+sizeof(T_STRING_LENGHT));
 	return data;
 }
+
+bool DataValue::isNull(){
+	return false;
+}
