@@ -10,8 +10,8 @@
 
 struct bufferKeyCmp {
 	bool operator()( IComparable* key1, IComparable* key2 ) const {
-		key1->isLowerThan(key2);
-	};
+		return key1->isLowerThan(key2);
+	}
 };
 
 class SystemBuffer{
