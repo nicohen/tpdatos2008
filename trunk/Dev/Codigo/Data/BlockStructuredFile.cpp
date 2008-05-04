@@ -95,7 +95,7 @@ void BlockStructuredFile::load(T_BLOCKSIZE blockSize){
 	this->_file->seekg (0, ios::beg);
 	this->_file->read(buffer,blockSize);	
 	this->_header->loadPropertiesFromBuffer(buffer);
-	delete buffer;
+	free(buffer);
 }
 
 void BlockStructuredFile::saveHeader(){
@@ -103,7 +103,7 @@ void BlockStructuredFile::saveHeader(){
 	buffer=(char*)malloc(this->getBlockSize());
 	this->_header->saveHeaderToBuffer(buffer);	
 	this->updateBlock(0,buffer);
-	delete buffer;
+	free(buffer);
 }
 
 T_BLOCKCOUNT BlockStructuredFile::getLastBlockIndex(){
