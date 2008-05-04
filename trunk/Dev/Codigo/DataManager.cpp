@@ -7,27 +7,35 @@ using namespace std;
 
 DataManager::DataManager(char* basePath, int bufferSize):_blocksBuffer(bufferSize) {
 	this->_basePath = cloneStr(basePath);
+	
+	this->_dataFilesBuffer=new DataFilesBuffer(2);
+	
 }
 
 DataManager::~DataManager() {
+	free(_dataFilesBuffer);
 	free(this->_basePath);
 }
 
 void DataManager::addFile(DataFile* dataFile) {
 	dataFile->save(this->_basePath);
+	_dataFilesBuffer->addFile(dataFile->getFileName(),dataFile);
 }
 
 DataFile* DataManager::getFile(char* fileName) {
-	DataFile* dataFile;
-	//Si no esta en el vector, lo trae de disco
-	dataFile = new DataFile(fileName);
-	dataFile->load(this->_basePath);
-	dataFile->setBlocksBuffer(&_blocksBuffer);
+	DataFile* dataFile=_dataFilesBuffer->getFile(fileName);
+	if(dataFile==NULL){
+		dataFile = new DataFile(fileName);
+		dataFile->load(this->_basePath);
+		dataFile->setBlocksBuffer(&_blocksBuffer);
+		_dataFilesBuffer->addFile(fileName,dataFile);
+	}
 	return dataFile;
 	//throw "[Excepcion]:No se encontro el archivo en DataFile.getFile";
 }
 
 bool DataManager::removeFile(char* fileName) {
+	
 	string* buffer = new string();
 	char* cadena;
 	bool isRemoved = false;
@@ -39,6 +47,9 @@ bool DataManager::removeFile(char* fileName) {
 	strcpy(cadena,buffer->c_str());
 	
 	isRemoved = hadSuccessRemoving(remove(cadena));
+	
+	//Eliminar del buffer	
+	_dataFilesBuffer->removeFile(fileName);
 	
 	delete buffer;
 	free(cadena);
@@ -67,4 +78,24 @@ unsigned int DataManager::getBufferCurrentSize() {
 
 unsigned int DataManager::getBufferBlocksCount() {
 	return this->_blocksBuffer.getBlocksCount();
+}
+
+unsigned int DataManager::getFilesBufferHitsCount() {
+	return this->_dataFilesBuffer->getHits();
+}
+
+unsigned int DataManager::getFilesBufferMissCount() {
+	return this->_dataFilesBuffer->getMiss();
+}
+
+unsigned int DataManager::getFilesBufferTotalSize() {
+	return this->_dataFilesBuffer->getTotalSize();
+}
+
+unsigned int DataManager::getFilesBufferCurrentSize() {
+	return this->_dataFilesBuffer->getCurrentSize();
+}
+
+unsigned int DataManager::getFilesBufferBlocksCount() {
+	return this->_dataFilesBuffer->getBlocksCount();
 }

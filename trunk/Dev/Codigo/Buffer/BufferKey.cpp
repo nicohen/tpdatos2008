@@ -25,9 +25,9 @@ bool BufferKey::isLowerThan(IComparable* other){
 }
 
 char* BufferKey::toString() {
-	char* cadena = (char*)malloc(strlen(this->_fileName)+30);
+	char* cadena = (char*)malloc(strlen(this->_fileName)+70);
 	
-	sprintf(cadena,"[FileName:%s] [BlockNumber:%d]",this->_fileName,this->_blockNumber);
+	sprintf(cadena,"BLOCKS BUFFER: [FileName:%s] [BlockNumber:%d]",this->_fileName,this->_blockNumber);
 	return cadena;
 }
 

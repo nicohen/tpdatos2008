@@ -73,6 +73,8 @@ SOURCES:=	$(CODE_PATH)BufferedDataManager.cpp\
 	$(BUFFER_PATH)ReplacementSelector.cpp\
 	$(BUFFER_PATH)IBuffereable.cpp\
 	$(BUFFER_PATH)BlocksBuffer.cpp\
+	$(BUFFER_PATH)DataFilesBufferKey.cpp\
+	$(BUFFER_PATH)DataFilesBuffer.cpp
 	
 OBJECTS=$(SOURCES:.cpp=.o)
 
