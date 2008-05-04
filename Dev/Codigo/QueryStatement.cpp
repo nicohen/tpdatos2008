@@ -13,6 +13,7 @@ QueryStatement::QueryStatement(char* filename):Statement(filename){
 StatementResult* QueryStatement::execute(DataManager* dataManager) {
 	string buffer;
 	ostringstream ss;
+	bool isFirstElement = true;
 	DEBUG("Inicio de la ejecución del QueryStatement");
 	
 	buffer.append("'Se consultó por registros con valor [");
@@ -30,8 +31,13 @@ StatementResult* QueryStatement::execute(DataManager* dataManager) {
 			buffer.append("Res = 0");
 		}else{
 			buffer.append("Res = ");
-			for (iter = list->begin(); iter != list->end(); iter++ ){
+			for (iter = list->begin(); iter != list->end(); iter++ ) {
 				each=((Record*)*iter);
+				if (isFirstElement) {
+					isFirstElement = false;
+				} else {
+					buffer.append(" - ");
+				}
 				each->toString(&buffer);
 			}
 		}
