@@ -31,12 +31,12 @@ void SystemBuffer::addElement(IComparable* key, IBuffereable* value){
 	ostringstream ss;
 	
 	if (this->_buffer.count(key)>0){
-		DEBUG("No se agrego al buffer porque ya existe el elemento");
+//		DEBUG("No se agrego al buffer porque ya existe el elemento");
 		return;
 	}
 	if (this->_bufferSize<value->getSize()){
 		//throw new BufferException("Tamaño de bloque mayor al del buffer");;
-		DEBUG("Tamaño de bloque mayor al del buffer");
+		DEBUG("BUFFER: Tamaño de bloque a insertar mayor al del buffer");
 		return;
 	}
 	if ((this->_bufferCurrentSize+value->getSize())>this->_bufferSize) {
@@ -48,7 +48,7 @@ void SystemBuffer::addElement(IComparable* key, IBuffereable* value){
 		this->makeSpace(value->getSize());
 	}
 	string mibuffer;
-	mibuffer.append("Se inserto en ");
+	mibuffer.append("BUFFER: Se inserto en ");
 	mibuffer.append(key->toString());
 	this->_buffer.insert(make_pair(key,value));
 	this->_bufferCurrentSize+=value->getSize();
