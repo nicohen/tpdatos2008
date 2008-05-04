@@ -35,7 +35,6 @@ DataFile* DataManager::getFile(char* fileName) {
 }
 
 bool DataManager::removeFile(char* fileName) {
-	
 	string* buffer = new string();
 	char* cadena;
 	bool isRemoved = false;

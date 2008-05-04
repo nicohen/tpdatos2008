@@ -14,6 +14,7 @@ DataFile::DataFile(char* fileName){
 	_fullPath=NULL;
 }
 
+
 DataFile::DataFile(char* fileName, int blockSize, int fileType, int indexSize, int secondaryFieldsCount, vector<Field*>* secondaryFields, SecondaryIndex* secondaryIndex) {
 	//ToDo: Desde afuera matar esto-->secondaryIndex	
 	vector<Field*>* fields=new vector<Field*>();
@@ -325,6 +326,10 @@ bool DataFile::updateRecord(Record* myRecord) {
 			break;
 	}
 	return found;
+}
+
+T_BLOCKSIZE DataFile::getSize(){
+	return 1;
 }
 T_BLOCKCOUNT DataFile::getFirstFreeContentBlockNumber(T_BLOCKCOUNT initBlockNumber, T_BLOCKSIZE minRequiredSpace) throw (BlockNotFoundException*) {
 	RecordsBlock* recordsBlock = NULL;
