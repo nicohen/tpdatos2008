@@ -13,6 +13,7 @@ RemoveStatement::RemoveStatement(char* filename):Statement(filename){
 StatementResult* RemoveStatement::execute(DataManager* anIDataManager){
 	vector<Record*>* removedRecords = NULL;
 	string buffer;
+	bool isFirstElement = true;
 	ostringstream ss;
 	buffer.append("'Se eliminan registros con valor [");
 	this->_value->toString(&buffer);
@@ -28,7 +29,11 @@ StatementResult* RemoveStatement::execute(DataManager* anIDataManager){
 		vector<Record*>::iterator iter;
 		for (iter = removedRecords->begin(); iter != removedRecords->end(); iter++ ){
 			each=((Record*)*iter);
-			buffer.append(" - ");
+			if (isFirstElement) {
+				isFirstElement = false;
+			} else {
+				buffer.append(" - ");
+			}
 			each->toString(&buffer);
 		}
 		buffer.append(removedRecords->size()?"":"0");	
