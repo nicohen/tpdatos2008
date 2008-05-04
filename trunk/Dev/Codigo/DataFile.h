@@ -13,8 +13,11 @@
 #include "Data/RawRecord.h"
 #include <vector>
 #include "Buffer/BlocksBuffer.h"
+#include "Buffer/IBuffereable.h"
 
-class DataFile {
+
+class DataFile:public IBuffereable
+{
 
 private:
 	int _blockSize;
@@ -61,6 +64,10 @@ public:
 	vector<Record*>* findRecords(int fNumber,DataValue* fValue);
 	vector<Record*>* removeRecord(int fNumber,DataValue* fValue);
 	bool updateRecord(Record* record);
+	
+	
+//	Implementacion de IBuffereable
+	virtual T_BLOCKSIZE getSize();
 	/*
 	void open();
 	void close();
