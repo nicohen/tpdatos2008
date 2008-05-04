@@ -996,10 +996,7 @@ void Test1_SystemBuffer(TestCase* test){
 	test->Assert_True(rb2==(RecordsBlock*)sbuffer.getBlock("test.txt",2));
 	test->Assert_True(rb3==(RecordsBlock*)sbuffer.getBlock("test.txt",3));
 	test->Assert_True(rb4==(RecordsBlock*)sbuffer.getBlock("test.txt",4));
-	delete rb;
-	delete rb2;
-	delete rb3;
-	delete rb4;
+	
 }
 
 void Test2_SystemBuffer(TestCase* test){
