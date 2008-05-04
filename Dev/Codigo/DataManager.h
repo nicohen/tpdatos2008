@@ -4,6 +4,7 @@
 #include "DataFile.h"
 #include <vector>
 #include "Buffer/BlocksBuffer.h"
+#include "Buffer/DataFilesBuffer.h"
 
 using namespace std;
 
@@ -12,6 +13,7 @@ class DataManager{
 private:
 	char* _basePath;
 	BlocksBuffer _blocksBuffer;
+	DataFilesBuffer* _dataFilesBuffer;
 public:
 	DataManager(char* basePath, int bufferSize);
 	virtual ~DataManager();
@@ -25,6 +27,12 @@ public:
 	unsigned int getBufferTotalSize();
 	unsigned int getBufferCurrentSize();
 	unsigned int getBufferBlocksCount();
+	
+	unsigned int getFilesBufferHitsCount();
+	unsigned int getFilesBufferMissCount();
+	unsigned int getFilesBufferTotalSize();
+	unsigned int getFilesBufferCurrentSize();
+	unsigned int getFilesBufferBlocksCount();
  
 };
 

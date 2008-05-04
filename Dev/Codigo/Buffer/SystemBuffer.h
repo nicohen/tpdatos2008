@@ -22,8 +22,6 @@ class SystemBuffer{
 		ReplacementSelector replacementCriteria;
 		unsigned int _hits;
 		unsigned int _miss;
-		
-		void removeElement(IComparable* bk);
 		void makeSpace(int elementSize);
 		
 	public:
@@ -31,6 +29,7 @@ class SystemBuffer{
 		void addElement(IComparable* key, IBuffereable* value);
 		IBuffereable* getElement(IComparable* key);
 		bool isInBuffer(IComparable* key);
+		void removeElement(IComparable* bk);
 		unsigned int getCurrentSize();
 		unsigned int getTotalSize();
 		unsigned int getHits();
