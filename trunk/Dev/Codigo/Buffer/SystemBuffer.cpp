@@ -31,7 +31,7 @@ void SystemBuffer::addElement(IComparable* key, IBuffereable* value){
 	ostringstream ss;
 	
 	if (this->_buffer.count(key)>0){
-		if (this->_buffer[key]===value){
+		if (this->_buffer[key]==value){
 			DEBUG("No se agrego al buffer porque ya existe el elemento");
 			return;
 		}
