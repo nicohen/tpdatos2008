@@ -28,11 +28,20 @@ StatementResult* StatsStatement::execute(DataManager* dataManager) {
 	ostringstream fileSize;
 	ostringstream dataFreeSpace;
 	ostringstream dataRecordsCount;
-	ostringstream hitsCount;
-	ostringstream missCount;
-	ostringstream bufferBlocksCount;
-	ostringstream bufferBlocksCurrentSize;
-	ostringstream bufferBlocksTotalSize;
+
+	//Buffer de bloques
+	ostringstream bufferBlocksHitsCount;
+	ostringstream bufferBlocksMissCount;
+	ostringstream bufferBlocksBlocksCount;
+	ostringstream bufferBlocksBlocksCurrentSize;
+	ostringstream bufferBlocksBlocksTotalSize;
+
+	//Buffer de File Descriptor
+	ostringstream bufferFileDescriptorHitsCount;
+	ostringstream bufferFileDescriptorMissCount;
+	ostringstream bufferFileDescriptorBlocksCount;
+	ostringstream bufferFileDescriptorBlocksCurrentSize;
+	ostringstream bufferFileDescriptorBlocksTotalSize;
 	
 	try{
 		DataFile* dataFile = dataManager->getFile(this->getFileName());
@@ -40,11 +49,20 @@ StatementResult* StatsStatement::execute(DataManager* dataManager) {
 		fileSize<<dataFile->getFileSize();
 		dataFreeSpace<<dataFile->getDataFreeSpace();
 		dataRecordsCount<<dataFile->getDataRecordsCount();
-		hitsCount<<dataManager->getBufferHitsCount();
-		missCount<<dataManager->getBufferMissCount();
-		bufferBlocksCount<<dataManager->getBufferBlocksCount();
-		bufferBlocksCurrentSize<<dataManager->getBufferCurrentSize();
-		bufferBlocksTotalSize<<dataManager->getBufferTotalSize();
+
+		//Buffer de bloques
+		bufferBlocksHitsCount<<dataManager->getBufferHitsCount();
+		bufferBlocksMissCount<<dataManager->getBufferMissCount();
+		bufferBlocksBlocksCount<<dataManager->getBufferBlocksCount();
+		bufferBlocksBlocksCurrentSize<<dataManager->getBufferCurrentSize();
+		bufferBlocksBlocksTotalSize<<dataManager->getBufferTotalSize();
+		
+		//Buffer de File Descriptor
+		bufferFileDescriptorHitsCount<<dataManager->getFilesBufferHitsCount();
+		bufferFileDescriptorMissCount<<dataManager->getFilesBufferMissCount();
+		bufferFileDescriptorBlocksCount<<dataManager->getFilesBufferBlocksCount();
+		bufferFileDescriptorBlocksCurrentSize<<dataManager->getFilesBufferCurrentSize();
+		bufferFileDescriptorBlocksTotalSize<<dataManager->getFilesBufferTotalSize();
 
 		buffer->append("'Estadisticas solicitadas del archivo ");
 		buffer->append(this->getFileName());
@@ -66,22 +84,43 @@ StatementResult* StatsStatement::execute(DataManager* dataManager) {
 		buffer->append(dataRecordsCount.str());
 		buffer->append(" registros\n");
 		buffer->append("\tIndice-----> 0 registros\n");
-		buffer->append("BUFFER\n");
+		
+		//Buffer de bloques
+		buffer->append("BUFFER (BLOQUES)\n");
 		//Cantidad de Hits
 		buffer->append("\tHits-------------> ");
-		buffer->append(hitsCount.str());
+		buffer->append(bufferBlocksHitsCount.str());
 		//Cantidad de Miss
 		buffer->append("\n\tMiss-------------> ");
-		buffer->append(missCount.str());
+		buffer->append(bufferBlocksMissCount.str());
 		//Cantidad de Bloques
 		buffer->append("\n\tBloques----------> ");
-		buffer->append(bufferBlocksCount.str());
+		buffer->append(bufferBlocksBlocksCount.str());
 		//Cantidad de Bloques
 		buffer->append("\n\tTamaño actual----> ");
-		buffer->append(bufferBlocksCurrentSize.str());
+		buffer->append(bufferBlocksBlocksCurrentSize.str());
 		//Cantidad de Bloques
 		buffer->append("\n\tTamaño total-----> ");
-		buffer->append(bufferBlocksTotalSize.str());
+		buffer->append(bufferBlocksBlocksTotalSize.str());
+		
+		//Buffer del File Descriptor
+		buffer->append("\nBUFFER (FILE DESCRIPTOR)\n");
+		//Cantidad de Hits
+		buffer->append("\tHits-------------> ");
+		buffer->append(bufferFileDescriptorHitsCount.str());
+		//Cantidad de Miss
+		buffer->append("\n\tMiss-------------> ");
+		buffer->append(bufferFileDescriptorMissCount.str());
+		//Cantidad de Bloques
+		buffer->append("\n\tBloques----------> ");
+		buffer->append(bufferFileDescriptorBlocksCount.str());
+		//Cantidad de Bloques
+		buffer->append("\n\tTamaño actual----> ");
+		buffer->append(bufferFileDescriptorBlocksCurrentSize.str());
+		//Cantidad de Bloques
+		buffer->append("\n\tTamaño total-----> ");
+		buffer->append(bufferFileDescriptorBlocksTotalSize.str());
+
 	}catch(FileNotFoundException* ex){
 		buffer->append(" Error al buscar registros(");
 		buffer->append(ex->toString());
