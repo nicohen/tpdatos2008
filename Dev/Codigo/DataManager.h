@@ -10,6 +10,7 @@ using namespace std;
 
 class DataManager{
 	
+	
 private:
 	char* _basePath;
 	BlocksBuffer _blocksBuffer;
