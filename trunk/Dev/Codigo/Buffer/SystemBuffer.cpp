@@ -31,6 +31,7 @@ void SystemBuffer::addElement(IComparable* key, IBuffereable* value){
 	ostringstream ss;
 	
 	if (this->_buffer.count(key)>0){
+		DEBUG("No se agrego al buffer porque ya existe el elemento");
 		return;
 	}
 	if (this->_bufferSize<value->getSize()){
@@ -46,9 +47,13 @@ void SystemBuffer::addElement(IComparable* key, IBuffereable* value){
 		DEBUG(buffer.c_str());
 		this->makeSpace(value->getSize());
 	}
-	this->_buffer[key]=value;
+	string mibuffer;
+	mibuffer.append("Se inserto en ");
+	mibuffer.append(key->toString());
+	this->_buffer.insert(make_pair(key,value));
 	this->_bufferCurrentSize+=value->getSize();
 	this->replacementCriteria.setItem(key);
+	DEBUG(mibuffer.c_str());
 }
 
 IBuffereable* SystemBuffer::getElement(IComparable* key){

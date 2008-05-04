@@ -9,7 +9,7 @@ StringValue::StringValue(char* text)
 
 StringValue::~StringValue()
 {
-	delete(this->_value);
+	free(this->_value);
 }
 
 void StringValue::toString(string* buffer) {

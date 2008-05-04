@@ -8,7 +8,7 @@ using namespace std;
 DataManager::DataManager(char* basePath, int bufferSize):_blocksBuffer(bufferSize) {
 	this->_basePath = cloneStr(basePath);
 	
-	this->_dataFilesBuffer=new DataFilesBuffer(2);
+	this->_dataFilesBuffer=new DataFilesBuffer(5);
 	
 }
 
