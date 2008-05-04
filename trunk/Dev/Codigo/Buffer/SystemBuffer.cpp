@@ -65,7 +65,7 @@ IBuffereable* SystemBuffer::getElement(IComparable* key){
 		sshits<<_hits;
 		ssmiss<<_miss;
 		
-		buffer.append("Hit consultando: ");
+		buffer.append("BUFFER: Hit consultando: ");
 		buffer.append(key->toString());
 		buffer.append(" [HITS acumulados:");
 		buffer.append(sshits.str());
@@ -82,7 +82,7 @@ IBuffereable* SystemBuffer::getElement(IComparable* key){
 		sshits<<_hits;
 		ssmiss<<_miss;
 		
-		buffer.append("Miss consultando: ");
+		buffer.append("BUFFER: Miss consultando: ");
 		buffer.append(key->toString());
 		buffer.append(" [HITS acumulados:");
 		buffer.append(sshits.str());
