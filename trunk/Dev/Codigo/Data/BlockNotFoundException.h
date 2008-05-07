@@ -9,6 +9,7 @@ private:
 public:
 	BlockNotFoundException(char* message);
 	virtual ~BlockNotFoundException();
+	char* toString();
 };
 
 #endif /*BLOCKNOTFOUNDEXCEPTION_H_*/

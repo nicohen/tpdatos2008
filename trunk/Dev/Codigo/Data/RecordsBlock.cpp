@@ -40,8 +40,6 @@ RawRecord* RecordsBlock::deserializeRecord(char* data, T_BLOCKSIZE offset){
 	return res;
 }
 
-
-
 RecordsBlock::~RecordsBlock(void)
 {
 	vector<RawRecord*>::iterator iter;
@@ -53,9 +51,7 @@ RecordsBlock::~RecordsBlock(void)
 	delete this->_records;
 }
 
-
-
-T_BLOCKSIZE RecordsBlock::getFreeSpace(){
+T_BLOCKSIZE RecordsBlock::getUsedSpace() {
 	T_BLOCKSIZE usedSpace=0;
 	RawRecord* each;
 	vector<RawRecord*>::iterator iter;
@@ -65,11 +61,7 @@ T_BLOCKSIZE RecordsBlock::getFreeSpace(){
 		each=(RawRecord*)*iter;
 		usedSpace+=this->getSerializationSize(each);
 	}
-	return this->getSize()-usedSpace;
-}
-
-T_BLOCKSIZE RecordsBlock::getUsedSpace() {
-	return (this->getSize()-this->getFreeSpace());
+	return usedSpace;
 }
 
 void RecordsBlock::writeAllRecords(){

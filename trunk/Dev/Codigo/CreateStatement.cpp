@@ -80,7 +80,6 @@ void CreateStatement::writeStatementQuery(OutPutter* outPutter){
 
 StatementResult* CreateStatement::execute(DataManager* dataManager){
 	ostringstream ss;
-	
 	string buffer;
 	DEBUG("Inicio de la ejecución del CreateStatement");
 	//Creo el DataFile

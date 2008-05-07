@@ -9,3 +9,7 @@ BlockNotFoundException::BlockNotFoundException(char* message) {
 BlockNotFoundException::~BlockNotFoundException() {
 	free(this->_message);
 }
+
+char* BlockNotFoundException::toString(){
+	return this->_message;
+}

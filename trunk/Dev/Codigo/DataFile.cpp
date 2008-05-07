@@ -131,7 +131,7 @@ T_FILESIZE DataFile::getDataFreeSpace() {
 	for (int i=1; i <= this->_blockStructuredFile->getContentBlockCount()-1; i++) {
 		recordsBlock = this->getRecordBlock(i);
 		//	(RecordsBlock*)this->_blockStructuredFile->bGetContentBlock(i,&(RecordsBlock::createRecordsBlock));
-		freeSpace += recordsBlock->getFreeSpace();
+		freeSpace += (recordsBlock->getSize() - recordsBlock->getUsedSpace());
 	}
 	
 	return freeSpace;
@@ -228,6 +228,11 @@ bool DataFile::isArrayOf(vector<Field*>* fields, vector<DataValue*>* values){
 	DataValue* aValue;
 	vector<Field*>::iterator fieldIter;
 	vector<DataValue*>::iterator valueIter;
+	
+	if(fields->size()!=values->size()){
+		return false;
+	}
+		
 	for(valueIter= values->begin(), fieldIter= fields->begin();
 		valueIter< values->end() && fieldIter< fields->end();
 		valueIter++, fieldIter++){
@@ -258,7 +263,7 @@ bool DataFile::isArrayOf(vector<Field*>* fields, vector<DataValue*>* values){
 }
 
 void DataFile::insertRecord(Record* record) {
-	
+	string str;
 	vector<Record*>* sameKeyRecordsfound = this->findRecords(0,(DataValue*)record->getValues()->at(0));
 	if(sameKeyRecordsfound->size()>0){
 		delete sameKeyRecordsfound;
@@ -274,22 +279,29 @@ void DataFile::insertRecord(Record* record) {
 	try {
 		//NAHUE: PASAR ESTO AL DATAFILE
 		T_BLOCKCOUNT freeRecordBlockNumber = this->_blockStructuredFile->getFirstFreeContentBlockNumber(1,record->getSerializationFullSize(),&RecordsBlock::createRecordsBlock);
-		recordsBlock = this->getRecordBlock(freeRecordBlockNumber); 
-			//(RecordsBlock*)this->_blockStructuredFile->bGetContentBlock(freeRecordBlockNumber,&RecordsBlock::createRecordsBlock);
-		recordsBlock->getRecords()->push_back(rawRecord);
-		//this->_blocksBuffer->addBlock(this->getFileName(),freeRecordBlockNumber,recordsBlock);
-		this->_blockStructuredFile->bUpdateContentBlock(freeRecordBlockNumber,recordsBlock);		
+		recordsBlock = this->getRecordBlock(freeRecordBlockNumber);
+		recordsBlock->getRecords()->push_back(rawRecord);		
+		try{
+			this->_blockStructuredFile->bUpdateContentBlock(freeRecordBlockNumber,recordsBlock);	
+		}catch(BlockStructuredFileException* noSpaceException){
+			throw new BlockNotFoundException("El bloque que tenia espacio libre, luego de intentar guardar el registro, este no entra.");
+		}
 	} catch(BlockNotFoundException* ex) {
 		recordsBlock = new RecordsBlock(this->_blockStructuredFile->getBlockSize());
 		recordsBlock->getRecords()->push_back(rawRecord);
-		this->_blocksBuffer->addBlock(this->getFileName(),this->getRecordsBlockCount()+1,recordsBlock);
-		this->_blockStructuredFile->bAppendContentBlock(recordsBlock);
+		try{
+			this->_blockStructuredFile->bAppendContentBlock(recordsBlock);
+			this->_blocksBuffer->addBlock(this->getFileName(),this->getRecordsBlockCount()+1,recordsBlock);	
+		}catch(BlockStructuredFileException* noSpaceException){
+			delete recordsBlock;
+			throw new BlockNotFoundException("El registro tiene tamaño mayor al del bloque");
+		}		
 		delete ex;
 	}
 }
 
 RecordsBlock* DataFile::getRecordBlock(int blockNumber){
-	Block* result= this->_blocksBuffer->getBlock(this->getFileName(),blockNumber);
+	Block* result= this->_blocksBuffer->getBlock(this->getFileName(),blockNumber);	
 	if (result==NULL){
 		result= this->getBlockStructuredFile()->bGetContentBlock(blockNumber,&RecordsBlock::createRecordsBlock);
 		this->_blocksBuffer->addBlock(this->getFileName(),blockNumber,result);
@@ -298,48 +310,14 @@ RecordsBlock* DataFile::getRecordBlock(int blockNumber){
 }
 
 bool DataFile::updateRecord(Record* myRecord) {
-	bool found = false;
-
-//	vector<Record*>* recordsObteined= new vector<Record*>();
-	RecordsBlock *rBlock;
-	int length= this->getRecordsBlockCount();
-	for(int j=1;j<=length;j++){
-		rBlock=	this->getRecordBlock(j);
-		vector<RawRecord*>* recordsList = rBlock->getRecords();
-		RawRecord* each=NULL;
-		vector<RawRecord*>::iterator iter;
-		for (iter = recordsList->begin(); iter != recordsList->end(); iter++ ){
-			each=((RawRecord*)*iter);
-			Record* recordToMatch = new Record();
-			recordToMatch->deserialize(each,this->getFields());
-			if(recordToMatch->matchField(0,myRecord->getValues()->at(0))){
-				RawRecord* myRawRecord = myRecord->serialize();
-				recordsList->erase(iter);
-				recordsList->push_back(myRawRecord);
-				//this->_blocksBuffer->addBlock(this->getFileName(),j,rBlock);
-				this->_blockStructuredFile->bUpdateContentBlock(j,rBlock);
-				found = true;
-				break;
-			}
-		}		
-		if (found)
-			break;
+	if(this->removeRecord(0,myRecord->getValues()->at(0))->size()<0){
+		return false;
+	}else{
+		this->insertRecord(myRecord);
+		return true;
 	}
-	return found;
 }
 
 T_BLOCKSIZE DataFile::getSize(){
 	return 1;
-}
-T_BLOCKCOUNT DataFile::getFirstFreeContentBlockNumber(T_BLOCKCOUNT initBlockNumber, T_BLOCKSIZE minRequiredSpace) throw (BlockNotFoundException*) {
-	RecordsBlock* recordsBlock = NULL;
-	for (int i=initBlockNumber; i <= this->getDataRecordsCount(); i++) {
-		recordsBlock = this->getRecordBlock(i);
-		if (recordsBlock->getFreeSpace()>=minRequiredSpace) {
-			return i;
-		}
-	}
-
-	throw new BlockNotFoundException("[BlockNotFoundException]: No hay espacio libre para insertar el Registro en un bloque existente");
-
 }

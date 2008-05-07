@@ -33,17 +33,17 @@ T_BLOCKSIZE Block::getSize(){
 	return this->_size;
 }
 
-T_BLOCKSIZE Block::getFreeSpace(){
-	return this->_freeSpace;
-}
+//T_BLOCKSIZE Block::getFreeSpace(){
+//	return this->_freeSpace;
+//}
 
 T_BLOCKSIZE Block::getUsedSpace(){
-	return (this->getSize()-this->getFreeSpace());
+	return 0;
 }
 
-void Block::setFreeSpace(T_BLOCKSIZE space){
+/*void Block::setFreeSpace(T_BLOCKSIZE space){
 	this->_freeSpace=space;
-}
+}*/
 
 void Block::setContent(char* content){
 	this->setFragment(content,0,this->_size);
