@@ -8,11 +8,11 @@ DeleteStatement::DeleteStatement(char* filename):Statement(filename){
 StatementResult* DeleteStatement::execute(DataManager* dataManager) {
 	StatementResult* statementResult = NULL;
 	string* buffer = NULL;
-	char* cadena;
+//	char* cadena;
 	bool wasSuccessful = false;
 	
 	//Elimino el archivo
-	wasSuccessful = dataManager->removeFile(this->getFileName());
+	wasSuccessful = dataManager->removeFile(cloneStr(this->getFileName()));
 	
 	statementResult = new StatementResult();
 	buffer = new string();
@@ -29,12 +29,8 @@ StatementResult* DeleteStatement::execute(DataManager* dataManager) {
 		buffer->append("' Res = 0");
 	}
 	
-	cadena = (char*) malloc(strlen(buffer->c_str()));
-	strcpy(cadena,buffer->c_str());
+	statementResult->setResult((char*)buffer->c_str());
 	
-	statementResult->setResult(cadena);
-	
-	delete buffer;
 	return statementResult;
 }
 

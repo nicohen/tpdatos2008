@@ -104,19 +104,11 @@ char* MetadataBlock::getContent(){
 		each=(Field*)*iter;
 		this->writeOnBlock(each,this,&counter);
 	}
-	this->setFreeSpace(this->getSize()-counter);
 	return Block::getContent();
 }
 
-void MetadataBlock::setFreeSpace(T_BLOCKSIZE space){
-}
-
-T_BLOCKSIZE MetadataBlock::getSize(){
-	return Block::getFreeSpace();
-}
-
-T_BLOCKSIZE MetadataBlock::getFreeSpace(){
-	return Block::getSize();
+T_BLOCKSIZE MetadataBlock::getUsedSpace(){
+	return 0;
 }
 
 Block* MetadataBlock::createMetadataBlock(char* content, T_BLOCKSIZE size){

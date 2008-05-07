@@ -39,9 +39,7 @@ public:
 	virtual void setFragment(char* content,T_BLOCKSIZE offset,T_BLOCKSIZE size);
 	virtual char* getContent();
 	
-	virtual void setFreeSpace(T_BLOCKSIZE space);
-	virtual T_BLOCKSIZE getSize();	
-	virtual T_BLOCKSIZE getFreeSpace();
+	virtual T_BLOCKSIZE getUsedSpace();
 };
 
 #endif /*METADATABLOCK_H_*/

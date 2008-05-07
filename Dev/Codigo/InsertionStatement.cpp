@@ -56,12 +56,11 @@ StatementResult* InsertionStatement::execute(DataManager* dataManager){
 			each=((DataValue*)*iter);
 			record->addValue(each);
 		}	
-	
-		dataFile->insertRecord(record);
-		buffer.append("'Se inserto el registro ");
+		buffer.append("'Intentando insertar el registro ");
 		record->toString(&buffer);
-		buffer.append("' Res = 1"); 
-		
+		buffer.append("'. ");
+		dataFile->insertRecord(record);		
+		buffer.append(" Res = 1");
 	} catch (TypeMismatchException* e1) {
 		buffer.append("'Error al insertar el registro (");
 		buffer.append(e1->toString());
@@ -74,6 +73,10 @@ StatementResult* InsertionStatement::execute(DataManager* dataManager){
 		buffer.append("'Error al insertar el registro (");
 		buffer.append(e3->toString());
 		buffer.append(")' Res = 0"); 
+	} catch(BlockNotFoundException* ex4){
+		buffer.append("'Error al insertar el registro (");
+		buffer.append(ex4->toString());
+		buffer.append(")' Res = 0");
 	}
 
 	cadena = cloneStr(buffer.c_str());

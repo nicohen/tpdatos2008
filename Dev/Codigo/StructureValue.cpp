@@ -91,7 +91,7 @@ bool StructureValue::equals(DataValue* other){
 	if(DataValue::equals(other)){
 		return equalsValueVectors(this->_dataValues,otherStructure->_dataValues);
 	}else{
-		printf("\nFINAL 4 \n");
+//		printf("\nFINAL 4 \n");
 		return false;	
 	}	
 }
@@ -194,28 +194,3 @@ bool StructureValue::isInstanceOf(DataType* dType){
 bool StructureValue::isNull(){
 	return this->getCount()==0;
 }
-/*
-bool StructureValue::isInstanceOf(DataType* dType){
-	StructureType* type=NULL;
-	int ocurrencias=0;
-	int index=0;
-	if(dType->getUniqueIdentifier()!=DataType::STRUCTURED_TYPE){
-		return false;
-	}
-	type=(StructureType*) dType;
-	if (type->getCount()==0){
-		return false;
-	}
-	if ((this->getCount()%type->getCount())!=0){
-		return false;
-	}
-	ocurrencias= this->getCount() / type->getCount();
-	for(int i=0;i<ocurrencias;i++){
-		for (index = 0; index < type->getCount(); index++) {
-			if(! ((DataValue*)this->_dataValues->at(index))->isInstanceOf(type->getItem(index))){
-				return false;
-			}
-		}
-	}
-	return true;
-}*/

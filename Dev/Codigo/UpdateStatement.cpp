@@ -36,6 +36,11 @@ StatementResult* UpdateStatement::execute(DataManager* anIDataManager) {
 		buffer.append(ex->toString());
 		buffer.append("). Res = 0"); 
 		delete ex;
+	}catch(BlockNotFoundException* ex2){
+		buffer.append(" Error al actualizar registro(");
+		buffer.append(ex2->toString());
+		buffer.append("). Res = 0"); 
+		delete ex2;
 	}
 	sr->setResult((char*)buffer.c_str());	
 	return sr;

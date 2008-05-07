@@ -4,56 +4,55 @@
 #include <sstream>
 #include "BlockStructuredFileException.h"
 
-
-void BlockStructuredFile::setBlockSize(T_BLOCKSIZE size){
+void BlockStructuredFile::setBlockSize(T_BLOCKSIZE size) {
 	//this->_bblockSize=size;
 	this->_header->setBlockSize(size);
 }
-void BlockStructuredFile::setBlockCount(T_BLOCKCOUNT count){
+void BlockStructuredFile::setBlockCount(T_BLOCKCOUNT count) {
 	//this->_bblockCount=count;
-	this->_header->setBlockCount(count);	
+	this->_header->setBlockCount(count);
 }
 
-T_BLOCKCOUNT BlockStructuredFile::getBlockCount(){
+T_BLOCKCOUNT BlockStructuredFile::getBlockCount() {
 	return this->_header->getBlockCount();
 }
 
 T_FILESIZE BlockStructuredFile::getFileSize() {
 	//return this->getBlockCount()*this->getBlockSize();
-	this->_file->seekg (0, ios::end);
+	this->_file->seekg(0, ios::end);
 	return this->_file->tellg();
 }
 
-T_BLOCKSIZE BlockStructuredFile::getBlockSize(){
+T_BLOCKSIZE BlockStructuredFile::getBlockSize() {
 	return this->_header->getBlockSize();
 }
 
-BlockStructuredFile* BlockStructuredFile::Load(char* filename){
+BlockStructuredFile* BlockStructuredFile::Load(char* filename) {
 	BlockStructuredFile* res=NULL;
 	T_BLOCKSIZE blockSize;
 	fstream* file=NULL;
-	
+
 	file = new fstream(filename,ios::in|ios::binary);
 	//Me muevo a la posicion 0 del archivo
-	file->seekg (0, ios::beg);	
+	file->seekg(0, ios::beg);
 	//Leo el primer campo (blockSize) para poder leer
-	file->read((char*)&blockSize,sizeof(T_BLOCKSIZE));
-	
+	file->read((char*)&blockSize, sizeof(T_BLOCKSIZE));
+
 	delete file;
-	
-	
+
 	res=new BlockStructuredFile(filename);
 	res->load(blockSize);
 	return res;
 }
 
-BlockStructuredFile* BlockStructuredFile::Create(char* filename,T_BLOCKSIZE blockSize){
+BlockStructuredFile* BlockStructuredFile::Create(char* filename,
+		T_BLOCKSIZE blockSize) {
 	BlockStructuredFile* res=NULL;
 	fstream* file=NULL;
 	file = new fstream(filename,ios::trunc|ios::in|ios::out|ios::binary);
 	file->close();
 	delete file;
-	
+
 	res=new BlockStructuredFile(filename);
 	res->setBlockSize(blockSize);
 	res->setBlockCount(1);
@@ -61,16 +60,15 @@ BlockStructuredFile* BlockStructuredFile::Create(char* filename,T_BLOCKSIZE bloc
 	return res;
 }
 
-
 BlockStructuredFile::BlockStructuredFile(char* filename) {
 	this->_file=NULL;
 	this->_filename=filename;
-	if(!existsFile(this->_filename)){
+	if (!existsFile(this->_filename)) {
 		//ERROR
 		string msg;
 		ostringstream os;
 		msg.append("No se encontró el archivo");
-		
+
 		throw new BlockStructuredFileException((char*)msg.c_str());
 	}
 	//this->_file = new fstream(this->_filename,ios::app|ios::in|ios::out|ios::binary);
@@ -80,132 +78,158 @@ BlockStructuredFile::BlockStructuredFile(char* filename) {
 	this->setBlockSize(0);
 }
 
-BlockStructuredFile::~BlockStructuredFile(){
-	if(this->_file!=NULL){
+BlockStructuredFile::~BlockStructuredFile() {
+	if (this->_file!=NULL) {
 		this->_file->close();
 		delete this->_file;
 	}
 	delete this->_header;
 }
 
-void BlockStructuredFile::load(T_BLOCKSIZE blockSize){
+void BlockStructuredFile::load(T_BLOCKSIZE blockSize) {
 	char* buffer;
 	//Cargo todo el bloque en un buffer y cargo las propiedades de ah�
 	buffer=(char*)malloc(blockSize);
-	this->_file->seekg (0, ios::beg);
-	this->_file->read(buffer,blockSize);	
+	this->_file->seekg(0, ios::beg);
+	this->_file->read(buffer, blockSize);
 	this->_header->loadPropertiesFromBuffer(buffer);
 	free(buffer);
 }
 
-void BlockStructuredFile::saveHeader(){
-	char* buffer;	
+void BlockStructuredFile::saveHeader() {
+	char* buffer;
 	buffer=(char*)malloc(this->getBlockSize());
-	this->_header->saveHeaderToBuffer(buffer);	
-	this->updateBlock(0,buffer);
+	this->_header->saveHeaderToBuffer(buffer);
+	this->updateBlock(0, buffer);
 	free(buffer);
 }
 
-T_BLOCKCOUNT BlockStructuredFile::getLastBlockIndex(){
+T_BLOCKCOUNT BlockStructuredFile::getLastBlockIndex() {
 	return this->getBlockCount()-1;
 }
 
-void BlockStructuredFile::appendBlock(char* content){
-	this->updateBlock(this->getLastBlockIndex()+1,content);
+void BlockStructuredFile::appendBlock(char* content) {
+	this->updateBlock(this->getLastBlockIndex()+1, content);
 	this->notifyBlockUpdated(this->getLastBlockIndex()+1);
 }
 
-void BlockStructuredFile::notifyBlockUpdated(T_BLOCKCOUNT blockNumber){
-	if(blockNumber>=this->getBlockCount()){
+void BlockStructuredFile::notifyBlockUpdated(T_BLOCKCOUNT blockNumber) {
+	if (blockNumber>=this->getBlockCount()) {
 		this->setBlockCount(this->getBlockCount()+1);
 		this->saveHeader();
 	}
 }
 
-void BlockStructuredFile::updateBlock(T_BLOCKCOUNT blockNumber,char* content){
-	this->_file->seekg(this->getBlockFilePositionFromAbsoluteBlockCount(blockNumber),ios::beg);
-	this->_file->write(content,this->getBlockSize());
+void BlockStructuredFile::updateBlock(T_BLOCKCOUNT blockNumber, char* content) {
+	this->_file->seekg(
+			this->getBlockFilePositionFromAbsoluteBlockCount(blockNumber),
+			ios::beg);
+	this->_file->write(content, this->getBlockSize());
 	this->_file->flush();
 }
 
-void BlockStructuredFile::updateContentBlock(T_BLOCKCOUNT contentBlockNumber,char* content){
-	this->updateBlock(this->getAbsoluteBlockNumberFromContentBlockNumber(contentBlockNumber),content);
+void BlockStructuredFile::updateContentBlock(T_BLOCKCOUNT contentBlockNumber,
+		char* content) {
+	this->updateBlock(
+			this->getAbsoluteBlockNumberFromContentBlockNumber(contentBlockNumber),
+			content);
 	notifyBlockUpdated(this->getAbsoluteBlockNumberFromContentBlockNumber(contentBlockNumber));
 }
 
-T_FILESIZE  BlockStructuredFile::getBlockFilePositionFromAbsoluteBlockCount(T_BLOCKCOUNT blockNumber){
+T_FILESIZE BlockStructuredFile::getBlockFilePositionFromAbsoluteBlockCount(
+		T_BLOCKCOUNT blockNumber) {
 	return this->getBlockSize()*blockNumber;
 }
 
-T_BLOCKCOUNT  BlockStructuredFile::getAbsoluteBlockNumberFromContentBlockNumber(T_BLOCKCOUNT contentBlockNumber){
+T_BLOCKCOUNT BlockStructuredFile::getAbsoluteBlockNumberFromContentBlockNumber(
+		T_BLOCKCOUNT contentBlockNumber) {
 	return contentBlockNumber+this->getHeaderBlockCount();
 }
 
-char* BlockStructuredFile::getContentBlock(T_BLOCKCOUNT contentBlockNumber){
+char* BlockStructuredFile::getContentBlock(T_BLOCKCOUNT contentBlockNumber) {
 	return getBlock(this->getAbsoluteBlockNumberFromContentBlockNumber(contentBlockNumber));
 }
 
-char* BlockStructuredFile::getBlock(T_BLOCKCOUNT blockNumber) throw (BlockStructuredFileException*){
-	if(blockNumber>=this->getBlockCount()){
+char* BlockStructuredFile::getBlock(T_BLOCKCOUNT blockNumber)
+		throw (BlockStructuredFileException*) {
+	if (blockNumber>=this->getBlockCount()) {
 		string msg;
 		ostringstream os;
 		os<<blockNumber;
 		msg.append("Se pidió un bloque que no existe: num = ");
 		msg.append(os.str());
 		throw new BlockStructuredFileException((char*)msg.c_str());
-	}else{
+	} else {
 		char* buffer;
 		//Cargo todo el bloque en un buffer y cargo las propiedades de ah�
 		buffer=(char*)malloc(this->getBlockSize());
-		this->_file->seekg (this->getBlockFilePositionFromAbsoluteBlockCount(blockNumber), ios::beg);
-		this->_file->read(buffer,this->getBlockSize());
+		this->_file->seekg(
+				this->getBlockFilePositionFromAbsoluteBlockCount(blockNumber),
+				ios::beg);
+		this->_file->read(buffer, this->getBlockSize());
 		return buffer;
-	}	
+	}
 }
 
-T_BLOCKCOUNT BlockStructuredFile::getHeaderBlockCount(){
+T_BLOCKCOUNT BlockStructuredFile::getHeaderBlockCount() {
 	return 1;
 }
 
-T_BLOCKCOUNT BlockStructuredFile::getContentBlockCount(){
+T_BLOCKCOUNT BlockStructuredFile::getContentBlockCount() {
 	return this->getBlockCount()-this->getHeaderBlockCount();
 }
 
-void BlockStructuredFile::bUpdateContentBlock(T_BLOCKCOUNT contentBlockNumber,Block* block){
-	this->updateContentBlock(contentBlockNumber,block->getContent());
+void BlockStructuredFile::bUpdateContentBlock(T_BLOCKCOUNT contentBlockNumber,
+		Block* block) {
+	if (block->getUsedSpace()>this->getBlockSize()) {
+		//printf("d");
+		throw new BlockStructuredFileException("El bloque tiene un tamaño mas grande que el esperado");
+	}
+	this->updateContentBlock(contentBlockNumber, block->getContent());
 }
 
-Block* BlockStructuredFile::bGetContentBlock(T_BLOCKCOUNT contentBlockNumber,Block* (*BlockCreatorFunction)(char* content,T_BLOCKSIZE size)){
+Block* BlockStructuredFile::bGetContentBlock(T_BLOCKCOUNT contentBlockNumber,
+		Block* (*BlockCreatorFunction)(char* content,T_BLOCKSIZE size)) {
 	Block* result=NULL;
 	char* buffer;
 	buffer=this->getContentBlock(contentBlockNumber);
-	if(BlockCreatorFunction==NULL){
-		result=new Block(buffer,this->getBlockSize());	
-	}else{
-		result=(*BlockCreatorFunction)(buffer,this->getBlockSize());
+	if (BlockCreatorFunction==NULL) {
+		result=new Block(buffer,this->getBlockSize());
+	} else {
+		result=(*BlockCreatorFunction)(buffer, this->getBlockSize());
 	}
-	
+
 	free(buffer);
 	return result;
 }
 
-void BlockStructuredFile::bAppendContentBlock(Block* block){
+void BlockStructuredFile::bAppendContentBlock(Block* block) {
+	if (block->getUsedSpace()>this->getBlockSize()) {
+		throw new BlockStructuredFileException("El bloque tiene un tamaño mas grande que el esperado");
+	}
 	this->appendBlock(block->getContent());
 	//Aca hay que actualizar luego el header para decirle el espacio libre de este bloque. block->getFreeSpace()
 }
 
-void BlockStructuredFile::removeLastContentBlock(){
-	
+void BlockStructuredFile::removeLastContentBlock() {
+
 }
 
-T_BLOCKCOUNT BlockStructuredFile::getFirstFreeContentBlockNumber(T_BLOCKCOUNT initBlockNumber, T_BLOCKSIZE minRequiredSpace,Block* (*BlockCreatorFunction)(char* content,T_BLOCKSIZE size)) throw (BlockNotFoundException*) {
-	RecordsBlock* recordsBlock = NULL;
-	
+T_BLOCKCOUNT BlockStructuredFile::getFirstFreeContentBlockNumber(
+		T_BLOCKCOUNT initBlockNumber, T_BLOCKSIZE minRequiredSpace, Block* (*BlockCreatorFunction)(char* content,T_BLOCKSIZE size))
+		throw (BlockNotFoundException*) {
+	RecordsBlock* recordsBlock= NULL;
+
 	for (int i=initBlockNumber; i <= this->getContentBlockCount()-1; i++) {
-		recordsBlock = (RecordsBlock*)this->bGetContentBlock(i,BlockCreatorFunction);
-		if (recordsBlock->getFreeSpace()>=minRequiredSpace) {
+		recordsBlock = (RecordsBlock*)this->bGetContentBlock(i,
+				BlockCreatorFunction);
+		if (recordsBlock->getSize() * 0.7 > (recordsBlock->getUsedSpace()
+				+ minRequiredSpace)) {
 			return i;
 		}
+		//		else{
+		//			printf("\n---Required %i, used %i, should be lower than %f \n", minRequiredSpace, recordsBlock->getUsedSpace(),recordsBlock->getSize() * 0.7);
+		//		}
 	}
 
 	throw new BlockNotFoundException("[BlockNotFoundException]: No hay espacio libre para insertar el Registro en un bloque existente");
