@@ -54,6 +54,7 @@ int setCharAtPosition(TDA_Board* board,int column,int row,char value){
 		return 0;
 	}
 }
-void nextState(TDA_Board* board){
-	
+int nextState(TDA_Board* board){
+	// TODO implementar
+	return 0;
 }

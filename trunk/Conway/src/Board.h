@@ -9,5 +9,5 @@ TDA_Board* createBoard(int columns,int rows);
 void deleteBoard(TDA_Board* board);
 char getCharAtPosition(TDA_Board* board,int column, int row);
 int setCharAtPosition(TDA_Board* board,int column,int row,char value);
-void nextState(TDA_Board* board);
+int nextState(TDA_Board* board);
 #endif /*BOARD_H_*/
