@@ -2,6 +2,10 @@
 #include <stdlib.h>
 
 TDA_Board* createBoard(int columns,int rows){
+	if ((columns<1)||(rows<1)){
+		return NULL;
+	}
+	int i,j;
 	TDA_Board* board= (TDA_Board*) malloc(sizeof(TDA_Board));
 	if (board==NULL){
 		return NULL;
@@ -12,9 +16,13 @@ TDA_Board* createBoard(int columns,int rows){
 	if (board->board==NULL){
 		free(board);
 		return NULL;
-	}else{
-		return board;
 	}
+	for(i=0;i<rows;i++){
+		for(j=0;j<columns;j++){
+			board->board[(i*rows)+j]='0';
+		}
+	}
+	return board;
 }
 
 void deleteBoard(TDA_Board* board){
@@ -33,14 +41,14 @@ int validateCell(TDA_Board* board,int column, int row){
 
 char getCharAtPosition(TDA_Board* board,int column, int row){
 	if (validateCell(board,column,row)){
-		return board->board[(column*board->rows)+row];
+		return board->board[(row*board->columns)+column];
 	}else{
 		return 0;
 	}
 }
 int setCharAtPosition(TDA_Board* board,int column,int row,char value){
 	if (validateCell(board,column,row)){
-		board->board[(column*board->rows)+row]=value;
+		board->board[(row*board->columns)+column]=value;
 		return 1;
 	}else{
 		return 0;
