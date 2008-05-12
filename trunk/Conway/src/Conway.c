@@ -2,14 +2,17 @@
 #include <stdlib.h>
 #include <string.h>
 #include "Utils.h"
+#include "Board.h"
 
 int main(int argc, char **argv) {
+	TDA_Board* board;
 	int steps=0;
 	int heigth=0;
 	int width=0;
 	char* sourceFile=NULL;
 	char* outputPrefix="";
 	int i=0;
+	
 	while (i<argc){
 		if (strcmpi("-V",argv[i])==0){
 			printf("Conway Version 1.1\n");
@@ -87,5 +90,8 @@ int main(int argc, char **argv) {
 		printf("Se debe indicar la cantidad de pasos.");
 		return 0;
 	}
+	board= createBoard(width,heigth);
+	//setUpBoardFromFile(board,sourceFile);
+	deleteBoard(board);
 	return 1;	
 }
