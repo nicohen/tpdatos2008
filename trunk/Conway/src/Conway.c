@@ -3,6 +3,7 @@
 #include <string.h>
 #include "Utils.h"
 #include "Board.h"
+#include "Files.h"
 
 int main(int argc, char **argv) {
 	TDA_Board* board;
@@ -11,7 +12,7 @@ int main(int argc, char **argv) {
 	int width=0;
 	char* sourceFile=NULL;
 	char* outputPrefix="";
-	int i=0;
+	int i=1;
 	while (i<argc){
 		if (strcmp("-V",argv[i])==0){
 			printf("Conway Version 1.1\n");
@@ -38,28 +39,34 @@ int main(int argc, char **argv) {
 			if(isNumericString(argv[i])!=0){
 				steps=atoi(argv[i]);
 				if(steps==0){
-					printf("Steps debe ser un número positivo mayor que 0.");
+					printf("Steps debe ser un número positivo mayor que 0");
+					return 1;
 				}
 			}else{
-				printf("Steps debe ser un número positivo mayor que 0.");
+				printf("Steps debe ser un número positivo mayor que 0");
+				return 1;
 			}
 		}else if(heigth==0){
 			if(isNumericString(argv[i])!=0){
 				heigth=atoi(argv[i]);
 				if(heigth==0){
 					printf("Heigth debe ser un número positivo mayor que 0.");
+					return 1;
 				}
 			}else{
 				printf("Heigth debe ser un número positivo mayor que 0.");
+				return 1;
 			}
 		}else if(width==0){
 			if(isNumericString(argv[i])!=0){
 				width=atoi(argv[i]);
 				if(width==0){
 					printf("Width debe ser un número positivo mayor que 0.");
+					return 1;
 				}
 			}else{
 				printf("Width debe ser un número positivo mayor que 0.");
+				return 1;
 			}
 		}else if(strcmp("-o",argv[i])==0){
 			i++;
@@ -67,6 +74,7 @@ int main(int argc, char **argv) {
 				outputPrefix=argv[i];
 			}else{
 				printf("Luego del un -o debe especificar el prefijo de los archivos de salida.");
+				return 1;
 			}
 		}else if(sourceFile==NULL){
 			sourceFile= argv[i];
@@ -75,22 +83,26 @@ int main(int argc, char **argv) {
 	}
 	if(sourceFile==NULL){
 		printf("Se debe indicar el nombre del archivo de entrada.");
-		return 0;
+		return 1;
 	}
 	if(width==0){
 		printf("Se debe indicar el ancho del tablero.");
-		return 0;
+		return 1;
 	}
 	if(heigth==0){
 		printf("Se debe indicar el alto del tablero.");
-		return 0;
+		return 1;
 	}
 	if(steps==0){
 		printf("Se debe indicar la cantidad de pasos.");
-		return 0;
+		return 1;
 	}
 	board= createBoard(width,heigth);
-	//setUpBoardFromFile(board,sourceFile);
+	printf("-------ANTES------\n");
+	toString(board);
+	setUpBoardFromFile(board,sourceFile);
+	printf("------DESPUES-----\n");
+	toString(board);
 	deleteBoard(board);
-	return 1;	
+	return 0;	
 }
