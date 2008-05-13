@@ -1,10 +1,19 @@
 #include "Utils.h"
+#include "Assertions.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+void numericTest(){
+	ASSERT_FALSE(isNumericString("123p"));
+	ASSERT_TRUE(isNumericString("123"));
+	ASSERT_FALSE(isNumericString("123.5"));
+	ASSERT_TRUE(isNumericString("015"));
+}
+
 int main(int argc, char **argv) {
-	printf("\"123p\" is numeric? %d\n",isNumericString("123p"));
-	printf("\"123\" is numeric? %d\n",isNumericString("123"));
-	printf("\"123,5\" is numeric? %d\n",isNumericString("123,5"));
+	numericTest();
+	printf("----Fin de Tests---");
 	return 1;
 }
+
