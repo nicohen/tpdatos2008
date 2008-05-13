@@ -1,5 +1,6 @@
 #include "Board.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 TDA_Board* createBoard(int columns,int rows){
 	if ((columns<1)||(rows<1)){
@@ -57,4 +58,13 @@ int setCharAtPosition(TDA_Board* board,int column,int row,char value){
 int nextState(TDA_Board* board){
 	// TODO implementar
 	return 0;
+}
+void toString(TDA_Board* board){
+	int i,j;
+	for(i=0;i<board->rows;i++){
+		for(j=0;j<board->columns-1;j++){
+			printf("%c,",getCharAtPosition(board,i,j));
+		}
+		printf("%c\n",getCharAtPosition(board,i,j));
+	}
 }

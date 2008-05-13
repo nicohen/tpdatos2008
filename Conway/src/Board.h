@@ -10,4 +10,5 @@ void deleteBoard(TDA_Board* board);
 char getCharAtPosition(TDA_Board* board,int column, int row);
 int setCharAtPosition(TDA_Board* board,int column,int row,char value);
 int nextState(TDA_Board* board);
+void toString(TDA_Board* board);
 #endif /*BOARD_H_*/

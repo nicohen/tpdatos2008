@@ -1,8 +1,6 @@
 #include "Utils.h"
 #include "Assertions.h"
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 void numericTest(){
 	ASSERT_FALSE(isNumericString("123p"));
