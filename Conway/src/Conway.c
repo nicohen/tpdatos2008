@@ -5,6 +5,29 @@
 #include "Board.h"
 #include "Files.h"
 
+void printVersion(){
+	printf("Conway Version 1.1\n");
+}
+
+void printHelp(){
+	printf("Uso:\n");
+	printf("conway -h\n");
+	printf("conway -V\n");
+	printf("conway i M N inputfile [-o outputprefix]\n");
+	printf("Opciones:\n");
+	printf("-h, --help Imprime este mensaje.\n");
+	printf("-V, --version Da la versión del programa.\n");
+	printf("-o Prefijo de los archivos de salida.\n");
+	printf("\n");
+	printf("Ejemplos:\n");
+	printf("conway 10 20 20 glider -o estado\n");
+	printf("Representa 10 iteraciones del Juego de la Vida en una matriz de 20x20,\n");
+	printf("con un estado inicial tomado del archivo 'glider'.\n");
+	printf("Los archivos de salida se llamarán estado_n.pbm.\n");
+	printf("Si no se da un prefijo para los archivos de salida,\n");
+	printf("el prefijo será el nombre del archivo de entrada.\n");	
+}
+
 int main(int argc, char **argv) {
 	TDA_Board* board;
 	int steps=0;
@@ -15,25 +38,10 @@ int main(int argc, char **argv) {
 	int i=1;
 	while (i<argc){
 		if (strcmp("-V",argv[i])==0){
-			printf("Conway Version 1.1\n");
+			printVersion();
 			return 1;
 		}else if (strcmp("-h",argv[i])==0){
-			printf("Uso:\n");
-			printf("conway -h\n");
-			printf("conway -V\n");
-			printf("conway i M N inputfile [-o outputprefix]\n");
-			printf("Opciones:\n");
-			printf("-h, --help Imprime este mensaje.\n");
-			printf("-V, --version Da la versión del programa.\n");
-			printf("-o Prefijo de los archivos de salida.\n");
-			printf("\n");
-			printf("Ejemplos:\n");
-			printf("conway 10 20 20 glider -o estado\n");
-			printf("Representa 10 iteraciones del Juego de la Vida en una matriz de 20x20,\n");
-			printf("con un estado inicial tomado del archivo 'glider'.\n");
-			printf("Los archivos de salida se llamarán estado_n.pbm.\n");
-			printf("Si no se da un prefijo para los archivos de salida,\n");
-			printf("el prefijo será el nombre del archivo de entrada.\n");
+			printHelp();
 			return 1;
 		}else if(steps==0){
 			if(isNumericString(argv[i])!=0){
@@ -101,6 +109,7 @@ int main(int argc, char **argv) {
 	printf("-------ANTES------\n");
 	toString(board);
 	setUpBoardFromFile(board,sourceFile);
+	createPBMFromBoad(board,outputPrefix,1);
 	printf("------DESPUES-----\n");
 	toString(board);
 	deleteBoard(board);
