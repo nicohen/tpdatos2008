@@ -18,6 +18,10 @@ private:
 	T_BLOCKSIZE getSerializationSize(RawRecord* record);
 	void deserializeRecords();
 	RawRecord* deserializeRecord(char* data, T_BLOCKSIZE offset);
+
+	
+protected:
+	vector<RawRecord*>* getRecords();
 public:
 	static Block* createRecordsBlock(char* content, T_BLOCKSIZE size);
 	RecordsBlock(T_BLOCKSIZE size);
@@ -26,8 +30,13 @@ public:
 
 	void appendRecord(RawRecord* record);
 	virtual T_BLOCKSIZE getUsedSpace();
-	virtual char* getContent();	
-	vector<RawRecord*>* getRecords();
+	virtual char* getContent();
+
+	vector<RawRecord*>::iterator begin();
+	vector<RawRecord*>::iterator end();
+	void erase(vector<RawRecord*>::iterator it);
+	T_BLOCKSIZE RecordCount();
+	void push_back(RawRecord* rawrecord);
 };
 
 #endif /*RecordsBlock_H_*/

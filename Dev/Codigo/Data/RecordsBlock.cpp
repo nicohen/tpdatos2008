@@ -1,5 +1,6 @@
 #include "RecordsBlock.h"
 #include "../Utils.h"
+#include "ContentOverflowBlockException.h"
 
 using namespace std;
 
@@ -107,4 +108,23 @@ vector<RawRecord*>* RecordsBlock::getRecords(){
 
 Block* RecordsBlock::createRecordsBlock(char* content, T_BLOCKSIZE size){
 	return new RecordsBlock(content,size);
+}
+
+vector<RawRecord*>::iterator RecordsBlock::begin(){
+	return this->_records->begin();
+}
+vector<RawRecord*>::iterator RecordsBlock::end(){
+	return this->_records->end();
+}
+void RecordsBlock::erase(vector<RawRecord*>::iterator it){
+	this->_records->erase(it);
+}
+T_BLOCKSIZE RecordsBlock::RecordCount(){
+	return this->_records->size();
+}
+void RecordsBlock::push_back(RawRecord* rawrecord){
+	if(this->getUsedSpace()+getSerializationSize(rawrecord)>this->getSize()){
+		throw new ContentOverflowBlockException();
+	}
+	return this->_records->push_back(rawrecord);
 }

@@ -5,6 +5,8 @@
 #include "StringValue.h"
 #include "Data/TypeMismatchException.h"
 #include "Data/IdentityException.h"
+#include "Data/RecordSizeOverflowException.h"
+
 
 using namespace std;
 
@@ -73,7 +75,7 @@ StatementResult* InsertionStatement::execute(DataManager* dataManager){
 		buffer.append("'Error al insertar el registro (");
 		buffer.append(e3->toString());
 		buffer.append(")' Res = 0"); 
-	} catch(BlockNotFoundException* ex4){
+	} catch(RecordSizeOverflowException* ex4){
 		buffer.append("'Error al insertar el registro (");
 		buffer.append(ex4->toString());
 		buffer.append(")' Res = 0");

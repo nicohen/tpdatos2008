@@ -8,6 +8,11 @@
 #include "Utils.h"
 #include "Data/FileNotFoundException.h"
 #include "Data/FileDoesAlreadyExistsException.h"
+#include "Data/ContentOverflowBlockException.h"
+#include "Data/RecordSizeOverflowException.h"
+
+
+
 
 DataFile::DataFile(char* fileName){
 	_fileName = cloneStr(fileName);
@@ -151,10 +156,10 @@ vector<Record*>* DataFile::findRecords(int fNumber,DataValue* fValue){
 	int length= this->getRecordsBlockCount();
 	for(int j=1;j<=length;j++){
 		rBlock=	this->getRecordBlock(j);
-		vector<RawRecord*>* recordsList= rBlock->getRecords();
+		//vector<RawRecord*>* recordsList= rBlock->getRecords();
 		RawRecord* each=NULL;
 		vector<RawRecord*>::iterator iter;
-		for (iter = recordsList->begin(); iter != recordsList->end(); iter++ ){
+		for (iter = rBlock->begin(); iter != rBlock->end(); iter++ ){
 			each=((RawRecord*)*iter);
 			Record* record= new Record();
 			record->deserialize(each,this->getFields());
@@ -177,20 +182,21 @@ vector<Record*>* DataFile::removeRecord(int fNumber,DataValue* fValue){
 	for(int j=1;j<=length;j++){
 		cantidad = 1;
 		rBlock=	this->getRecordBlock(j);
-		vector<RawRecord*>* recordsList= rBlock->getRecords();
+		//vector<RawRecord*>* recordsList= rBlock->getRecords();
 		RawRecord* each=NULL;
 		vector<RawRecord*>::iterator iter;
-		for (iter = recordsList->begin(); iter != recordsList->end(); iter++ ){
+		for (iter = rBlock->begin(); iter != rBlock->end(); iter++ ){
 			each=((RawRecord*)*iter);
 			Record* record= new Record();
 			record->deserialize(each,this->getFields());
 			if(record->matchField(fNumber,fValue)){
 				removedRecords->push_back(record);
-				recordsList->erase(iter);
+				rBlock->erase(iter);
 				iter--;
 				actualize=true;
 			}
 		}
+		
 		if (actualize){
 			//this->_blocksBuffer->addBlock(this->getFileName(),j,rBlock);
 			this->_blockStructuredFile->bUpdateContentBlock(j,rBlock);
@@ -212,7 +218,7 @@ T_BLOCKSIZE DataFile::getDataRecordsCount() {
 	for (int i=1; i <= this->_blockStructuredFile->getContentBlockCount()-1; i++) {
 		recordsBlock =  this->getRecordBlock(i);
 			//(RecordsBlock*)this->_blockStructuredFile->bGetContentBlock(i,&(RecordsBlock::createRecordsBlock));
-		recordsCount += recordsBlock->getRecords()->size();
+		recordsCount += recordsBlock->RecordCount();
 	}
 	
 	return recordsCount;
@@ -262,7 +268,16 @@ bool DataFile::isArrayOf(vector<Field*>* fields, vector<DataValue*>* values){
 	return true;	
 }
 
+T_BLOCKCOUNT DataFile::getFirstRecordsBlockIndex(){
+	return 1;
+}
+T_BLOCKCOUNT DataFile::getLastRecordsBlockIndex(){
+	return this->_blockStructuredFile->getContentBlockCount()-1;
+}
+
 void DataFile::insertRecord(Record* record) {
+	RecordsBlock* recordsBlock = NULL;
+	RawRecord* rawRecord =NULL;
 	string str;
 	vector<Record*>* sameKeyRecordsfound = this->findRecords(0,(DataValue*)record->getValues()->at(0));
 	if(sameKeyRecordsfound->size()>0){
@@ -274,29 +289,26 @@ void DataFile::insertRecord(Record* record) {
 	if (this->isArrayOf(this->_metadataBlock->GetSecondaryFields(),record->getValues())==false){
 		throw new TypeMismatchException("Los datos ingresados no coinciden con la estructura del Archivo");
 	}
-	RecordsBlock* recordsBlock = NULL;
-	RawRecord* rawRecord = record->serialize();
-	try {
-		//NAHUE: PASAR ESTO AL DATAFILE
-		T_BLOCKCOUNT freeRecordBlockNumber = this->_blockStructuredFile->getFirstFreeContentBlockNumber(1,record->getSerializationFullSize(),&RecordsBlock::createRecordsBlock);
-		recordsBlock = this->getRecordBlock(freeRecordBlockNumber);
-		recordsBlock->getRecords()->push_back(rawRecord);		
+	rawRecord = record->serialize();
+	
+	for (T_BLOCKCOUNT i=this->getFirstRecordsBlockIndex();i <=this->getLastRecordsBlockIndex(); i++) {
 		try{
-			this->_blockStructuredFile->bUpdateContentBlock(freeRecordBlockNumber,recordsBlock);	
-		}catch(BlockStructuredFileException* noSpaceException){
-			throw new BlockNotFoundException("El bloque que tenia espacio libre, luego de intentar guardar el registro, este no entra.");
+			recordsBlock = this->getRecordBlock(i);
+			recordsBlock->push_back(rawRecord);
+			this->_blockStructuredFile->bUpdateContentBlock(i,recordsBlock);
+			return;
+		}catch(ContentOverflowBlockException* ex1){
+			delete ex1;
 		}
-	} catch(BlockNotFoundException* ex) {
+	}
+	try{
 		recordsBlock = new RecordsBlock(this->_blockStructuredFile->getBlockSize());
-		recordsBlock->getRecords()->push_back(rawRecord);
-		try{
-			this->_blockStructuredFile->bAppendContentBlock(recordsBlock);
-			this->_blocksBuffer->addBlock(this->getFileName(),this->getRecordsBlockCount()+1,recordsBlock);	
-		}catch(BlockStructuredFileException* noSpaceException){
-			delete recordsBlock;
-			throw new BlockNotFoundException("El registro tiene tamaño mayor al del bloque");
-		}		
-		delete ex;
+		recordsBlock->push_back(rawRecord);
+		this->_blockStructuredFile->bAppendContentBlock(recordsBlock);
+		this->_blocksBuffer->addBlock(this->getFileName(),this->getLastRecordsBlockIndex(),recordsBlock);
+	}catch(ContentOverflowBlockException* ex2){
+		delete ex2;
+		throw new RecordSizeOverflowException();
 	}
 }
 
