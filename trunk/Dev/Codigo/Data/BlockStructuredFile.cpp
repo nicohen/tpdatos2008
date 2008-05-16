@@ -204,9 +204,9 @@ Block* BlockStructuredFile::bGetContentBlock(T_BLOCKCOUNT contentBlockNumber,
 }
 
 void BlockStructuredFile::bAppendContentBlock(Block* block) {
-	if (block->getUsedSpace()>this->getBlockSize()) {
-		throw new BlockStructuredFileException("El bloque tiene un tamaño mas grande que el esperado");
-	}
+//	if (block->getUsedSpace()>this->getBlockSize()) {
+//		throw new BlockStructuredFileException("El bloque tiene un tamaño mas grande que el esperado");
+//	}
 	this->appendBlock(block->getContent());
 	//Aca hay que actualizar luego el header para decirle el espacio libre de este bloque. block->getFreeSpace()
 }
@@ -215,24 +215,21 @@ void BlockStructuredFile::removeLastContentBlock() {
 
 }
 
-T_BLOCKCOUNT BlockStructuredFile::getFirstFreeContentBlockNumber(
-		T_BLOCKCOUNT initBlockNumber, T_BLOCKSIZE minRequiredSpace, Block* (*BlockCreatorFunction)(char* content,T_BLOCKSIZE size))
-		throw (BlockNotFoundException*) {
-	RecordsBlock* recordsBlock= NULL;
+T_BLOCKCOUNT BlockStructuredFile::getFirstFreeContentBlockNumber(T_BLOCKCOUNT initBlockNumber, T_BLOCKSIZE minRequiredSpace, Block* (*BlockCreatorFunction)(char* content,T_BLOCKSIZE size)) throw (BlockNotFoundException*) {
+	Block* block= NULL;
+	BlockNotFoundException* ex;
+	
+	ex=new BlockNotFoundException("[BlockNotFoundException]: No hay espacio libre para insertar el Registro en un bloque existente");
 
 	for (int i=initBlockNumber; i <= this->getContentBlockCount()-1; i++) {
-		recordsBlock = (RecordsBlock*)this->bGetContentBlock(i,
-				BlockCreatorFunction);
-		if (recordsBlock->getSize() * 0.7 > (recordsBlock->getUsedSpace()
-				+ minRequiredSpace)) {
+		block = this->bGetContentBlock(i,BlockCreatorFunction);
+		if (block->getSize() * 0.7 > (block->getUsedSpace()+ minRequiredSpace)) {
 			return i;
 		}
-		//		else{
-		//			printf("\n---Required %i, used %i, should be lower than %f \n", minRequiredSpace, recordsBlock->getUsedSpace(),recordsBlock->getSize() * 0.7);
-		//		}
+//		else{
+//			printf("\n---Required %i, used %i, should be lower than %f \n", minRequiredSpace, recordsBlock->getUsedSpace(),recordsBlock->getSize() * 0.7);
+//		}
 	}
-
-	throw new BlockNotFoundException("[BlockNotFoundException]: No hay espacio libre para insertar el Registro en un bloque existente");
-
+	throw ex;
 }
 
