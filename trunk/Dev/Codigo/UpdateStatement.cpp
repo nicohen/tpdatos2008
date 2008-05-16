@@ -3,6 +3,7 @@
 #include "IntValue.h"
 #include "StringValue.h"
 #include "StructureValue.h"
+#include "Data/RecordSizeOverflowException.h"
 //#include <sstream>
 
 UpdateStatement::UpdateStatement(char* filename):Statement(filename){
@@ -36,7 +37,7 @@ StatementResult* UpdateStatement::execute(DataManager* anIDataManager) {
 		buffer.append(ex->toString());
 		buffer.append("). Res = 0"); 
 		delete ex;
-	}catch(BlockNotFoundException* ex2){
+	}catch(RecordSizeOverflowException* ex2){
 		buffer.append(" Error al actualizar registro(");
 		buffer.append(ex2->toString());
 		buffer.append("). Res = 0"); 
