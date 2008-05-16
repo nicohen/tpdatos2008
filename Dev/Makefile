@@ -76,7 +76,8 @@ SOURCES:=	$(CODE_PATH)BufferedDataManager.cpp\
 	$(BUFFER_PATH)DataFilesBufferKey.cpp\
 	$(BUFFER_PATH)DataFilesBuffer.cpp\
 	$(DATA_PATH)ContentOverflowBlockException.cpp\
-	$(DATA_PATH)RecordSizeOverflowException.cpp
+	$(DATA_PATH)RecordSizeOverflowException.cpp\
+	$(DATA_PATH)KeysBlock.cpp
 	
 OBJECTS=$(SOURCES:.cpp=.o)
 
@@ -88,7 +89,8 @@ all: $(SOURCES) $(EXECUTABLE)
 $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(LDFLAGS) $(MAIN_CLASS) $(OBJECTS) -o $(EXECUTABLE)
 
-nahuel: $(OBJECTS) 
+nahuel:
+	$(OBJECTS) 
 	$(CC) $(LDFLAGS) $(MAIN_NAHUEL) $(OBJECTS) -o $(EXECUTABLE)
 
 pablo: $(OBJECTS) 
