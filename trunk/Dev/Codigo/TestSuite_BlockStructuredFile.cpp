@@ -21,6 +21,7 @@
 #include "Buffer/ReplacementSelector.h"
 #include "Buffer/ComparableExample.h"
 #include "Buffer/BlocksBuffer.h"
+#include "Data/KeysBlock.h"
 
 using namespace std;
 
@@ -428,11 +429,10 @@ void Test_Block_SizeAndFreeSpace(TestCase* test){
 	buffer=createEmptyByteArray(512);
 	*(buffer)='q';
 	block=new Block(buffer,512);
-	block->getFreeSpace();
-	test->Assert_inteq(0,block->getFreeSpace());
+	test->Assert_inteq(512,block->getUsedSpace());
 	test->Assert_inteq(512,block->getSize());
-	block->setFreeSpace(20);
-	test->Assert_inteq(20,block->getFreeSpace());
+//	block->setFreeSpace(20);
+//	test->Assert_inteq(492,block->getUsedSpace());
 	delete block;
 	free(buffer);
 }
@@ -556,12 +556,14 @@ void Test_RecordsBlock(TestCase* test){
 	char* updatedBuffer=NULL;
 	T_BLOCKSIZE actualRecord1Size=0;
 	T_BLOCKSIZE actualRecord2Size=0;
-	T_BLOCKSIZE actualRecordsCount=0;	
+	T_BLOCKSIZE actualRecordsCount=0;
+	RawRecord* record1=new RawRecord("e",1);
+	RawRecord* record2=new RawRecord("a",1);
 	
 	//Creo un bloque de registros
 	recordsBlock=new RecordsBlock(100);
-	recordsBlock->appendRecord(new RawRecord("e",1));
-	recordsBlock->appendRecord(new RawRecord("a",1));
+	recordsBlock->appendRecord(record1);
+	recordsBlock->appendRecord(record2);
 	
 	updatedBuffer=recordsBlock->getContent();
 	
@@ -581,7 +583,7 @@ void Test_RecordsBlock(TestCase* test){
 	//Verifico el campo que guarda el contenido del segundo registro
 	test->Assert_True_m(compareByteArray("a",updatedBuffer+sizeof(T_BLOCKSIZE)+1+sizeof(T_BLOCKSIZE),1),"Deberian ser arrays iguales");
 	//Verifico el espacio libre
-	test->Assert_inteq(100-2*(1+sizeof(T_BLOCKSIZE))-sizeof(T_BLOCKSIZE),recordsBlock->getFreeSpace());
+	test->Assert_inteq(sizeof(T_BLOCKSIZE) + 2*(sizeof(T_BLOCKSIZE)+1),recordsBlock->getUsedSpace());
 	delete recordsBlock;
 }
 
@@ -603,9 +605,9 @@ void Test_RecordsBlock_Deserialization(TestCase* test){
 	
 	//Creo un nuevo bloque de registros a partir de la informacion serializada
 	deserializedRecordsBlock=new RecordsBlock(serializedData,100);
-	test->Assert_inteq(2,deserializedRecordsBlock->getRecords()->size());
-	test->Assert_True_m(compareByteArray("nahuequeve",((RawRecord*)deserializedRecordsBlock->getRecords()->at(0))->getContent(),10),"hola_Deberian ser arrays iguales");
-	test->Assert_True_m(compareByteArray("chau",((RawRecord*)deserializedRecordsBlock->getRecords()->at(1))->getContent(),4),"chau_Deberian ser arrays iguales");
+	test->Assert_inteq(2,deserializedRecordsBlock->RecordCount());
+	test->Assert_True_m(compareByteArray("nahuequeve",((RawRecord*)deserializedRecordsBlock->at(0))->getContent(),10),"hola_Deberian ser arrays iguales");
+	test->Assert_True_m(compareByteArray("chau",((RawRecord*)deserializedRecordsBlock->at(1))->getContent(),4),"chau_Deberian ser arrays iguales");
 	free(serializedData);
 	delete deserializedRecordsBlock;	
 }
@@ -618,10 +620,10 @@ void Test_RecordsBlock_RecordsManipulation(TestCase* test){
 	//Creo un bloque de registros
 	recordsBlock=new RecordsBlock(100);
 	//Le agrego registros
-	recordsBlock->getRecords()->push_back(new RawRecord("Holaas",6));
-	recordsBlock->getRecords()->push_back(new RawRecord("Haaaeee",7));
-	recordsBlock->getRecords()->push_back(new RawRecord("aax",3));
-	recordsBlock->getRecords()->pop_back();
+	recordsBlock->push_back(new RawRecord("Holaas",6));
+	recordsBlock->push_back(new RawRecord("Haaaeee",7));
+	//recordsBlock->push_back(new RawRecord("aax",3));
+	//recordsBlock->pop_back();
 	
 	//Lo serializo
 	serializedData=(char*)malloc(100);
@@ -630,9 +632,9 @@ void Test_RecordsBlock_RecordsManipulation(TestCase* test){
 	
 	//Creo un nuevo bloque de registros a partir de la informacion serializada
 	deserializedRecordsBlock=new RecordsBlock(serializedData,100);
-	test->Assert_inteq(2,deserializedRecordsBlock->getRecords()->size());
-	test->Assert_True_m(compareByteArray("Holaas",((RawRecord*)deserializedRecordsBlock->getRecords()->at(0))->getContent(),6),"hola_Deberian ser arrays iguales");
-	test->Assert_True_m(compareByteArray("Haaaeee",((RawRecord*)deserializedRecordsBlock->getRecords()->at(1))->getContent(),7),"chau_Deberian ser arrays iguales");
+	test->Assert_inteq(2,deserializedRecordsBlock->RecordCount());
+	test->Assert_True_m(compareByteArray("Holaas",((RawRecord*)deserializedRecordsBlock->at(0))->getContent(),6),"hola_Deberian ser arrays iguales");
+	test->Assert_True_m(compareByteArray("Haaaeee",((RawRecord*)deserializedRecordsBlock->at(1))->getContent(),7),"chau_Deberian ser arrays iguales");
 	free(serializedData);
 	delete deserializedRecordsBlock;
 }
@@ -661,7 +663,7 @@ void Test_BlockStructured_DataBlockCreation(TestCase* test){
 	
 	loadedfile=BlockStructuredFile::Load(filename);
 	loadedblock = (RecordsBlock*)loadedfile->bGetContentBlock(0,&createRecordsBlock);
-	test->Assert_True_m(compareByteArray("aaaa",((RawRecord*)loadedblock->getRecords()->at(0))->getContent(),4),"Los bloques deberian ser iguales");
+	test->Assert_True_m(compareByteArray("aaaa",((RawRecord*)loadedblock->at(0))->getContent(),4),"Los bloques deberian ser iguales");
 	delete loadedfile;
 }
 
@@ -813,7 +815,7 @@ void Test_Integration_BSFandRecordsB_getContentOnAnUninitializedRecordsBlock(Tes
 	//delete file;
 	try{
 		rb=(RecordsBlock*)file->bGetContentBlock(1,&RecordsBlock::createRecordsBlock);
-		rb->getRecords()->push_back(new RawRecord("nicolas",7));
+		rb->push_back(new RawRecord("nicolas",7));
 		file->bUpdateContentBlock(1,rb);
 		test->Assert_True_m(false,"Deberia haber lanzado una excepcion del tipo BlockStructuredFileException");
 	}catch(BlockStructuredFileException* ex){
@@ -933,9 +935,9 @@ void Test_RecordsBlock_Remove(TestCase* test){
 	
 	//Creo un nuevo bloque de registros a partir de la informacion serializada
 	deserializedRecordsBlock=new RecordsBlock(serializedData,100);
-	test->Assert_inteq(3,deserializedRecordsBlock->getRecords()->size());
-	deserializedRecordsBlock->getRecords()->clear();
-	test->Assert_inteq(0,deserializedRecordsBlock->getRecords()->size());
+	test->Assert_inteq(3,deserializedRecordsBlock->RecordCount());
+	deserializedRecordsBlock->clear();
+	test->Assert_inteq(0,deserializedRecordsBlock->RecordCount());
 	
 	//Lo serializo
 	serializedData=(char*)malloc(100);
@@ -943,7 +945,7 @@ void Test_RecordsBlock_Remove(TestCase* test){
 	delete deserializedRecordsBlock;
 	
 	deserializedRecordsBlock2=new RecordsBlock(serializedData,100);	
-	test->Assert_inteq(0,deserializedRecordsBlock2->getRecords()->size());
+	test->Assert_inteq(0,deserializedRecordsBlock2->RecordCount());
 	
 	
 	free(serializedData);
@@ -1175,6 +1177,52 @@ void Test_BufferHitsMissAndSize(TestCase* test) {
 	test->Assert_inteq(512,blocksBuffer->getTotalSize());
 }
 
+
+
+void Test_KeysBlock_Empty(TestCase* test) {
+	KeysBlock* keysBlock=new KeysBlock(512,2);
+	
+	//Verifico condiciones iniciales
+	test->Assert_inteq(2,keysBlock->getDispersion());
+	test->Assert_inteq(0,keysBlock->RecordCount());
+	test->Assert_inteq(12,keysBlock->getUsedSpace());
+	
+	//modifico la dispersion
+	keysBlock->setDispersion(15);
+	test->Assert_inteq(15,keysBlock->getDispersion());
+	test->Assert_inteq(12,keysBlock->getUsedSpace());
+	
+	//agrego un registro y verifico
+	Record* record=new Record();
+	record->addValue(new StringValue("pepe"));
+	record->addValue(new IntValue(123));
+	keysBlock->appendRecord(record->serialize());
+	
+	test->Assert_inteq(1,keysBlock->RecordCount());
+	
+	
+}
+
+void Test_KeysBlock_LittleSpace(TestCase* test) {
+	KeysBlock* keysBlock=new KeysBlock(12,2);
+	//deberia tirar excepcion
+}
+
+void Test_KeysBlock_Persistence(TestCase* test) {
+	KeysBlock* keysBlock=new KeysBlock(50,33);
+	Record* record=new Record();
+	record->addValue(new StringValue("pepe"));
+	record->addValue(new IntValue(123));
+	keysBlock->appendRecord(record->serialize());
+	
+	char* data=(char*)malloc( keysBlock->getSize());
+	data=keysBlock->getContent();
+	
+	KeysBlock* deserialized=new KeysBlock(data,keysBlock->getSize());
+	
+	test->Assert_inteq(33,deserialized->getDispersion());
+}
+
 int main(int argc, char* argv[]){
 	int failedTests=0;
 	
@@ -1357,7 +1405,19 @@ int main(int argc, char* argv[]){
 	
 	TestCase* test_nahue_02=new TestCase("Test_RecordWithNullValues",&failedTests);	
 	Test_RecordWithNullValues(test_nahue_02);
-	delete test_nahue_02;	
+	delete test_nahue_02;
+	
+	TestCase* test_nahue_03=new TestCase("Test_KeysBlock_Empty",&failedTests);	
+	Test_KeysBlock_Empty(test_nahue_03);
+	delete test_nahue_03;
+	
+	TestCase* test_nahue_04=new TestCase("Test_KeysBlock_LittleSpace",&failedTests);	
+	Test_KeysBlock_LittleSpace(test_nahue_04);
+	delete test_nahue_04;
+		
+	TestCase* test_nahue_05=new TestCase("Test_KeysBlock_Persistence",&failedTests);	
+	Test_KeysBlock_Persistence(test_nahue_05);
+	delete test_nahue_05;
 	
 	delete new TestSuiteResult(failedTests);
 	return 0;

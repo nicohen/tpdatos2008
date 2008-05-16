@@ -35,7 +35,7 @@ T_BLOCKSIZE Block::getSize(){
 } 
 
 T_BLOCKSIZE Block::getUsedSpace(){
-	return 0;
+	return this->_size;
 } 
 
 void Block::setContent(char* content){

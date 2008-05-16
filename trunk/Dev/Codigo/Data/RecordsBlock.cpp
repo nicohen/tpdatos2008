@@ -26,7 +26,7 @@ void RecordsBlock::deserializeRecords(){
 		record=this->deserializeRecord(Block::getContent(),offset);
 		this->_records->push_back(record);
 		offset+=this->getSerializationSize(record);
-	}	
+	}
 }
 
 RawRecord* RecordsBlock::deserializeRecord(char* data, T_BLOCKSIZE offset){
@@ -127,4 +127,12 @@ void RecordsBlock::push_back(RawRecord* rawrecord){
 		throw new ContentOverflowBlockException();
 	}
 	return this->_records->push_back(rawrecord);
+}
+
+RawRecord* RecordsBlock::at(T_BLOCKSIZE i){
+	return this->_records->at(i);	
+}
+
+void RecordsBlock::clear(){
+	this->_records->clear();
 }

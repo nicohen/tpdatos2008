@@ -28,15 +28,17 @@ public:
 	RecordsBlock(char* content,T_BLOCKSIZE size);
 	virtual ~RecordsBlock(void);
 
-	void appendRecord(RawRecord* record);
+	virtual void appendRecord(RawRecord* record);
 	virtual T_BLOCKSIZE getUsedSpace();
 	virtual char* getContent();
-
-	vector<RawRecord*>::iterator begin();
-	vector<RawRecord*>::iterator end();
-	void erase(vector<RawRecord*>::iterator it);
-	T_BLOCKSIZE RecordCount();
-	void push_back(RawRecord* rawrecord);
+	virtual void push_back(RawRecord* rawrecord);
+	
+	virtual vector<RawRecord*>::iterator begin();
+	virtual vector<RawRecord*>::iterator end();
+	virtual void erase(vector<RawRecord*>::iterator it);
+	virtual T_BLOCKSIZE RecordCount();
+	virtual RawRecord* at(T_BLOCKSIZE i);
+	virtual void clear();
 };
 
 #endif /*RecordsBlock_H_*/
