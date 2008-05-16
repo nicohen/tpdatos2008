@@ -32,9 +32,9 @@ private:
 	T_BLOCKCOUNT getFirstRecordsBlockIndex();
 	T_BLOCKCOUNT getLastRecordsBlockIndex();
 public:
+//	Implementacion de IBuffereable
+	virtual T_BLOCKSIZE getSize();
 	static const int FIRST_BLOCK = 0;
-	//static DataFile* Load(char* filename);
-	//void create();
 	
 	//Constructores y destructores 
 	DataFile(char* fileName, int blockSize, int fileType, int indexSize, int secondaryFieldsCount, vector<Field*>* secondaryFields, SecondaryIndex* secondaryIndex);
@@ -58,7 +58,6 @@ public:
 	T_BLOCKSIZE getDataRecordsCount();
 	T_BLOCKSIZE getRecordsBlockCount();
 	
-	//vector<Field*>* getDataStructure();
 	Field* getPrimaryField();
 	vector<Field*>* getFields();
 
@@ -66,20 +65,9 @@ public:
 	vector<Record*>* findRecords(int fNumber,DataValue* fValue);
 	vector<Record*>* removeRecord(int fNumber,DataValue* fValue);
 	bool updateRecord(Record* record);
-	
-	
-//	Implementacion de IBuffereable
-	virtual T_BLOCKSIZE getSize();
-	/*
-	void open();
-	void close();
-	void insert(Record* record);
-	void remove();
-	Record* find(int fieldNumber, DataValue* expectedData);
-	Record* createRecord();
-	int delet(int fieldNumber, DataValue* expectedData);
-	Record* readRecord();
-	*/
+	void insertRecordAt(T_BLOCKCOUNT blockNumber,Record* record);
+	void appendEmptyBlock();
+	bool existsAnotherWithSameKey(Record* record);
 };
 
 #endif /*DATAFILE_H_*/

@@ -275,40 +275,58 @@ T_BLOCKCOUNT DataFile::getLastRecordsBlockIndex(){
 	return this->_blockStructuredFile->getContentBlockCount()-1;
 }
 
-void DataFile::insertRecord(Record* record) {
-	RecordsBlock* recordsBlock = NULL;
-	RawRecord* rawRecord =NULL;
-	string str;
+bool DataFile::existsAnotherWithSameKey(Record* record){
+	bool res=false;
 	vector<Record*>* sameKeyRecordsfound = this->findRecords(0,(DataValue*)record->getValues()->at(0));
 	if(sameKeyRecordsfound->size()>0){
-		delete sameKeyRecordsfound;
-		throw new IdentityException("Ya existe un registro con la misma clave que el que se quiere insertar");
+		res=true;
 	}
 	delete sameKeyRecordsfound;
-	
+	return res;
+}
+void DataFile::appendEmptyBlock(){
+	RecordsBlock* recordsBlock = new RecordsBlock(this->_blockStructuredFile->getBlockSize());
+	this->_blockStructuredFile->bAppendContentBlock(recordsBlock);
+	this->_blocksBuffer->addBlock(this->getFileName(),this->getLastRecordsBlockIndex(),recordsBlock);
+}
+
+
+void DataFile::insertRecord(Record* record) {
+	string str;
+	if(this->existsAnotherWithSameKey(record)){
+		throw new IdentityException("Ya existe un registro con la misma clave que el que se quiere insertar");
+	}	
 	if (this->isArrayOf(this->_metadataBlock->GetSecondaryFields(),record->getValues())==false){
 		throw new TypeMismatchException("Los datos ingresados no coinciden con la estructura del Archivo");
-	}
-	rawRecord = record->serialize();
-	
+	}	
 	for (T_BLOCKCOUNT i=this->getFirstRecordsBlockIndex();i <=this->getLastRecordsBlockIndex(); i++) {
 		try{
-			recordsBlock = this->getRecordBlock(i);
-			recordsBlock->push_back(rawRecord);
-			this->_blockStructuredFile->bUpdateContentBlock(i,recordsBlock);
-			return;
+			this->insertRecordAt(i,record);
+			return;//Si no hay excepcion es porque lo insertó bien, por lo tanto termina el metodo.
 		}catch(ContentOverflowBlockException* ex1){
 			delete ex1;
 		}
 	}
 	try{
-		recordsBlock = new RecordsBlock(this->_blockStructuredFile->getBlockSize());
-		recordsBlock->push_back(rawRecord);
-		this->_blockStructuredFile->bAppendContentBlock(recordsBlock);
-		this->_blocksBuffer->addBlock(this->getFileName(),this->getLastRecordsBlockIndex(),recordsBlock);
+		this->appendEmptyBlock();		
+		this->insertRecordAt(this->getLastRecordsBlockIndex(),record);
 	}catch(ContentOverflowBlockException* ex2){
 		delete ex2;
 		throw new RecordSizeOverflowException();
+	}
+}
+
+void DataFile::insertRecordAt(T_BLOCKCOUNT blockNumber,Record* record){
+	RecordsBlock* recordsBlock = NULL;
+	RawRecord* rawRecord =NULL;
+	try{
+		rawRecord = record->serialize();
+		recordsBlock = this->getRecordBlock(blockNumber);
+		recordsBlock->push_back(rawRecord);
+		this->_blockStructuredFile->bUpdateContentBlock(blockNumber,recordsBlock);
+	}catch(ContentOverflowBlockException* ex){
+		delete rawRecord;
+		throw ex;
 	}
 }
 
