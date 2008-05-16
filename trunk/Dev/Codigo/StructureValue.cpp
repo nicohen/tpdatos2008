@@ -87,8 +87,8 @@ bool StructureValue::equals(DataValue* other){
 	vector<DataValue*>::iterator ownIter;
 	vector<DataValue*>::iterator otherIter;
 	
-	otherStructure=(StructureValue*) other;
 	if(DataValue::equals(other)){
+		otherStructure=(StructureValue*) other;
 		return equalsValueVectors(this->_dataValues,otherStructure->_dataValues);
 	}else{
 //		printf("\nFINAL 4 \n");
