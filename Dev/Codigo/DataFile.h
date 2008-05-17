@@ -37,9 +37,10 @@ private:
 	bool isArrayOf(vector<Field*>* fields, vector<DataValue*>* values);
 	T_BLOCKCOUNT getFirstFreeContentBlockNumber(T_BLOCKCOUNT initBlockNumber, T_BLOCKSIZE minRequiredSpace) throw (BlockNotFoundException*);
 	T_BLOCKCOUNT getFirstRecordsBlockIndex();
-	T_BLOCKCOUNT getLastRecordsBlockIndex();
 	bool canInsert(Record* record);
 public:
+	T_BLOCKCOUNT getLastRecordsBlockIndex();
+	
 	
 	
 	virtual BlockFactory* getBlockFactory();
@@ -57,6 +58,7 @@ public:
 	void setBlocksBuffer(BlocksBuffer* blocksBuffer);
 	void load(char* folderpath);
 	void save(char* folderPath);
+	void deleTe();
 	void setFolder(char* folderPath);
 	char* appendFolder(char* fileName, char* folderPath);
 	
@@ -80,6 +82,7 @@ public:
 	virtual vector<Record*>* findRecordsAt(T_BLOCKCOUNT blockNumber, int fNumber,DataValue* fValue);
 	virtual vector<Record*>* removeRecord(int fNumber,DataValue* fValue);
 	vector<Record*>* removeRecordAt(T_BLOCKCOUNT blockNumber, int fNumber,DataValue* fValue) throw (BlockNotFoundException*);
+	vector<Record*>* removeRecordsAt(T_BLOCKCOUNT blockNumber);
 	virtual bool updateRecord(Record* record);
 	bool updateRecordAt(T_BLOCKCOUNT blockNumber,Record* record);
 	void appendEmptyBlock();

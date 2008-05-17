@@ -1,6 +1,7 @@
 #include "HashTable.h"
 #include "stdio.h"
 #include "../Utils.h"
+#include "../Data/FileNotFoundException.h"
 
 HashTable::HashTable(){
 	_hashFile=NULL;
@@ -24,6 +25,12 @@ void HashTable::load(char* filePath){
 	_fileName= cloneStr(filePath);
 	_hashFile=fopen(filePath,"r+");
 	fread(&_size,INT_SIZE,1,_hashFile);
+}
+
+void HashTable::deleTe() {
+	if (!hadSuccessRemoving(remove(_fileName))) {
+		throw new FileNotFoundException("Se intento eliminar un archivo que no existe");
+	}
 }
 
 int HashTable::getSize(){
