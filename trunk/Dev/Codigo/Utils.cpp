@@ -49,12 +49,12 @@ bool existsFile(char* filename){
 	return false;
 }
 
-unsigned int RobertSedgwicksHash(string& str) {
+unsigned int ElHashDeCubillas(char* str) {
    unsigned int b    = 378551;
    unsigned int a    = 63689;
    unsigned int hash = 0;
 
-   for(size_t i = 0; i < str.length(); i++) {
+   for(size_t i = 0; i < strlen(str); i++) {
       hash = hash * a + str[i];
       a    = a * b;
    }
