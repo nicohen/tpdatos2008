@@ -28,7 +28,7 @@ private:
 	BlockStructuredFile* _blockStructuredFile;
 	char* _fullPath;
 	BlocksBuffer* _blocksBuffer;
-	RecordsBlockFactory _blockFactory;
+	BlockFactory* _blockFactory;
 	MetadataBlockFactory _metadataBlockFactory;
 	
 	bool isArrayOf(vector<Field*>* fields, vector<DataValue*>* values);
@@ -39,6 +39,7 @@ private:
 public:
 	
 	virtual BlockFactory* getBlockFactory();
+	virtual void setBlockFactory(BlockFactory* blockFactory);
 	
 //	Implementacion de IBuffereable
 	virtual T_BLOCKSIZE getSize();
