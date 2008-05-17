@@ -43,7 +43,13 @@ void HashTable::update(int index, int value){
 }
 
 void HashTable::grow(){
+	int* buffer= (int*) malloc(INT_SIZE*_size);
+	fseek(_hashFile,INT_SIZE,SEEK_SET);
+	fread(buffer,INT_SIZE,_size,_hashFile);
+	//fseek(_hashFile,INT_SIZE*(_size+1),SEEK_SET);
+	fwrite(buffer,INT_SIZE,_size,_hashFile);
 	_size=_size+_size;
 	fseek(_hashFile,0,SEEK_SET);
 	fwrite(&_size,INT_SIZE,1,_hashFile);
+	free(buffer);
 }
