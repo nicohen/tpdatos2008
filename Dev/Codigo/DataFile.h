@@ -59,6 +59,7 @@ public:
 	BlockStructuredFile* getBlockStructuredFile();
 	void setMetadataBlock(MetadataBlock* metadataBlock);
 	RecordsBlock* getRecordBlock(int blockNumber);
+	RecordsBlock* getRecordBlockAt(int blockNumber);
 	T_FILESIZE getDataUsedSpace();
 	T_FILESIZE getDataFreeSpace();
 	T_FILESIZE getFileSize();
@@ -69,10 +70,12 @@ public:
 	vector<Field*>* getFields();
 
 	void insertRecord(Record* record);
-	vector<Record*>* findRecords(int fNumber,DataValue* fValue);
-	vector<Record*>* removeRecord(int fNumber,DataValue* fValue);
-	bool updateRecord(Record* record);
 	void insertRecordAt(T_BLOCKCOUNT blockNumber,Record* record);
+	vector<Record*>* findRecords(int fNumber,DataValue* fValue);
+	vector<Record*>* removeRecord(int fNumber,DataValue* fValue) throw (BlockNotFoundException*);
+	vector<Record*>* removeRecordAt(T_BLOCKCOUNT blockNumber, int fNumber,DataValue* fValue) throw (BlockNotFoundException*);
+	bool updateRecord(Record* record);
+	bool updateRecordAt(T_BLOCKCOUNT blockNumber,Record* record);
 	void appendEmptyBlock();
 	bool existsAnotherWithSameKey(Record* record);
 };

@@ -10,9 +10,7 @@
 #include "Data/FileDoesAlreadyExistsException.h"
 #include "Data/ContentOverflowBlockException.h"
 #include "Data/RecordSizeOverflowException.h"
-
-
-
+#include "Data/BlockNotFoundException.h"
 
 DataFile::DataFile(char* fileName){
 	_fileName = cloneStr(fileName);
@@ -173,38 +171,57 @@ vector<Record*>* DataFile::findRecords(int fNumber,DataValue* fValue){
 	return recordsObteined;
 }
 
-vector<Record*>* DataFile::removeRecord(int fNumber,DataValue* fValue){
-	bool actualize=false;
-	RecordsBlock *rBlock;
-	int cantidad = 1;
+vector<Record*>* DataFile::removeRecord(int fNumber,DataValue* fValue) throw (BlockNotFoundException*) {
 	vector<Record*>* removedRecords = new vector<Record*>();
+	vector<Record*>* removedRecordsAt;
 	int length= this->getRecordsBlockCount();
-	for(int j=1;j<=length;j++){
-		cantidad = 1;
-		rBlock=	this->getRecordBlock(j);
-		//vector<RawRecord*>* recordsList= rBlock->getRecords();
-		RawRecord* each=NULL;
-		vector<RawRecord*>::iterator iter;
-		for (iter = rBlock->begin(); iter != rBlock->end(); iter++ ){
-			each=((RawRecord*)*iter);
-			Record* record= new Record();
-			record->deserialize(each,this->getFields());
-			if(record->matchField(fNumber,fValue)){
-				removedRecords->push_back(record);
-				rBlock->erase(iter);
-				iter--;
-				actualize=true;
-			}
+	Record* each=NULL;
+	for(int j=1;j<=length;j++) {
+		removedRecordsAt = this->removeRecordAt(j,fNumber,fValue);
+		vector<Record*>::iterator iter;
+		for (iter = removedRecordsAt->begin(); iter != removedRecordsAt->end(); iter++ ){
+			each = ((Record*)*iter);
+			removedRecords->push_back(each);
 		}
-		
-		if (actualize){
-			//this->_blocksBuffer->addBlock(this->getFileName(),j,rBlock);
-			this->_blockStructuredFile->bUpdateContentBlock(j,rBlock);
-			actualize=false;
-		}
+	}
+	
+	if (removedRecords!=NULL) {
+		delete removedRecordsAt;
 	}
 	return removedRecords;
 }
+
+vector<Record*>* DataFile::removeRecordAt(T_BLOCKCOUNT blockNumber, int fNumber, DataValue* fValue) throw (BlockNotFoundException*) {
+	bool updateRecord=false;
+	RecordsBlock *rBlock;
+	vector<Record*>* removedRecords = new vector<Record*>();
+	rBlock=	this->getRecordBlock(blockNumber);
+
+	//Sale en el caso que no haya encontrado bloques
+	if (rBlock->getSize()==0 || blockNumber<=0) {
+		throw new BlockNotFoundException*();
+	}
+	
+	RawRecord* each=NULL;
+	vector<RawRecord*>::iterator iter;
+	for (iter = rBlock->begin(); iter != rBlock->end(); iter++ ){
+		each=((RawRecord*)*iter);
+		Record* record= new Record();
+		record->deserialize(each,this->getFields());
+		if(record->matchField(fNumber,fValue)){
+			removedRecords->push_back(record);
+			rBlock->erase(iter);
+			iter--;
+			updateRecord=true;
+		}
+	}
+	if (updateRecord){
+		this->_blockStructuredFile->bUpdateContentBlock(blockNumber,rBlock);
+		updateRecord=false;
+	}
+	return removedRecords;
+}
+
 /*
 vector<Field*>* DataFile::getDataStructure(){
 	return this->_metadataBlock->GetSecondaryFields();
@@ -344,6 +361,15 @@ bool DataFile::updateRecord(Record* myRecord) {
 		return false;
 	}else{
 		this->insertRecord(myRecord);
+		return true;
+	}
+}
+
+bool DataFile::updateRecordAt(T_BLOCKCOUNT blockNumber,Record* myRecord) {
+	if(this->removeRecordAt(blockNumber,0,myRecord->getValues()->at(0))->size()<0){
+		return false;
+	}else{
+		this->insertRecordAt(blockNumber,myRecord);
 		return true;
 	}
 }

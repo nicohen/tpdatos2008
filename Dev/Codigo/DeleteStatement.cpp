@@ -31,6 +31,7 @@ StatementResult* DeleteStatement::execute(DataManager* dataManager) {
 	
 	statementResult->setResult((char*)buffer->c_str());
 	
+	delete buffer;
 	return statementResult;
 }
 
