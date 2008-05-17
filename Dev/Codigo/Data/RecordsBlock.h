@@ -39,6 +39,7 @@ public:
 	virtual T_BLOCKSIZE RecordCount();
 	virtual RawRecord* at(T_BLOCKSIZE i);
 	virtual void clear();
+	virtual bool canUpdate(RawRecord* current, RawRecord* newOne);
 };
 
 #endif /*RecordsBlock_H_*/
