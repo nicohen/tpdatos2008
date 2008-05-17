@@ -5,6 +5,7 @@
 #include "../StringValue.h"
 #include "../Data/KeysBlockFactory.h"
 #include "../IntValue.h"
+#include "../Data/RecordNotFoundException.h"
 
 HashIndex::HashIndex()
 {
@@ -41,6 +42,26 @@ void HashIndex::create(char* folderPath,char* filePath){
 	_hashtable->create((char*)hashFileFullPath.c_str(),1);
 	
 }
+
+void HashIndex::unIndex(DataValue* keyValue) {
+	int hashTablePos = getHash(((StringValue*)keyValue)->getString()) % _hashtable->getSize();
+	int keysBlockNumber= _hashtable->getAt(hashTablePos);
+	_keysfile->removeRecordAt(keysBlockNumber,0,keyValue);	
+}
+
+void HashIndex::update(DataValue* keyValue, int blockNumber) {
+	int hashTablePos = getHash(((StringValue*)keyValue)->getString()) % _hashtable->getSize();
+	int keysBlockNumber= _hashtable->getAt(hashTablePos);
+	Record* keyRecord=new Record();
+	keyRecord->addValue(new StringValue(cloneStr((((StringValue*)keyValue)->getString()))));
+	keyRecord->addValue(new IntValue(blockNumber));
+	_keysfile->updateRecordAt(keysBlockNumber,keyRecord);
+}
+
+void HashIndex::deleTe(char* folderPath,char* filePath){
+	
+}
+
 void HashIndex::load(char* folderPath,char* filePath){
 	string keysFileName;
 	string hashFileFullPath;
@@ -66,12 +87,20 @@ void HashIndex::load(char* folderPath,char* filePath){
 }
 
 int HashIndex::getHash(char* arg){
-	return 1;
+	return ElHashDeCubillas(arg);
+}
+
+void HashIndex::reIndex(int keysBlockNumber) {
+	vector<Record*>* erasedRecords = _keysfile->removeRecordsAt(keysBlockNumber);
+	Record* each=NULL;
+	vector<Record*>::iterator iter;
+	for (iter = erasedRecords->begin(); iter != erasedRecords->end(); iter++ ){
+		each=((Record*)*iter);
+		index(each->getValues()->at(0),((IntValue*)each->getValues()->at(1))->getInt());
+	}
 }
 
 void HashIndex::index(DataValue* keyValue,int blockNumber){
-	int recordPosition;
-	
 	if (keyValue->getCharType()!=DataType::STRING_TYPE){
 		throw "se esperaba stringValue";
 	}
@@ -85,8 +114,22 @@ void HashIndex::index(DataValue* keyValue,int blockNumber){
 	try{
 		_keysfile->insertRecordAt(keysBlockNumber,keyRecord);
 	}catch(ContentOverflowBlockException* ex){
-		recordPosition = _keysfile->insertRecord(keyRecord);
+		_keysfile->appendEmptyBlock();
 		_hashtable->grow();
-		_hashtable->update(hashTablePos,recordPosition);
+		_hashtable->update(hashTablePos,_keysfile->getLastRecordsBlockIndex());
+		this->reIndex(keysBlockNumber);
+		this->index(keyValue,blockNumber);
 	}
+}
+
+int HashIndex::getBlockNumber(DataValue* keyValue) {
+	int hashTablePos = getHash(((StringValue*)keyValue)->getString()) % _hashtable->getSize();
+	int keysBlockNumber= _hashtable->getAt(hashTablePos);
+
+	vector<Record*>* recordsFound = _keysfile->findRecordsAt(keysBlockNumber,0,keyValue);
+	if (recordsFound->size()==0) {
+		throw new RecordNotFoundException();
+	}
+	
+	return ((IntValue*)recordsFound->at(0)->getValues()->at(1))->getInt();
 }

@@ -15,6 +15,7 @@ class HashTable{
 		virtual ~HashTable();
 		void create(char* filePath, int size);
 		void load(char* filePath);
+		void deleTe();
 		int getSize();
 		int getAt(int i);
 		void update(int index, int value);

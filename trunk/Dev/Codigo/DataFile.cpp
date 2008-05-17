@@ -122,6 +122,14 @@ void DataFile::save(char* folderPath) {
 	}
 }
 
+void DataFile::deleTe() {
+	if(existsFile(this->_fullPath)){
+		remove(this->_fullPath);
+	} else {
+		throw new FileNotFoundException("Se intento eliminar un archivo que no existe");
+	}
+}
+
 char* DataFile::getFileName() {
 	return this->_fullPath;
 }
@@ -260,6 +268,37 @@ vector<Record*>* DataFile::removeRecordAt(T_BLOCKCOUNT blockNumber, int fNumber,
 			iter--;
 			updateRecord=true;
 		}
+	}
+	if (updateRecord){
+		this->_blockStructuredFile->bUpdateContentBlock(blockNumber,rBlock);
+		updateRecord=false;
+	}
+	return removedRecords;
+}
+
+vector<Record*>* DataFile::removeRecordsAt(T_BLOCKCOUNT blockNumber) {
+	bool updateRecord=false;
+	RecordsBlock *rBlock;
+	vector<Record*>* removedRecords = new vector<Record*>();
+
+	try {
+		rBlock=	this->getRecordBlock(blockNumber);
+	} catch (BlockStructuredFileException* ex) {
+		//Sale en el caso que no haya encontrado bloques
+		delete ex;
+		throw new BlockNotFoundException("No se ha encontrado Bloque dentro del archivo");
+	}
+	
+	RawRecord* each=NULL;
+	vector<RawRecord*>::iterator iter;
+	for (iter = rBlock->begin(); iter != rBlock->end(); iter++ ){
+		each=((RawRecord*)*iter);
+		Record* record= new Record();
+		record->deserialize(each,this->getFields());
+		removedRecords->push_back(record);
+		rBlock->erase(iter);
+		iter--;
+		updateRecord=true;
 	}
 	if (updateRecord){
 		this->_blockStructuredFile->bUpdateContentBlock(blockNumber,rBlock);

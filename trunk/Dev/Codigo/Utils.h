@@ -9,4 +9,5 @@ bool isNumeric(char* word);
 void DEBUG(const char* word);
 bool existsFile(char* filename);
 bool hadSuccessRemoving(int removeResponse);
+unsigned int ElHashDeCubillas(char* str);
 #endif /*UTILS_H_*/

@@ -19,7 +19,11 @@ public:
 	virtual void create(char* folderPath,char* filePath);
 	virtual void load(char* folderPath,char* filePath);
 	virtual void index(DataValue* keyValue,int blockNumber);
-	
+	virtual int getBlockNumber(DataValue* keyValue);
+	virtual void reIndex(int keysBlockNumber);
+	virtual void unIndex (DataValue* keyValue);
+	virtual void update (DataValue* keyValue, int blockNumber);
+	virtual void deleTe(char* folderPath,char* filePath);
 };
 
 #endif /*HASHINDEX_H_*/
