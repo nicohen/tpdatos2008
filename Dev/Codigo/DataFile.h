@@ -51,7 +51,8 @@ public:
 	static const int FIRST_BLOCK = 0;
 	
 	//Constructores y destructores 
-	DataFile(char* fileName, int blockSize, int fileType, int indexSize, int secondaryFieldsCount, vector<Field*>* secondaryFields, SecondaryIndex* secondaryIndex);
+	DataFile(char* fileName, int blockSize, vector<Field*>* secondaryFields,HashIndex* index);
+	
 	DataFile(char* fileName);
 	virtual ~DataFile();
 	
@@ -87,7 +88,7 @@ public:
 	bool updateRecordAt(T_BLOCKCOUNT blockNumber,Record* record);
 	void appendEmptyBlock();
 	bool existsAnotherWithSameKey(Record* record);
-	virtual void setPrimaryIndex(HashIndex* index);
+//	virtual void setPrimaryIndex(HashIndex* index);
 };
 
 #endif /*DATAFILE_H_*/

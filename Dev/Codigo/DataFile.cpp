@@ -3,6 +3,7 @@
 #include "string.h"
 #include <vector>
 #include "IntType.h"
+#include "StringType.h"
 #include "Data/IdentityException.h"
 #include "Data/TypeMismatchException.h"
 #include "Utils.h"
@@ -22,13 +23,17 @@ DataFile::DataFile(char* fileName){
 }
 
 
-DataFile::DataFile(char* fileName, int blockSize, int fileType, int indexSize, int secondaryFieldsCount, vector<Field*>* secondaryFields, SecondaryIndex* secondaryIndex) {
+DataFile::DataFile(char* fileName, int blockSize, vector<Field*>* secondaryFields,HashIndex* index) {
 	//ToDo: Desde afuera matar esto-->secondaryIndex	
 	vector<Field*>* fields=new vector<Field*>();
 	Field* primaryField=new Field();
 	primaryField->setIsMandatory(true);
 	primaryField->setIsPolyvalent(false);
-	primaryField->setDataType(new IntType());
+	if(index!=NULL){
+		primaryField->setDataType(new StringType());
+	}else{
+		primaryField->setDataType(new IntType());
+	}
 	fields->push_back(primaryField);
 	
 	Field* each=NULL;
@@ -41,10 +46,10 @@ DataFile::DataFile(char* fileName, int blockSize, int fileType, int indexSize, i
 	_fileName = cloneStr(fileName);
 	_blockSize = blockSize;
 	_metadataBlock = new MetadataBlock(blockSize);
-	_metadataBlock->setFileType(fileType);
+//	_metadataBlock->setFileType(fileType);
 	_metadataBlock->setSecondaryFields(fields);
 	_blockFactory=new RecordsBlockFactory();
-	this->_primaryIndex=NULL;
+	this->_primaryIndex=index;
 }
 
 void DataFile::setBlocksBuffer(BlocksBuffer* blocksBuffer){
@@ -81,14 +86,14 @@ BlockStructuredFile* DataFile::getBlockStructuredFile() {
 
 char* DataFile::appendFolder(char* fileName, char* folderPath){
 	string buffer;
-	char* result;
+//	char* result;
 	
 	buffer.append(folderPath);
 	buffer.append(fileName);
 	
-	result = (char*) malloc(strlen(buffer.c_str()));
-	strcpy(result,buffer.c_str());
-	return result;	
+//	result = (char*) malloc(strlen(buffer.c_str()));
+//	strcpy(result,buffer.c_str());
+	return cloneStr((char*)buffer.c_str());	
 }
 
 void DataFile::setFolder(char* folderPath){
@@ -505,7 +510,7 @@ void DataFile::setBlockFactory(BlockFactory* blockFactory){
 bool DataFile::canInsert(Record* record) {
 	return this->getRecordBlock(0)->canInsert(record->serialize());
 }
-
-void DataFile::setPrimaryIndex(HashIndex* index){
-	this->_primaryIndex=index;
-}
+//
+//void DataFile::setPrimaryIndex(HashIndex* index){
+//	this->_primaryIndex=index;
+//}

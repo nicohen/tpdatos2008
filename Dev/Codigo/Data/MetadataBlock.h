@@ -14,7 +14,9 @@ private:
 	vector<Field*>* _fields;
 	
 	Field* parseField(char* content, int* offset);
-	void writeOnBlock(Field* field,Block* block,int* offset);	
+	void writeOnBlock(Field* field,Block* block,int* offset);
+	int getFileType();
+	void setFileType(int fileType);
 public:
 	static Block* createMetadataBlock(char* content, T_BLOCKSIZE size);
 	
@@ -25,8 +27,7 @@ public:
 
 	//int getIndexSize();
 	//void setIndexSize(int indexSize);
-	int getFileType();
-	void setFileType(int fileType);
+
 	int getQtyFields();
 	void setSecondaryField(Field* field);
 	void setSecondaryFields(vector<Field*>* _fields);

@@ -35,24 +35,26 @@ DataFile* DataManager::getFile(char* fileName) {
 }
 
 bool DataManager::removeFile(char* fileName) {
-	string* buffer = new string();
-	char* cadena;
-	bool isRemoved = false;
-	
-	buffer->append(_basePath);
-	buffer->append(fileName);
-	
-	cadena = (char*) malloc(strlen(buffer->c_str()));
-	strcpy(cadena,buffer->c_str());
-	
-	isRemoved = hadSuccessRemoving(remove(cadena));
-	
-	//Eliminar del buffer	
-	_dataFilesBuffer->removeFile(fileName);
-	
-	delete buffer;
-	free(cadena);
-	return isRemoved;
+//	string* buffer = new string();
+//	char* cadena;
+//	bool isRemoved = false;
+//	
+//	buffer->append(_basePath);
+//	buffer->append(fileName);
+//	
+//	cadena = (char*) malloc(strlen(buffer->c_str()));
+//	strcpy(cadena,buffer->c_str());
+//	
+//	isRemoved = hadSuccessRemoving(remove(cadena));
+//	
+//	//Eliminar del buffer	
+//	_dataFilesBuffer->removeFile(fileName);
+//	
+//	delete buffer;
+//	free(cadena);
+//	return isRemoved;
+	this->getFile(fileName)->deleTe();
+	return true;
 }
 
 char* DataManager::getBasePath() {

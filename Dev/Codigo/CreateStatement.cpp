@@ -81,12 +81,14 @@ void CreateStatement::writeStatementQuery(OutPutter* outPutter){
 StatementResult* CreateStatement::execute(DataManager* dataManager){
 	ostringstream ss;
 	string buffer;
+	HashIndex* index=NULL;
 	DEBUG("Inicio de la ejecución del CreateStatement");
 	//Creo el DataFile
-	DataFile* dataFile = new DataFile(this->getFileName(),this->getDataBlockSize(),this->getFileType(),this->getIndexSize(),this->getSecondaryFieldCount(),this->getSecondaryFields(),this->getSecondaryIndex());
-	if(this->_fileType){
-		dataFile->setPrimaryIndex(new HashIndex());
+	if(this->_fileType==this->HASH){
+		index=new HashIndex(this->_indexSize);
 	}
+	DataFile* dataFile = new DataFile(this->getFileName(),this->getDataBlockSize(),this->getSecondaryFields(),index);
+	
 	//Creo el archivo en la carpeta correspondiente
 	StatementResult* sr = new StatementResult();
 	ss<<this->getFileName();
