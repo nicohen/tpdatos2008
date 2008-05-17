@@ -82,7 +82,7 @@ StatementResult* CreateStatement::execute(DataManager* dataManager){
 	ostringstream ss;
 	string buffer;
 	HashIndex* index=NULL;
-	DEBUG("Inicio de la ejecución del CreateStatement");
+	DEBUG_CONDITIONAL("Inicio de la ejecución del CreateStatement");
 	//Creo el DataFile
 	if(this->_fileType==this->HASH){
 		index=new HashIndex(this->_indexSize);
@@ -107,7 +107,7 @@ StatementResult* CreateStatement::execute(DataManager* dataManager){
 		buffer.append("' Res = 0");
 	}	
 	sr->setResult((char*)buffer.c_str());
-	DEBUG("Fin de la ejecución del CreateStatement");
+	DEBUG_CONDITIONAL("Fin de la ejecución del CreateStatement");
 	return sr;
 }
 

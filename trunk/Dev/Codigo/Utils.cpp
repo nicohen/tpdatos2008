@@ -21,6 +21,13 @@ void DEBUG(const char* words){
 	}
 }
 
+void DEBUG_CONDITIONAL(const char* words){
+	extern bool verbose;
+	if (verbose && false){
+		printf("%s\n",words);
+	}
+}
+
 bool isNumeric(char* word){
 	int i=0;
 	int size =strlen(word);
