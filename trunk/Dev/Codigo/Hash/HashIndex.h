@@ -3,6 +3,7 @@
 #include "../DataValue.h"
 #include "../DataFile.h"
 #include "HashTable.h"
+#include "../Data/Block.h"
 
 class DataFile;
 class HashIndex
@@ -10,11 +11,12 @@ class HashIndex
 private:
 	DataFile* _keysfile;
 	HashTable* _hashtable;
+	T_BLOCKSIZE _indexBlockSize;
 	
 protected:
 		virtual int getHash(char* arg);
 public:
-	HashIndex();
+	HashIndex(T_BLOCKSIZE indexBlockSize);
 	virtual ~HashIndex();
 	virtual void create(char* folderPath,char* filePath);
 	virtual void load(char* folderPath,char* filePath);

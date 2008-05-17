@@ -6,9 +6,12 @@
 #include "../Data/KeysBlockFactory.h"
 #include "../IntValue.h"
 #include "../Data/RecordNotFoundException.h"
+#include "../Field.h"
+#include <vector>
 
-HashIndex::HashIndex()
+HashIndex::HashIndex(T_BLOCKSIZE indexBlockSize)
 {
+	_indexBlockSize=indexBlockSize;
 }
 
 HashIndex::~HashIndex()
@@ -33,8 +36,20 @@ void HashIndex::create(char* folderPath,char* filePath){
 	hashFileFullPath.append(fullpath);
 	hashFileFullPath.append(".hash");
 	
+	vector<Field*>* fields=new vector<Field*>();
 	
-	_keysfile=new DataFile((char*)keysFileName.c_str());
+	Field* keyField = new Field();
+	Field* secondaryField1 = new Field();
+	
+	keyField->setDataType(new StringType());
+	secondaryField1->setDataType(new IntType());
+	
+	fields->push_back(keyField);
+	fields->push_back(secondaryField1);
+	
+
+	
+	_keysfile=new DataFile((char*)keysFileName.c_str(),_indexBlockSize,fields,NULL);
 	_keysfile->setBlockFactory(new KeysBlockFactory());
 	_keysfile->save(folderPath);
 	
@@ -82,6 +97,7 @@ void HashIndex::load(char* folderPath,char* filePath){
 	_keysfile=new DataFile((char*)keysFileName.c_str());
 	_keysfile->setBlockFactory(new KeysBlockFactory());
 	_keysfile->load(folderPath);
+	_indexBlockSize= _keysfile->getBlockStructuredFile()->getBlockSize();
 	
 	_hashtable=new HashTable();
 	_hashtable->load((char*)hashFileFullPath.c_str());
