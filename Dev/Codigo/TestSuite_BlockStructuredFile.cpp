@@ -1225,17 +1225,17 @@ void Test_KeysBlock_Persistence(TestCase* test) {
 	test->Assert_inteq(33,deserialized->getDispersion());
 }
 
-void test_HashTable(TestCase* test){
+void test_HashTable2(TestCase* test){
 	HashTable table;
 	table.create("hash.dat",4);
 	test->Assert_True(4==table.getSize());
+	table.update(3,2);
+	test->Assert_True(2==table.getAt(3));
 	table.grow();
 	test->Assert_True(8==table.getSize());
-	table.update(7,2);
-	test->Assert_True(2==table.getAt(7));
 }
 
-void test_HashTable2(TestCase* test){
+void test_HashTable(TestCase* test){
 	HashTable table;
 	table.load("hash.dat");
 	test->Assert_True(8==table.getSize());
