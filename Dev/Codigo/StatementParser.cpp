@@ -18,8 +18,8 @@ StructureType* StatementParser::parseStructuredType(){
 	Token* token= _tokenizer->getNextToken(true);
 	while ((token!=NULL)&&((token->getType()!=Parsing::ITokenizer::DELIMITER)&&(strcmp(token->getContent(),"|")!=0))){		
 		if ((token==NULL)||(token->getType()!=Parsing::ITokenizer::KEYWORD)){
-			DEBUG("Se esperaba el tipo de dato en lugar de:");
-			DEBUG((token==NULL)?"fin de archivo":token->getContent());
+			DEBUG_CONDITIONAL("Se esperaba el tipo de dato en lugar de:");
+			DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 			delete structuredType;
 			throw ParserException();
 		}else{
@@ -28,16 +28,16 @@ StructureType* StatementParser::parseStructuredType(){
 				structuredType->addType(dType);
 				token =	_tokenizer->getNextToken(false);
 				if ((token==NULL) || (token->getType()!=Parsing::ITokenizer::DELIMITER)){
-					DEBUG("Se esperaba ',' o '|' en lugar de:");
-					DEBUG((token==NULL)?"fin de archivo":token->getContent());
+					DEBUG_CONDITIONAL("Se esperaba ',' o '|' en lugar de:");
+					DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 					delete structuredType;
 					throw ParserException();
 				}else{
 					if (strcmp(token->getContent(),"|")==0){
 						break;
 					}else if (strcmp(token->getContent(),",")!=0){
-						DEBUG("Se esperaba ',' o '|' en lugar de:");
-						DEBUG((token==NULL)?"fin de archivo":token->getContent());
+						DEBUG_CONDITIONAL("Se esperaba ',' o '|' en lugar de:");
+						DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 						delete structuredType;
 						throw ParserException();
 					}
@@ -47,16 +47,16 @@ StructureType* StatementParser::parseStructuredType(){
 				structuredType->addType(dType);
 				token =	_tokenizer->getNextToken(false);
 				if ((token==NULL) || (token->getType()!=Parsing::ITokenizer::DELIMITER)){
-					DEBUG("Se esperaba ',' o '|' en lugar de:");
-					DEBUG((token==NULL)?"fin de archivo":token->getContent());
+					DEBUG_CONDITIONAL("Se esperaba ',' o '|' en lugar de:");
+					DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 					delete structuredType;
 					throw ParserException();
 				}else{
 					if (strcmp(token->getContent(),"|")==0){
 						break;
 					}else if (strcmp(token->getContent(),",")!=0){
-						DEBUG("Se esperaba ',' o '|' en lugar de:");
-						DEBUG((token==NULL)?"fin de archivo":token->getContent());
+						DEBUG_CONDITIONAL("Se esperaba ',' o '|' en lugar de:");
+						DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 						delete structuredType;
 						throw ParserException();
 					}
@@ -76,44 +76,44 @@ void StatementParser::parseParameters(CreateStatement* statement){
 	// PARSEO EL CORCHETE
 	token =	_tokenizer->getNextToken(false);
 	if ((token==NULL)||(token->getType()!=Parsing::ITokenizer::DELIMITER)||(strcmp(token->getContent(),"[")!=0)){
-		DEBUG("Se esperaba '[' en lugar de:");
-		DEBUG((token==NULL)?"fin de archivo":token->getContent());
+		DEBUG_CONDITIONAL("Se esperaba '[' en lugar de:");
+		DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 		throw ParserException();
 	}		
 	token =	_tokenizer->getNextToken(false);
 	if (token->getType()!=Parsing::ITokenizer::NUMBER){
-		DEBUG("Se esperaba un número en lugar de:");
-		DEBUG((token==NULL)?"fin de archivo":token->getContent());
+		DEBUG_CONDITIONAL("Se esperaba un número en lugar de:");
+		DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 		throw ParserException();	
 	}
 	statement->setDataBlockSize(atol(token->getContent()));
 	token =	_tokenizer->getNextToken(false);
 	if ((token==NULL) || (token->getType()!=Parsing::ITokenizer::DELIMITER)){
-		DEBUG("Se esperaba ',' en lugar de:");
-		DEBUG((token==NULL)?"fin de archivo":token->getContent());
+		DEBUG_CONDITIONAL("Se esperaba ',' en lugar de:");
+		DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 		throw ParserException();
 	}
 	if (strcmp(token->getContent(),",")!=0){
-		DEBUG("Se esperaba ',' en lugar de:");
-		DEBUG((token==NULL)?"fin de archivo":token->getContent());
+		DEBUG_CONDITIONAL("Se esperaba ',' en lugar de:");
+		DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 		throw ParserException();
 	}
 	token =	_tokenizer->getNextToken(false);
 	if (token->getType()!=Parsing::ITokenizer::NUMBER){
-		DEBUG("Se esperaba un número en lugar de:");
-		DEBUG((token==NULL)?"fin de archivo":token->getContent());
+		DEBUG_CONDITIONAL("Se esperaba un número en lugar de:");
+		DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 		throw ParserException();
 	}
 	statement->setIndexSize(atol(token->getContent()));
 	token =	_tokenizer->getNextToken(false);
 	if ((token==NULL) || (token->getType()!=Parsing::ITokenizer::DELIMITER)){
-		DEBUG("Se esperaba ']' en lugar de:");
-		DEBUG((token==NULL)?"fin de archivo":token->getContent());
+		DEBUG_CONDITIONAL("Se esperaba ']' en lugar de:");
+		DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 		throw ParserException();
 	}
 	if (strcmp(token->getContent(),"]")!=0){
-		DEBUG("Se esperaba ']' en lugar de:");
-		DEBUG((token==NULL)?"fin de archivo":token->getContent());
+		DEBUG_CONDITIONAL("Se esperaba ']' en lugar de:");
+		DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 		throw ParserException();
 	}
 }
@@ -125,22 +125,22 @@ void StatementParser::parseIndex(CreateStatement* statement){
 	// PARSEO EL CORCHETE
 	token =	_tokenizer->getNextToken(false);
 	if ((token==NULL)||(token->getType()!=Parsing::ITokenizer::DELIMITER)||(strcmp(token->getContent(),"[")!=0)){
-		DEBUG("Se esperaba '[' en lugar de:");
-		DEBUG((token==NULL)?"fin de archivo":token->getContent());
+		DEBUG_CONDITIONAL("Se esperaba '[' en lugar de:");
+		DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 		throw ParserException();
 	}
 	token =	_tokenizer->getNextToken(false);
 	if ((token==NULL) || (token->getType()!=Parsing::ITokenizer::NUMBER)){
-		DEBUG("Se esperaba un numero en lugar de:");
-		DEBUG((token==NULL)?"fin de archivo":token->getContent());
+		DEBUG_CONDITIONAL("Se esperaba un numero en lugar de:");
+		DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 		throw ParserException();
 	}else{
 		fieldNumber= atol(token->getContent());
 	}
 	token =	_tokenizer->getNextToken(false);
 	if ((token==NULL)||(token->getType()!=Parsing::ITokenizer::DELIMITER)||(strcmp(token->getContent(),"]")!=0)){
-		DEBUG("Se esperaba ']' en lugar de:");
-		DEBUG((token==NULL)?"fin de archivo":token->getContent());
+		DEBUG_CONDITIONAL("Se esperaba ']' en lugar de:");
+		DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 		throw ParserException();
 	}
 	statement->setSecondaryIndex(new SecondaryIndex(indexType,fieldNumber));
@@ -153,8 +153,8 @@ std::vector<Field*>* StatementParser::parseFields(){
 	// PARSEO EL CORCHETE
 	token =	_tokenizer->getNextToken(false);
 	if ((token==NULL)||(token->getType()!=Parsing::ITokenizer::DELIMITER)||(strcmp(token->getContent(),"[")!=0)){
-		DEBUG("Se esperaba '[' en lugar de:");
-		DEBUG((token==NULL)?"fin de archivo":token->getContent());
+		DEBUG_CONDITIONAL("Se esperaba '[' en lugar de:");
+		DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 		throw ParserException();		
 	}
 	token =	_tokenizer->getNextToken(false);
@@ -171,8 +171,8 @@ std::vector<Field*>* StatementParser::parseFields(){
 				list->push_back(field);
 				token =	_tokenizer->getNextToken(false);
 				if ((token==NULL) || (token->getType()!=Parsing::ITokenizer::DELIMITER)){
-					DEBUG("Se esperaba '+', '*', ',' o '|' en lugar de:");
-					DEBUG((token==NULL)?"fin de archivo":token->getContent());
+					DEBUG_CONDITIONAL("Se esperaba '+', '*', ',' o '|' en lugar de:");
+					DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 					delete field;
 					throw ParserException();
 				}else{
@@ -181,16 +181,16 @@ std::vector<Field*>* StatementParser::parseFields(){
 						field->setIsPolyvalent(true);
 						token =	_tokenizer->getNextToken(false);
 						if ((token==NULL) || (token->getType()!=Parsing::ITokenizer::DELIMITER)){
-							DEBUG("Se esperaba ',' o '|' en lugar de:");
-							DEBUG((token==NULL)?"fin de archivo":token->getContent());
+							DEBUG_CONDITIONAL("Se esperaba ',' o '|' en lugar de:");
+							DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 							delete field;
 							throw ParserException();
 						}else{
 							if (strcmp(token->getContent(),"]")==0){
 								break;
 							}else if (strcmp(token->getContent(),",")!=0){
-								DEBUG("Se esperaba ',' o '|' en lugar de:");
-								DEBUG((token==NULL)?"fin de archivo":token->getContent());
+								DEBUG_CONDITIONAL("Se esperaba ',' o '|' en lugar de:");
+								DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 								delete field;
 								throw ParserException();
 							}
@@ -200,16 +200,16 @@ std::vector<Field*>* StatementParser::parseFields(){
 						field->setIsPolyvalent(true);
 						token =	_tokenizer->getNextToken(false);
 						if ((token==NULL) || (token->getType()!=Parsing::ITokenizer::DELIMITER)){
-							DEBUG("Se esperaba ',' o '|' en lugar de:");
-							DEBUG((token==NULL)?"fin de archivo":token->getContent());
+							DEBUG_CONDITIONAL("Se esperaba ',' o '|' en lugar de:");
+							DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 							delete field;
 							throw ParserException();
 						}else{
 							if (strcmp(token->getContent(),"]")==0){
 								break;
 							}else if (strcmp(token->getContent(),",")!=0){
-								DEBUG("Se esperaba ',' o '|' en lugar de:");
-								DEBUG((token==NULL)?"fin de archivo":token->getContent());
+								DEBUG_CONDITIONAL("Se esperaba ',' o '|' en lugar de:");
+								DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 								delete field;
 							throw ParserException();
 							}
@@ -217,8 +217,8 @@ std::vector<Field*>* StatementParser::parseFields(){
 					}else if (strcmp(token->getContent(),"]")==0){
 						break;
 					}else if (strcmp(token->getContent(),",")!=0){
-						DEBUG("Se esperaba ',' o ']' en lugar de:");
-						DEBUG((token==NULL)?"fin de archivo":token->getContent());
+						DEBUG_CONDITIONAL("Se esperaba ',' o ']' en lugar de:");
+						DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 						delete field;
 						throw ParserException();
 					}					
@@ -233,16 +233,16 @@ std::vector<Field*>* StatementParser::parseFields(){
 				list->push_back(field);
 				token =	_tokenizer->getNextToken(false);
 				if ((token==NULL) || (token->getType()!=Parsing::ITokenizer::DELIMITER)){
-					DEBUG("Se esperaba ',' o '|' en lugar de:");
-					DEBUG((token==NULL)?"fin de archivo":token->getContent());
+					DEBUG_CONDITIONAL("Se esperaba ',' o '|' en lugar de:");
+					DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 					delete field;
 					throw ParserException();
 				}else{
 					if (strcmp(token->getContent(),"]")==0){
 						break;
 					}else if (strcmp(token->getContent(),",")!=0){
-						DEBUG("Se esperaba ',' o '|' en lugar de:");
-						DEBUG((token==NULL)?"fin de archivo":token->getContent());
+						DEBUG_CONDITIONAL("Se esperaba ',' o '|' en lugar de:");
+						DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 						delete field;
 					throw ParserException();
 					}
@@ -255,23 +255,23 @@ std::vector<Field*>* StatementParser::parseFields(){
 				list->push_back(field);
 				token =	_tokenizer->getNextToken(false);
 				if ((token==NULL) || (token->getType()!=Parsing::ITokenizer::DELIMITER)){
-					DEBUG("Se esperaba ',' o '|' en lugar de:");
-					DEBUG((token==NULL)?"fin de archivo":token->getContent());
+					DEBUG_CONDITIONAL("Se esperaba ',' o '|' en lugar de:");
+					DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 					delete field;
 					throw ParserException();
 				}else{
 					if (strcmp(token->getContent(),"]")==0){
 						break;
 					}else if (strcmp(token->getContent(),",")!=0){
-						DEBUG("Se esperaba ',' o '|' en lugar de:");
-						DEBUG((token==NULL)?"fin de archivo":token->getContent());
+						DEBUG_CONDITIONAL("Se esperaba ',' o '|' en lugar de:");
+						DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 						delete field;
 						throw ParserException();
 					}
 				}				
 			}else{
-				DEBUG("Se esperaba un tipo de datos en lugar de:");
-				DEBUG((token==NULL)?"fin de archivo":token->getContent());
+				DEBUG_CONDITIONAL("Se esperaba un tipo de datos en lugar de:");
+				DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 				throw ParserException();
 			}
 		}
@@ -287,8 +287,8 @@ int StatementParser::parseFileType(){
 		throw StatementParserException("No lleva indice secundario");
 	}
 	if ((token==NULL) || (token->getType()!=Parsing::ITokenizer::KEYWORD)){
-		DEBUG("Se esperaba el tipo de organización en lugar de:");
-		DEBUG((token==NULL)?"fin de archivo":token->getContent());
+		DEBUG_CONDITIONAL("Se esperaba el tipo de organización en lugar de:");
+		DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 		throw ParserException();
 	}else{
 		if (strcmp(token->getContent(),"secuencial")==0){ 
@@ -312,8 +312,8 @@ StructureValue* StatementParser::parseStructuredValue(){
 	Token* token= _tokenizer->getNextToken(true);
 	while ((token!=NULL)&&((token->getType()!=Parsing::ITokenizer::DELIMITER)&&(strcmp(token->getContent(),"|")!=0))){		
 		if ((token==NULL)||!((token->getType()!=Parsing::ITokenizer::NUMBER)||(token->getType()!=Parsing::ITokenizer::STRING))){
-			DEBUG("Se esperaba un valor numérico o un string en lugar de:");
-			DEBUG((token==NULL)?"fin de archivo":token->getContent());
+			DEBUG_CONDITIONAL("Se esperaba un valor numérico o un string en lugar de:");
+			DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 			delete structuredValue;
 			throw ParserException();
 		}else{
@@ -322,16 +322,16 @@ StructureValue* StatementParser::parseStructuredValue(){
 				structuredValue->addValue(dValue);
 				token =	_tokenizer->getNextToken(false);
 				if ((token==NULL) || (token->getType()!=Parsing::ITokenizer::DELIMITER)){
-					DEBUG("Se esperaba '|' o ',' en lugar de:");
-					DEBUG((token==NULL)?"fin de archivo":token->getContent());
+					DEBUG_CONDITIONAL("Se esperaba '|' o ',' en lugar de:");
+					DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 					delete structuredValue;
 					throw ParserException();
 				}else{
 					if (strcmp(token->getContent(),"|")==0){
 						break;
 					}else if (strcmp(token->getContent(),",")!=0){
-						DEBUG("Se esperaba '|' o ',' en lugar de:");
-						DEBUG((token==NULL)?"fin de archivo":token->getContent());
+						DEBUG_CONDITIONAL("Se esperaba '|' o ',' en lugar de:");
+						DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 						delete structuredValue;
 						throw ParserException();
 					}
@@ -341,23 +341,23 @@ StructureValue* StatementParser::parseStructuredValue(){
 				structuredValue->addValue(dValue);
 				token =	_tokenizer->getNextToken(false);
 				if ((token==NULL) || (token->getType()!=Parsing::ITokenizer::DELIMITER)){
-					DEBUG("Se esperaba '|' o ',' en lugar de:");
-					DEBUG((token==NULL)?"fin de archivo":token->getContent());
+					DEBUG_CONDITIONAL("Se esperaba '|' o ',' en lugar de:");
+					DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 					delete structuredValue;
 					throw ParserException();
 				}else{
 					if (strcmp(token->getContent(),"|")==0){
 						break;
 					}else if (strcmp(token->getContent(),",")!=0){
-						DEBUG("Se esperaba '|' o ',' en lugar de:");
-						DEBUG((token==NULL)?"fin de archivo":token->getContent());
+						DEBUG_CONDITIONAL("Se esperaba '|' o ',' en lugar de:");
+						DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 						delete structuredValue;
 						throw ParserException();
 					}
 				}			
 			}else{
-				DEBUG("Se esperaba un valor numérico o un string en lugar de:");
-				DEBUG((token==NULL)?"fin de archivo":token->getContent());
+				DEBUG_CONDITIONAL("Se esperaba un valor numérico o un string en lugar de:");
+				DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 				throw ParserException();
 			}
 			token =	_tokenizer->getNextToken(false);
@@ -373,8 +373,8 @@ std::vector<DataValue*>* StatementParser::parseValues(){
 	// PARSEO EL CORCHETE
 	token =	_tokenizer->getNextToken(false);
 	if ((token==NULL)||(token->getType()!=Parsing::ITokenizer::DELIMITER)||(strcmp(token->getContent(),"[")!=0)){
-		DEBUG("Se esperaba '[' en lugar de:");
-		DEBUG((token==NULL)?"fin de archivo":token->getContent());
+		DEBUG_CONDITIONAL("Se esperaba '[' en lugar de:");
+		DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 		throw ParserException();
 	}
 	token =	_tokenizer->getNextToken(false);
@@ -390,16 +390,16 @@ std::vector<DataValue*>* StatementParser::parseValues(){
 				list->push_back(dValue);
 				token =	_tokenizer->getNextToken(false);
 				if ((token==NULL) || (token->getType()!=Parsing::ITokenizer::DELIMITER)){
-					DEBUG("Se esperaba ',' o ']' en lugar de:");
-					DEBUG((token==NULL)?"fin de archivo":token->getContent());
+					DEBUG_CONDITIONAL("Se esperaba ',' o ']' en lugar de:");
+					DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 					delete dValue;
 					throw ParserException();
 				}else{
 					 if (strcmp(token->getContent(),"]")==0){
 						break;
 					}else if (strcmp(token->getContent(),",")!=0){
-						DEBUG("Se esperaba ',' o ']' en lugar de:");
-						DEBUG((token==NULL)?"fin de archivo":token->getContent());
+						DEBUG_CONDITIONAL("Se esperaba ',' o ']' en lugar de:");
+						DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 						delete dValue;
 						throw ParserException();
 					}					
@@ -412,16 +412,16 @@ std::vector<DataValue*>* StatementParser::parseValues(){
 				list->push_back(dValue);
 				token =	_tokenizer->getNextToken(false);
 				if ((token==NULL) || (token->getType()!=Parsing::ITokenizer::DELIMITER)){
-					DEBUG("Se esperaba ',' o ']' en lugar de:");
-					DEBUG((token==NULL)?"fin de archivo":token->getContent());
+					DEBUG_CONDITIONAL("Se esperaba ',' o ']' en lugar de:");
+					DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 					delete dValue;
 					throw ParserException();
 				}else{
 					if (strcmp(token->getContent(),"]")==0){
 						break;
 					}else if (strcmp(token->getContent(),",")!=0){
-						DEBUG("Se esperaba ',' o ']' en lugar de:");
-						DEBUG((token==NULL)?"fin de archivo":token->getContent());
+						DEBUG_CONDITIONAL("Se esperaba ',' o ']' en lugar de:");
+						DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 						delete dValue;
 						throw ParserException();
 					}
@@ -431,23 +431,23 @@ std::vector<DataValue*>* StatementParser::parseValues(){
 				list->push_back(dValue);
 				token =	_tokenizer->getNextToken(false);
 				if ((token==NULL) || (token->getType()!=Parsing::ITokenizer::DELIMITER)){
-					DEBUG("Se esperaba ',' o ']' en lugar de:");
-					DEBUG((token==NULL)?"fin de archivo":token->getContent());
+					DEBUG_CONDITIONAL("Se esperaba ',' o ']' en lugar de:");
+					DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 					delete dValue;
 					throw ParserException();
 				}else{
 					if (strcmp(token->getContent(),"]")==0){
 						break;
 					}else if (strcmp(token->getContent(),",")!=0){
-						DEBUG("Se esperaba ',' o ']' en lugar de:");
-						DEBUG((token==NULL)?"fin de archivo":token->getContent());
+						DEBUG_CONDITIONAL("Se esperaba ',' o ']' en lugar de:");
+						DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 						delete dValue;
 						throw ParserException();
 					}
 				}
 			}else{
-				DEBUG("Se esperaba algun valor en lugar de:");
-				DEBUG((token==NULL)?"fin de archivo":token->getContent());
+				DEBUG_CONDITIONAL("Se esperaba algun valor en lugar de:");
+				DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 				throw ParserException();
 			}
 		token =	_tokenizer->getNextToken(false);
@@ -461,8 +461,8 @@ Statement* StatementParser::parseCreateStatement(){
 	Parsing::Token* token =	_tokenizer->getNextToken(false);
 	// PARSEO NOMBRE DEL ARCHIVO DE DATOS
 	if((token==NULL) || (token->getType()!=Parsing::ITokenizer::STRING) || (strlen(token->getContent())==0)){
-		DEBUG("Se esperaba el nombre del archivo de datos, se recibió:");
-		DEBUG((token==NULL)?"fin de archivo":token->getContent());
+		DEBUG_CONDITIONAL("Se esperaba el nombre del archivo de datos, se recibió:");
+		DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 		throw ParserException();
 	}else{
 		createStatement=new CreateStatement(token->getContent());
@@ -471,8 +471,8 @@ Statement* StatementParser::parseCreateStatement(){
 	token =	_tokenizer->getNextToken(false);
 	if ((token==NULL)||(token->getType()!=Parsing::ITokenizer::DELIMITER)||(strcmp(token->getContent(),";")!=0)){
 		delete createStatement; 
-		DEBUG("Se esperaba ';' en lugar de:");
-		DEBUG((token==NULL)?"fin de archivo":token->getContent());
+		DEBUG_CONDITIONAL("Se esperaba ';' en lugar de:");
+		DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 		throw ParserException();
 	}	
 	// PARSEO EL TIPO DE ARCHIVO
@@ -493,8 +493,8 @@ Statement* StatementParser::parseCreateStatement(){
 	token =	_tokenizer->getNextToken(false);
 	if ((token==NULL)||(token->getType()!=Parsing::ITokenizer::DELIMITER)||(strcmp(token->getContent(),";")!=0)){
 		delete createStatement;
-		DEBUG("Se esperaba ';' en lugar de:");
-		DEBUG((token==NULL)?"fin de archivo":token->getContent());
+		DEBUG_CONDITIONAL("Se esperaba ';' en lugar de:");
+		DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 		throw ParserException();	
 	}
 	//PARSEO LOS PARAMETROS
@@ -507,13 +507,13 @@ Statement* StatementParser::parseCreateStatement(){
 	// PARSEO EL ";" o "\n"
 	token =	_tokenizer->getNextToken(false);
 	if ((token==NULL)||(token->getType()!=Parsing::ITokenizer::DELIMITER)||!((strcmp(token->getContent(),";")!=0)||(strcmp(token->getContent(),"\n")!=0))){
-		DEBUG("Se esperaba ';' o fin de linea en lugar de:");
-		DEBUG((token==NULL)?"fin de archivo":token->getContent());
+		DEBUG_CONDITIONAL("Se esperaba ';' o fin de linea en lugar de:");
+		DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 		delete createStatement; 
 		throw ParserException();	
 	}else{
 		if (strcmp(token->getContent(),"\n")==0){
-			DEBUG("Fin de parseo CREAR correctamente.");
+			DEBUG_CONDITIONAL("Fin de parseo CREAR correctamente.");
 			return createStatement;			
 		}
 	}
@@ -524,22 +524,22 @@ Statement* StatementParser::parseCreateStatement(){
 		delete createStatement; 
 		throw ParserException();
 	}catch(StatementParserException pe){
-		DEBUG("Fin de parseo CREAR correctamente.");
+		DEBUG_CONDITIONAL("Fin de parseo CREAR correctamente.");
 		return createStatement;
 	}
 	token =	_tokenizer->getNextToken(false);
 	if ((token->getType()==Parsing::ITokenizer::DELIMITER)&&(strcmp(token->getContent(),";")==0)){
 		_tokenizer->moveToNextLine();
-		DEBUG("Fin de parseo CREAR correctamente.");
+		DEBUG_CONDITIONAL("Fin de parseo CREAR correctamente.");
 		return createStatement;
 	}
 	if ((token->getType()!=Parsing::ITokenizer::DELIMITER)||(strcmp(token->getContent(),"\n")!=0)){
-		DEBUG("Se esperaba ';' fin de linead en lugar de:");
-		DEBUG((token==NULL)?"fin de archivo":token->getContent());
+		DEBUG_CONDITIONAL("Se esperaba ';' fin de linead en lugar de:");
+		DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 		delete createStatement; 
 		throw ParserException();
 	}
-	DEBUG("Fin de parseo CREAR correctamente.");
+	DEBUG_CONDITIONAL("Fin de parseo CREAR correctamente.");
 	return createStatement;
 }
 
@@ -548,8 +548,8 @@ Statement* StatementParser::parseInsertionStatement(){
 	Parsing::Token* token =	_tokenizer->getNextToken(false);
 	
 	if((token==NULL) || (token->getType()!=Parsing::ITokenizer::STRING) || (strlen(token->getContent())==0)){
-		DEBUG("Se esperaba el nombre del archivo de datos, se recibió:");
-		DEBUG((token==NULL)?"fin de archivo":token->getContent());
+		DEBUG_CONDITIONAL("Se esperaba el nombre del archivo de datos, se recibió:");
+		DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 		throw ParserException();
 	}else{
 		statement=new InsertionStatement(token->getContent());
@@ -557,8 +557,8 @@ Statement* StatementParser::parseInsertionStatement(){
 	// PARSEO EL ";"
 	token =	_tokenizer->getNextToken(false);
 	if ((token==NULL)||(token->getType()!=Parsing::ITokenizer::DELIMITER)||(strcmp(token->getContent(),";")!=0)){
-		DEBUG("Se esperaba ';' en lugar de:");
-		DEBUG((token==NULL)?"fin de archivo":token->getContent());
+		DEBUG_CONDITIONAL("Se esperaba ';' en lugar de:");
+		DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 		delete statement; 
 		throw ParserException();	
 	}
@@ -573,16 +573,16 @@ Statement* StatementParser::parseInsertionStatement(){
 	token =	_tokenizer->getNextToken(false);
 	if ((token->getType()==Parsing::ITokenizer::DELIMITER)&&(strcmp(token->getContent(),";")==0)){
 		_tokenizer->moveToNextLine();
-		DEBUG("Fin de parseo INGRESAR correctamente.");
+		DEBUG_CONDITIONAL("Fin de parseo INGRESAR correctamente.");
 		return statement;
 	}
 	if ((token->getType()!=Parsing::ITokenizer::DELIMITER)||(strcmp(token->getContent(),"\n")!=0)){
-		DEBUG("Se esperaba ';' fin de linead en lugar de:");
-		DEBUG((token==NULL)?"fin de archivo":token->getContent());
+		DEBUG_CONDITIONAL("Se esperaba ';' fin de linead en lugar de:");
+		DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 		delete statement; 
 		throw ParserException();
 	}
-	DEBUG("Fin de parseo INGRESAR correctamente.");
+	DEBUG_CONDITIONAL("Fin de parseo INGRESAR correctamente.");
 	return statement;
 }
 
@@ -591,8 +591,8 @@ Statement* StatementParser::parseQueryStatement(){
 	Parsing::Token* token =	_tokenizer->getNextToken(false);
 	
 	if((token==NULL) || (token->getType()!=Parsing::ITokenizer::STRING) || (strlen(token->getContent())==0)){
-		DEBUG("Se esperaba el nombre del archivo de datos, se recibió:");
-		DEBUG((token==NULL)?"fin de archivo":token->getContent());
+		DEBUG_CONDITIONAL("Se esperaba el nombre del archivo de datos, se recibió:");
+		DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 		throw ParserException();
 	}else{
 		statement=new QueryStatement(token->getContent());
@@ -600,8 +600,8 @@ Statement* StatementParser::parseQueryStatement(){
 	// PARSEO EL ";"
 	token =	_tokenizer->getNextToken(false);
 	if ((token==NULL)||(token->getType()!=Parsing::ITokenizer::DELIMITER)||(strcmp(token->getContent(),";")!=0)){
-		DEBUG("Se esperaba ';' en lugar de:");
-		DEBUG((token==NULL)?"fin de archivo":token->getContent());
+		DEBUG_CONDITIONAL("Se esperaba ';' en lugar de:");
+		DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 		delete statement; 
 		throw ParserException();	
 	}
@@ -609,16 +609,16 @@ Statement* StatementParser::parseQueryStatement(){
 	//PARCEO "["
 	token =	_tokenizer->getNextToken(false);
 	if ((token==NULL)||(token->getType()!=Parsing::ITokenizer::DELIMITER)||(strcmp(token->getContent(),"[")!=0)){
-		DEBUG("Se esperaba '[' en lugar de:");
-		DEBUG((token==NULL)?"fin de archivo":token->getContent());
+		DEBUG_CONDITIONAL("Se esperaba '[' en lugar de:");
+		DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 		delete statement; 
 		throw ParserException();
 	}
 	// PARCEO LA CLAVE
 	token =	_tokenizer->getNextToken(false);
 	if ((token==NULL)||(token->getType()!=Parsing::ITokenizer::NUMBER)){
-		DEBUG("Se esperaba un valor numerico en lugar de:");
-		DEBUG((token==NULL)?"fin de archivo":token->getContent());
+		DEBUG_CONDITIONAL("Se esperaba un valor numerico en lugar de:");
+		DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 		delete statement; 
 		throw ParserException();
 	}
@@ -626,16 +626,16 @@ Statement* StatementParser::parseQueryStatement(){
 	//PARCEO ","
 	token =	_tokenizer->getNextToken(false);
 	if ((token==NULL)||(token->getType()!=Parsing::ITokenizer::DELIMITER)||(strcmp(token->getContent(),",")!=0)){
-		DEBUG("Se esperaba ',' en lugar de:");
-		DEBUG((token==NULL)?"fin de archivo":token->getContent());
+		DEBUG_CONDITIONAL("Se esperaba ',' en lugar de:");
+		DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 		delete statement; 
 		throw ParserException();
 	}
 	//PARCEO EL VALOR
 	token =	_tokenizer->getNextToken(false);
 	if ((token==NULL)||!((token->getType()==Parsing::ITokenizer::NUMBER)||(token->getType()==Parsing::ITokenizer::STRING)||(strcmp(token->getContent(),"|")==0))){
-		DEBUG("Se esperaba valor en lugar de:");
-		DEBUG((token==NULL)?"fin de archivo":token->getContent());
+		DEBUG_CONDITIONAL("Se esperaba valor en lugar de:");
+		DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 		delete statement; 
 		throw ParserException();
 	}
@@ -655,24 +655,24 @@ Statement* StatementParser::parseQueryStatement(){
 	//PARCEO "]"
 	token =	_tokenizer->getNextToken(false);
 	if ((token==NULL)||(token->getType()!=Parsing::ITokenizer::DELIMITER)||(strcmp(token->getContent(),"]")!=0)){
-		DEBUG("Se esperaba ']' en lugar de:");
-		DEBUG((token==NULL)?"fin de archivo":token->getContent());
+		DEBUG_CONDITIONAL("Se esperaba ']' en lugar de:");
+		DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 		delete statement; 
 		throw ParserException();
 	}
 	token =	_tokenizer->getNextToken(false);
 	if ((token->getType()==Parsing::ITokenizer::DELIMITER)&&(strcmp(token->getContent(),";")==0)){
 		_tokenizer->moveToNextLine();
-		DEBUG("Fin de parseo CONSULTAR correctamente.");
+		DEBUG_CONDITIONAL("Fin de parseo CONSULTAR correctamente.");
 		return statement;
 	}
 	if ((token->getType()!=Parsing::ITokenizer::DELIMITER)||(strcmp(token->getContent(),"\n")!=0)){
-		DEBUG("Se esperaba ';' fin de linead en lugar de:");
-		DEBUG((token==NULL)?"fin de archivo":token->getContent());
+		DEBUG_CONDITIONAL("Se esperaba ';' fin de linead en lugar de:");
+		DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 		delete statement; 
 		throw ParserException();
 	}
-	DEBUG("Fin de parseo CONSULTAR correctamente.");
+	DEBUG_CONDITIONAL("Fin de parseo CONSULTAR correctamente.");
 	return statement;
 }
 
@@ -681,8 +681,8 @@ Statement* StatementParser::parseRemoveStatement(){
 	Parsing::Token* token =	_tokenizer->getNextToken(false);
 	
 	if((token==NULL) || (token->getType()!=Parsing::ITokenizer::STRING) || (strlen(token->getContent())==0)){
-		DEBUG("Se esperaba el nombre del archivo de datos, se recibió:");
-		DEBUG((token==NULL)?"fin de archivo":token->getContent());
+		DEBUG_CONDITIONAL("Se esperaba el nombre del archivo de datos, se recibió:");
+		DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 		throw ParserException();
 	}else{
 		statement=new RemoveStatement(token->getContent());
@@ -690,8 +690,8 @@ Statement* StatementParser::parseRemoveStatement(){
 	// PARSEO EL ";"
 	token =	_tokenizer->getNextToken(false);
 	if ((token==NULL)||(token->getType()!=Parsing::ITokenizer::DELIMITER)||(strcmp(token->getContent(),";")!=0)){
-		DEBUG("Se esperaba ';' en lugar de:");
-		DEBUG((token==NULL)?"fin de archivo":token->getContent());
+		DEBUG_CONDITIONAL("Se esperaba ';' en lugar de:");
+		DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 		delete statement; 
 		throw ParserException();	
 	}
@@ -699,16 +699,16 @@ Statement* StatementParser::parseRemoveStatement(){
 	//PARCEO "["
 	token =	_tokenizer->getNextToken(false);
 	if ((token==NULL)||(token->getType()!=Parsing::ITokenizer::DELIMITER)||(strcmp(token->getContent(),"[")!=0)){
-		DEBUG("Se esperaba '[' en lugar de:");
-		DEBUG((token==NULL)?"fin de archivo":token->getContent());
+		DEBUG_CONDITIONAL("Se esperaba '[' en lugar de:");
+		DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 		delete statement; 
 		throw ParserException();
 	}
 	// PARCEO LA CLAVE
 	token =	_tokenizer->getNextToken(false);
 	if ((token==NULL)||(token->getType()!=Parsing::ITokenizer::NUMBER)){
-		DEBUG("Se esperaba un valor numerico en lugar de:");
-		DEBUG((token==NULL)?"fin de archivo":token->getContent());
+		DEBUG_CONDITIONAL("Se esperaba un valor numerico en lugar de:");
+		DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 		delete statement; 
 		throw ParserException();
 	}
@@ -716,16 +716,16 @@ Statement* StatementParser::parseRemoveStatement(){
 	//PARCEO ","
 	token =	_tokenizer->getNextToken(false);
 	if ((token==NULL)||(token->getType()!=Parsing::ITokenizer::DELIMITER)||(strcmp(token->getContent(),",")!=0)){
-		DEBUG("Se esperaba ',' en lugar de:");
-		DEBUG((token==NULL)?"fin de archivo":token->getContent());
+		DEBUG_CONDITIONAL("Se esperaba ',' en lugar de:");
+		DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 		delete statement; 
 		throw ParserException();
 	}
 	//PARCEO EL VALOR
 	token =	_tokenizer->getNextToken(false);
 	if ((token==NULL)||!((token->getType()==Parsing::ITokenizer::NUMBER)||(token->getType()==Parsing::ITokenizer::STRING)||(strcmp(token->getContent(),"|")==0))){
-		DEBUG("Se esperaba valor en lugar de:");
-		DEBUG((token==NULL)?"fin de archivo":token->getContent());
+		DEBUG_CONDITIONAL("Se esperaba valor en lugar de:");
+		DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 		delete statement; 
 		throw ParserException();
 	}
@@ -745,8 +745,8 @@ Statement* StatementParser::parseRemoveStatement(){
 	//PARCEO "]"
 	token =	_tokenizer->getNextToken(false);
 	if ((token==NULL)||(token->getType()!=Parsing::ITokenizer::DELIMITER)||(strcmp(token->getContent(),"]")!=0)){
-		DEBUG("Se esperaba ']' en lugar de:");
-		DEBUG((token==NULL)?"fin de archivo":token->getContent());
+		DEBUG_CONDITIONAL("Se esperaba ']' en lugar de:");
+		DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 		delete statement; 
 		throw ParserException();
 	}
@@ -754,16 +754,16 @@ Statement* StatementParser::parseRemoveStatement(){
 	token =	_tokenizer->getNextToken(false);
 	if ((token->getType()==Parsing::ITokenizer::DELIMITER)&&(strcmp(token->getContent(),";")==0)){
 		_tokenizer->moveToNextLine();
-		DEBUG("Fin de parseo QUITAR correctamente.");
+		DEBUG_CONDITIONAL("Fin de parseo QUITAR correctamente.");
 		return statement;
 	}
 	if ((token->getType()!=Parsing::ITokenizer::DELIMITER)||(strcmp(token->getContent(),"\n")!=0)){
-		DEBUG("Se esperaba ';' fin de linead en lugar de:");
-		DEBUG((token==NULL)?"fin de archivo":token->getContent());
+		DEBUG_CONDITIONAL("Se esperaba ';' fin de linead en lugar de:");
+		DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 		delete statement; 
 		throw ParserException();
 	}
-	DEBUG("Fin de parseo QUITAR correctamente.");
+	DEBUG_CONDITIONAL("Fin de parseo QUITAR correctamente.");
 	return statement;
 }
 
@@ -771,8 +771,8 @@ Statement* StatementParser::parseDeleteStatement(){
 	Statement* statement=NULL;
 	Parsing::Token* token =	_tokenizer->getNextToken(false);
 	if((token==NULL) || (token->getType()!=Parsing::ITokenizer::STRING) || (strlen(token->getContent())==0)){
-		DEBUG("Se esperaba el nombre del archivo de datos, se recibió:");
-		DEBUG((token==NULL)?"fin de archivo":token->getContent());
+		DEBUG_CONDITIONAL("Se esperaba el nombre del archivo de datos, se recibió:");
+		DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 		throw ParserException();
 	}else{
 		statement=new DeleteStatement(token->getContent());
@@ -781,16 +781,16 @@ Statement* StatementParser::parseDeleteStatement(){
 	token =	_tokenizer->getNextToken(false);
 	if ((token->getType()==Parsing::ITokenizer::DELIMITER)&&(strcmp(token->getContent(),";")==0)){
 		_tokenizer->moveToNextLine();
-		DEBUG("Fin de parseo ELIMINAR correctamente.");
+		DEBUG_CONDITIONAL("Fin de parseo ELIMINAR correctamente.");
 		return statement;
 	}
 	if ((token->getType()!=Parsing::ITokenizer::DELIMITER)||(strcmp(token->getContent(),"\n")!=0)){
-		DEBUG("Se esperaba ';' fin de linead en lugar de:");
-		DEBUG((token==NULL)?"fin de archivo":token->getContent());
+		DEBUG_CONDITIONAL("Se esperaba ';' fin de linead en lugar de:");
+		DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 		delete statement; 
 		throw ParserException();
 	}
-	DEBUG("Fin de parseo ELIMINAR correctamente.");
+	DEBUG_CONDITIONAL("Fin de parseo ELIMINAR correctamente.");
 	return statement;
 }
 
@@ -798,8 +798,8 @@ Statement* StatementParser::parseStatsStatement(){
 	Statement* statement=NULL;
 	Parsing::Token* token =	_tokenizer->getNextToken(false);
 	if((token==NULL) || (token->getType()!=Parsing::ITokenizer::STRING) || (strlen(token->getContent())==0)){
-		DEBUG("Se esperaba el nombre del archivo de datos, se recibió:");
-		DEBUG((token==NULL)?"fin de archivo":token->getContent());
+		DEBUG_CONDITIONAL("Se esperaba el nombre del archivo de datos, se recibió:");
+		DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 		throw ParserException();
 	}else{
 		statement=new StatsStatement(token->getContent());
@@ -808,16 +808,16 @@ Statement* StatementParser::parseStatsStatement(){
 	token =	_tokenizer->getNextToken(false);
 	if ((token->getType()==Parsing::ITokenizer::DELIMITER)&&(strcmp(token->getContent(),";")==0)){
 		_tokenizer->moveToNextLine();
-		DEBUG("Fin de parseo ESTADISTICA correctamente.");
+		DEBUG_CONDITIONAL("Fin de parseo ESTADISTICA correctamente.");
 		return statement;
 	}
 	if ((token->getType()!=Parsing::ITokenizer::DELIMITER)||(strcmp(token->getContent(),"\n")!=0)){
-		DEBUG("Se esperaba ';' fin de linead en lugar de:");
-		DEBUG((token==NULL)?"fin de archivo":token->getContent());
+		DEBUG_CONDITIONAL("Se esperaba ';' fin de linead en lugar de:");
+		DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 		delete statement; 
 		throw ParserException();
 	}
-	DEBUG("Fin de parseo ESTADISTICA correctamente.");
+	DEBUG_CONDITIONAL("Fin de parseo ESTADISTICA correctamente.");
 	return statement;
 }
 
@@ -826,8 +826,8 @@ Statement* StatementParser::parseUpdateStatement(){
 	Parsing::Token* token =	_tokenizer->getNextToken(false);
 	
 	if((token==NULL) || (token->getType()!=Parsing::ITokenizer::STRING) || (strlen(token->getContent())==0)){
-		DEBUG("Se esperaba el nombre del archivo de datos, se recibió:");
-		DEBUG((token==NULL)?"fin de archivo":token->getContent());
+		DEBUG_CONDITIONAL("Se esperaba el nombre del archivo de datos, se recibió:");
+		DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 		throw ParserException();
 	}else{
 		statement=new UpdateStatement(token->getContent());
@@ -835,8 +835,8 @@ Statement* StatementParser::parseUpdateStatement(){
 	// PARSEO EL ";"
 	token =	_tokenizer->getNextToken(false);
 	if ((token==NULL)||(token->getType()!=Parsing::ITokenizer::DELIMITER)||(strcmp(token->getContent(),";")!=0)){
-		DEBUG("Se esperaba ';' en lugar de:");
-		DEBUG((token==NULL)?"fin de archivo":token->getContent());
+		DEBUG_CONDITIONAL("Se esperaba ';' en lugar de:");
+		DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 		delete statement; 
 		throw ParserException();	
 	}
@@ -851,16 +851,16 @@ Statement* StatementParser::parseUpdateStatement(){
 	token =	_tokenizer->getNextToken(false);
 	if ((token->getType()==Parsing::ITokenizer::DELIMITER)&&(strcmp(token->getContent(),";")==0)){
 		_tokenizer->moveToNextLine();
-		DEBUG("Fin de parseo ACTUALIZAR correctamente.");
+		DEBUG_CONDITIONAL("Fin de parseo ACTUALIZAR correctamente.");
 		return statement;
 	}
 	if ((token->getType()!=Parsing::ITokenizer::DELIMITER)||(strcmp(token->getContent(),"\n")!=0)){
-		DEBUG("Se esperaba ';' fin de linead en lugar de:");
-		DEBUG((token==NULL)?"fin de archivo":token->getContent());
+		DEBUG_CONDITIONAL("Se esperaba ';' fin de linead en lugar de:");
+		DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 		delete statement; 
 		throw ParserException();
 	}
-	DEBUG("Fin de parseo ACTUALIZAR correctamente.");
+	DEBUG_CONDITIONAL("Fin de parseo ACTUALIZAR correctamente.");
 	return statement;
 }
 
@@ -876,8 +876,8 @@ Statement* StatementParser::getNext(){
 	}
 	
 	if ((token!=NULL)&&(token->getType()!=Parsing::ITokenizer::KEYWORD)){
-		DEBUG("Se esperaba KEYWORD en lugar de:");
-		DEBUG(token->getContent());
+		DEBUG_CONDITIONAL("Se esperaba KEYWORD en lugar de:");
+		DEBUG_CONDITIONAL(token->getContent());
 		buffer.append("Sentecia desconocida: ");
 		buffer.append(token->getContent());
 		_tokenizer->moveToNextLine();
@@ -891,42 +891,42 @@ Statement* StatementParser::getNext(){
 	try{
 		// IDENTIFICA EL TIPO DE STATEMENT Y DERIVO AL METODO CORRECTO
 		if (strcmp(token->getContent(),"CREAR")==0){
-			DEBUG("Inicio del parseo de CREAR.");
+			DEBUG_CONDITIONAL("Inicio del parseo de CREAR.");
 			statement= parseCreateStatement();
 		}
 		if (strcmp(token->getContent(),"INGRESAR")==0){
-			DEBUG("Inicio del parseo de INGRESAR.");
+			DEBUG_CONDITIONAL("Inicio del parseo de INGRESAR.");
 			statement= parseInsertionStatement();
 		}
 		if (strcmp(token->getContent(),"CONSULTA")==0){
-			DEBUG("Inicio del parseo de CONSULTA.");
+			DEBUG_CONDITIONAL("Inicio del parseo de CONSULTA.");
 			statement= parseQueryStatement();
 		}
 		if (strcmp(token->getContent(),"QUITAR")==0){
-			DEBUG("Inicio del parseo de QUITAR.");
+			DEBUG_CONDITIONAL("Inicio del parseo de QUITAR.");
 			statement= parseRemoveStatement();
 		}
 		if (strcmp(token->getContent(),"ELIMINAR")==0){
-			DEBUG("Inicio del parseo de ELIMINAR.");
+			DEBUG_CONDITIONAL("Inicio del parseo de ELIMINAR.");
 			statement= parseDeleteStatement();
 		}
 		if (strcmp(token->getContent(),"ESTADISTICA")==0){
-			DEBUG("Inicio del parseo de ESTADISTICA.");
+			DEBUG_CONDITIONAL("Inicio del parseo de ESTADISTICA.");
 			statement= parseStatsStatement();
 		}
 		if (strcmp(token->getContent(),"FINALIZAR")==0){
-			DEBUG("Inicio del parseo de FINALIZAR.");
+			DEBUG_CONDITIONAL("Inicio del parseo de FINALIZAR.");
 			free(statementType);
 			throw new KillDaemonException();
 		}
 		if (strcmp(token->getContent(),"ACTUALIZAR")==0){
-			DEBUG("Inicio del parseo de ACTUALIZAR.");
+			DEBUG_CONDITIONAL("Inicio del parseo de ACTUALIZAR.");
 			statement= parseUpdateStatement();
 		}
 		free(statementType);
 		return statement;
 	}catch(StatementParserException* e){
-		DEBUG("La linea es incorrecta. Se continuará parseando la proxima linea.\n");
+		DEBUG_CONDITIONAL("La linea es incorrecta. Se continuará parseando la proxima linea.\n");
 		if (strcmp(_tokenizer->getLastToken()->getContent(),"\n")!=0){
 			_tokenizer->moveToNextLine();
 		}
@@ -936,7 +936,7 @@ Statement* StatementParser::getNext(){
 		throw new StatementParserException(buffer.c_str());
 	}catch(ParserException e1){
 		//TODO: Llamar al tokenizer y decirle que vaya hasta el proximo \n
-		DEBUG("La linea es incorrecta. Se continuará parseando la proxima linea.\n");
+		DEBUG_CONDITIONAL("La linea es incorrecta. Se continuará parseando la proxima linea.\n");
 		if (strcmp(_tokenizer->getLastToken()->getContent(),"\n")!=0){
 			_tokenizer->moveToNextLine();
 		}
@@ -945,8 +945,8 @@ Statement* StatementParser::getNext(){
 		free(statementType);
 		throw new StatementParserException(buffer.c_str());
 	}
-	DEBUG("Tipo de statement desconocido:");
-	DEBUG((token==NULL)?"fin de archivo":token->getContent());
+	DEBUG_CONDITIONAL("Tipo de statement desconocido:");
+	DEBUG_CONDITIONAL((token==NULL)?"fin de archivo":token->getContent());
 	if (strcmp(_tokenizer->getLastToken()->getContent(),"\n")!=0){
 		_tokenizer->moveToNextLine();
 	}

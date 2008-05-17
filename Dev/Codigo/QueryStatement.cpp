@@ -14,7 +14,7 @@ StatementResult* QueryStatement::execute(DataManager* dataManager) {
 	string buffer;
 	ostringstream ss;
 	bool isFirstElement = true;
-	DEBUG("Inicio de la ejecución del QueryStatement");
+	DEBUG_CONDITIONAL("Inicio de la ejecución del QueryStatement");
 	
 	buffer.append("'Se consultó por registros con valor [");
 	this->_value->toString(&buffer);
@@ -51,7 +51,7 @@ StatementResult* QueryStatement::execute(DataManager* dataManager) {
 	//Preparo el resultado
 	StatementResult* sr= new StatementResult();
 	sr->setResult((char*)buffer.c_str());
-	DEBUG("Fin de la ejecución del QueryStatement");
+	DEBUG_CONDITIONAL("Fin de la ejecución del QueryStatement");
 	return sr;
 }
 

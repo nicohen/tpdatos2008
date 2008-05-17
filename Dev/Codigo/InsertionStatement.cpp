@@ -46,7 +46,7 @@ StatementResult* InsertionStatement::execute(DataManager* dataManager){
 	StatementResult* sr = new StatementResult();	
 	char* cadena; 
 	string buffer;	
-	DEBUG("Inicio de la ejecución del InsertionStatement");
+	DEBUG_CONDITIONAL("Inicio de la ejecución del InsertionStatement");
 	
 	try {
 		DataFile* dataFile = dataManager->getFile(this->getFileName());
@@ -83,7 +83,7 @@ StatementResult* InsertionStatement::execute(DataManager* dataManager){
 
 	cadena = cloneStr(buffer.c_str());
 	sr->setResult(cadena);
-	DEBUG("Fin de la ejecución del InsertionStatement");
+	DEBUG_CONDITIONAL("Fin de la ejecución del InsertionStatement");
 	free(cadena);
 	return sr;
 }
