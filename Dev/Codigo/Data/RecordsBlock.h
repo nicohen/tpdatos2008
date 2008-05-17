@@ -23,7 +23,7 @@ private:
 protected:
 	vector<RawRecord*>* getRecords();
 public:
-	static Block* createRecordsBlock(char* content, T_BLOCKSIZE size);
+//	static Block* createRecordsBlock(char* content, T_BLOCKSIZE size);
 	RecordsBlock(T_BLOCKSIZE size);
 	RecordsBlock(char* content,T_BLOCKSIZE size);
 	virtual ~RecordsBlock(void);

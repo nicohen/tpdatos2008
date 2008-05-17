@@ -14,6 +14,9 @@
 #include <vector>
 #include "Buffer/BlocksBuffer.h"
 #include "Buffer/IBuffereable.h"
+#include "Data/BlockFactory.h"
+#include "Data/RecordsBlockFactory.h"
+
 
 
 class DataFile:public IBuffereable
@@ -26,12 +29,16 @@ private:
 	BlockStructuredFile* _blockStructuredFile;
 	char* _fullPath;
 	BlocksBuffer* _blocksBuffer;
+	RecordsBlockFactory _blockFactory;
 	
 	bool isArrayOf(vector<Field*>* fields, vector<DataValue*>* values);
 	T_BLOCKCOUNT getFirstFreeContentBlockNumber(T_BLOCKCOUNT initBlockNumber, T_BLOCKSIZE minRequiredSpace) throw (BlockNotFoundException*);
 	T_BLOCKCOUNT getFirstRecordsBlockIndex();
 	T_BLOCKCOUNT getLastRecordsBlockIndex();
 public:
+	
+	virtual BlockFactory* getBlockFactory();
+	
 //	Implementacion de IBuffereable
 	virtual T_BLOCKSIZE getSize();
 	static const int FIRST_BLOCK = 0;

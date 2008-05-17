@@ -106,9 +106,9 @@ vector<RawRecord*>* RecordsBlock::getRecords(){
 }
 
 
-Block* RecordsBlock::createRecordsBlock(char* content, T_BLOCKSIZE size){
-	return new RecordsBlock(content,size);
-}
+//Block* RecordsBlock::createRecordsBlock(char* content, T_BLOCKSIZE size){
+//	return new RecordsBlock(content,size);
+//}
 
 vector<RawRecord*>::iterator RecordsBlock::begin(){
 	return this->_records->begin();
