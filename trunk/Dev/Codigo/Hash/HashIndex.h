@@ -9,12 +9,15 @@ class HashIndex
 private:
 	DataFile* _keysfile;
 	HashTable* _hashtable;
+	
+	protected:
+		virtual int getHash(char* arg);
 public:
 	HashIndex();
 	virtual ~HashIndex();
-	virtual void create(char* filePath, int size);
-	virtual void load(char* filePath);
-	virtual void insert(DataValue* keyValue,int blockNumber);
+	virtual void create(char* folderPath,char* filePath);
+	virtual void load(char* folderPath,char* filePath);
+	virtual void index(DataValue* keyValue,int blockNumber);
 	
 };
 
