@@ -23,7 +23,7 @@ public:
 	virtual void reIndex(int keysBlockNumber);
 	virtual void unIndex (DataValue* keyValue);
 	virtual void update (DataValue* keyValue, int blockNumber);
-	virtual void deleTe(char* folderPath,char* filePath);
+	virtual void deleTe();
 };
 
 #endif /*HASHINDEX_H_*/

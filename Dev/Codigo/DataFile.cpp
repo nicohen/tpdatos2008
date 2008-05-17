@@ -66,7 +66,9 @@ DataFile::~DataFile() {
 		free(this->_fullPath);
 	}
 	delete _blockFactory;
-	delete this->_primaryIndex;
+	if(this->_primaryIndex!=NULL){
+		delete this->_primaryIndex;
+	}
 }
 
 void DataFile::setBlockStructuredFile(BlockStructuredFile* blockStructuredFile) {
@@ -105,6 +107,7 @@ void DataFile::load(char* folderPath){
 }
 
 
+
 void DataFile::save(char* folderPath) {
 	this->setFolder(folderPath);	
 	
@@ -124,6 +127,9 @@ void DataFile::save(char* folderPath) {
 
 void DataFile::deleTe() {
 	if(existsFile(this->_fullPath)){
+		if(this->_primaryIndex!=NULL){
+			this->_primaryIndex->deleTe();
+		}
 		remove(this->_fullPath);
 	} else {
 		throw new FileNotFoundException("Se intento eliminar un archivo que no existe");
