@@ -114,6 +114,13 @@ bool RecordsBlock::canUpdate(RawRecord* current, RawRecord* newOne){
 	return true;
 }
 
+bool RecordsBlock::canInsert(RawRecord* record){
+	if(getSerializationSize(record)>this->getSize()){
+		return false;
+	}
+	return true;
+}
+
 
 //Block* RecordsBlock::createRecordsBlock(char* content, T_BLOCKSIZE size){
 //	return new RecordsBlock(content,size);
