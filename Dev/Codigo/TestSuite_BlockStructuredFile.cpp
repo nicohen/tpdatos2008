@@ -23,6 +23,7 @@
 #include "Buffer/BlocksBuffer.h"
 #include "Data/KeysBlock.h"
 #include "Data/RecordsBlockFactory.h"
+#include "Hash/HashTable.h"
 
 using namespace std;
 
@@ -1224,6 +1225,24 @@ void Test_KeysBlock_Persistence(TestCase* test) {
 	test->Assert_inteq(33,deserialized->getDispersion());
 }
 
+void test_HashTable(TestCase* test){
+	HashTable table;
+	table.create("hash.dat",4);
+	test->Assert_True(4==table.getSize());
+	table.grow();
+	test->Assert_True(8==table.getSize());
+	table.update(7,2);
+	test->Assert_True(2==table.getAt(7));
+}
+
+void test_HashTable2(TestCase* test){
+	HashTable table;
+	table.load("hash.dat");
+	test->Assert_True(8==table.getSize());
+	table.update(5,3);
+	test->Assert_True(2==table.getAt(7));
+}
+
 int main(int argc, char* argv[]){
 	int failedTests=0;
 	
@@ -1400,7 +1419,15 @@ int main(int argc, char* argv[]){
 	Test_BufferHitsMissAndSize(test42);
 	delete test42;
 	
-	TestCase* test_nahue_01=new TestCase("Test_NullValue",&failedTests);	
+	TestCase* test43=new TestCase("test_HashTable",&failedTests);
+	test_HashTable(test43);
+	delete test43;
+	
+	TestCase* test44=new TestCase("test_HashTable2",&failedTests);
+	test_HashTable2(test44);
+	delete test44;
+	
+	TestCase* test_nahue_01=new	 TestCase("Test_NullValue",&failedTests);	
 	Test_NullValue(test_nahue_01);
 	delete test_nahue_01;
 	

@@ -6,6 +6,7 @@ CODE_PATH:= Codigo/
 DATA_PATH:= $(CODE_PATH)Data/
 BUFFER_PATH:= $(CODE_PATH)Buffer/
 TEST_PATH:= $(CODE_PATH)TestingFramework/
+HASH_PATH:= $(CODE_PATH)Hash/
 
 MAIN_CLASS= $(CODE_PATH)main.cpp
 MAIN_PABLO= $(CODE_PATH)main_pablo.cpp
@@ -81,6 +82,7 @@ SOURCES:=	$(CODE_PATH)BufferedDataManager.cpp\
 	$(DATA_PATH)ContentOverflowBlockException.cpp\
 	$(DATA_PATH)RecordSizeOverflowException.cpp\
 	$(DATA_PATH)KeysBlock.cpp\
+	$(HASH_PATH)HashTable.cpp\
 	$(DATA_PATH)HashIndex.cpp
 	
 OBJECTS=$(SOURCES:.cpp=.o)
@@ -93,8 +95,7 @@ all: $(SOURCES) $(EXECUTABLE)
 $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(LDFLAGS) $(MAIN_CLASS) $(OBJECTS) -o $(EXECUTABLE)
 
-nahuel:
-	$(OBJECTS) 
+nahuel:	$(OBJECTS) 
 	$(CC) $(LDFLAGS) $(MAIN_NAHUEL) $(OBJECTS) -o $(EXECUTABLE)
 
 pablo: $(OBJECTS) 
