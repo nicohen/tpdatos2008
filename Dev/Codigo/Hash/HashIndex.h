@@ -4,13 +4,14 @@
 #include "../DataFile.h"
 #include "HashTable.h"
 
+class DataFile;
 class HashIndex
 {
 private:
 	DataFile* _keysfile;
 	HashTable* _hashtable;
 	
-	protected:
+protected:
 		virtual int getHash(char* arg);
 public:
 	HashIndex();

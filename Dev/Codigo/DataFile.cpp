@@ -17,6 +17,7 @@
 DataFile::DataFile(char* fileName){
 	_fileName = cloneStr(fileName);
 	_fullPath=NULL;
+	_blockFactory=new RecordsBlockFactory();
 }
 
 
@@ -63,6 +64,7 @@ DataFile::~DataFile() {
 		free(this->_fullPath);
 	}
 	delete _blockFactory;
+	delete this->_primaryIndex;
 }
 
 void DataFile::setBlockStructuredFile(BlockStructuredFile* blockStructuredFile) {
@@ -110,6 +112,9 @@ void DataFile::save(char* folderPath) {
 	this->_blockStructuredFile = BlockStructuredFile::Create(this->_fullPath,_blockSize);
 	//Guardo el MetadataBlock
 	this->_blockStructuredFile->bAppendContentBlock(this->_metadataBlock);
+	
+	//Guardo el indice
+	this->_primaryIndex->create(folderPath,this->_fileName);
 }
 
 char* DataFile::getFileName() {
@@ -338,7 +343,7 @@ bool DataFile::existsAnotherWithSameKey(Record* record){
 	return res;
 }
 void DataFile::appendEmptyBlock(){
-	RecordsBlock* recordsBlock = new RecordsBlock(this->_blockStructuredFile->getBlockSize());
+	RecordsBlock* recordsBlock = (RecordsBlock*)this->getBlockFactory()->createEmptyBlock(this->_blockStructuredFile->getBlockSize());
 	this->_blockStructuredFile->bAppendContentBlock(recordsBlock);
 	this->_blocksBuffer->addBlock(this->getFileName(),this->getLastRecordsBlockIndex(),recordsBlock);
 }
@@ -449,4 +454,8 @@ void DataFile::setBlockFactory(BlockFactory* blockFactory){
 }
 bool DataFile::canInsert(Record* record) {
 	return this->getRecordBlock(0)->canInsert(record->serialize());
+}
+
+void DataFile::setPrimaryIndex(HashIndex* index){
+	this->_primaryIndex=index;
 }
