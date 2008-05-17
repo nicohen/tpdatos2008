@@ -16,8 +16,7 @@
 #include "Buffer/IBuffereable.h"
 #include "Data/BlockFactory.h"
 #include "Data/RecordsBlockFactory.h"
-
-
+#include "Data/MetadataBlockFactory.h"
 
 class DataFile:public IBuffereable
 {
@@ -30,6 +29,7 @@ private:
 	char* _fullPath;
 	BlocksBuffer* _blocksBuffer;
 	RecordsBlockFactory _blockFactory;
+	MetadataBlockFactory _metadataBlockFactory;
 	
 	bool isArrayOf(vector<Field*>* fields, vector<DataValue*>* values);
 	T_BLOCKCOUNT getFirstFreeContentBlockNumber(T_BLOCKCOUNT initBlockNumber, T_BLOCKSIZE minRequiredSpace) throw (BlockNotFoundException*);
@@ -69,7 +69,6 @@ public:
 	vector<Field*>* getFields();
 
 	virtual void insertRecord(Record* record);
-	void insertRecordAt(T_BLOCKCOUNT blockNumber,Record* record);
 	virtual vector<Record*>* findRecords(int fNumber,DataValue* fValue);
 	virtual vector<Record*>* removeRecord(int fNumber,DataValue* fValue) throw (BlockNotFoundException*);
 	vector<Record*>* removeRecordAt(T_BLOCKCOUNT blockNumber, int fNumber,DataValue* fValue) throw (BlockNotFoundException*);

@@ -17,6 +17,7 @@ SOURCES:=	$(CODE_PATH)BufferedDataManager.cpp\
 	$(DATA_PATH)KeysBlockFactory.cpp\
 	$(DATA_PATH)RecordsBlockFactory.cpp\
 	$(DATA_PATH)BlockFactory.cpp\
+	$(DATA_PATH)MetadataBlockFactory.cpp\
 	$(BUFFER_PATH)BufferKey.cpp\
 	$(CODE_PATH)CreateStatement.cpp\
 	$(CODE_PATH)DataFile.cpp\

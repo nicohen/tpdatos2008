@@ -93,7 +93,7 @@ void DataFile::load(char* folderPath){
 	//Cargo el blockStructureFile
 	this->_blockStructuredFile = BlockStructuredFile::Load(this->_fullPath);
 	//Cargo el MetadataBlock
-	this->_metadataBlock = (MetadataBlock*)_blockStructuredFile->bGetContentBlock(DataFile::FIRST_BLOCK,this->getBlockFactory());
+	this->_metadataBlock = (MetadataBlock*)_blockStructuredFile->bGetContentBlock(DataFile::FIRST_BLOCK,&_metadataBlockFactory);
 }
 
 void DataFile::save(char* folderPath) {
