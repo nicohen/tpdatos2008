@@ -58,7 +58,7 @@ void HashIndex::update(DataValue* keyValue, int blockNumber) {
 	_keysfile->updateRecordAt(keysBlockNumber,keyRecord);
 }
 
-void HashIndex::deleTe(char* folderPath,char* filePath){
+void HashIndex::deleTe(){
 	_keysfile->deleTe();
 	_hashtable->deleTe();
 }
