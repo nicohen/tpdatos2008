@@ -18,6 +18,7 @@ DataFile::DataFile(char* fileName){
 	_fileName = cloneStr(fileName);
 	_fullPath=NULL;
 	_blockFactory=new RecordsBlockFactory();
+	this->_primaryIndex=NULL;
 }
 
 
@@ -43,6 +44,7 @@ DataFile::DataFile(char* fileName, int blockSize, int fileType, int indexSize, i
 	_metadataBlock->setFileType(fileType);
 	_metadataBlock->setSecondaryFields(fields);
 	_blockFactory=new RecordsBlockFactory();
+	this->_primaryIndex=NULL;
 }
 
 void DataFile::setBlocksBuffer(BlocksBuffer* blocksBuffer){
@@ -102,6 +104,7 @@ void DataFile::load(char* folderPath){
 	this->_metadataBlock = (MetadataBlock*)_blockStructuredFile->bGetContentBlock(DataFile::FIRST_BLOCK,&_metadataBlockFactory);
 }
 
+
 void DataFile::save(char* folderPath) {
 	this->setFolder(folderPath);	
 	
@@ -114,7 +117,9 @@ void DataFile::save(char* folderPath) {
 	this->_blockStructuredFile->bAppendContentBlock(this->_metadataBlock);
 	
 	//Guardo el indice
-	this->_primaryIndex->create(folderPath,this->_fileName);
+	if(this->_primaryIndex!=NULL){
+		this->_primaryIndex->create(folderPath,this->_fileName);
+	}
 }
 
 char* DataFile::getFileName() {
