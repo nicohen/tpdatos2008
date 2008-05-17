@@ -84,7 +84,9 @@ SOURCES:=	$(CODE_PATH)BufferedDataManager.cpp\
 	$(DATA_PATH)RecordSizeOverflowException.cpp\
 	$(DATA_PATH)KeysBlock.cpp\
 	$(HASH_PATH)HashTable.cpp\
-	$(DATA_PATH)HashIndex.cpp
+	$(DATA_PATH)HashIndex.cpp\
+	$(DATA_PATH)CannotUpdateRecordException.cpp\
+	$(DATA_PATH)RecordNotFoundException.cpp
 	
 OBJECTS=$(SOURCES:.cpp=.o)
 

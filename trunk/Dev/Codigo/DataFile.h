@@ -35,6 +35,7 @@ private:
 	T_BLOCKCOUNT getFirstFreeContentBlockNumber(T_BLOCKCOUNT initBlockNumber, T_BLOCKSIZE minRequiredSpace) throw (BlockNotFoundException*);
 	T_BLOCKCOUNT getFirstRecordsBlockIndex();
 	T_BLOCKCOUNT getLastRecordsBlockIndex();
+	bool canInsert(Record* record);
 public:
 	
 	virtual BlockFactory* getBlockFactory();
@@ -69,11 +70,12 @@ public:
 	vector<Field*>* getFields();
 
 	virtual void insertRecord(Record* record);
+	virtual void insertRecordAt(T_BLOCKCOUNT blockNumber, Record* record);
 	virtual vector<Record*>* findRecords(int fNumber,DataValue* fValue);
-	virtual vector<Record*>* removeRecord(int fNumber,DataValue* fValue) throw (BlockNotFoundException*);
+	virtual vector<Record*>* findRecordsAt(T_BLOCKCOUNT blockNumber, int fNumber,DataValue* fValue);
+	virtual vector<Record*>* removeRecord(int fNumber,DataValue* fValue);
 	vector<Record*>* removeRecordAt(T_BLOCKCOUNT blockNumber, int fNumber,DataValue* fValue) throw (BlockNotFoundException*);
 	virtual bool updateRecord(Record* record);
-	void insertRecordAt(T_BLOCKCOUNT blockNumber,Record* record);
 	bool updateRecordAt(T_BLOCKCOUNT blockNumber,Record* record);
 	void appendEmptyBlock();
 	bool existsAnotherWithSameKey(Record* record);
