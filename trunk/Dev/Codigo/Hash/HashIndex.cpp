@@ -59,7 +59,8 @@ void HashIndex::update(DataValue* keyValue, int blockNumber) {
 }
 
 void HashIndex::deleTe(char* folderPath,char* filePath){
-	
+	_keysfile->deleTe();
+	_hashtable->deleTe();
 }
 
 void HashIndex::load(char* folderPath,char* filePath){
