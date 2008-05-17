@@ -9,7 +9,10 @@ RecordsBlockFactory::~RecordsBlockFactory()
 {
 }
 
-
 Block* RecordsBlockFactory::createBlock(char* content, T_BLOCKSIZE size){
 	return new RecordsBlock(content,size);
+}
+
+Block* RecordsBlockFactory::createEmptyBlock(T_BLOCKSIZE size){
+	return new RecordsBlock(size);
 }

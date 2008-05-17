@@ -9,6 +9,7 @@ public:
 	MetadataBlockFactory();
 	virtual ~MetadataBlockFactory();
 	virtual Block* createBlock(char* content, T_BLOCKSIZE size);
+	virtual Block* createEmptyBlock(T_BLOCKSIZE size);
 };
 
 #endif /*METADATABLOCKFACTORY_H_*/

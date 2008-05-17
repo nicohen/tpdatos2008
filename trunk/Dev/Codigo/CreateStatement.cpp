@@ -84,6 +84,9 @@ StatementResult* CreateStatement::execute(DataManager* dataManager){
 	DEBUG("Inicio de la ejecución del CreateStatement");
 	//Creo el DataFile
 	DataFile* dataFile = new DataFile(this->getFileName(),this->getDataBlockSize(),this->getFileType(),this->getIndexSize(),this->getSecondaryFieldCount(),this->getSecondaryFields(),this->getSecondaryIndex());
+	if(this->_fileType){
+		dataFile->setPrimaryIndex(new HashIndex());
+	}
 	//Creo el archivo en la carpeta correspondiente
 	StatementResult* sr = new StatementResult();
 	ss<<this->getFileName();

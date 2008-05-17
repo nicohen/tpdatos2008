@@ -9,6 +9,7 @@ public:
 	RecordsBlockFactory();
 	virtual ~RecordsBlockFactory();
 	virtual Block* createBlock(char* content, T_BLOCKSIZE size);
+	virtual Block* createEmptyBlock(T_BLOCKSIZE size);
 };
 
 #endif /*RECORDSBLOCKFACTORY_H_*/

@@ -9,6 +9,7 @@ public:
 	BlockFactory();
 	virtual ~BlockFactory();
 	virtual Block* createBlock(char* content, T_BLOCKSIZE size);
+	virtual Block* createEmptyBlock(T_BLOCKSIZE size);
 };
 
 #endif /*BLOCKFACTORY_H_*/

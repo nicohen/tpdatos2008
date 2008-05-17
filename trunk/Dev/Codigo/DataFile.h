@@ -17,7 +17,9 @@
 #include "Data/BlockFactory.h"
 #include "Data/RecordsBlockFactory.h"
 #include "Data/MetadataBlockFactory.h"
+#include "Hash/HashIndex.h"
 
+class HashIndex;
 class DataFile:public IBuffereable
 {
 
@@ -30,6 +32,7 @@ private:
 	BlocksBuffer* _blocksBuffer;
 	BlockFactory* _blockFactory;
 	MetadataBlockFactory _metadataBlockFactory;
+	HashIndex* _primaryIndex;
 	
 	bool isArrayOf(vector<Field*>* fields, vector<DataValue*>* values);
 	T_BLOCKCOUNT getFirstFreeContentBlockNumber(T_BLOCKCOUNT initBlockNumber, T_BLOCKSIZE minRequiredSpace) throw (BlockNotFoundException*);
@@ -80,6 +83,7 @@ public:
 	bool updateRecordAt(T_BLOCKCOUNT blockNumber,Record* record);
 	void appendEmptyBlock();
 	bool existsAnotherWithSameKey(Record* record);
+	virtual void setPrimaryIndex(HashIndex* index);
 };
 
 #endif /*DATAFILE_H_*/
