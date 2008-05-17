@@ -95,7 +95,7 @@ void DataFile::load(char* folderPath){
 	//Cargo el blockStructureFile
 	this->_blockStructuredFile = BlockStructuredFile::Load(this->_fullPath);
 	//Cargo el MetadataBlock
-	this->_metadataBlock = (MetadataBlock*)_blockStructuredFile->bGetContentBlock(DataFile::FIRST_BLOCK,&MetadataBlock::createMetadataBlock);
+	this->_metadataBlock = (MetadataBlock*)_blockStructuredFile->bGetContentBlock(DataFile::FIRST_BLOCK,this->getBlockFactory());
 }
 
 void DataFile::save(char* folderPath) {
@@ -333,7 +333,7 @@ void DataFile::insertRecordAt(T_BLOCKCOUNT blockNumber,Record* record){
 RecordsBlock* DataFile::getRecordBlock(int blockNumber){
 	Block* result= this->_blocksBuffer->getBlock(this->getFileName(),blockNumber);	
 	if (result==NULL){
-		result= this->getBlockStructuredFile()->bGetContentBlock(blockNumber,&RecordsBlock::createRecordsBlock);
+		result= this->getBlockStructuredFile()->bGetContentBlock(blockNumber,this->getBlockFactory());
 		this->_blocksBuffer->addBlock(this->getFileName(),blockNumber,result);
 	}
 	return (RecordsBlock*)result;
@@ -350,4 +350,8 @@ bool DataFile::updateRecord(Record* myRecord) {
 
 T_BLOCKSIZE DataFile::getSize(){
 	return 1;
+}
+
+BlockFactory* DataFile::getBlockFactory(){
+	return &this->_blockFactory;
 }

@@ -22,6 +22,7 @@
 #include "Buffer/ComparableExample.h"
 #include "Buffer/BlocksBuffer.h"
 #include "Data/KeysBlock.h"
+#include "Data/RecordsBlockFactory.h"
 
 using namespace std;
 
@@ -662,7 +663,7 @@ void Test_BlockStructured_DataBlockCreation(TestCase* test){
 	delete file;
 	
 	loadedfile=BlockStructuredFile::Load(filename);
-	loadedblock = (RecordsBlock*)loadedfile->bGetContentBlock(0,&createRecordsBlock);
+	loadedblock = (RecordsBlock*)loadedfile->bGetContentBlock(0,new RecordsBlockFactory());
 	test->Assert_True_m(compareByteArray("aaaa",((RawRecord*)loadedblock->at(0))->getContent(),4),"Los bloques deberian ser iguales");
 	delete loadedfile;
 }
@@ -814,7 +815,7 @@ void Test_Integration_BSFandRecordsB_getContentOnAnUninitializedRecordsBlock(Tes
 	//file->bUpdateContentBlock(0,createEmptyBlock(512));
 	//delete file;
 	try{
-		rb=(RecordsBlock*)file->bGetContentBlock(1,&RecordsBlock::createRecordsBlock);
+		rb=(RecordsBlock*)file->bGetContentBlock(1,new RecordsBlockFactory());
 		rb->push_back(new RawRecord("nicolas",7));
 		file->bUpdateContentBlock(1,rb);
 		test->Assert_True_m(false,"Deberia haber lanzado una excepcion del tipo BlockStructuredFileException");

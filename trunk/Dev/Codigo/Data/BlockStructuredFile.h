@@ -7,6 +7,7 @@
 #include "BlockStructuredFileException.h"
 #include "BlockNotFoundException.h"
 #include "RecordsBlock.h"
+#include "BlockFactory.h"
 
 using namespace std;
 /*
@@ -62,10 +63,10 @@ public:
 	
 	//Nuevos metodos que usan Block	
 	void bUpdateContentBlock(T_BLOCKCOUNT contentBlockNumber,Block* block);	
-	Block* bGetContentBlock(T_BLOCKCOUNT contentBlockNumber,Block* (*BlockCreatorFunction)(char* content,T_BLOCKSIZE size));
+	Block* bGetContentBlock(T_BLOCKCOUNT contentBlockNumber,BlockFactory* blockFactory);
 	void bAppendContentBlock(Block* block);
 	void removeLastContentBlock();
-	T_BLOCKCOUNT getFirstFreeContentBlockNumber(T_BLOCKCOUNT initBlockNumber, T_BLOCKSIZE minRequiredSpace,Block* (*BlockCreatorFunction)(char* content,T_BLOCKSIZE size)) throw (BlockNotFoundException*);
+	T_BLOCKCOUNT getFirstFreeContentBlockNumber(T_BLOCKCOUNT initBlockNumber, T_BLOCKSIZE minRequiredSpace, BlockFactory* blockFactory) throw (BlockNotFoundException*);
 	
 	virtual ~BlockStructuredFile(void);
 };
