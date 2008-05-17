@@ -41,6 +41,7 @@ DataFile::DataFile(char* fileName, int blockSize, int fileType, int indexSize, i
 	_metadataBlock = new MetadataBlock(blockSize);
 	_metadataBlock->setFileType(fileType);
 	_metadataBlock->setSecondaryFields(fields);
+	_blockFactory=new RecordsBlockFactory();
 }
 
 void DataFile::setBlocksBuffer(BlocksBuffer* blocksBuffer){
@@ -61,6 +62,7 @@ DataFile::~DataFile() {
 	if(this->_fullPath!=NULL){
 		free(this->_fullPath);
 	}
+	delete _blockFactory;
 }
 
 void DataFile::setBlockStructuredFile(BlockStructuredFile* blockStructuredFile) {
@@ -437,9 +439,13 @@ T_BLOCKSIZE DataFile::getSize(){
 }
 
 BlockFactory* DataFile::getBlockFactory(){
-	return &this->_blockFactory;
+	return this->_blockFactory;
 }
 
+void DataFile::setBlockFactory(BlockFactory* blockFactory){
+	delete this->_blockFactory;
+	this->_blockFactory=blockFactory;
+}
 bool DataFile::canInsert(Record* record) {
 	return this->getRecordBlock(0)->canInsert(record->serialize());
 }
