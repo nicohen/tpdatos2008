@@ -40,6 +40,7 @@ public:
 	virtual RawRecord* at(T_BLOCKSIZE i);
 	virtual void clear();
 	virtual bool canUpdate(RawRecord* current, RawRecord* newOne);
+	virtual bool canInsert(RawRecord* record);
 };
 
 #endif /*RecordsBlock_H_*/
