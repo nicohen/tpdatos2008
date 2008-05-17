@@ -344,7 +344,7 @@ void DataFile::appendEmptyBlock(){
 }
 
 
-void DataFile::insertRecord(Record* record) {
+int DataFile::insertRecord(Record* record) {
 	string str;
 	if(this->existsAnotherWithSameKey(record)){
 		throw new IdentityException("Ya existe un registro con la misma clave que el que se quiere insertar");
@@ -355,7 +355,7 @@ void DataFile::insertRecord(Record* record) {
 	for (T_BLOCKCOUNT i=this->getFirstRecordsBlockIndex();i <=this->getLastRecordsBlockIndex(); i++) {
 		try{
 			this->insertRecordAt(i,record);
-			return;//Si no hay excepcion es porque lo insertó bien, por lo tanto termina el metodo.
+			return i;//Si no hay excepcion es porque lo insertó bien, por lo tanto termina el metodo.
 		}catch(ContentOverflowBlockException* ex1){
 			delete ex1;
 		}
@@ -363,6 +363,7 @@ void DataFile::insertRecord(Record* record) {
 	try{
 		this->appendEmptyBlock();		
 		this->insertRecordAt(this->getLastRecordsBlockIndex(),record);
+		return this->getLastRecordsBlockIndex();
 	}catch(ContentOverflowBlockException* ex2){
 		delete ex2;
 		throw new RecordSizeOverflowException();

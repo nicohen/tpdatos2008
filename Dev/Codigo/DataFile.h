@@ -70,7 +70,7 @@ public:
 	Field* getPrimaryField();
 	vector<Field*>* getFields();
 
-	virtual void insertRecord(Record* record);
+	virtual int insertRecord(Record* record);
 	virtual void insertRecordAt(T_BLOCKCOUNT blockNumber, Record* record);
 	virtual vector<Record*>* findRecords(int fNumber,DataValue* fValue);
 	virtual vector<Record*>* findRecordsAt(T_BLOCKCOUNT blockNumber, int fNumber,DataValue* fValue);
