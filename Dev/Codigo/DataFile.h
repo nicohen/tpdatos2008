@@ -41,6 +41,7 @@ private:
 	bool canInsert(Record* record);
 public:
 	
+	
 	virtual BlockFactory* getBlockFactory();
 	virtual void setBlockFactory(BlockFactory* blockFactory);
 	
