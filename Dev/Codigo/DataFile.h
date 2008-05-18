@@ -24,6 +24,10 @@ class DataFile:public IBuffereable
 {
 
 private:
+	static const unsigned short SECUENTIAL=0;
+	static const unsigned short HASH_INDEX=1;
+			
+	
 	int _blockSize;
 	char* _fileName;
 	MetadataBlock* _metadataBlock;

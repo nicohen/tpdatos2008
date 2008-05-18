@@ -2,10 +2,12 @@
 #include "../Statement.h"
 
 MetadataBlock::MetadataBlock(T_BLOCKSIZE size): Block(size) {
-	_fileType=Statement::OTHER;
+	//_fileType=Statement::OTHER;
 	_fields= new vector<Field*>();
+	_primaryIndexType=0;
 }
 MetadataBlock::MetadataBlock(char* content,T_BLOCKSIZE size): Block(content,size){
+	_primaryIndexType=0;
 	_fields= new vector<Field*>();
 	this->deserialize(Block::getContent());
 }
@@ -23,13 +25,16 @@ MetadataBlock::~MetadataBlock() {
 	delete(this->_fields);
 }
 
-int MetadataBlock::getFileType() {
-	return this->_fileType;
+unsigned short MetadataBlock::getPrimaryIndexType() {
+	return this->_primaryIndexType;
 }
 
-void MetadataBlock::setFileType(int fileType) {
-	this->_fileType = fileType;
+void MetadataBlock::setPrimaryIndexType(unsigned short primaryIndexType) {
+	this->_primaryIndexType = primaryIndexType;
 }
+
+unsigned short int getPrimaryIndexType();
+	void setPrimaryIndexType(unsigned short int fileType);
 
 int MetadataBlock::getQtyFields() {
 	return this->_fields->size();
@@ -68,8 +73,8 @@ void MetadataBlock::setContent(char* content){
 void MetadataBlock::deserialize(char* content){
 	int counter=0;
 	unsigned short qtyField=0;
-	memcpy(&(this->_fileType),content,sizeof(short));
-	counter+=sizeof(short);
+	memcpy(&(this->_primaryIndexType),content,sizeof(unsigned short int));
+	counter+=sizeof(unsigned short int);
 	memcpy(&qtyField,content+counter,sizeof(short));
 	counter+=sizeof(short);
 	for (int j=0;j<qtyField;j++){
@@ -96,7 +101,7 @@ char* MetadataBlock::getContent(){
 	vector<Field*>::iterator iter;
 	Field* each;
 	int counter= sizeof(T_FILETYPE);
-	this->setFragment((char*)&_fileType,0,counter);
+	this->setFragment((char*)&_primaryIndexType,0,counter);
 	unsigned short size= _fields->size();
 	this->setFragment((char*)&size,counter,sizeof(short));
 	counter+= sizeof(short);

@@ -24,6 +24,12 @@ DataFile::DataFile(char* fileName){
 
 
 DataFile::DataFile(char* fileName, int blockSize, vector<Field*>* secondaryFields,HashIndex* index) {
+	_fileName = cloneStr(fileName);
+	_blockSize = blockSize;
+	_metadataBlock = new MetadataBlock(blockSize);
+	_blockFactory=new RecordsBlockFactory();
+	this->_primaryIndex=index;
+	
 	//ToDo: Desde afuera matar esto-->secondaryIndex	
 	vector<Field*>* fields=new vector<Field*>();
 	Field* primaryField=new Field();
@@ -31,8 +37,10 @@ DataFile::DataFile(char* fileName, int blockSize, vector<Field*>* secondaryField
 	primaryField->setIsPolyvalent(false);
 	if(index!=NULL){
 		primaryField->setDataType(new StringType());
+		_metadataBlock->setPrimaryIndexType(DataFile::HASH_INDEX);
 	}else{
 		primaryField->setDataType(new IntType());
+		_metadataBlock->setPrimaryIndexType(DataFile::SECUENTIAL);
 	}
 	fields->push_back(primaryField);
 	
@@ -43,13 +51,7 @@ DataFile::DataFile(char* fileName, int blockSize, vector<Field*>* secondaryField
 		fields->push_back(each);
 	}
 	
-	_fileName = cloneStr(fileName);
-	_blockSize = blockSize;
-	_metadataBlock = new MetadataBlock(blockSize);
-//	_metadataBlock->setFileType(fileType);
 	_metadataBlock->setSecondaryFields(fields);
-	_blockFactory=new RecordsBlockFactory();
-	this->_primaryIndex=index;
 }
 
 void DataFile::setBlocksBuffer(BlocksBuffer* blocksBuffer){
@@ -109,6 +111,11 @@ void DataFile::load(char* folderPath){
 	this->_blockStructuredFile = BlockStructuredFile::Load(this->_fullPath);
 	//Cargo el MetadataBlock
 	this->_metadataBlock = (MetadataBlock*)_blockStructuredFile->bGetContentBlock(DataFile::FIRST_BLOCK,&_metadataBlockFactory);
+	
+	if(this->_metadataBlock->getPrimaryIndexType()==DataFile::HASH_INDEX){
+		this->_primaryIndex=new HashIndex(0);
+		this->_primaryIndex->load(folderPath,this->_fileName);
+	}
 }
 
 
