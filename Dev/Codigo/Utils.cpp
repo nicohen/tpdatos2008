@@ -23,7 +23,7 @@ void DEBUG(const char* words){
 
 void DEBUG_CONDITIONAL(const char* words){
 	extern bool verbose;
-	if (verbose && false){
+	if (verbose && true){
 		printf("%s\n",words);
 	}
 }
