@@ -20,6 +20,7 @@ DataFile::DataFile(char* fileName){
 	_fullPath=NULL;
 	_blockFactory=new RecordsBlockFactory();
 	this->_primaryIndex=NULL;
+	this->_blocksBuffer = NULL;
 }
 
 
@@ -47,9 +48,14 @@ DataFile::DataFile(char* fileName, int blockSize,Field* keyField ,vector<Field*>
 	}
 	
 	_metadataBlock->setSecondaryFields(fields);
+	
+	this->_blocksBuffer = NULL;
 }
 
 void DataFile::setBlocksBuffer(BlocksBuffer* blocksBuffer){
+	if (this->_primaryIndex!=NULL) {
+		this->_primaryIndex->setBlocksBuffer(blocksBuffer);
+	}
 	_blocksBuffer=blocksBuffer;
 }
 
@@ -227,8 +233,6 @@ vector<Record*>* DataFile::findRecordsAt(T_BLOCKCOUNT blockNumber, int fNumber,D
 		record->deserialize(each,this->getFields());
 		if(record->matchField(fNumber,fValue)){
 			recordsFound->push_back(record);
-		}else{
-			delete record;
 		}
 	}
 	
@@ -236,17 +240,24 @@ vector<Record*>* DataFile::findRecordsAt(T_BLOCKCOUNT blockNumber, int fNumber,D
 }
 
 vector<Record*>* DataFile::removeRecord(int fNumber,DataValue* fValue) {
-	vector<Record*>* removedRecords = new vector<Record*>();
-	vector<Record*>* removedRecordsAt;
-	int length= this->getRecordsBlockCount();
-	Record* each=NULL;
+	vector<Record*>* removedRecords = NULL;
+	vector<Record*>* removedRecordsAt = NULL;
 	
-	for(int j=1;j<=length;j++) {
-		removedRecordsAt = this->removeRecordAt(j,fNumber,fValue);
-		vector<Record*>::iterator iter;
-		for (iter = removedRecordsAt->begin(); iter != removedRecordsAt->end(); iter++ ){
-			each = ((Record*)*iter);
-			removedRecords->push_back(each);
+	//Uso el Hash
+	if (fNumber==0 && this->_primaryIndex!=NULL) {		
+		int blockNumber = this->_primaryIndex->getBlockNumber(fValue);
+		removedRecords = this->removeRecordAt(blockNumber,fNumber,fValue);
+	} else {
+		removedRecords = new vector<Record*>();
+		int length= this->getRecordsBlockCount();
+		Record* each=NULL;
+		for(int j=1;j<=length;j++) {
+			removedRecordsAt = this->removeRecordAt(j,fNumber,fValue);
+			vector<Record*>::iterator iter;
+			for (iter = removedRecordsAt->begin(); iter != removedRecordsAt->end(); iter++ ){
+				each = ((Record*)*iter);
+				removedRecords->push_back(each);
+			}
 		}
 	}
 	
@@ -282,10 +293,22 @@ vector<Record*>* DataFile::removeRecordAt(T_BLOCKCOUNT blockNumber, int fNumber,
 			updateRecord=true;
 		}
 	}
+
 	if (updateRecord){
 		this->_blockStructuredFile->bUpdateContentBlock(blockNumber,rBlock);
 		updateRecord=false;
 	}
+
+	if (this->_primaryIndex!=NULL){
+		Record* eachRecord;
+		vector<Record*>::iterator iterrec;
+		for (iterrec = removedRecords->begin(); iterrec != removedRecords->end(); iterrec++ ){
+			eachRecord=((Record*)*iterrec);
+			DataValue* dummy=eachRecord->getValues()->at(0);
+			this->_primaryIndex->unIndex(dummy);		
+		}
+	}
+	
 	return removedRecords;
 }
 
@@ -402,7 +425,8 @@ bool DataFile::existsAnotherWithSameKey(Record* record){
 void DataFile::appendEmptyBlock(){
 	RecordsBlock* recordsBlock = (RecordsBlock*)this->getBlockFactory()->createEmptyBlock(this->_blockStructuredFile->getBlockSize());
 	this->_blockStructuredFile->bAppendContentBlock(recordsBlock);
-	this->_blocksBuffer->addBlock(this->getFileName(),this->getLastRecordsBlockIndex(),recordsBlock);
+	if (this->_blocksBuffer!=NULL)
+		this->_blocksBuffer->addBlock(this->getFileName(),this->getLastRecordsBlockIndex(),recordsBlock);
 }
 
 
@@ -440,6 +464,8 @@ void DataFile::insertRecordAt(T_BLOCKCOUNT blockNumber,Record* record){
 		recordsBlock = this->getRecordBlock(blockNumber);
 		recordsBlock->push_back(rawRecord);
 		this->_blockStructuredFile->bUpdateContentBlock(blockNumber,recordsBlock);
+		if (this->_primaryIndex!=NULL)
+			this->_primaryIndex->index(record->getValues()->at(0),blockNumber);
 	}catch(ContentOverflowBlockException* ex){
 		delete rawRecord;
 		throw ex;
@@ -457,19 +483,24 @@ RecordsBlock* DataFile::getRecordBlock(int blockNumber){
 
 bool DataFile::updateRecord(Record* myRecord) {
 	if (this->canInsert(myRecord)) {
-		int length= this->getRecordsBlockCount();
-		
-		for(int j=1;j<=length;j++) {
-			try {
-				this->updateRecordAt(j,myRecord);
-				return true;
-			} catch (CannotUpdateRecordException* ex1) {
-				delete ex1;
-				this->removeRecordAt(j,0,myRecord->getValues()->at(0));
-				this->insertRecord(myRecord);
-				return true;
-			} catch (RecordNotFoundException* ex2) {
-				delete ex2;
+		//Uso el Hash
+		if (this->_primaryIndex!=NULL) {
+			int blockNumber = this->_primaryIndex->getBlockNumber(myRecord->getValues()->at(0));
+			this->updateRecordAt(blockNumber,myRecord);
+		} else {
+			int length= this->getRecordsBlockCount();
+			for(int j=1;j<=length;j++) {
+				try {
+					this->updateRecordAt(j,myRecord);
+					return true;
+				} catch (CannotUpdateRecordException* ex1) {
+					delete ex1;
+					this->removeRecordAt(j,0,myRecord->getValues()->at(0));
+					this->insertRecord(myRecord);
+					return true;
+				} catch (RecordNotFoundException* ex2) {
+					delete ex2;
+				}
 			}
 		}
 	}
@@ -510,7 +541,7 @@ void DataFile::setBlockFactory(BlockFactory* blockFactory){
 	this->_blockFactory=blockFactory;
 }
 bool DataFile::canInsert(Record* record) {
-	return this->getRecordBlock(0)->canInsert(record->serialize());
+	return RecordsBlock::canInsert(this->getBlockStructuredFile()->getBlockSize(),record->serialize());
 }
 //
 //void DataFile::setPrimaryIndex(HashIndex* index){

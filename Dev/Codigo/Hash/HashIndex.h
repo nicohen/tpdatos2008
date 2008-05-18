@@ -4,6 +4,7 @@
 #include "../DataFile.h"
 #include "HashTable.h"
 #include "../Data/Block.h"
+#include "../Buffer/BlocksBuffer.h"
 
 class DataFile;
 class HashIndex
@@ -26,6 +27,8 @@ public:
 	virtual void unIndex (DataValue* keyValue);
 	virtual void update (DataValue* keyValue, int blockNumber);
 	virtual void deleTe();
+	virtual void setBlocksBuffer(BlocksBuffer* blocksBuffer);
+
 };
 
 #endif /*HASHINDEX_H_*/
