@@ -55,7 +55,7 @@ public:
 	static const int FIRST_BLOCK = 0;
 	
 	//Constructores y destructores 
-	DataFile(char* fileName, int blockSize, vector<Field*>* secondaryFields,HashIndex* index);
+	DataFile(char* fileName, int blockSize,Field* keyField, vector<Field*>* secondaryFields,HashIndex* index);
 	
 	DataFile(char* fileName);
 	virtual ~DataFile();

@@ -23,7 +23,7 @@ DataFile::DataFile(char* fileName){
 }
 
 
-DataFile::DataFile(char* fileName, int blockSize, vector<Field*>* secondaryFields,HashIndex* index) {
+DataFile::DataFile(char* fileName, int blockSize,Field* keyField ,vector<Field*>* secondaryFields,HashIndex* index) {
 	_fileName = cloneStr(fileName);
 	_blockSize = blockSize;
 	_metadataBlock = new MetadataBlock(blockSize);
@@ -32,17 +32,12 @@ DataFile::DataFile(char* fileName, int blockSize, vector<Field*>* secondaryField
 	
 	//ToDo: Desde afuera matar esto-->secondaryIndex	
 	vector<Field*>* fields=new vector<Field*>();
-	Field* primaryField=new Field();
-	primaryField->setIsMandatory(true);
-	primaryField->setIsPolyvalent(false);
 	if(index!=NULL){
-		primaryField->setDataType(new StringType());
 		_metadataBlock->setFileType(DataFile::HASH_INDEX);
 	}else{
-		primaryField->setDataType(new IntType());
 		_metadataBlock->setFileType(DataFile::SECUENTIAL);
 	}
-	fields->push_back(primaryField);
+	fields->push_back(keyField);
 	
 	Field* each=NULL;
 	vector<Field*>::iterator iter;
@@ -88,14 +83,14 @@ BlockStructuredFile* DataFile::getBlockStructuredFile() {
 
 char* DataFile::appendFolder(char* fileName, char* folderPath){
 	string buffer;
-//	char* result;
+	char* result;
 	
 	buffer.append(folderPath);
 	buffer.append(fileName);
 	
-//	result = (char*) malloc(strlen(buffer.c_str()));
-//	strcpy(result,buffer.c_str());
-	return cloneStr((char*)buffer.c_str());	
+	result = (char*) malloc(strlen(buffer.c_str()));
+	strcpy(result,buffer.c_str());
+	return result;//cloneStr((char*)buffer.c_str());	
 }
 
 void DataFile::setFolder(char* folderPath){
