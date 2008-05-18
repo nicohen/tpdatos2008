@@ -24,8 +24,8 @@ class DataFile:public IBuffereable
 {
 
 private:
-	static const unsigned short SECUENTIAL=0;
-	static const unsigned short HASH_INDEX=1;
+	static const int SECUENTIAL=0;
+	static const int HASH_INDEX=1;
 			
 	
 	int _blockSize;

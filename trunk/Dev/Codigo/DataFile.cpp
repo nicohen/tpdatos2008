@@ -37,10 +37,10 @@ DataFile::DataFile(char* fileName, int blockSize, vector<Field*>* secondaryField
 	primaryField->setIsPolyvalent(false);
 	if(index!=NULL){
 		primaryField->setDataType(new StringType());
-		_metadataBlock->setPrimaryIndexType(DataFile::HASH_INDEX);
+		_metadataBlock->setFileType(DataFile::HASH_INDEX);
 	}else{
 		primaryField->setDataType(new IntType());
-		_metadataBlock->setPrimaryIndexType(DataFile::SECUENTIAL);
+		_metadataBlock->setFileType(DataFile::SECUENTIAL);
 	}
 	fields->push_back(primaryField);
 	
@@ -112,7 +112,7 @@ void DataFile::load(char* folderPath){
 	//Cargo el MetadataBlock
 	this->_metadataBlock = (MetadataBlock*)_blockStructuredFile->bGetContentBlock(DataFile::FIRST_BLOCK,&_metadataBlockFactory);
 	
-	if(this->_metadataBlock->getPrimaryIndexType()==DataFile::HASH_INDEX){
+	if(this->_metadataBlock->getFileType()==DataFile::HASH_INDEX){
 		this->_primaryIndex=new HashIndex(0);
 		this->_primaryIndex->load(folderPath,this->_fileName);
 	}

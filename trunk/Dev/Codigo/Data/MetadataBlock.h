@@ -10,15 +10,12 @@ using namespace std;
 class MetadataBlock: public Block{
 	
 private:
-	unsigned short _primaryIndexType;
+	unsigned short int _fileType;
 	vector<Field*>* _fields;
 	
 	Field* parseField(char* content, int* offset);
-	void writeOnBlock(Field* field,Block* block,int* offset);
-	
+	void writeOnBlock(Field* field,Block* block,int* offset);	
 public:
-	unsigned short getPrimaryIndexType();
-	void setPrimaryIndexType(unsigned short fileType);
 	static Block* createMetadataBlock(char* content, T_BLOCKSIZE size);
 	
 	MetadataBlock(T_BLOCKSIZE size);
@@ -28,7 +25,8 @@ public:
 
 	//int getIndexSize();
 	//void setIndexSize(int indexSize);
-
+	int getFileType();
+	void setFileType(int fileType);
 	int getQtyFields();
 	void setSecondaryField(Field* field);
 	void setSecondaryFields(vector<Field*>* _fields);

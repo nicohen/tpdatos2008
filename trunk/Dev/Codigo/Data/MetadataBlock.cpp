@@ -2,12 +2,10 @@
 #include "../Statement.h"
 
 MetadataBlock::MetadataBlock(T_BLOCKSIZE size): Block(size) {
-	//_fileType=Statement::OTHER;
+	_fileType=Statement::OTHER;
 	_fields= new vector<Field*>();
-	_primaryIndexType=0;
 }
 MetadataBlock::MetadataBlock(char* content,T_BLOCKSIZE size): Block(content,size){
-	_primaryIndexType=0;
 	_fields= new vector<Field*>();
 	this->deserialize(Block::getContent());
 }
@@ -25,16 +23,13 @@ MetadataBlock::~MetadataBlock() {
 	delete(this->_fields);
 }
 
-unsigned short MetadataBlock::getPrimaryIndexType() {
-	return this->_primaryIndexType;
+int MetadataBlock::getFileType() {
+	return this->_fileType;
 }
 
-void MetadataBlock::setPrimaryIndexType(unsigned short primaryIndexType) {
-	this->_primaryIndexType = primaryIndexType;
+void MetadataBlock::setFileType(int fileType) {
+	this->_fileType = fileType;
 }
-
-unsigned short int getPrimaryIndexType();
-	void setPrimaryIndexType(unsigned short int fileType);
 
 int MetadataBlock::getQtyFields() {
 	return this->_fields->size();
@@ -73,10 +68,10 @@ void MetadataBlock::setContent(char* content){
 void MetadataBlock::deserialize(char* content){
 	int counter=0;
 	unsigned short qtyField=0;
-	memcpy(&(this->_primaryIndexType),content,sizeof(unsigned short));
-	counter+=sizeof(unsigned short);
-	memcpy(&qtyField,content+counter,sizeof(unsigned short));
-	counter+=sizeof(unsigned short);
+	memcpy(&(this->_fileType),content,sizeof(short));
+	counter+=sizeof(short);
+	memcpy(&qtyField,content+counter,sizeof(short));
+	counter+=sizeof(short);
 	for (int j=0;j<qtyField;j++){
 		this->setSecondaryField(this->parseField(content,&counter));
 	}
@@ -100,12 +95,11 @@ void MetadataBlock::writeOnBlock(Field* field,Block* block,int* offset){
 char* MetadataBlock::getContent(){
 	vector<Field*>::iterator iter;
 	Field* each;
-	int counter= 0;
-	this->setFragment((char*)&_primaryIndexType,counter,sizeof(unsigned short));
-	counter+=sizeof(unsigned short);
+	int counter= sizeof(T_FILETYPE);
+	this->setFragment((char*)&_fileType,0,counter);
 	unsigned short size= _fields->size();
-	this->setFragment((char*)&size,counter,sizeof(unsigned short));
-	counter+= sizeof(unsigned short);
+	this->setFragment((char*)&size,counter,sizeof(short));
+	counter+= sizeof(short);
 	for (iter = this->_fields->begin(); iter != this->_fields->end(); iter++ ){	
 		each=(Field*)*iter;
 		this->writeOnBlock(each,this,&counter);
