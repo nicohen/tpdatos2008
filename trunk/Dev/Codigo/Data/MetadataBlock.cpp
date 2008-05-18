@@ -73,10 +73,10 @@ void MetadataBlock::setContent(char* content){
 void MetadataBlock::deserialize(char* content){
 	int counter=0;
 	unsigned short qtyField=0;
-	memcpy(&(this->_primaryIndexType),content,sizeof(unsigned short int));
-	counter+=sizeof(unsigned short int);
-	memcpy(&qtyField,content+counter,sizeof(short));
-	counter+=sizeof(short);
+	memcpy(&(this->_primaryIndexType),content,sizeof(unsigned short));
+	counter+=sizeof(unsigned short);
+	memcpy(&qtyField,content+counter,sizeof(unsigned short));
+	counter+=sizeof(unsigned short);
 	for (int j=0;j<qtyField;j++){
 		this->setSecondaryField(this->parseField(content,&counter));
 	}
@@ -100,11 +100,12 @@ void MetadataBlock::writeOnBlock(Field* field,Block* block,int* offset){
 char* MetadataBlock::getContent(){
 	vector<Field*>::iterator iter;
 	Field* each;
-	int counter= sizeof(T_FILETYPE);
-	this->setFragment((char*)&_primaryIndexType,0,counter);
+	int counter= 0;
+	this->setFragment((char*)&_primaryIndexType,counter,sizeof(unsigned short));
+	counter+=sizeof(unsigned short);
 	unsigned short size= _fields->size();
-	this->setFragment((char*)&size,counter,sizeof(short));
-	counter+= sizeof(short);
+	this->setFragment((char*)&size,counter,sizeof(unsigned short));
+	counter+= sizeof(unsigned short);
 	for (iter = this->_fields->begin(); iter != this->_fields->end(); iter++ ){	
 		each=(Field*)*iter;
 		this->writeOnBlock(each,this,&counter);
