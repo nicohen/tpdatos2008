@@ -95,8 +95,6 @@ T_BLOCKSIZE RecordsBlock::getSerializationSize(RawRecord* record){
 void RecordsBlock::appendRecord(RawRecord* record){
 	this->_records->push_back(record);
 }
-//me cago en la puta
-
 
 char* RecordsBlock::getContent(){
 	this->writeAllRecords();
@@ -114,8 +112,8 @@ bool RecordsBlock::canUpdate(RawRecord* current, RawRecord* newOne){
 	return true;
 }
 
-bool RecordsBlock::canInsert(RawRecord* record){
-	if(getSerializationSize(record)>this->getSize()){
+bool RecordsBlock::canInsert(T_BLOCKSIZE size, RawRecord* record){
+	if(getSerializationSize(record)>size){
 		return false;
 	}
 	return true;

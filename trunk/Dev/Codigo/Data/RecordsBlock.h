@@ -15,7 +15,7 @@ private:
 	//void writeRecord(char* content, T_BLOCKSIZE recordSize,T_BLOCKSIZE offset);
 	void writeAllRecords();
 	void writeOnBlock(RawRecord* record,Block* block,T_BLOCKSIZE offset);
-	T_BLOCKSIZE getSerializationSize(RawRecord* record);
+	static T_BLOCKSIZE getSerializationSize(RawRecord* record);
 	void deserializeRecords();
 	RawRecord* deserializeRecord(char* data, T_BLOCKSIZE offset);
 
@@ -40,7 +40,7 @@ public:
 	virtual RawRecord* at(T_BLOCKSIZE i);
 	virtual void clear();
 	virtual bool canUpdate(RawRecord* current, RawRecord* newOne);
-	virtual bool canInsert(RawRecord* record);
+	static bool canInsert(T_BLOCKSIZE size, RawRecord* record);
 };
 
 #endif /*RecordsBlock_H_*/

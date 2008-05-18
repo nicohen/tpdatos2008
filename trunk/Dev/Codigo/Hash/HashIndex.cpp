@@ -44,22 +44,32 @@ void HashIndex::create(char* folderPath,char* filePath){
 	keyField->setDataType(new StringType());
 	secondaryField1->setDataType(new IntType());
 	
+	//fields->push_back(keyField);
 	fields->push_back(secondaryField1);
 	
 
 	_keysfile=new DataFile((char*)keysFileName.c_str(),_indexBlockSize,keyField,fields,NULL);
-	_keysfile->setBlockFactory(new KeysBlockFactory());
+	//_keysfile->setBlockFactory(new KeysBlockFactory());
 	_keysfile->save(folderPath);
+	delete _keysfile;
+	_keysfile = new DataFile((char*)keysFileName.c_str());
+	_keysfile->load(folderPath);
 	
 	_hashtable=new HashTable();
 	_hashtable->create((char*)hashFileFullPath.c_str(),1);
-	
+	_hashtable->update(0,1);
 }
 
 void HashIndex::unIndex(DataValue* keyValue) {
 	int hashTablePos = getHash(((StringValue*)keyValue)->getString()) % _hashtable->getSize();
 	int keysBlockNumber= _hashtable->getAt(hashTablePos);
-	_keysfile->removeRecordAt(keysBlockNumber,0,keyValue);	
+
+//	string buffer;	
+//	buffer.append("HASH: Desindexando registro");
+//	keyValue->toString(&buffer);
+	DEBUG("HASH: Desindexando registro");
+	
+	_keysfile->removeRecordAt(keysBlockNumber,0,keyValue);
 }
 
 void HashIndex::update(DataValue* keyValue, int blockNumber) {
@@ -93,7 +103,7 @@ void HashIndex::load(char* folderPath,char* filePath){
 	
 	
 	_keysfile=new DataFile((char*)keysFileName.c_str());
-	_keysfile->setBlockFactory(new KeysBlockFactory());
+//	_keysfile->setBlockFactory(new KeysBlockFactory());
 	_keysfile->load(folderPath);
 	_indexBlockSize= _keysfile->getBlockStructuredFile()->getBlockSize();
 	
@@ -107,6 +117,11 @@ int HashIndex::getHash(char* arg){
 
 void HashIndex::reIndex(int keysBlockNumber) {
 	vector<Record*>* erasedRecords = _keysfile->removeRecordsAt(keysBlockNumber);
+
+//	string buffer;
+//	buffer.append("HASH: Reindexando registros");
+	DEBUG("HASH: Reindexando registros");
+
 	Record* each=NULL;
 	vector<Record*>::iterator iter;
 	for (iter = erasedRecords->begin(); iter != erasedRecords->end(); iter++ ){
@@ -122,9 +137,14 @@ void HashIndex::index(DataValue* keyValue,int blockNumber){
 	int hashTablePos = getHash(((StringValue*)keyValue)->getString()) % _hashtable->getSize();
 	int keysBlockNumber= _hashtable->getAt(hashTablePos);
 	
+//	string buffer;
+//	buffer.append("HASH: Indexando registro");
+//	keyValue->toString(&buffer);
+	DEBUG("HASH: Indexando registro");
+	
 	Record* keyRecord=new Record();
 	keyRecord->addValue(new StringValue(cloneStr((((StringValue*)keyValue)->getString()))));
-	keyRecord->addValue(new IntValue(keysBlockNumber));
+	keyRecord->addValue(new IntValue(blockNumber));
 	
 	try{
 		_keysfile->insertRecordAt(keysBlockNumber,keyRecord);
@@ -141,10 +161,20 @@ int HashIndex::getBlockNumber(DataValue* keyValue) {
 	int hashTablePos = getHash(((StringValue*)keyValue)->getString()) % _hashtable->getSize();
 	int keysBlockNumber= _hashtable->getAt(hashTablePos);
 
+//	string buffer;
+//	buffer.append("HASH: Buscando numero de bloque del registro");
+//	keyValue->toString(&buffer);
+	DEBUG("HASH: Buscando numero de bloque del registro");
+
 	vector<Record*>* recordsFound = _keysfile->findRecordsAt(keysBlockNumber,0,keyValue);
 	if (recordsFound->size()==0) {
 		throw new RecordNotFoundException();
 	}
 	
 	return ((IntValue*)recordsFound->at(0)->getValues()->at(1))->getInt();
+}
+
+void HashIndex::setBlocksBuffer(BlocksBuffer* blocksBuffer) {
+	_keysfile->setBlocksBuffer(blocksBuffer);
+	_keysfile->appendEmptyBlock();
 }
