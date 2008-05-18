@@ -44,12 +44,10 @@ void HashIndex::create(char* folderPath,char* filePath){
 	keyField->setDataType(new StringType());
 	secondaryField1->setDataType(new IntType());
 	
-	fields->push_back(keyField);
 	fields->push_back(secondaryField1);
 	
 
-	
-	_keysfile=new DataFile((char*)keysFileName.c_str(),_indexBlockSize,fields,NULL);
+	_keysfile=new DataFile((char*)keysFileName.c_str(),_indexBlockSize,keyField,fields,NULL);
 	_keysfile->setBlockFactory(new KeysBlockFactory());
 	_keysfile->save(folderPath);
 	
