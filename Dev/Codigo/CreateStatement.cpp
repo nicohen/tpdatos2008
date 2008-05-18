@@ -3,7 +3,8 @@
 #include <stdio.h>
 #include "Data/FileDoesAlreadyExistsException.h"
 #include <sstream>
-
+#include "StringType.h"
+#include "IntType.h"
 using namespace std;
 
 //Getters
@@ -83,11 +84,18 @@ StatementResult* CreateStatement::execute(DataManager* dataManager){
 	string buffer;
 	HashIndex* index=NULL;
 	DEBUG_CONDITIONAL("Inicio de la ejecución del CreateStatement");
-	//Creo el DataFile
+	
+	//Creo el tipo de la clave primaria
+	Field* primaryField=new Field();
+	primaryField->setIsMandatory(true);
+	primaryField->setIsPolyvalent(false);
 	if(this->_fileType==this->HASH){
+		primaryField->setDataType(new StringType());
 		index=new HashIndex(this->_indexSize);
+	}else{
+		primaryField->setDataType(new IntType());
 	}
-	DataFile* dataFile = new DataFile(this->getFileName(),this->getDataBlockSize(),this->getSecondaryFields(),index);
+	DataFile* dataFile = new DataFile(this->getFileName(),this->getDataBlockSize(),primaryField,this->getSecondaryFields(),index);
 	
 	//Creo el archivo en la carpeta correspondiente
 	StatementResult* sr = new StatementResult();
