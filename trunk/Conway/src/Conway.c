@@ -106,12 +106,12 @@ int main(int argc, char **argv) {
 		return 1;
 	}
 	board= createBoard(width,heigth);
-	printf("-------ANTES------\n");
-	toString(board);
 	setUpBoardFromFile(board,sourceFile);
-	createPBMFromBoad(board,outputPrefix,1);
-	printf("------DESPUES-----\n");
-	toString(board);
+	createPBMFromBoad(board,outputPrefix,0);
+	for(i=1;i<=steps;i++){
+		nextState(board);
+		createPBMFromBoad(board,outputPrefix,i);
+	}
 	deleteBoard(board);
 	return 0;	
 }
