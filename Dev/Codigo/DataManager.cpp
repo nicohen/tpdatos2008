@@ -38,6 +38,7 @@ DataFile* DataManager::getFile(char* fileName) {
 bool DataManager::removeFile(char* fileName) {
 	try{
 		this->getFile(fileName)->deleTe();
+		this->_dataFilesBuffer->removeFile(fileName);
 		return true;	
 	}catch(FileNotFoundException* ex){
 		delete ex;

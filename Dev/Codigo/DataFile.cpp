@@ -14,6 +14,8 @@
 #include "Data/BlockNotFoundException.h"
 #include "Data/CannotUpdateRecordException.h"
 #include "Data/RecordNotFoundException.h"
+#include "stdio.h"
+#include "string.h"
 
 DataFile::DataFile(char* fileName){
 	_fileName = cloneStr(fileName);
@@ -94,9 +96,8 @@ char* DataFile::appendFolder(char* fileName, char* folderPath){
 	buffer.append(folderPath);
 	buffer.append(fileName);
 	
-	result = (char*) malloc(strlen(buffer.c_str()));
-	strcpy(result,buffer.c_str());
-	return result;//cloneStr((char*)buffer.c_str());	
+//	result = (char*) malloc(strlen(buffer.c_str()));
+	return cloneStr((char*)buffer.c_str());	
 }
 
 void DataFile::setFolder(char* folderPath){
@@ -192,10 +193,32 @@ vector<Record*>* DataFile::findRecords(int fNumber,DataValue* fValue){
 	// tengo que crear un record a partir de un array de bytes que devuelve el recordblock
 	vector<Record*>* recordsObteined= new vector<Record*>();
 	vector<Record*>* recordsFoundAt = NULL;
-	RecordsBlock *rBlock;
+	string indexedSearchMsg;
+	string secuentialSearchMsg;
+	//Entra por clave primaria
+	if(fNumber==0 && fValue->isInstanceOf((DataType*)this->_metadataBlock->GetSecondaryFields()->at(0)->getDataType()) ){
+		try{
+			indexedSearchMsg.append("Buscando registro por clave primaria: ");
+			fValue->toString(&indexedSearchMsg);
+			int i=this->_primaryIndex->getBlockNumber(fValue);
+			indexedSearchMsg.append(". Clave primaria encontrada en el bloque: ");
+			appendIntTo(&indexedSearchMsg,i);
+			DEBUGS(&indexedSearchMsg);
+			return this->findRecordsAt(i,fNumber,fValue);
+		}catch(RecordNotFoundException* ex){
+			indexedSearchMsg.append(". Clave primaria no encontrada.");
+			delete ex;
+			DEBUGS(&indexedSearchMsg);
+			return recordsObteined;
+		}
+	}
+	//No entra por clave primaria
+	secuentialSearchMsg.append("Buscando registro de forma secuencial: ");
+	fValue->toString(&secuentialSearchMsg);
+	DEBUGS(&secuentialSearchMsg);
+	
 	int length= this->getRecordsBlockCount();
 	for(int j=1;j<=length;j++){
-		rBlock=	this->getRecordBlock(j);
 		recordsFoundAt = this->findRecordsAt(j,fNumber,fValue);
 		vector<Record*>::iterator iter;
 		for (iter = recordsFoundAt->begin(); iter != recordsFoundAt->end(); iter++ ) {
@@ -432,6 +455,7 @@ void DataFile::appendEmptyBlock(){
 
 int DataFile::insertRecord(Record* record) {
 	string str;
+	DEBUG("Validando unicidad");
 	if(this->existsAnotherWithSameKey(record)){
 		throw new IdentityException("Ya existe un registro con la misma clave que el que se quiere insertar");
 	}	
@@ -459,16 +483,17 @@ int DataFile::insertRecord(Record* record) {
 void DataFile::insertRecordAt(T_BLOCKCOUNT blockNumber,Record* record){
 	RecordsBlock* recordsBlock = NULL;
 	RawRecord* rawRecord =NULL;
+	rawRecord = record->serialize();
+	recordsBlock = this->getRecordBlock(blockNumber);
 	try{
-		rawRecord = record->serialize();
-		recordsBlock = this->getRecordBlock(blockNumber);
 		recordsBlock->push_back(rawRecord);
 		this->_blockStructuredFile->bUpdateContentBlock(blockNumber,recordsBlock);
 		if (this->_primaryIndex!=NULL)
 			this->_primaryIndex->index(record->getValues()->at(0),blockNumber);
-	}catch(ContentOverflowBlockException* ex){
+			
+	}catch(...){
 		delete rawRecord;
-		throw ex;
+		throw;
 	}
 }
 
@@ -481,22 +506,25 @@ RecordsBlock* DataFile::getRecordBlock(int blockNumber){
 	return (RecordsBlock*)result;
 }
 
-bool DataFile::updateRecord(Record* myRecord) {
-	if (this->canInsert(myRecord)) {
+bool DataFile::updateRecord(Record* record) {
+	if (this->canInsert(record)) {
 		//Uso el Hash
 		if (this->_primaryIndex!=NULL) {
-			int blockNumber = this->_primaryIndex->getBlockNumber(myRecord->getValues()->at(0));
-			this->updateRecordAt(blockNumber,myRecord);
+			if (this->isArrayOf(this->_metadataBlock->GetSecondaryFields(),record->getValues())==false){
+				throw new TypeMismatchException("Los datos ingresados no coinciden con la estructura del Archivo");
+			}
+			int blockNumber = this->_primaryIndex->getBlockNumber(record->getValues()->at(0));
+			this->updateRecordAt(blockNumber,record);
 		} else {
 			int length= this->getRecordsBlockCount();
 			for(int j=1;j<=length;j++) {
 				try {
-					this->updateRecordAt(j,myRecord);
+					this->updateRecordAt(j,record);
 					return true;
 				} catch (CannotUpdateRecordException* ex1) {
 					delete ex1;
-					this->removeRecordAt(j,0,myRecord->getValues()->at(0));
-					this->insertRecord(myRecord);
+					this->removeRecordAt(j,0,record->getValues()->at(0));
+					this->insertRecord(record);
 					return true;
 				} catch (RecordNotFoundException* ex2) {
 					delete ex2;
@@ -541,7 +569,11 @@ void DataFile::setBlockFactory(BlockFactory* blockFactory){
 	this->_blockFactory=blockFactory;
 }
 bool DataFile::canInsert(Record* record) {
-	return RecordsBlock::canInsert(this->getBlockStructuredFile()->getBlockSize(),record->serialize());
+	RawRecord* data;
+	data=record->serialize();
+	bool res = RecordsBlock::canInsert(this->getBlockStructuredFile()->getBlockSize(),record->serialize());
+	delete data;
+	return res;	
 }
 //
 //void DataFile::setPrimaryIndex(HashIndex* index){

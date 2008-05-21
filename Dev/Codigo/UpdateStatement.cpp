@@ -4,6 +4,7 @@
 #include "StringValue.h"
 #include "StructureValue.h"
 #include "Data/RecordSizeOverflowException.h"
+#include "Data/TypeMismatchException.h"
 //#include <sstream>
 
 UpdateStatement::UpdateStatement(char* filename):Statement(filename){
@@ -20,9 +21,13 @@ StatementResult* UpdateStatement::execute(DataManager* anIDataManager) {
 	bool hasUpdated = false;
 	Record* record  = new Record();
 	record->addValues(this->_values);
+	string preOut;
 	string buffer;
 	StatementResult* sr = new StatementResult();
 	try{
+		preOut.append("Intentando actualizar el registro: ");
+		record->toString(&preOut);
+		DEBUGS(&preOut);
 		DataFile* dataFile = anIDataManager->getFile(this->getFileName());
 		hasUpdated = dataFile->updateRecord(record);
 		buffer.append("'Registro actualizado ");
@@ -32,6 +37,11 @@ StatementResult* UpdateStatement::execute(DataManager* anIDataManager) {
 			buffer.append("1");
 		else
 			buffer.append("0");
+	}catch(TypeMismatchException* ex1){
+		buffer.append(" Error al actualizar registro(");
+		buffer.append(ex1->toString());
+		buffer.append("). Res = 0"); 
+		delete ex1;
 	}catch(FileNotFoundException* ex){
 		buffer.append(" Error al actualizar registro(");
 		buffer.append(ex->toString());
@@ -43,7 +53,7 @@ StatementResult* UpdateStatement::execute(DataManager* anIDataManager) {
 		buffer.append("). Res = 0"); 
 		delete ex2;
 	}
-	sr->setResult((char*)buffer.c_str());	
+	sr->setResult(cloneStr(buffer.c_str()));	
 	return sr;
 }
 

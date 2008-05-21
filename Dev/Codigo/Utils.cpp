@@ -2,6 +2,8 @@
 #include "string.h"
 #include "stdio.h"
 #include <fstream>
+#include <sstream>
+
 
 using namespace std;
 char* cloneStr(const char* source){
@@ -23,8 +25,21 @@ void DEBUG(const char* words){
 
 void DEBUG_CONDITIONAL(const char* words){
 	extern bool verbose;
-	if (verbose && false){
+	if (verbose && true){
 		printf("%s\n",words);
+	}
+}
+
+void appendIntTo(string* str, int number){
+	ostringstream oss;
+	oss<<number;
+	str->append(oss.str());
+}
+
+void DEBUGS(string* words){
+	extern bool verbose;
+	if (verbose){
+		printf("%s\n",words->c_str());
 	}
 }
 
