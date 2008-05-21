@@ -57,7 +57,6 @@ int setCharAtPosition(TDA_Board* board,int row,int column,char value){
 	}
 }
 void nextState(TDA_Board* board){
-	// TODO implementar
 	unsigned int activos;
 	TDA_Board* newBoard= createBoard(board->rows,board->columns);
 	int i,j;
