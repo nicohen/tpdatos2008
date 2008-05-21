@@ -1,8 +1,8 @@
 #include <mips/regdef.h>
 
         .text
-	.globl func
-func:
+	.globl vecinos
+vecinos:
 	subu	sp,sp,16	# Armo STACK de 16 Bytes
 	sw	$fp,12(sp)
 	sw	gp,8(sp)
