@@ -1,10 +1,19 @@
 #include "RecordsBlock.h"
 #include "../Utils.h"
 #include "ContentOverflowBlockException.h"
+#include "RecordSizeOverflowException.h"
+
+//-----------------------------------
+//Estructura de un RecordsBlock:	Cantidad de elementos|{Registros}
+//Cantidad de elementos:			T_BLOCKSIZE (tamaño 2)
+//Registro: 						{Tamaño de registro|Contenido del registro}
+//Tamaño de registro:				T_BLOCKSIZE (tamaño 2)
+//-----------------------------------
+//Tamaño de un RecordsBlock: sizeof(T_BLOCKSIZE)+cant*sizeof(T_BLOCKSIZE)+SUM(tamaño contenido)
+//-----------------------------------
+//Estructura de un RecordsBlock: 2|18|abcdefghijklmnñ|6|qwerty
 
 using namespace std;
-
-
 
 
 RecordsBlock::RecordsBlock(T_BLOCKSIZE size):Block(size){
@@ -113,16 +122,11 @@ bool RecordsBlock::canUpdate(RawRecord* current, RawRecord* newOne){
 }
 
 bool RecordsBlock::canInsert(T_BLOCKSIZE size, RawRecord* record){
-	if(getSerializationSize(record)>size){
+	if(sizeof(T_BLOCKSIZE) +getSerializationSize(record)>size){
 		return false;
 	}
 	return true;
-}
-
-
-//Block* RecordsBlock::createRecordsBlock(char* content, T_BLOCKSIZE size){
-//	return new RecordsBlock(content,size);
-//}
+} 
 
 vector<RawRecord*>::iterator RecordsBlock::begin(){
 	return this->_records->begin();
@@ -137,6 +141,9 @@ T_BLOCKSIZE RecordsBlock::RecordCount(){
 	return this->_records->size();
 }
 void RecordsBlock::push_back(RawRecord* rawrecord){
+	if(!canInsert(this->getSize(),rawrecord)){
+		throw new RecordSizeOverflowException();
+	}
 	if(this->getUsedSpace()+getSerializationSize(rawrecord)>this->getSize()){
 		throw new ContentOverflowBlockException();
 	}

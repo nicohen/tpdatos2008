@@ -838,6 +838,7 @@ void Test_StatementExec_CreateStatement(TestCase* test){
 void Test_MetadataBlock_Serialization(TestCase* test){
 	
 	
+	
 }
 
 void Test_Records_Matching(TestCase* test){
@@ -1226,21 +1227,23 @@ void Test_KeysBlock_Persistence(TestCase* test) {
 }
 
 void test_HashTable2(TestCase* test){
-	HashTable table;
-	table.create("hash.dat",4);
-	test->Assert_True(4==table.getSize());
-	table.update(3,2);
-	test->Assert_True(2==table.getAt(3));
-	table.grow();
-	test->Assert_True(8==table.getSize());
+	test->Assert_True_m(false,"Metodo no probado");
+//	HashTable table;
+//	table.create("hash.dat",4);
+//	test->Assert_True(4==table.getSize());
+//	table.update(3,2);
+//	test->Assert_True(2==table.getAt(3));
+//	table.grow();
+//	test->Assert_True(8==table.getSize());
 }
 
 void test_HashTable(TestCase* test){
-	HashTable table;
-	table.load("hash.dat");
-	test->Assert_True(8==table.getSize());
-	table.update(5,3);
-	test->Assert_True(2==table.getAt(7));
+	test->Assert_True_m(false,"Metodo no probado");
+//	HashTable table;
+//	table.load("hash.dat");
+//	test->Assert_True(8==table.getSize());
+//	table.update(5,3);
+//	test->Assert_True(2==table.getAt(7));
 }
 
 int main(int argc, char* argv[]){

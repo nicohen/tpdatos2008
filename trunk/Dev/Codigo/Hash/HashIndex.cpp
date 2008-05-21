@@ -2,6 +2,7 @@
 #include <string.h>
 #include "../Utils.h"
 #include "../Data/ContentOverflowBlockException.h"
+#include "../Data/RecordSizeOverflowException.h"
 #include "../StringValue.h"
 #include "../Data/KeysBlockFactory.h"
 #include "../IntValue.h"
@@ -64,10 +65,10 @@ void HashIndex::unIndex(DataValue* keyValue) {
 	int hashTablePos = getHash(((StringValue*)keyValue)->getString()) % _hashtable->getSize();
 	int keysBlockNumber= _hashtable->getAt(hashTablePos);
 
-//	string buffer;	
-//	buffer.append("HASH: Desindexando registro");
-//	keyValue->toString(&buffer);
-	DEBUG("HASH: Desindexando registro");
+	string buffer;	
+	buffer.append("HASH: Desindexando registro");
+	keyValue->toString(&buffer);
+	DEBUGS(&buffer);
 	
 	_keysfile->removeRecordAt(keysBlockNumber,0,keyValue);
 }
@@ -118,9 +119,9 @@ int HashIndex::getHash(char* arg){
 void HashIndex::reIndex(int keysBlockNumber) {
 	vector<Record*>* erasedRecords = _keysfile->removeRecordsAt(keysBlockNumber);
 
-//	string buffer;
-//	buffer.append("HASH: Reindexando registros");
-	DEBUG("HASH: Reindexando registros");
+	string buffer;
+	buffer.append("HASH: Inicio de reindexacion de registros");
+	DEBUGS(&buffer);
 
 	Record* each=NULL;
 	vector<Record*>::iterator iter;
@@ -128,6 +129,7 @@ void HashIndex::reIndex(int keysBlockNumber) {
 		each=((Record*)*iter);
 		index(each->getValues()->at(0),((IntValue*)each->getValues()->at(1))->getInt());
 	}
+//	DEBUG("HASH: Fin de reindexacion de registros");
 }
 
 void HashIndex::index(DataValue* keyValue,int blockNumber){
@@ -137,10 +139,10 @@ void HashIndex::index(DataValue* keyValue,int blockNumber){
 	int hashTablePos = getHash(((StringValue*)keyValue)->getString()) % _hashtable->getSize();
 	int keysBlockNumber= _hashtable->getAt(hashTablePos);
 	
-//	string buffer;
-//	buffer.append("HASH: Indexando registro");
-//	keyValue->toString(&buffer);
-	DEBUG("HASH: Indexando registro");
+	string buffer;
+	buffer.append("HASH Indexando el registro: ");
+	keyValue->toString(&buffer);
+	DEBUGS(&buffer);
 	
 	Record* keyRecord=new Record();
 	keyRecord->addValue(new StringValue(cloneStr((((StringValue*)keyValue)->getString()))));
@@ -154,6 +156,13 @@ void HashIndex::index(DataValue* keyValue,int blockNumber){
 		_hashtable->update(hashTablePos,_keysfile->getLastRecordsBlockIndex());
 		this->reIndex(keysBlockNumber);
 		this->index(keyValue,blockNumber);
+	}catch(RecordSizeOverflowException* ex2){
+		delete ex2;
+		string exmessage;
+		buffer.append("HASH [ERROR]: No se puede indexar el registro ");
+		keyRecord->toString(&exmessage);
+		exmessage.append(" porque su tamaño es mayor al de un bloque.");
+		DEBUGS(&exmessage);		
 	}
 }
 
@@ -161,10 +170,10 @@ int HashIndex::getBlockNumber(DataValue* keyValue) {
 	int hashTablePos = getHash(((StringValue*)keyValue)->getString()) % _hashtable->getSize();
 	int keysBlockNumber= _hashtable->getAt(hashTablePos);
 
-//	string buffer;
-//	buffer.append("HASH: Buscando numero de bloque del registro");
-//	keyValue->toString(&buffer);
-	DEBUG("HASH: Buscando numero de bloque del registro");
+	string buffer;
+	buffer.append("HASH: Buscando numero de bloque del registro");
+	keyValue->toString(&buffer);
+	DEBUGS(&buffer);
 
 	vector<Record*>* recordsFound = _keysfile->findRecordsAt(keysBlockNumber,0,keyValue);
 	if (recordsFound->size()==0) {

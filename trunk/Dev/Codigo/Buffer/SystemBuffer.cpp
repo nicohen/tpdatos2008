@@ -127,7 +127,6 @@ void SystemBuffer::removeElement(IComparable* bk){
 		this->_buffer.erase(iter);
 		delete key;
 		this->_bufferCurrentSize-=value->getSize();
-		delete value;
 	}
 }
 
