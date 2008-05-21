@@ -7,12 +7,17 @@ SOURCES =	$(SRCFOLDER)Utils.c\
 			$(SRCFOLDER)Board.c\
 			$(SRCFOLDER)Files.c
 TARGET = 	Conway.exe
+VECINOS_C = $(SRCFOLDER)Vecinos.c
+VECINOS_MIPS = $(SRCFOLDER)Vecinos.S
+
+mips:	$(OBJECTS)
+	$(CXX) -o $(TARGET) $(OBJECTS) $(VECINOS_MIPS) $(SRCFOLDER)Conway.c
 
 all:	$(OBJECTS)
-	$(CXX) -o $(TARGET) $(OBJECTS) $(SRCFOLDER)Conway.c
+	$(CXX) -o $(TARGET) $(OBJECTS) $(VECINOS_C) $(SRCFOLDER)Conway.c
 
 test: $(OBJECTS)
-	$(CXX) -o $(TARGET) $(OBJECTS) $(SRCFOLDER)Test.c
+	$(CXX) -o $(TARGET) $(OBJECTS) $(VECINOS_C) $(SRCFOLDER)Test.c
 
 clean:
 	rm -f $(OBJECTS) $(TARGET)
