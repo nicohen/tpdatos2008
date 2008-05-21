@@ -1,3 +1,4 @@
+CXX = gcc
 SRCFOLDER =	src/
 CXXFLAGS =	-ansi -g -Wall
 OBJECTS =	$(SRCFOLDER)Utils.o\
