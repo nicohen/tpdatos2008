@@ -56,17 +56,10 @@ public:
 	T_BLOCKCOUNT getBlockCount();
 	T_BLOCKCOUNT getContentBlockCount();
 	
-	//No implementados
-	void removeBlock(T_BLOCKCOUNT contentBlockNumber);	
-	void moveBlock(T_BLOCKCOUNT currentContentBlockNumber,T_BLOCKCOUNT destContentBlockNumber);
-//	T_BLOCKCOUNT getFirstFreeBlockNumber();
-	
 	//Nuevos metodos que usan Block	
 	void bUpdateContentBlock(T_BLOCKCOUNT contentBlockNumber,Block* block);	
 	Block* bGetContentBlock(T_BLOCKCOUNT contentBlockNumber,BlockFactory* blockFactory);
 	void bAppendContentBlock(Block* block);
-	void removeLastContentBlock();
-	T_BLOCKCOUNT getFirstFreeContentBlockNumber(T_BLOCKCOUNT initBlockNumber, T_BLOCKSIZE minRequiredSpace, BlockFactory* blockFactory) throw (BlockNotFoundException*);
 	
 	virtual ~BlockStructuredFile(void);
 };
