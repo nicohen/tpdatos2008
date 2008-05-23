@@ -91,7 +91,7 @@ BlockStructuredFile* DataFile::getBlockStructuredFile() {
 
 char* DataFile::appendFolder(char* fileName, char* folderPath){
 	string buffer;
-	char* result;
+//	char* result;
 	
 	buffer.append(folderPath);
 	buffer.append(fileName);
