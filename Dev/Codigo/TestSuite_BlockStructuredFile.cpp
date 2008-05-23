@@ -1207,7 +1207,7 @@ void Test_KeysBlock_Empty(TestCase* test) {
 }
 
 void Test_KeysBlock_LittleSpace(TestCase* test) {
-	KeysBlock* keysBlock=new KeysBlock(12,2);
+//	KeysBlock* keysBlock=new KeysBlock(12,2);
 	//deberia tirar excepcion
 }
 
@@ -1227,23 +1227,23 @@ void Test_KeysBlock_Persistence(TestCase* test) {
 }
 
 void test_HashTable2(TestCase* test){
-	test->Assert_True_m(false,"Metodo no probado");
-//	HashTable table;
-//	table.create("hash.dat",4);
-//	test->Assert_True(4==table.getSize());
-//	table.update(3,2);
-//	test->Assert_True(2==table.getAt(3));
-//	table.grow();
-//	test->Assert_True(8==table.getSize());
+	//test->Assert_True_m(false,"Metodo no probado");
+	HashTable table;
+	table.create("hash.dat",4);
+	test->Assert_True(4==table.getSize());
+	table.update(3,2);
+	test->Assert_True(2==table.getAt(3));
+	table.grow();
+	test->Assert_True(8==table.getSize());
 }
 
 void test_HashTable(TestCase* test){
-	test->Assert_True_m(false,"Metodo no probado");
-//	HashTable table;
-//	table.load("hash.dat");
-//	test->Assert_True(8==table.getSize());
-//	table.update(5,3);
-//	test->Assert_True(2==table.getAt(7));
+	//test->Assert_True_m(false,"Metodo no probado");
+	HashTable table;
+	table.load("hash.dat");
+	test->Assert_True(8==table.getSize());
+	table.update(7,3);
+	test->Assert_True(3==table.getAt(7));
 }
 
 int main(int argc, char* argv[]){
@@ -1422,12 +1422,12 @@ int main(int argc, char* argv[]){
 	Test_BufferHitsMissAndSize(test42);
 	delete test42;
 	
-	TestCase* test43=new TestCase("test_HashTable",&failedTests);
-	test_HashTable(test43);
+	TestCase* test43=new TestCase("test_HashTable2",&failedTests);
+	test_HashTable2(test43);
 	delete test43;
 	
-	TestCase* test44=new TestCase("test_HashTable2",&failedTests);
-	test_HashTable2(test44);
+	TestCase* test44=new TestCase("test_HashTable",&failedTests);
+	test_HashTable(test44);
 	delete test44;
 	
 	TestCase* test_nahue_01=new	 TestCase("Test_NullValue",&failedTests);	
