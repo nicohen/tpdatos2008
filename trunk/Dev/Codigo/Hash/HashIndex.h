@@ -28,6 +28,9 @@ public:
 	virtual void update (DataValue* keyValue, int blockNumber);
 	virtual void deleTe();
 	virtual void setBlocksBuffer(BlocksBuffer* blocksBuffer);
+	
+	virtual int getHashTablePosition(DataValue* keyValue);
+	virtual int getKeysFileBlockNumberFor(DataValue* keyValue);
 
 };
 
