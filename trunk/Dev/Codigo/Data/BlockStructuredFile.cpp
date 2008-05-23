@@ -5,11 +5,9 @@
 #include "BlockStructuredFileException.h"
 
 void BlockStructuredFile::setBlockSize(T_BLOCKSIZE size) {
-	//this->_bblockSize=size;
 	this->_header->setBlockSize(size);
 }
 void BlockStructuredFile::setBlockCount(T_BLOCKCOUNT count) {
-	//this->_bblockCount=count;
 	this->_header->setBlockCount(count);
 }
 
@@ -18,7 +16,6 @@ T_BLOCKCOUNT BlockStructuredFile::getBlockCount() {
 }
 
 T_FILESIZE BlockStructuredFile::getFileSize() {
-	//return this->getBlockCount()*this->getBlockSize();
 	this->_file->seekg(0, ios::end);
 	return this->_file->tellg();
 }
@@ -45,8 +42,7 @@ BlockStructuredFile* BlockStructuredFile::Load(char* filename) {
 	return res;
 }
 
-BlockStructuredFile* BlockStructuredFile::Create(char* filename,
-		T_BLOCKSIZE blockSize) {
+BlockStructuredFile* BlockStructuredFile::Create(char* filename, T_BLOCKSIZE blockSize) {
 	BlockStructuredFile* res=NULL;
 	fstream* file=NULL;
 	file = new fstream(filename,ios::trunc|ios::in|ios::out|ios::binary);
@@ -64,14 +60,10 @@ BlockStructuredFile::BlockStructuredFile(char* filename) {
 	this->_file=NULL;
 	this->_filename=filename;
 	if (!existsFile(this->_filename)) {
-		//ERROR
 		string msg;
-		ostringstream os;
 		msg.append("No se encontró el archivo");
-
 		throw new BlockStructuredFileException((char*)msg.c_str());
 	}
-	//this->_file = new fstream(this->_filename,ios::app|ios::in|ios::out|ios::binary);
 	this->_file = new fstream(this->_filename,ios::in|ios::out|ios::binary);
 	this->_header=new BlockStructuredFileHeader();
 	this->setBlockCount(0);
@@ -88,7 +80,7 @@ BlockStructuredFile::~BlockStructuredFile() {
 
 void BlockStructuredFile::load(T_BLOCKSIZE blockSize) {
 	char* buffer;
-	//Cargo todo el bloque en un buffer y cargo las propiedades de ah�
+	//Cargo todo el bloque en un buffer y cargo las propiedades de ahí
 	buffer=(char*)malloc(blockSize);
 	this->_file->seekg(0, ios::beg);
 	this->_file->read(buffer, blockSize);
@@ -121,9 +113,7 @@ void BlockStructuredFile::notifyBlockUpdated(T_BLOCKCOUNT blockNumber) {
 }
 
 void BlockStructuredFile::updateBlock(T_BLOCKCOUNT blockNumber, char* content) {
-	this->_file->seekg(
-			this->getBlockFilePositionFromAbsoluteBlockCount(blockNumber),
-			ios::beg);
+	this->_file->seekg(this->getBlockFilePositionFromAbsoluteBlockCount(blockNumber),ios::beg);
 	this->_file->write(content, this->getBlockSize());
 	this->_file->flush();
 }
@@ -182,7 +172,6 @@ T_BLOCKCOUNT BlockStructuredFile::getContentBlockCount() {
 void BlockStructuredFile::bUpdateContentBlock(T_BLOCKCOUNT contentBlockNumber,
 		Block* block) {
 	if (block->getUsedSpace()>this->getBlockSize()) {
-		//printf("d");
 		throw new BlockStructuredFileException("El bloque tiene un tamaño mas grande que el esperado");
 	}
 	this->updateContentBlock(contentBlockNumber, block->getContent());
@@ -203,32 +192,6 @@ Block* BlockStructuredFile::bGetContentBlock(T_BLOCKCOUNT contentBlockNumber,Blo
 }
 
 void BlockStructuredFile::bAppendContentBlock(Block* block) {
-//	if (block->getUsedSpace()>this->getBlockSize()) {
-//		throw new BlockStructuredFileException("El bloque tiene un tamaño mas grande que el esperado");
-//	}
 	this->appendBlock(block->getContent());
 	//Aca hay que actualizar luego el header para decirle el espacio libre de este bloque. block->getFreeSpace()
 }
-
-void BlockStructuredFile::removeLastContentBlock() {
-
-}
-
-T_BLOCKCOUNT BlockStructuredFile::getFirstFreeContentBlockNumber(T_BLOCKCOUNT initBlockNumber, T_BLOCKSIZE minRequiredSpace, BlockFactory* blockFactory) throw (BlockNotFoundException*) {
-	Block* block= NULL;
-	BlockNotFoundException* ex;
-	
-	ex=new BlockNotFoundException("[BlockNotFoundException]: No hay espacio libre para insertar el Registro en un bloque existente");
-
-	for (int i=initBlockNumber; i <= this->getContentBlockCount()-1; i++) {
-		block = this->bGetContentBlock(i,blockFactory);
-		if (block->getSize() * 0.7 > (block->getUsedSpace()+ minRequiredSpace)) {
-			return i;
-		}
-//		else{
-//			printf("\n---Required %i, used %i, should be lower than %f \n", minRequiredSpace, recordsBlock->getUsedSpace(),recordsBlock->getSize() * 0.7);
-//		}
-	}
-	throw ex;
-}
-
