@@ -2,7 +2,7 @@
 #include "../Statement.h"
 
 MetadataBlock::MetadataBlock(T_BLOCKSIZE size): Block(size) {
-	_fileType=Statement::OTHER;
+	_fileType=0;
 	_fields= new vector<Field*>();
 }
 MetadataBlock::MetadataBlock(char* content,T_BLOCKSIZE size): Block(content,size){
@@ -81,34 +81,65 @@ void MetadataBlock::setFragment(char* content,T_BLOCKSIZE offset,T_BLOCKSIZE siz
 	Block::setFragment(content,offset,size);
 }
 
-void MetadataBlock::writeOnBlock(Field* field,Block* block,int* offset){
+void MetadataBlock::writeFieldOnBlock(Field* field,Block* block,int* offset){
+	//Tamaño del campo
 	T_BLOCKSIZE fieldSize;
-	char* serializedField;
-	fieldSize= field->serialize(&serializedField);
+	//Serializacion del campo
+	char* serializedFieldData;
+	//Se serializa el campo y se obtiene el tamaño del contenido
+	fieldSize= field->serialize(&serializedFieldData);
+	//Se serializa el tamaño
 	block->setFragment((char*)&fieldSize,*offset,sizeof(T_BLOCKSIZE));
 	*offset+=sizeof(T_BLOCKSIZE);
-	block->setFragment(serializedField,*offset,fieldSize);
+	//Se escribe el campo
+	block->setFragment(serializedFieldData,*offset,fieldSize);
 	*offset+=fieldSize;
-	free(serializedField);
+	free(serializedFieldData);
 }
 
 char* MetadataBlock::getContent(){
-	vector<Field*>::iterator iter;
-	Field* each;
+//	if(this->getSerializationSize()>this->getSize()){
+//		
+//	}
+	//Tipo de archivo
 	int counter= sizeof(T_FILETYPE);
 	this->setFragment((char*)&_fileType,0,counter);
+	
+	//Tamaño de campos
 	unsigned short size= _fields->size();
 	this->setFragment((char*)&size,counter,sizeof(short));
 	counter+= sizeof(short);
+	
+	vector<Field*>::iterator iter;
+	Field* each;
 	for (iter = this->_fields->begin(); iter != this->_fields->end(); iter++ ){	
 		each=(Field*)*iter;
-		this->writeOnBlock(each,this,&counter);
+		this->writeFieldOnBlock(each,this,&counter);
 	}
 	return Block::getContent();
 }
 
 T_BLOCKSIZE MetadataBlock::getUsedSpace(){
-	return 0;
+	T_BLOCKSIZE size=0;
+	//seccion de tipo de archivo
+	size+=sizeof(T_FILETYPE);
+	//seccion de tamaño de campos
+	size+= sizeof(short);
+	
+	vector<Field*>::iterator iter;
+	Field* each;
+	for (iter = this->_fields->begin(); iter != this->_fields->end(); iter++ ){	
+		each=(Field*)*iter;
+		//Seccion del tamaño del contenido del campo
+		size+=sizeof(T_BLOCKSIZE);
+		
+		//contenido del campo
+		char* serializedFieldData;
+		//Se serializa el campo y se acumula el tamaño del contenido
+		size+= each->serialize(&serializedFieldData);
+		delete serializedFieldData;
+	}
+	return size;
 }
 
 Block* MetadataBlock::createMetadataBlock(char* content, T_BLOCKSIZE size){

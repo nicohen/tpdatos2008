@@ -3,6 +3,8 @@
 #include <string>
 #include <sstream>
 #include "BlockStructuredFileException.h"
+#include "FileDoesAlreadyExistsException.h"
+#include "FileNotFoundException.h"
 
 void BlockStructuredFile::setBlockSize(T_BLOCKSIZE size) {
 	this->_header->setBlockSize(size);
@@ -25,6 +27,9 @@ T_BLOCKSIZE BlockStructuredFile::getBlockSize() {
 }
 
 BlockStructuredFile* BlockStructuredFile::Load(char* filename) {
+	if(!existsFile(filename)){
+		throw new FileNotFoundException("Se intento cargar un archivo que no existe");
+	}
 	BlockStructuredFile* res=NULL;
 	T_BLOCKSIZE blockSize;
 	fstream* file=NULL;
@@ -43,6 +48,9 @@ BlockStructuredFile* BlockStructuredFile::Load(char* filename) {
 }
 
 BlockStructuredFile* BlockStructuredFile::Create(char* filename, T_BLOCKSIZE blockSize) {
+	if(existsFile(filename)){
+		throw new FileDoesAlreadyExistsException("No se puede crear el archivo porque ya existe uno con el mismo nombre");
+	}
 	BlockStructuredFile* res=NULL;
 	fstream* file=NULL;
 	file = new fstream(filename,ios::trunc|ios::in|ios::out|ios::binary);
@@ -194,4 +202,11 @@ Block* BlockStructuredFile::bGetContentBlock(T_BLOCKCOUNT contentBlockNumber,Blo
 void BlockStructuredFile::bAppendContentBlock(Block* block) {
 	this->appendBlock(block->getContent());
 	//Aca hay que actualizar luego el header para decirle el espacio libre de este bloque. block->getFreeSpace()
+}
+
+void BlockStructuredFile::deleTe(){
+	if(this->_file->is_open()){
+		this->_file->close();
+	}
+	remove(this->_filename);
 }

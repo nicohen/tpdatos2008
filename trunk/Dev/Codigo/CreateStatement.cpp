@@ -2,6 +2,7 @@
 #include "Utils.h"
 #include <stdio.h>
 #include "Data/FileDoesAlreadyExistsException.h"
+#include "Data/MetadataOverflowException.h"
 #include <sstream>
 #include "StringType.h"
 #include "IntType.h"
@@ -113,6 +114,12 @@ StatementResult* CreateStatement::execute(DataManager* dataManager){
 		buffer.append("'No se logro crear el archivo: ");
 		buffer.append(ex->toString());
 		buffer.append("' Res = 0");
+		delete ex;
+	}catch(MetadataOverflowException* ex2){
+		buffer.append("'No se logro crear el archivo: ");
+		buffer.append(ex2->toString());
+		buffer.append("' Res = 0");
+		delete ex2;
 	}	
 	sr->setResult((char*)buffer.c_str());
 	DEBUG_CONDITIONAL("Fin de la ejecución del CreateStatement");

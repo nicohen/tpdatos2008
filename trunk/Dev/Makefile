@@ -63,6 +63,7 @@ SOURCES:=	$(CODE_PATH)BufferedDataManager.cpp\
 	$(DATA_PATH)BlockStructuredFile.cpp\
 	$(DATA_PATH)BlockStructuredFileHeader.cpp\
 	$(DATA_PATH)MetadataBlock.cpp\
+	$(DATA_PATH)MetadataOverflowException.cpp\
 	$(DATA_PATH)RawRecord.cpp\
 	$(DATA_PATH)Record.cpp\
 	$(TEST_PATH)Assertion.cpp\
