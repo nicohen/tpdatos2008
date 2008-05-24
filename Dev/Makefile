@@ -6,7 +6,7 @@ CODE_PATH:= Codigo/
 DATA_PATH:= $(CODE_PATH)Data/
 BUFFER_PATH:= $(CODE_PATH)Buffer/
 TEST_PATH:= $(CODE_PATH)TestingFramework/
-HASH_PATH:= $(CODE_PATH)Hash/
+INDEXES_PATH:= $(CODE_PATH)Indexes/
 
 MAIN_CLASS= $(CODE_PATH)main.cpp
 MAIN_PABLO= $(CODE_PATH)main_pablo.cpp
@@ -84,8 +84,8 @@ SOURCES:=	$(CODE_PATH)BufferedDataManager.cpp\
 	$(DATA_PATH)ContentOverflowBlockException.cpp\
 	$(DATA_PATH)RecordSizeOverflowException.cpp\
 	$(DATA_PATH)KeysBlock.cpp\
-	$(HASH_PATH)HashTable.cpp\
-	$(HASH_PATH)HashIndex.cpp\
+	$(INDEXES_PATH)HashTable.cpp\
+	$(INDEXES_PATH)HashIndex.cpp\
 	$(DATA_PATH)CannotUpdateRecordException.cpp\
 	$(DATA_PATH)RecordNotFoundException.cpp
 	
@@ -116,4 +116,5 @@ clean-all:
 	rm -f $(CODE_PATH)*.o
 	rm -f $(DATA_PATH)*.o
 	rm -f $(BUFFER_PATH)*.o
+	rm -f $(INDEXES_PATH)*.o
 	rm -f $(TEST_PATH)*.o

@@ -17,7 +17,7 @@
 #include "Data/BlockFactory.h"
 #include "Data/RecordsBlockFactory.h"
 #include "Data/MetadataBlockFactory.h"
-#include "Hash/HashIndex.h"
+#include "Indexes/HashIndex.h"
 
 class HashIndex;
 class DataFile:public IBuffereable
