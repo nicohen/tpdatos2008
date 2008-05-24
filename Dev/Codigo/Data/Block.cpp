@@ -6,6 +6,11 @@ Block::Block(T_BLOCKSIZE size){
 	this->_size=size;
 	this->_freeSpace=size;
 	this->_content=(char*)malloc(this->_size);
+	
+	char clean='\0';
+	for (int i=0;i<this->_size;i++){
+		this->setFragment(&clean,i,1);	
+	}
 } 
 
 Block::~Block(){

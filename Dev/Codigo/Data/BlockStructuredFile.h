@@ -61,6 +61,8 @@ public:
 	Block* bGetContentBlock(T_BLOCKCOUNT contentBlockNumber,BlockFactory* blockFactory);
 	void bAppendContentBlock(Block* block);
 	
+	void deleTe();
+	
 	virtual ~BlockStructuredFile(void);
 };
 

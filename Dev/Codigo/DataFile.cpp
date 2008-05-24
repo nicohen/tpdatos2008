@@ -14,6 +14,7 @@
 #include "Data/BlockNotFoundException.h"
 #include "Data/CannotUpdateRecordException.h"
 #include "Data/RecordNotFoundException.h"
+#include "Data/MetadataOverflowException.h"
 #include "stdio.h"
 #include "string.h"
 
@@ -91,12 +92,10 @@ BlockStructuredFile* DataFile::getBlockStructuredFile() {
 
 char* DataFile::appendFolder(char* fileName, char* folderPath){
 	string buffer;
-//	char* result;
 	
 	buffer.append(folderPath);
 	buffer.append(fileName);
 	
-//	result = (char*) malloc(strlen(buffer.c_str()));
 	return cloneStr((char*)buffer.c_str());	
 }
 
@@ -106,9 +105,7 @@ void DataFile::setFolder(char* folderPath){
 
 void DataFile::load(char* folderPath){
 	this->setFolder(folderPath);
-	if(!existsFile(this->_fullPath)){
-		throw new FileNotFoundException("Se intento cargar un archivo que no existe");
-	}
+	
 	//Cargo el blockStructureFile
 	this->_blockStructuredFile = BlockStructuredFile::Load(this->_fullPath);
 	//Cargo el MetadataBlock
@@ -125,13 +122,18 @@ void DataFile::load(char* folderPath){
 void DataFile::save(char* folderPath) {
 	this->setFolder(folderPath);	
 	
-	if(existsFile(this->_fullPath)){
-		throw new FileDoesAlreadyExistsException("No se puede crear el archivo porque ya existe uno con el mismo nombre");
-	}
+	
 	//Creo el blockStructureFile
 	this->_blockStructuredFile = BlockStructuredFile::Create(this->_fullPath,_blockSize);
-	//Guardo el MetadataBlock
-	this->_blockStructuredFile->bAppendContentBlock(this->_metadataBlock);
+	
+	try{
+		//Guardo el MetadataBlock
+		this->_blockStructuredFile->bAppendContentBlock(this->_metadataBlock);	
+	}catch(ContentOverflowBlockException* ex){
+		this->_blockStructuredFile->deleTe();
+		delete ex;
+		throw new MetadataOverflowException();
+	}
 	
 	//Guardo el indice
 	if(this->_primaryIndex!=NULL){

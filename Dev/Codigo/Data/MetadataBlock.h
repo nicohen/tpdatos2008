@@ -14,7 +14,7 @@ private:
 	vector<Field*>* _fields;
 	
 	Field* parseField(char* content, int* offset);
-	void writeOnBlock(Field* field,Block* block,int* offset);	
+	void writeFieldOnBlock(Field* field,Block* block,int* offset);	
 public:
 	static Block* createMetadataBlock(char* content, T_BLOCKSIZE size);
 	
