@@ -27,6 +27,7 @@ public:
 	virtual void toString(string* buffer);
 	virtual char* getString();
 	virtual bool isInstanceOf(DataType* dType);
+	virtual DataValue* clone();
 };
 
 

@@ -49,3 +49,7 @@ int IntValue::getInt(){
 bool IntValue::isInstanceOf(DataType* dType){
 	return this->getCharType()==dType->getCharType();
 }
+
+DataValue* IntValue::clone(){
+	return new IntValue(this->_value);
+}

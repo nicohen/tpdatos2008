@@ -92,7 +92,7 @@ StatementResult* CreateStatement::execute(DataManager* dataManager){
 	primaryField->setIsPolyvalent(false);
 	if(this->_fileType==this->HASH){
 		primaryField->setDataType(new StringType());
-		index=new HashIndex(this->_indexSize);
+		index=new HashIndex(this->_indexSize,new StringType());
 	}else{
 		primaryField->setDataType(new IntType());
 	}

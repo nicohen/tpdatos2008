@@ -14,11 +14,12 @@ private:
 	HashTable* _hashtable;
 	T_BLOCKSIZE _indexBlockSize;
 	int _conflictiveKeysfileBlockNumber;
+	DataType* _keyType;
 	
 protected:
-		virtual unsigned int getHash(char* arg);
+		virtual unsigned int getHash(DataValue* input);
 public:
-	HashIndex(T_BLOCKSIZE indexBlockSize);
+	HashIndex(T_BLOCKSIZE indexBlockSize,DataType* keyType);
 	virtual ~HashIndex();
 	virtual void create(char* folderPath,char* filePath);
 	virtual void load(char* folderPath,char* filePath);
@@ -32,6 +33,7 @@ public:
 	virtual	void simplify(int arg0);
 	virtual unsigned int getHashTablePosition(DataValue* keyValue);
 	virtual int getKeysFileBlockNumberFor(DataValue* keyValue);
+	unsigned int RSHash(char* input);
 
 };
 

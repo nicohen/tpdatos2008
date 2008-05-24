@@ -112,7 +112,7 @@ void DataFile::load(char* folderPath){
 	this->_metadataBlock = (MetadataBlock*)_blockStructuredFile->bGetContentBlock(DataFile::FIRST_BLOCK,&_metadataBlockFactory);
 	
 	if(this->_metadataBlock->getFileType()==DataFile::HASH_INDEX){
-		this->_primaryIndex=new HashIndex(0);
+		this->_primaryIndex=new HashIndex(0,NULL);
 		this->_primaryIndex->load(folderPath,this->_fileName);
 	}
 }
@@ -406,6 +406,11 @@ bool DataFile::isArrayOf(vector<Field*>* fields, vector<DataValue*>* values){
 		valueIter< values->end() && fieldIter< fields->end();
 		valueIter++, fieldIter++){
 			aValue= (DataValue*)*valueIter;
+			
+			string valuestr;
+			valuestr.append("verificando: ");
+			aValue->toString(&valuestr);
+			DEBUGS(&valuestr );
 			aField= (Field*)*fieldIter;
 			if (aValue->isInstanceOf(aField->getDataType())==false){
 				return false;

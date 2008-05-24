@@ -58,13 +58,12 @@ void HashTable::update(int index, int value){
 	msg.append("', Valor '");
 	appendIntTo(&msg,value);
 	msg.append("'");
+	DEBUGS(&msg);
 	fseek(_hashFile,(index+1)*INT_SIZE,SEEK_SET);
 	fwrite(&value,INT_SIZE,1,_hashFile);
 }
 
 void HashTable::grow(){
-
-	DEBUG("HASH Agrandando la tabla de hashes.");
 	string msg;
 	msg.append("HASH Agrandando la tabla de hashes. Valor anterior '");
 	appendIntTo(&msg,_size);
@@ -81,6 +80,7 @@ void HashTable::grow(){
 	msg.append("', Valor nuevo '");
 	appendIntTo(&msg,_size);
 	msg.append("'");
+	DEBUGS(&msg);
 }
 void HashTable::simplify(){
 	_size=_size/2;

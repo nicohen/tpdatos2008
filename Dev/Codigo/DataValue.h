@@ -27,7 +27,7 @@ public:
 	T_STRING_LENGHT getSerializationFullSize();
 	char* serialize();	
 	char* deserialize(char* data);//Esto va en la clase madre (no es virtual)
-	
+	virtual DataValue* clone()=0;
 	virtual bool isNull();
 };
 

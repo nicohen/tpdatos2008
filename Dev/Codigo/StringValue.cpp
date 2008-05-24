@@ -49,3 +49,8 @@ void StringValue::serializeTo(char* buffer){
 bool StringValue::isInstanceOf(DataType* dType){
 	return this->getCharType() ==dType->getCharType();
 }
+
+DataValue* StringValue::clone(){
+	return new StringValue(this->_value);
+}
+
