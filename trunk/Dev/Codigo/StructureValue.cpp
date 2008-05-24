@@ -194,3 +194,15 @@ bool StructureValue::isInstanceOf(DataType* dType){
 bool StructureValue::isNull(){
 	return this->getCount()==0;
 }
+
+DataValue* StructureValue::clone(){
+	StructureValue* result=new  StructureValue();
+	DataValue* each=NULL;
+	vector<DataValue*>::iterator iter;
+	for (iter = this->_dataValues->begin(); iter != this->_dataValues->end(); iter++ )
+	{
+		each=((DataValue*)*iter);
+		result->addValue(each->clone());
+	}
+	return result;
+}

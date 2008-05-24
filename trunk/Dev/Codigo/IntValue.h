@@ -22,6 +22,7 @@ public:
 	virtual char getCharType();
 	virtual void toString(string* buffer);
 	virtual bool isInstanceOf(DataType* dType);
+	virtual DataValue* clone();
 };
 
 #endif /*INTVALUE_H_*/

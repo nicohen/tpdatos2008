@@ -3,7 +3,6 @@
 #include "../Utils.h"
 #include "../Data/ContentOverflowBlockException.h"
 #include "../Data/RecordSizeOverflowException.h"
-#include "../StringValue.h"
 #include "../Data/KeysBlockFactory.h"
 #include "../Data/KeysBlock.h"
 #include "../IntValue.h"
@@ -11,45 +10,41 @@
 #include "../Field.h"
 #include <vector>
 
-HashIndex::HashIndex(T_BLOCKSIZE indexBlockSize)
-{
+HashIndex::HashIndex(T_BLOCKSIZE indexBlockSize, DataType* keyType) {
+	_keyType=keyType;
 	_indexBlockSize=indexBlockSize;
 	_conflictiveKeysfileBlockNumber=0;
 }
 
-HashIndex::~HashIndex()
-{
+HashIndex::~HashIndex() {
 	delete _keysfile;
 	delete _hashtable;
 }
 
-
-void HashIndex::create(char* folderPath,char* filePath){
+void HashIndex::create(char* folderPath, char* filePath) {
 	string keysFileName;
 	string hashFileFullPath;
 	string fullpath;
-	
+
 	fullpath.append(folderPath);
 	fullpath.append(filePath);
-	
+
 	keysFileName.append(filePath);
 	keysFileName.append(".keys");
-	
-	
+
 	hashFileFullPath.append(fullpath);
 	hashFileFullPath.append(".hash");
-	
+
 	vector<Field*>* fields=new vector<Field*>();
-	
+
 	Field* keyField = new Field();
 	Field* secondaryField1 = new Field();
-	
-	keyField->setDataType(new StringType());
+
+	keyField->setDataType(_keyType);
 	secondaryField1->setDataType(new IntType());
-	
+
 	//fields->push_back(keyField);
 	fields->push_back(secondaryField1);
-	
 
 	_keysfile=new DataFile((char*)keysFileName.c_str(),_indexBlockSize,keyField,fields,NULL);
 	_keysfile->setBlockFactory(new KeysBlockFactory());
@@ -57,70 +52,71 @@ void HashIndex::create(char* folderPath,char* filePath){
 	delete _keysfile;
 	_keysfile = new DataFile((char*)keysFileName.c_str());
 	_keysfile->load(folderPath);
-	
+
 	_hashtable=new HashTable();
-	_hashtable->create((char*)hashFileFullPath.c_str(),1);
-	_hashtable->update(0,1);
+	_hashtable->create((char*)hashFileFullPath.c_str(), 1);
+	_hashtable->update(0, 1);
 }
 
-void HashIndex::deleTe(){
+void HashIndex::deleTe() {
 	_keysfile->deleTe();
 	_hashtable->deleTe();
 }
 
-void HashIndex::load(char* folderPath,char* filePath){
+void HashIndex::load(char* folderPath, char* filePath) {
 	string keysFileName;
 	string hashFileFullPath;
 	string fullpath;
-	
+
 	fullpath.append(folderPath);
 	fullpath.append(filePath);
-	
+
 	keysFileName.append(filePath);
 	keysFileName.append(".keys");
-	
-	
+
 	hashFileFullPath.append(fullpath);
 	hashFileFullPath.append(".hash");
-	
-	
+
 	_keysfile=new DataFile((char*)keysFileName.c_str());
 	_keysfile->setBlockFactory(new KeysBlockFactory());
 	_keysfile->load(folderPath);
+	this->_keyType= _keysfile->getFields()->at(0)->getDataType();
+
 	_indexBlockSize= _keysfile->getBlockStructuredFile()->getBlockSize();
-	
+
 	_hashtable=new HashTable();
 	_hashtable->load((char*)hashFileFullPath.c_str());
+
 }
 
 void HashIndex::unIndex(DataValue* keyValue) {
-	string buffer;	
-	buffer.append("HASH Desindexando clave '");
+	string buffer;
+	buffer.append("HASH Desindexando clave ");
 	keyValue->toString(&buffer);
-	buffer.append("'");
 	DEBUGS(&buffer);
-	
+
 	int keysBlockNumber= getKeysFileBlockNumberFor(keyValue);
-	_keysfile->removeRecordAt(keysBlockNumber,0,keyValue);
-	if (keysBlockNumber==_conflictiveKeysfileBlockNumber){
+	_keysfile->removeRecordAt(keysBlockNumber, 0, keyValue);
+	if (keysBlockNumber==_conflictiveKeysfileBlockNumber) {
 		this->simplify(keysBlockNumber);
 	}
-	if ((keysBlockNumber+(_hashtable->getSize()/2))==_conflictiveKeysfileBlockNumber){
+	if ((keysBlockNumber+(_hashtable->getSize()/2))
+			==_conflictiveKeysfileBlockNumber) {
 		this->simplify(keysBlockNumber+(_hashtable->getSize()/2));
 	}
 }
 
-void HashIndex::simplify(int arg0){
+void HashIndex::simplify(int arg0) {
 	int distance= _hashtable->getSize()/2;
 	int i=0;
-	while(i<distance){
-		if ((i!=arg0)&&(_hashtable->getAt(i)!=_hashtable->getAt(distance+i))){
+	while (i<distance) {
+		if ((i!=arg0)&&(_hashtable->getAt(i)!=_hashtable->getAt(distance+i))) {
 			_conflictiveKeysfileBlockNumber=i;
 			break;
 		}
 		i++;
 	}
-	if (i==distance){
+	if (i==distance) {
 		_hashtable->simplify();
 		this->reIndex(arg0);
 		this->reIndex(arg0+distance);
@@ -128,104 +124,120 @@ void HashIndex::simplify(int arg0){
 }
 
 void HashIndex::update(DataValue* keyValue, int blockNumber) {
-	string buffer;	
+	string buffer;
 	buffer.append("HASH Actualizando clave '");
 	keyValue->toString(&buffer);
-	buffer.append("'... Nuevo numero de bloque de datos '");
-	appendIntTo(&buffer,blockNumber);
-	buffer.append("'");
+	buffer.append("'... Nuevo numero de bloque de datos ");
+	appendIntTo(&buffer, blockNumber);
 	DEBUGS(&buffer);
-	
+
 	int keysBlockNumber= getKeysFileBlockNumberFor(keyValue);
-	
+
 	Record* keyRecord=new Record();
-	keyRecord->addValue(new StringValue(cloneStr((((StringValue*)keyValue)->getString()))));
+	keyRecord->addValue(keyValue->clone());
 	keyRecord->addValue(new IntValue(blockNumber));
-	
-	_keysfile->updateRecordAt(keysBlockNumber,keyRecord);
+
+	_keysfile->updateRecordAt(keysBlockNumber, keyRecord);
 }
 
-unsigned int HashIndex::getHash(char* arg){
-	return ElHashDeCubillas(arg);
+unsigned int HashIndex::getHash(DataValue* input) {
+	string inputString;
+	input->toString(&inputString);
+	unsigned int hashResult= RSHash((char*)inputString.c_str());
+
+	return hashResult;
+}
+
+unsigned int HashIndex::RSHash(char* input) {
+	unsigned int b = 378551;
+	unsigned int a = 63689;
+	unsigned int hash = 0;
+
+	for (size_t i = 0; i < strlen(input); i++) {
+		hash = hash * a + input[i];
+		a = a * b;
+	}
+
+	return hash;
 }
 
 void HashIndex::reIndex(int keysBlockNumber) {
 	vector<Record*>* erasedRecords = _keysfile->removeRecordsAt(keysBlockNumber);
 
 	string buffer;
-	buffer.append("HASH Reindexando el bucket número '");
-	appendIntTo(&buffer,keysBlockNumber);
-	buffer.append("'");
+	buffer.append("HASH Reindexando el bucket número ");
+	appendIntTo(&buffer, keysBlockNumber);
 	DEBUGS(&buffer);
 
 	Record* each=NULL;
 	vector<Record*>::iterator iter;
-	for (iter = erasedRecords->begin(); iter != erasedRecords->end(); iter++ ){
+	for (iter = erasedRecords->begin(); iter != erasedRecords->end(); iter++) {
 		each=((Record*)*iter);
-		index(each->getValues()->at(0),((IntValue*)each->getValues()->at(1))->getInt());
+		index(each->getValues()->at(0), ((IntValue*)each->getValues()->at(1))->getInt());
 	}
-//	DEBUG("HASH: Fin de reindexacion de registros");
+	//	DEBUG("HASH: Fin de reindexacion de registros");
 }
 
-unsigned int HashIndex::getHashTablePosition(DataValue* keyValue){
+unsigned int HashIndex::getHashTablePosition(DataValue* keyValue) {
 	string buffer;
-	buffer.append("HASH buscando posicion en la tabla para la clave '");
-	keyValue->toString(&buffer);	
-	unsigned int hashTablePos = getHash(((StringValue*)keyValue)->getString()) % _hashtable->getSize();
-	buffer.append("'... Posición obtenida '");
-	appendIntTo(&buffer,hashTablePos);
-	buffer.append("'");
+	buffer.append("HASH buscando posicion en la tabla para la clave ");
+	keyValue->toString(&buffer);
+	unsigned int hashTablePos = getHash(keyValue) % _hashtable->getSize();
+	buffer.append(" ... Posición obtenida ");
+	appendIntTo(&buffer, hashTablePos);
 	DEBUGS(&buffer);
 	return hashTablePos;
 }
 
-int HashIndex::getKeysFileBlockNumberFor(DataValue* keyValue){
+int HashIndex::getKeysFileBlockNumberFor(DataValue* keyValue) {
 	string buffer;
-	buffer.append("HASH buscando numero de bucket para la clave '");
+	buffer.append("HASH buscando numero de bucket para la clave ");
 	keyValue->toString(&buffer);
 	int blockNumber = _hashtable->getAt(getHashTablePosition(keyValue));
 	buffer.append("' ... Numero de bucket obtenido: ");
-	appendIntTo(&buffer,blockNumber);
+	appendIntTo(&buffer, blockNumber);
 	return blockNumber;
 }
 
-void HashIndex::index(DataValue* keyValue,int blockNumber){
-	if (keyValue->getCharType()!=DataType::STRING_TYPE){
-		throw "se esperaba stringValue";
-	}
-	
+void HashIndex::index(DataValue* keyValue, int blockNumber) {
+	//	if (keyValue->getCharType()!=DataType::STRING_TYPE){
+	//		throw "se esperaba stringValue";
+	//	}
+
 	string startMsg;
-	startMsg.append("HASH Indexando la clave '");
+	startMsg.append("HASH Indexando la clave ");
 	keyValue->toString(&startMsg);
-	startMsg.append("' asociada al bloque de datos número '");
-	appendIntTo(&startMsg,blockNumber);
-	startMsg.append("'");
+	startMsg.append(" asociada al bloque de datos número ");
+	appendIntTo(&startMsg, blockNumber);
 	DEBUGS(&startMsg);
-	
+
 	int keysBlockNumber= getKeysFileBlockNumberFor(keyValue);
-	
+
 	Record* keyRecord=new Record();
-	keyRecord->addValue(new StringValue(cloneStr((((StringValue*)keyValue)->getString()))));
+	keyRecord->addValue(keyValue->clone());
 	keyRecord->addValue(new IntValue(blockNumber));
-	
-	try{
+
+	try {
 		string insertMsg;
-		insertMsg.append("HASH Intentando insertar el registro '");
+		insertMsg.append("HASH Intentando insertar el registro ");
 		keyRecord->toString(&insertMsg);
-		insertMsg.append("' en el bucket número '");
+		insertMsg.append(" en el bucket número ");
 		appendIntTo(&insertMsg,keysBlockNumber);
-		insertMsg.append("'.");
+		insertMsg.append(".");
 		_keysfile->insertRecordAt(keysBlockNumber,keyRecord);
-	}catch(ContentOverflowBlockException* ex){
+	} catch(ContentOverflowBlockException* ex) {		
 		delete ex;
 		_conflictiveKeysfileBlockNumber= keysBlockNumber;
-		DEBUG("HASH Overflow en el archivo de claves");
 		
 		string overflowMsg;
-		DEBUG("HASH Agregando bucket vacio");
+		overflowMsg.append("HASH Overflow en el bucket número ");
+		appendIntTo(&overflowMsg,keysBlockNumber);
+		overflowMsg.append(". Agregando bucket vacio.");
+		DEBUGS(&overflowMsg);
+		
 		KeysBlock* conflictiveBlock=(KeysBlock*)_keysfile->getRecordBlock(keysBlockNumber);
 		KeysBlock* newBlock=(KeysBlock*)_keysfile->appendEmptyBlock();
-		if (conflictiveBlock->getDispersion()==_hashtable->getSize()){
+		if (conflictiveBlock->getDispersion()==_hashtable->getSize()) {
 			_hashtable->grow();
 		}
 		conflictiveBlock->setDispersion(_hashtable->getSize());
@@ -233,14 +245,14 @@ void HashIndex::index(DataValue* keyValue,int blockNumber){
 		_hashtable->update(getHashTablePosition(keyValue),_keysfile->getLastRecordsBlockIndex());
 		this->reIndex(keysBlockNumber);
 		this->index(keyValue,blockNumber);
-	}catch(RecordSizeOverflowException* ex2){
+	} catch(RecordSizeOverflowException* ex2) {
 		delete ex2;
 		string exmessage;
-		
+
 		exmessage.append("HASH [ERROR] No se puede indexar el registro ");
 		keyRecord->toString(&exmessage);
 		exmessage.append(" porque su tamaño es mayor al de un bloque.");
-		DEBUGS(&exmessage);		
+		DEBUGS(&exmessage);
 	}
 }
 
@@ -252,11 +264,12 @@ int HashIndex::getBlockNumber(DataValue* keyValue) {
 	keyValue->toString(&buffer);
 	DEBUGS(&buffer);
 
-	vector<Record*>* recordsFound = _keysfile->findRecordsAt(keysBlockNumber,0,keyValue);
+	vector<Record*>* recordsFound = _keysfile->findRecordsAt(keysBlockNumber, 0,
+			keyValue);
 	if (recordsFound->size()==0) {
 		throw new RecordNotFoundException();
 	}
-	
+
 	return ((IntValue*)recordsFound->at(0)->getValues()->at(1))->getInt();
 }
 
