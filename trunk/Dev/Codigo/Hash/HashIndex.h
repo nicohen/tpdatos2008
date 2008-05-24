@@ -15,7 +15,7 @@ private:
 	T_BLOCKSIZE _indexBlockSize;
 	
 protected:
-		virtual int getHash(char* arg);
+		virtual unsigned int getHash(char* arg);
 public:
 	HashIndex(T_BLOCKSIZE indexBlockSize);
 	virtual ~HashIndex();
@@ -29,7 +29,7 @@ public:
 	virtual void deleTe();
 	virtual void setBlocksBuffer(BlocksBuffer* blocksBuffer);
 	
-	virtual int getHashTablePosition(DataValue* keyValue);
+	virtual unsigned int getHashTablePosition(DataValue* keyValue);
 	virtual int getKeysFileBlockNumberFor(DataValue* keyValue);
 
 };

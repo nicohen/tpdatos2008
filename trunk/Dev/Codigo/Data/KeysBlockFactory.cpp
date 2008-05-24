@@ -14,5 +14,5 @@ Block* KeysBlockFactory::createBlock(char* content, T_BLOCKSIZE size){
 } 
 
 Block* KeysBlockFactory::createEmptyBlock(T_BLOCKSIZE size){
-	return new KeysBlock(size,0);
+	return new KeysBlock(size,1);
 }

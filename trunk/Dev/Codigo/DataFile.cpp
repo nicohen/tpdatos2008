@@ -445,11 +445,12 @@ bool DataFile::existsAnotherWithSameKey(Record* record){
 	delete sameKeyRecordsfound;
 	return res;
 }
-void DataFile::appendEmptyBlock(){
+RecordsBlock* DataFile::appendEmptyBlock(){
 	RecordsBlock* recordsBlock = (RecordsBlock*)this->getBlockFactory()->createEmptyBlock(this->_blockStructuredFile->getBlockSize());
 	this->_blockStructuredFile->bAppendContentBlock(recordsBlock);
 	if (this->_blocksBuffer!=NULL)
 		this->_blocksBuffer->addBlock(this->getFileName(),this->getLastRecordsBlockIndex(),recordsBlock);
+	return recordsBlock;
 }
 
 
