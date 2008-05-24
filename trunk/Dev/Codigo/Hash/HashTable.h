@@ -20,6 +20,7 @@ class HashTable{
 		int getAt(int i);
 		void update(int index, int value);
 		void grow();
+		void simplify();
 };
 
 #endif /*HASHTABLE_H_*/

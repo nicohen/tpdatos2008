@@ -24,7 +24,6 @@ void HashTable::create(char* filePath, int size){
 	for (int i=0;i<size;i++){
 		fwrite(&zero,INT_SIZE,1,_hashFile);	
 	}		
-//	fclose(_hashFile);
 }
 
 void HashTable::load(char* filePath){
@@ -32,7 +31,6 @@ void HashTable::load(char* filePath){
 	_hashFile=fopen(filePath,"r+");
 	fseek(_hashFile,0,SEEK_SET);
 	fread(&_size,INT_SIZE,1,_hashFile);
-//	fclose(_hashFile);
 }
 
 void HashTable::deleTe() {
@@ -47,10 +45,8 @@ int HashTable::getSize(){
 
 int HashTable::getAt(int i){
 	int content;
-//	_hashFile=fopen(_fileName,"r+");
 	fseek(_hashFile,(i+1)*INT_SIZE,SEEK_SET);
 	fread(&content,INT_SIZE,1,_hashFile);
-//	fclose(_hashFile);
 	return content;
 }
 
@@ -62,10 +58,8 @@ void HashTable::update(int index, int value){
 	msg.append("', Valor '");
 	appendIntTo(&msg,value);
 	msg.append("'");
-//	_hashFile=fopen(_fileName,"r+");
 	fseek(_hashFile,(index+1)*INT_SIZE,SEEK_SET);
 	fwrite(&value,INT_SIZE,1,_hashFile);
-//	fclose(_hashFile);
 }
 
 void HashTable::grow(){
@@ -74,7 +68,6 @@ void HashTable::grow(){
 	string msg;
 	msg.append("HASH Agrandando la tabla de hashes. Valor anterior '");
 	appendIntTo(&msg,_size);
-//	_hashFile=fopen(_fileName,"r+");
 	int* buffer= (int*) malloc(INT_SIZE*_size);
 	fseek(_hashFile,INT_SIZE,SEEK_SET);
 	fread(buffer,INT_SIZE,_size,_hashFile);
@@ -88,5 +81,10 @@ void HashTable::grow(){
 	msg.append("', Valor nuevo '");
 	appendIntTo(&msg,_size);
 	msg.append("'");
-//	fclose(_hashFile);
+}
+void HashTable::simplify(){
+	_size=_size/2;
+	fseek(_hashFile,0,SEEK_SET);
+	fwrite(&_size,INT_SIZE,1,_hashFile);
+//	ftruncate((int)_hashFile,(_size+1)*INT_SIZE);
 }
