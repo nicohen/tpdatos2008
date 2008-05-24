@@ -5,6 +5,7 @@
 #include "../Data/RecordSizeOverflowException.h"
 #include "../StringValue.h"
 #include "../Data/KeysBlockFactory.h"
+#include "../Data/KeysBlock.h"
 #include "../IntValue.h"
 #include "../Data/RecordNotFoundException.h"
 #include "../Field.h"
@@ -121,7 +122,7 @@ void HashIndex::update(DataValue* keyValue, int blockNumber) {
 	_keysfile->updateRecordAt(keysBlockNumber,keyRecord);
 }
 
-int HashIndex::getHash(char* arg){
+unsigned int HashIndex::getHash(char* arg){
 	return ElHashDeCubillas(arg);
 }
 
@@ -143,11 +144,11 @@ void HashIndex::reIndex(int keysBlockNumber) {
 //	DEBUG("HASH: Fin de reindexacion de registros");
 }
 
-int HashIndex::getHashTablePosition(DataValue* keyValue){
+unsigned int HashIndex::getHashTablePosition(DataValue* keyValue){
 	string buffer;
 	buffer.append("HASH buscando posicion en la tabla para la clave '");
 	keyValue->toString(&buffer);	
-	int hashTablePos = getHash(((StringValue*)keyValue)->getString()) % _hashtable->getSize();
+	unsigned int hashTablePos = getHash(((StringValue*)keyValue)->getString()) % _hashtable->getSize();
 	buffer.append("'... Posición obtenida '");
 	appendIntTo(&buffer,hashTablePos);
 	buffer.append("'");
@@ -195,11 +196,16 @@ void HashIndex::index(DataValue* keyValue,int blockNumber){
 	}catch(ContentOverflowBlockException* ex){
 		delete ex;
 		DEBUG("HASH Overflow en el archivo de claves");
-
+		
 		string overflowMsg;
 		DEBUG("HASH Agregando bucket vacio");
-		_keysfile->appendEmptyBlock();
-		_hashtable->grow();
+		KeysBlock* conflictiveBlock=(KeysBlock*)_keysfile->getRecordBlock(keysBlockNumber);
+		KeysBlock* newBlock=(KeysBlock*)_keysfile->appendEmptyBlock();
+		if (conflictiveBlock->getDispersion()==_hashtable->getSize()){
+			_hashtable->grow();
+		}
+		conflictiveBlock->setDispersion(_hashtable->getSize());
+		newBlock->setDispersion(_hashtable->getSize());
 		_hashtable->update(getHashTablePosition(keyValue),_keysfile->getLastRecordsBlockIndex());
 		this->reIndex(keysBlockNumber);
 		this->index(keyValue,blockNumber);

@@ -90,7 +90,7 @@ public:
 	vector<Record*>* removeRecordsAt(T_BLOCKCOUNT blockNumber);
 	virtual bool updateRecord(Record* record);
 	bool updateRecordAt(T_BLOCKCOUNT blockNumber,Record* record);
-	void appendEmptyBlock();
+	RecordsBlock* appendEmptyBlock();
 	bool existsAnotherWithSameKey(Record* record);
 //	virtual void setPrimaryIndex(HashIndex* index);
 };
