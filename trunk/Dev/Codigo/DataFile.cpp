@@ -406,11 +406,6 @@ bool DataFile::isArrayOf(vector<Field*>* fields, vector<DataValue*>* values){
 		valueIter< values->end() && fieldIter< fields->end();
 		valueIter++, fieldIter++){
 			aValue= (DataValue*)*valueIter;
-			
-			string valuestr;
-			valuestr.append("verificando: ");
-			aValue->toString(&valuestr);
-			DEBUGS(&valuestr );
 			aField= (Field*)*fieldIter;
 			if (aValue->isInstanceOf(aField->getDataType())==false){
 				return false;
