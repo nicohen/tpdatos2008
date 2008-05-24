@@ -18,6 +18,8 @@
 #include "Data/RecordsBlockFactory.h"
 #include "Data/MetadataBlockFactory.h"
 #include "Indexes/HashIndex.h"
+#include "Indexes/IIndex.h"
+
 
 class HashIndex;
 class DataFile:public IBuffereable
@@ -36,7 +38,7 @@ private:
 	BlocksBuffer* _blocksBuffer;
 	BlockFactory* _blockFactory;
 	MetadataBlockFactory _metadataBlockFactory;
-	HashIndex* _primaryIndex;
+	IIndex* _primaryIndex;
 	
 	bool isArrayOf(vector<Field*>* fields, vector<DataValue*>* values);
 	T_BLOCKCOUNT getFirstFreeContentBlockNumber(T_BLOCKCOUNT initBlockNumber, T_BLOCKSIZE minRequiredSpace) throw (BlockNotFoundException*);
@@ -55,7 +57,7 @@ public:
 	static const int FIRST_BLOCK = 0;
 	
 	//Constructores y destructores 
-	DataFile(char* fileName, int blockSize,Field* keyField, vector<Field*>* secondaryFields,HashIndex* index);
+	DataFile(char* fileName, int blockSize,Field* keyField, vector<Field*>* secondaryFields,IIndex* index);
 	
 	DataFile(char* fileName);
 	virtual ~DataFile();

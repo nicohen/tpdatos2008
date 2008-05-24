@@ -5,9 +5,10 @@
 #include "HashTable.h"
 #include "../Data/Block.h"
 #include "../Buffer/BlocksBuffer.h"
+#include "IIndex.h"
 
 class DataFile;
-class HashIndex
+class HashIndex: public IIndex
 {
 private:
 	DataFile* _keysfile;

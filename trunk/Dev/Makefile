@@ -34,6 +34,7 @@ SOURCES:=	$(CODE_PATH)BufferedDataManager.cpp\
 	$(DATA_PATH)FileDoesAlreadyExistsException.cpp\
 	$(DATA_PATH)IdentityException.cpp\
 	$(CODE_PATH)InsertionStatement.cpp\
+	$(INDEXES_PATH)IIndex.cpp\
 	$(CODE_PATH)IntType.cpp\
 	$(CODE_PATH)IntValue.cpp\
 	$(CODE_PATH)IOException.cpp\
