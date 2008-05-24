@@ -14,6 +14,7 @@
 HashIndex::HashIndex(T_BLOCKSIZE indexBlockSize)
 {
 	_indexBlockSize=indexBlockSize;
+	_conflictiveKeysfileBlockNumber=0;
 }
 
 HashIndex::~HashIndex()
@@ -99,9 +100,31 @@ void HashIndex::unIndex(DataValue* keyValue) {
 	buffer.append("'");
 	DEBUGS(&buffer);
 	
-	int keysBlockNumber= getKeysFileBlockNumberFor(keyValue);	
-	
+	int keysBlockNumber= getKeysFileBlockNumberFor(keyValue);
 	_keysfile->removeRecordAt(keysBlockNumber,0,keyValue);
+	if (keysBlockNumber==_conflictiveKeysfileBlockNumber){
+		this->simplify(keysBlockNumber);
+	}
+	if ((keysBlockNumber+(_hashtable->getSize()/2))==_conflictiveKeysfileBlockNumber){
+		this->simplify(keysBlockNumber+(_hashtable->getSize()/2));
+	}
+}
+
+void HashIndex::simplify(int arg0){
+	int distance= _hashtable->getSize()/2;
+	int i=0;
+	while(i<distance){
+		if ((i!=arg0)&&(_hashtable->getAt(i)!=_hashtable->getAt(distance+i))){
+			_conflictiveKeysfileBlockNumber=i;
+			break;
+		}
+		i++;
+	}
+	if (i==distance){
+		_hashtable->simplify();
+		this->reIndex(arg0);
+		this->reIndex(arg0+distance);
+	}
 }
 
 void HashIndex::update(DataValue* keyValue, int blockNumber) {
@@ -195,6 +218,7 @@ void HashIndex::index(DataValue* keyValue,int blockNumber){
 		_keysfile->insertRecordAt(keysBlockNumber,keyRecord);
 	}catch(ContentOverflowBlockException* ex){
 		delete ex;
+		_conflictiveKeysfileBlockNumber= keysBlockNumber;
 		DEBUG("HASH Overflow en el archivo de claves");
 		
 		string overflowMsg;

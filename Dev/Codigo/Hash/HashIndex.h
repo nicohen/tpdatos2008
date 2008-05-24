@@ -13,6 +13,7 @@ private:
 	DataFile* _keysfile;
 	HashTable* _hashtable;
 	T_BLOCKSIZE _indexBlockSize;
+	int _conflictiveKeysfileBlockNumber;
 	
 protected:
 		virtual unsigned int getHash(char* arg);
@@ -28,7 +29,7 @@ public:
 	virtual void update (DataValue* keyValue, int blockNumber);
 	virtual void deleTe();
 	virtual void setBlocksBuffer(BlocksBuffer* blocksBuffer);
-	
+	virtual	void simplify(int arg0);
 	virtual unsigned int getHashTablePosition(DataValue* keyValue);
 	virtual int getKeysFileBlockNumberFor(DataValue* keyValue);
 
