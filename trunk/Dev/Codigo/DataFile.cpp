@@ -196,7 +196,7 @@ vector<Record*>* DataFile::findRecords(int fNumber,DataValue* fValue){
 	string indexedSearchMsg;
 	string secuentialSearchMsg;
 	//Entra por clave primaria
-	if(fNumber==0 && fValue->isInstanceOf((DataType*)this->_metadataBlock->GetSecondaryFields()->at(0)->getDataType()) ){
+	if(this->_primaryIndex!= NULL && fNumber==0 && fValue->isInstanceOf((DataType*)this->_metadataBlock->GetSecondaryFields()->at(0)->getDataType()) ){
 		try{
 			indexedSearchMsg.append("Buscando registro por clave primaria: ");
 			fValue->toString(&indexedSearchMsg);
@@ -513,8 +513,12 @@ bool DataFile::updateRecord(Record* record) {
 			if (this->isArrayOf(this->_metadataBlock->GetSecondaryFields(),record->getValues())==false){
 				throw new TypeMismatchException("Los datos ingresados no coinciden con la estructura del Archivo");
 			}
+			try{
 			int blockNumber = this->_primaryIndex->getBlockNumber(record->getValues()->at(0));
 			this->updateRecordAt(blockNumber,record);
+			}catch(RecordNotFoundException* ex){
+				delete ex;
+			}			
 		} else {
 			int length= this->getRecordsBlockCount();
 			for(int j=1;j<=length;j++) {

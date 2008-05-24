@@ -52,7 +52,9 @@ KeysBlock::~KeysBlock()
 }
 
 vector<RawRecord*>::iterator KeysBlock::begin(){
-	//CUIDADO: hay que devolver el segundo elemento
+	if (RecordsBlock::begin()==RecordsBlock::end()){
+		return RecordsBlock::end();
+	}
 	return RecordsBlock::begin()+1;
 }
 
