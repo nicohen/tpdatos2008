@@ -27,7 +27,7 @@ DataFile::DataFile(char* fileName){
 }
 
 
-DataFile::DataFile(char* fileName, int blockSize,Field* keyField ,vector<Field*>* secondaryFields,HashIndex* index) {
+DataFile::DataFile(char* fileName, int blockSize,Field* keyField ,vector<Field*>* secondaryFields,IIndex* index) {
 	_fileName = cloneStr(fileName);
 	_blockSize = blockSize;
 	_metadataBlock = new MetadataBlock(blockSize);
