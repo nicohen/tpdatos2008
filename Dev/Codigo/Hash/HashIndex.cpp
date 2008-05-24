@@ -50,7 +50,7 @@ void HashIndex::create(char* folderPath,char* filePath){
 	
 
 	_keysfile=new DataFile((char*)keysFileName.c_str(),_indexBlockSize,keyField,fields,NULL);
-	//_keysfile->setBlockFactory(new KeysBlockFactory());
+	_keysfile->setBlockFactory(new KeysBlockFactory());
 	_keysfile->save(folderPath);
 	delete _keysfile;
 	_keysfile = new DataFile((char*)keysFileName.c_str());
@@ -83,7 +83,7 @@ void HashIndex::load(char* folderPath,char* filePath){
 	
 	
 	_keysfile=new DataFile((char*)keysFileName.c_str());
-//	_keysfile->setBlockFactory(new KeysBlockFactory());
+	_keysfile->setBlockFactory(new KeysBlockFactory());
 	_keysfile->load(folderPath);
 	_indexBlockSize= _keysfile->getBlockStructuredFile()->getBlockSize();
 	
