@@ -182,7 +182,9 @@ unsigned int HashIndex::getHashTablePosition(DataValue* keyValue) {
 	string buffer;
 	buffer.append("HASH buscando posicion en la tabla para la clave ");
 	keyValue->toString(&buffer);
-	unsigned int hashTablePos = getHash(keyValue) % _hashtable->getSize();
+	int hashsize= _hashtable->getSize();
+	unsigned int hash=getHash(keyValue);
+	unsigned int hashTablePos = hash % hashsize;
 	buffer.append(" ... Posición obtenida ");
 	appendIntTo(&buffer, hashTablePos);
 	DEBUGS(&buffer);
@@ -196,6 +198,7 @@ int HashIndex::getKeysFileBlockNumberFor(DataValue* keyValue) {
 	int blockNumber = _hashtable->getAt(getHashTablePosition(keyValue));
 	buffer.append("' ... Numero de bucket obtenido: ");
 	appendIntTo(&buffer, blockNumber);
+	DEBUGS(&buffer);
 	return blockNumber;
 }
 

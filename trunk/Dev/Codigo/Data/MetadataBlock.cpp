@@ -68,8 +68,8 @@ void MetadataBlock::setContent(char* content){
 void MetadataBlock::deserialize(char* content){
 	int counter=0;
 	unsigned short qtyField=0;
-	memcpy(&(this->_fileType),content,sizeof(short));
-	counter+=sizeof(short);
+	memcpy(&(this->_fileType),content,sizeof(T_FILETYPE));
+	counter+=sizeof(T_FILETYPE);
 	memcpy(&qtyField,content+counter,sizeof(short));
 	counter+=sizeof(short);
 	for (int j=0;j<qtyField;j++){
