@@ -114,9 +114,17 @@ void HashIndex::simplify(int arg0) {
 		i++;
 	}
 	if (i==distance) {
+		string buffer;
+		buffer.append("HASH Simplificando la tabla de hash.\n");
+		buffer.append("HASH Tamaño anterior: ");
+		appendIntTo(&buffer,_hashtable->getSize());
 		int lower=_hashtable->getAt(arg0);
 		int hier=_hashtable->getAt(arg0+distance);
 		_hashtable->simplify();
+		buffer.append(". Tamaño nuevo: ");
+		appendIntTo(&buffer,_hashtable->getSize());
+		buffer.append("\n");
+		DEBUGS(buffer);
 		_hashtable->update(arg0,(lower<hier)?lower:hier);
 		this->reIndex(arg0);
 		this->reIndex(arg0+distance);
