@@ -19,14 +19,13 @@ private:
 	void deserializeRecords();
 	RawRecord* deserializeRecord(char* data, T_BLOCKSIZE offset);
 
-	
-protected:
-	vector<RawRecord*>* getRecords();
 public:
 //	static Block* createRecordsBlock(char* content, T_BLOCKSIZE size);
 	RecordsBlock(T_BLOCKSIZE size);
 	RecordsBlock(char* content,T_BLOCKSIZE size);
 	virtual ~RecordsBlock(void);
+
+	vector<RawRecord*>* getRecords();
 
 	virtual void appendRecord(RawRecord* record);
 	virtual T_BLOCKSIZE getUsedSpace();
