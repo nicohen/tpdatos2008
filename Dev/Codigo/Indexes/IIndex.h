@@ -20,6 +20,7 @@ public:
 	virtual void deleTe()=0;
 	virtual void setBlocksBuffer(BlocksBuffer* blocksBuffer)=0;
 	virtual void toString(string* buffer)=0;
+	virtual int getSize()=0;
 	
 };
 

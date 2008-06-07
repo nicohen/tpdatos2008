@@ -97,6 +97,10 @@ public:
 	bool existsAnotherWithSameKey(Record* record);
 	virtual void toString(string* buffer);
 //	virtual void setPrimaryIndex(HashIndex* index);
+	
+	T_FILESIZE getDataIndexUsedSpace();
+	T_FILESIZE getDataIndexFreeSpace();
+
 };
 
 #endif /*DATAFILE_H_*/

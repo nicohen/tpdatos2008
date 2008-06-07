@@ -104,3 +104,7 @@ void HashTable::toString(string* buffer) {
 		buffer->append("0");
 	}
 }
+
+int HashTable::getPhysicalSize() {
+	return (this->_size+1)*INT_SIZE;
+}

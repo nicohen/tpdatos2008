@@ -293,3 +293,7 @@ void HashIndex::toString(string* buffer) {
 	this->_keysfile->toString(buffer);
 	this->_hashtable->toString(buffer);
 }
+
+int HashIndex::getSize() {
+	return (this->_keysfile->getDataUsedSpace()+this->_hashtable->getPhysicalSize());
+}
