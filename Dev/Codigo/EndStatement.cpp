@@ -9,7 +9,7 @@ EndStatement::EndStatement(char* filename):Statement(filename){
 StatementResult* EndStatement::execute(DataManager* anIDataManager){
 	StatementResult* sr = new StatementResult();
 	
-	sr->setResult("El programa finaliza su ejecución");
+	sr->setResult((char*)"El programa finaliza su ejecución");
 	return sr;
 }
 

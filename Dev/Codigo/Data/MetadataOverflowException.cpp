@@ -10,5 +10,5 @@ MetadataOverflowException::~MetadataOverflowException()
 
 char* MetadataOverflowException::toString()
 {
-	return "El tamaño del bloque de metadata no es lo suficientemente grande como para que entre la información necesaria";
+	return (char*)"El tamaño del bloque de metadata no es lo suficientemente grande como para que entre la información necesaria";
 }

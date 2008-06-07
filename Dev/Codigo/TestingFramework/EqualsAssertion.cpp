@@ -7,10 +7,10 @@ EqualsAssertion::EqualsAssertion(char* expected, char* actual){
 		_actual=actual;
 		_expected=expected;
 		if(_expected==0){
-			_expected="";
+			_expected=(char*)"";
 		}
 		if(_actual==0){
-			_actual="";
+			_actual=(char*)"";
 		}
 		if(strcmp(_expected,_actual)!=0){
 			this->reportAssertionFailed();

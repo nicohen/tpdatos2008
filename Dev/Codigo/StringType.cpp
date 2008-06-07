@@ -19,7 +19,7 @@ DataValue* StringType::deserializeValue(char* content){
 }
 
 DataValue* StringType::createNullValue(){
-	return new StringValue("");
+	return new StringValue((char*)"");
 }
 
 int StringType::serialize(char* stream){

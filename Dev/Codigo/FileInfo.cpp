@@ -24,7 +24,7 @@ namespace FileManager{
 	}
 	
 	void FileInfo::open(void) throw (IOException){
-		_fileManager->Open(this,"r+b");
+		_fileManager->Open(this,(char*)"r+b");
 		if (_file == NULL){
 			throw IOException();
 		}
@@ -49,7 +49,7 @@ namespace FileManager{
 	}
 	
 	void FileInfo::create(void) throw (IOException){
-		_fileManager->Open(this,"w+b");
+		_fileManager->Open(this,(char*)"w+b");
 		if (_file == NULL){
 			throw IOException();
 		}
