@@ -148,7 +148,7 @@ void DataFile::deleTe() {
 		}
 		remove(this->_fullPath);
 	} else {
-		throw new FileNotFoundException("Se intento eliminar un archivo que no existe");
+		throw new FileNotFoundException((char*)"Se intento eliminar un archivo que no existe");
 	}
 }
 
@@ -247,7 +247,7 @@ vector<Record*>* DataFile::findRecordsAt(T_BLOCKCOUNT blockNumber, int fNumber,D
 	} catch (BlockStructuredFileException* ex) {
 		//Sale en el caso que no haya encontrado bloques
 		delete ex;
-		throw new BlockNotFoundException("No se ha encontrado Bloque dentro del archivo");
+		throw new BlockNotFoundException((char*)"No se ha encontrado Bloque dentro del archivo");
 	}
 	
 	RawRecord* each=NULL;
@@ -302,7 +302,7 @@ vector<Record*>* DataFile::removeRecordAt(T_BLOCKCOUNT blockNumber, int fNumber,
 	} catch (BlockStructuredFileException* ex) {
 		//Sale en el caso que no haya encontrado bloques
 		delete ex;
-		throw new BlockNotFoundException("No se ha encontrado Bloque dentro del archivo");
+		throw new BlockNotFoundException((char*)"No se ha encontrado Bloque dentro del archivo");
 	}
 	
 	RawRecord* each=NULL;
@@ -347,7 +347,7 @@ vector<Record*>* DataFile::removeRecordsAt(T_BLOCKCOUNT blockNumber) {
 	} catch (BlockStructuredFileException* ex) {
 		//Sale en el caso que no haya encontrado bloques
 		delete ex;
-		throw new BlockNotFoundException("No se ha encontrado Bloque dentro del archivo");
+		throw new BlockNotFoundException((char*)"No se ha encontrado Bloque dentro del archivo");
 	}
 	
 	RawRecord* each=NULL;
@@ -460,10 +460,10 @@ int DataFile::insertRecord(Record* record) {
 	string str;
 	DEBUG("Validando unicidad");
 	if(this->existsAnotherWithSameKey(record)){
-		throw new IdentityException("Ya existe un registro con la misma clave que el que se quiere insertar");
+		throw new IdentityException((char*)"Ya existe un registro con la misma clave que el que se quiere insertar");
 	}	
 	if (this->isArrayOf(this->_metadataBlock->GetSecondaryFields(),record->getValues())==false){
-		throw new TypeMismatchException("Los datos ingresados no coinciden con la estructura del Archivo");
+		throw new TypeMismatchException((char*)"Los datos ingresados no coinciden con la estructura del Archivo");
 	}	
 	for (T_BLOCKCOUNT i=this->getFirstRecordsBlockIndex();i <=this->getLastRecordsBlockIndex(); i++) {
 		try{
@@ -514,7 +514,7 @@ bool DataFile::updateRecord(Record* record) {
 		//Uso el Hash
 		if (this->_primaryIndex!=NULL) {
 			if (this->isArrayOf(this->_metadataBlock->GetSecondaryFields(),record->getValues())==false){
-				throw new TypeMismatchException("Los datos ingresados no coinciden con la estructura del Archivo");
+				throw new TypeMismatchException((char*)"Los datos ingresados no coinciden con la estructura del Archivo");
 			}
 			try{
 			int blockNumber = this->_primaryIndex->getBlockNumber(record->getValues()->at(0));
