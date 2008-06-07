@@ -526,9 +526,15 @@ bool DataFile::updateRecord(Record* record) {
 			if (this->isArrayOf(this->_metadataBlock->GetSecondaryFields(),record->getValues())==false){
 				throw new TypeMismatchException((char*)"Los datos ingresados no coinciden con la estructura del Archivo");
 			}
+			int blockNumber=0;
 			try{
-				int blockNumber = this->_primaryIndex->getBlockNumber(record->getValues()->at(0));
+				blockNumber = this->_primaryIndex->getBlockNumber(record->getValues()->at(0));
 				return this->updateRecordAt(blockNumber,record);
+			} catch (CannotUpdateRecordException* cee) {
+				delete cee;
+				this->removeRecordAt(blockNumber,0,record->getValues()->at(0));
+				this->insertRecord(record);
+				return true;
 			}catch(RecordNotFoundException* ex){
 				delete ex;
 			}			

@@ -142,7 +142,7 @@ T_BLOCKSIZE RecordsBlock::RecordCount(){
 	return this->_records->size();
 }
 void RecordsBlock::push_back(RawRecord* rawrecord){
-	if(!canInsert(this->getSize(),rawrecord)){
+	if(!canInsert(this->getSize()-this->getReservedSpace(),rawrecord)){
 		throw new RecordSizeOverflowException();
 	}
 	if(this->getUsedSpace()+getSerializationSize(rawrecord)>this->getSize()){
@@ -153,6 +153,10 @@ void RecordsBlock::push_back(RawRecord* rawrecord){
 
 RawRecord* RecordsBlock::at(T_BLOCKSIZE i){
 	return this->_records->at(i);	
+}
+
+int RecordsBlock::getReservedSpace(){
+	return 0;
 }
 
 void RecordsBlock::clear(){
