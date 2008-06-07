@@ -11,7 +11,7 @@ bool ComparableExample::isLowerThan(IComparable* other){
 }
 
 char* ComparableExample::toString() {
-	return "ComparableExample";
+	return (char*)"ComparableExample";
 }
 
 ComparableExample::~ComparableExample()

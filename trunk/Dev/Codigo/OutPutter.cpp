@@ -58,7 +58,7 @@ void OutPutter::printLine(const char* message) {
 	timeinfo = localtime(&rawtime);
 	strftime(buffer,80,"%Y%m%d_%H%M%S",timeinfo);
 	
-	this->_fileInfoOut->open("ab");
+	this->_fileInfoOut->open((char*)"ab");
 
 	stringMessage.append("\n[");
 	stringMessage.append(buffer);

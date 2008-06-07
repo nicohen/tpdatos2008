@@ -35,7 +35,7 @@ void HashTable::load(char* filePath){
 
 void HashTable::deleTe() {
 	if (!hadSuccessRemoving(remove(_fileName))) {
-		throw new FileNotFoundException("Se intento eliminar un archivo que no existe");
+		throw new FileNotFoundException((char*)"Se intento eliminar un archivo que no existe");
 	}
 }
 

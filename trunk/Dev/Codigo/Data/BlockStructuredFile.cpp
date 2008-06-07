@@ -28,7 +28,7 @@ T_BLOCKSIZE BlockStructuredFile::getBlockSize() {
 
 BlockStructuredFile* BlockStructuredFile::Load(char* filename) {
 	if(!existsFile(filename)){
-		throw new FileNotFoundException("Se intento cargar un archivo que no existe");
+		throw new FileNotFoundException((char*)"Se intento cargar un archivo que no existe");
 	}
 	BlockStructuredFile* res=NULL;
 	T_BLOCKSIZE blockSize;
@@ -49,7 +49,7 @@ BlockStructuredFile* BlockStructuredFile::Load(char* filename) {
 
 BlockStructuredFile* BlockStructuredFile::Create(char* filename, T_BLOCKSIZE blockSize) {
 	if(existsFile(filename)){
-		throw new FileDoesAlreadyExistsException("No se puede crear el archivo porque ya existe uno con el mismo nombre");
+		throw new FileDoesAlreadyExistsException((char*)"No se puede crear el archivo porque ya existe uno con el mismo nombre");
 	}
 	BlockStructuredFile* res=NULL;
 	fstream* file=NULL;
@@ -180,7 +180,7 @@ T_BLOCKCOUNT BlockStructuredFile::getContentBlockCount() {
 void BlockStructuredFile::bUpdateContentBlock(T_BLOCKCOUNT contentBlockNumber,
 		Block* block) {
 	if (block->getUsedSpace()>this->getBlockSize()) {
-		throw new BlockStructuredFileException("El bloque tiene un tamaño mas grande que el esperado");
+		throw new BlockStructuredFileException((char*)"El bloque tiene un tamaño mas grande que el esperado");
 	}
 	this->updateContentBlock(contentBlockNumber, block->getContent());
 }

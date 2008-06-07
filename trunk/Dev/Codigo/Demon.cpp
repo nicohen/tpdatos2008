@@ -20,12 +20,12 @@ void Demon::run(void){
 	FileManager::FileManager* fileManager = new FileManager::FileManager();
 	FileManager::FileInfo* inputFile = NULL;
 	OutPutter::OutPutter* outPutter = NULL;
-	DataManager* dataManager = new DataManager("Data/",_bufferSize);
+	DataManager* dataManager = new DataManager((char*)"Data/",_bufferSize);
 	BufferedDataManager* bufferedDataManager = new BufferedDataManager(dataManager); 
 	
 	for(int i=1;!_finishDaemon;i++) {
 		try{
-			inputFile = fileManager->CreateFileInfo("In/Comando.7506");
+			inputFile = fileManager->CreateFileInfo((char*)"In/Comando.7506");
 			
 			inputFile->open();
 			
@@ -59,7 +59,7 @@ void Demon::processInputStatements(BufferedDataManager* bufferedDataManager, Out
 	bool fin=false;
 
 	char delimiters[]= {' ','[',']',';',',','\n','|','+','*'};
-	char* keywords[]= {"CREAR","CONSULTA","hash","INGRESAR","QUITAR","ELIMINAR","ESTADISTICA","FINALIZAR","ACTUALIZAR","secuencial","indexado","secIndexado","int","string"};
+	char* keywords[]= {(char*)"CREAR",(char*)"CONSULTA",(char*)"hash",(char*)"INGRESAR",(char*)"QUITAR",(char*)"ELIMINAR",(char*)"ESTADISTICA",(char*)"FINALIZAR",(char*)"ACTUALIZAR",(char*)"secuencial",(char*)"indexado",(char*)"secIndexado",(char*)"int",(char*)"string"};
  	
  	Parsing::Tokenizer* tokenizer = new Parsing::Tokenizer(inputFile,'\'',delimiters,9,keywords,14);
 	StatementParser* statementParser = new StatementParser(tokenizer,outPutter);
