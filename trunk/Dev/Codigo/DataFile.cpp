@@ -269,9 +269,14 @@ vector<Record*>* DataFile::removeRecord(int fNumber,DataValue* fValue) {
 	vector<Record*>* removedRecordsAt = NULL;
 	
 	//Uso el Hash
-	if (fNumber==0 && this->_primaryIndex!=NULL) {		
-		int blockNumber = this->_primaryIndex->getBlockNumber(fValue);
-		removedRecords = this->removeRecordAt(blockNumber,fNumber,fValue);
+	if (fNumber==0 && this->_primaryIndex!=NULL) {
+		try{
+			int blockNumber = this->_primaryIndex->getBlockNumber(fValue);
+			removedRecords = this->removeRecordAt(blockNumber,fNumber,fValue);
+		}catch(RecordNotFoundException* ex){
+			delete ex;
+			removedRecords = new vector<Record*>();
+		} 
 	} else {
 		removedRecords = new vector<Record*>();
 		int length= this->getRecordsBlockCount();
@@ -501,6 +506,11 @@ void DataFile::insertRecordAt(T_BLOCKCOUNT blockNumber,Record* record){
 }
 
 RecordsBlock* DataFile::getRecordBlock(int blockNumber){
+	if(blockNumber<1){
+		//el primer bloque de registros es el 1
+		DEBUG("El numero de bloque tiene que ser mayor a 0");
+		throw new RecordNotFoundException();
+	}
 	Block* result= this->_blocksBuffer->getBlock(this->getFileName(),blockNumber);	
 	if (result==NULL){
 		result= this->getBlockStructuredFile()->bGetContentBlock(blockNumber,this->getBlockFactory());
