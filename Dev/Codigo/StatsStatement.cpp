@@ -25,7 +25,8 @@ StatementResult* StatsStatement::execute(DataManager* dataManager) {
 	string* buffer = new string();
 	char* cadena;
 	ostringstream dataUsedSpace;
-	ostringstream fileSize;
+	ostringstream dataIndexUsedSpace;
+	ostringstream dataFileSize;
 	ostringstream dataFreeSpace;
 	ostringstream dataRecordsCount;
 
@@ -46,7 +47,7 @@ StatementResult* StatsStatement::execute(DataManager* dataManager) {
 	try{
 		DataFile* dataFile = dataManager->getFile(this->getFileName());
 		dataUsedSpace<<dataFile->getDataUsedSpace();
-		fileSize<<dataFile->getFileSize();
+		dataFileSize<<dataFile->getFileSize();
 		dataFreeSpace<<dataFile->getDataFreeSpace();
 		dataRecordsCount<<dataFile->getDataRecordsCount();
 
@@ -72,7 +73,7 @@ StatementResult* StatsStatement::execute(DataManager* dataManager) {
 		buffer->append(" bytes\n");
 		buffer->append("\tIndice-----> 0 bytes\n");
 		buffer->append("\tNeto-------> ");
-		buffer->append(fileSize.str());
+		buffer->append(dataFileSize.str());
 		buffer->append(" bytes\n");
 		buffer->append("ESPACIO LIBRE\n");
 		buffer->append("\tDatos------> ");
@@ -120,7 +121,8 @@ StatementResult* StatsStatement::execute(DataManager* dataManager) {
 		//Cantidad de Bloques
 		buffer->append("\n\tTamaño total-----> ");
 		buffer->append(bufferFileDescriptorBlocksTotalSize.str());
-
+		buffer->append("\n");
+		dataFile->toString(buffer);
 	}catch(FileNotFoundException* ex){
 		buffer->append(" Error al buscar registros(");
 		buffer->append(ex->toString());

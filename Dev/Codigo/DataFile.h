@@ -75,6 +75,7 @@ public:
 	void setMetadataBlock(MetadataBlock* metadataBlock);
 	RecordsBlock* getRecordBlock(int blockNumber);
 	T_FILESIZE getDataUsedSpace();
+//	T_FILESIZE getIndexUsedSpace();
 	T_FILESIZE getDataFreeSpace();
 	T_FILESIZE getFileSize();
 	T_BLOCKSIZE getDataRecordsCount();
@@ -94,6 +95,7 @@ public:
 	bool updateRecordAt(T_BLOCKCOUNT blockNumber,Record* record);
 	RecordsBlock* appendEmptyBlock();
 	bool existsAnotherWithSameKey(Record* record);
+	virtual void toString(string* buffer);
 //	virtual void setPrimaryIndex(HashIndex* index);
 };
 

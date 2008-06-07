@@ -527,8 +527,8 @@ bool DataFile::updateRecord(Record* record) {
 				throw new TypeMismatchException((char*)"Los datos ingresados no coinciden con la estructura del Archivo");
 			}
 			try{
-			int blockNumber = this->_primaryIndex->getBlockNumber(record->getValues()->at(0));
-			this->updateRecordAt(blockNumber,record);
+				int blockNumber = this->_primaryIndex->getBlockNumber(record->getValues()->at(0));
+				this->updateRecordAt(blockNumber,record);
 			}catch(RecordNotFoundException* ex){
 				delete ex;
 			}			
@@ -596,3 +596,36 @@ bool DataFile::canInsert(Record* record) {
 //void DataFile::setPrimaryIndex(HashIndex* index){
 //	this->_primaryIndex=index;
 //}
+
+void DataFile::toString(string* buffer) {
+	RecordsBlock* rb = NULL;
+	RawRecord* each=NULL;
+	Record* record = NULL;
+	buffer->append("ARCHIVO: ");
+	buffer->append(this->_fileName);
+	buffer->append("\nDATOS:");
+	int recordsBlockCount = this->getRecordsBlockCount();
+	if(recordsBlockCount<2){
+		buffer->append("\n(vacio)");
+	}
+	for (int i=1;i<=recordsBlockCount;i++) {
+		rb = this->getRecordBlock(i);
+		vector<RawRecord*>::iterator iter;
+		buffer->append("\nBloque ");
+		appendIntTo(buffer,i);
+		buffer->append(":");
+		for (iter = rb->begin(); iter != rb->end(); iter++ ) {
+			each=((RawRecord*)*iter);
+			record= new Record();
+			record->deserialize(each,this->getFields());
+			buffer->append("\n");
+			buffer->append("\t");
+			record->toString(buffer);
+		}
+	}
+	buffer->append("\n");
+	if(_primaryIndex!=NULL) {
+		buffer->append("INDICE:\n");
+		_primaryIndex->toString(buffer);
+	}
+}
