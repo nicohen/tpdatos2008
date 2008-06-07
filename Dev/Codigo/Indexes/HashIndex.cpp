@@ -97,9 +97,9 @@ void HashIndex::unIndex(DataValue* keyValue) {
 	if (keysBlockNumber==_conflictiveKeysfileBlockNumber) {
 		this->simplify(keysBlockNumber);
 	}
-	if ((keysBlockNumber+(_hashtable->getSize()/2))
-			==_conflictiveKeysfileBlockNumber) {
-		this->simplify(keysBlockNumber+(_hashtable->getSize()/2));
+	int other=keysBlockNumber+(_hashtable->getSize()/2); 
+	if (other ==_conflictiveKeysfileBlockNumber) {
+		this->simplify(other);
 	}
 }
 
@@ -114,7 +114,10 @@ void HashIndex::simplify(int arg0) {
 		i++;
 	}
 	if (i==distance) {
+		int lower=_hashtable->getAt(arg0);
+		int hier=_hashtable->getAt(arg0+distance);
 		_hashtable->simplify();
+		_hashtable->update(arg0,(lower<hier)?lower:hier);
 		this->reIndex(arg0);
 		this->reIndex(arg0+distance);
 	}
