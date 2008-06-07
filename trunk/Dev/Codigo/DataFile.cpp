@@ -629,3 +629,14 @@ void DataFile::toString(string* buffer) {
 		_primaryIndex->toString(buffer);
 	}
 }
+
+T_FILESIZE DataFile::getDataIndexUsedSpace() {
+	if(_primaryIndex!=NULL) {
+		return _primaryIndex->getSize();
+	}
+	return 0;
+}
+
+T_FILESIZE DataFile::getDataIndexFreeSpace() {
+	return 0;
+}

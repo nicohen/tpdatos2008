@@ -37,6 +37,7 @@ public:
 	virtual int getKeysFileBlockNumberFor(DataValue* keyValue);
 	unsigned int RSHash(char* input);
 	virtual void toString(string* buffer);
+	virtual int getSize();
 };
 
 #endif /*HASHINDEX_H_*/

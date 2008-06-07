@@ -28,6 +28,7 @@ StatementResult* StatsStatement::execute(DataManager* dataManager) {
 	ostringstream dataIndexUsedSpace;
 	ostringstream dataFileSize;
 	ostringstream dataFreeSpace;
+	ostringstream dataIndexFreeSpace;
 	ostringstream dataRecordsCount;
 
 	//Buffer de bloques
@@ -47,8 +48,10 @@ StatementResult* StatsStatement::execute(DataManager* dataManager) {
 	try{
 		DataFile* dataFile = dataManager->getFile(this->getFileName());
 		dataUsedSpace<<dataFile->getDataUsedSpace();
+		dataIndexUsedSpace<<dataFile->getDataIndexUsedSpace();
 		dataFileSize<<dataFile->getFileSize();
 		dataFreeSpace<<dataFile->getDataFreeSpace();
+		dataIndexFreeSpace<<dataFile->getDataIndexFreeSpace();
 		dataRecordsCount<<dataFile->getDataRecordsCount();
 
 		//Buffer de bloques
@@ -71,7 +74,9 @@ StatementResult* StatsStatement::execute(DataManager* dataManager) {
 		buffer->append("\tDatos------> ");
 		buffer->append(dataUsedSpace.str());
 		buffer->append(" bytes\n");
-		buffer->append("\tIndice-----> 0 bytes\n");
+		buffer->append("\tIndice-----> ");
+		buffer->append(dataIndexUsedSpace.str());
+		buffer->append(" bytes\n");
 		buffer->append("\tNeto-------> ");
 		buffer->append(dataFileSize.str());
 		buffer->append(" bytes\n");
@@ -79,12 +84,14 @@ StatementResult* StatsStatement::execute(DataManager* dataManager) {
 		buffer->append("\tDatos------> ");
 		buffer->append(dataFreeSpace.str());
 		buffer->append(" bytes\n");
-		buffer->append("\tIndice-----> 0 bytes\n");
+		buffer->append("\tIndice-----> ");
+		buffer->append(dataIndexFreeSpace.str());
+		buffer->append(" bytes\n");
 		buffer->append("CANTIDAD REGISTROS/ENTRADAS\n");
 		buffer->append("\tDatos------> ");
 		buffer->append(dataRecordsCount.str());
 		buffer->append(" registros\n");
-		buffer->append("\tIndice-----> 0 registros\n");
+//		buffer->append("\tIndice-----> 0 registros\n");
 		
 		//Buffer de bloques
 		buffer->append("BUFFER (BLOQUES)\n");
