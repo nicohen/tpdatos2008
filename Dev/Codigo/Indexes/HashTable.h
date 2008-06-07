@@ -2,6 +2,7 @@
 #define HASHTABLE_H_
 
 #import "stdio.h"
+#import <string>
 
 class HashTable{
 	private:
@@ -17,10 +18,12 @@ class HashTable{
 		void load(char* filePath);
 		void deleTe();
 		int getSize();
+		int getPhysicalSize();
 		int getAt(int i);
 		void update(int index, int value);
 		void grow();
 		void simplify();
+		void toString(std::string* buffer);
 };
 
 #endif /*HASHTABLE_H_*/
