@@ -3,6 +3,7 @@
 
 #include "../DataValue.h"
 #include "../Buffer/BlocksBuffer.h"
+#include <string>
 
 class IIndex
 {
@@ -18,6 +19,8 @@ public:
 	virtual void update (DataValue* keyValue, int blockNumber)=0;
 	virtual void deleTe()=0;
 	virtual void setBlocksBuffer(BlocksBuffer* blocksBuffer)=0;
+	virtual void toString(string* buffer)=0;
+	
 };
 
 #endif /*IINDEX_H_*/

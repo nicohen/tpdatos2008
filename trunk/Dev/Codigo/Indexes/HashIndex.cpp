@@ -288,3 +288,8 @@ void HashIndex::setBlocksBuffer(BlocksBuffer* blocksBuffer) {
 	_keysfile->setBlocksBuffer(blocksBuffer);
 	_keysfile->appendEmptyBlock();
 }
+
+void HashIndex::toString(string* buffer) {
+	this->_keysfile->toString(buffer);
+	this->_hashtable->toString(buffer);
+}

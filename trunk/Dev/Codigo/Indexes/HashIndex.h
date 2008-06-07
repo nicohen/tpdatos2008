@@ -6,6 +6,7 @@
 #include "../Data/Block.h"
 #include "../Buffer/BlocksBuffer.h"
 #include "IIndex.h"
+#include "string.h"
 
 class DataFile;
 class HashIndex: public IIndex
@@ -35,7 +36,7 @@ public:
 	virtual unsigned int getHashTablePosition(DataValue* keyValue);
 	virtual int getKeysFileBlockNumberFor(DataValue* keyValue);
 	unsigned int RSHash(char* input);
-
+	virtual void toString(string* buffer);
 };
 
 #endif /*HASHINDEX_H_*/
