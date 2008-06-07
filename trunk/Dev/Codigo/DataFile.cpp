@@ -528,7 +528,7 @@ bool DataFile::updateRecord(Record* record) {
 			}
 			try{
 				int blockNumber = this->_primaryIndex->getBlockNumber(record->getValues()->at(0));
-				this->updateRecordAt(blockNumber,record);
+				return this->updateRecordAt(blockNumber,record);
 			}catch(RecordNotFoundException* ex){
 				delete ex;
 			}			
