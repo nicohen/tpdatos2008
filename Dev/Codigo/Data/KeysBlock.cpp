@@ -80,3 +80,8 @@ void KeysBlock::clear(){
 	RecordsBlock::clear();
 	this->setDispersion(dispersion);
 }
+
+int KeysBlock::getReservedSpace(){
+	//Es lo que ocupa el registro que tiene la informacion de dispersion
+	return 10;
+}

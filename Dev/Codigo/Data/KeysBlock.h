@@ -11,6 +11,7 @@ class KeysBlock : public RecordsBlock
 	
 private:
 	vector<Field*>* _fieldList;
+	
 public: 
 	virtual ~KeysBlock();
 	static Block* createKeysBlock(char* content, T_BLOCKSIZE size);
@@ -26,7 +27,9 @@ public:
 	
 	void loadDispersionField();
 	int getDispersion();
+
 	void setDispersion(int dispersion);
+	virtual int getReservedSpace();
 };
 
 #endif /*KEYSBLOCK_H_*/
