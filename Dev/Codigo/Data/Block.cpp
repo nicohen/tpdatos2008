@@ -18,9 +18,13 @@ Block::~Block(){
 }
 
 Block::Block(char* content,T_BLOCKSIZE size){
+	char clean='\0';	
 	this->_size=size;
 	this->_freeSpace=0;
 	this->_content=(char*)malloc(this->_size);
+	for (int i=0;i<this->_size;i++){
+		this->setFragment(&clean,i,1);	
+	}
 	this->setContent(content);
 }
 
@@ -44,6 +48,10 @@ T_BLOCKSIZE Block::getUsedSpace(){
 } 
 
 void Block::setContent(char* content){
+	char clean='\0';
+	for (int i=0;i<this->_size;i++){
+		this->setFragment(&clean,i,1);	
+	}
 	this->setFragment(content,0,this->_size);
 }
 

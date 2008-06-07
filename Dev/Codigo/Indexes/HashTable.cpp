@@ -51,7 +51,6 @@ int HashTable::getAt(int i){
 }
 
 void HashTable::update(int index, int value){
-
 	string msg;
 	msg.append("HASH Actualizando la tabla de hashes. Posicion '");
 	appendIntTo(&msg,index);
@@ -61,6 +60,7 @@ void HashTable::update(int index, int value){
 	DEBUGS(&msg);
 	fseek(_hashFile,(index+1)*INT_SIZE,SEEK_SET);
 	fwrite(&value,INT_SIZE,1,_hashFile);
+	fflush(_hashFile);
 }
 
 void HashTable::grow(){
@@ -83,8 +83,8 @@ void HashTable::grow(){
 	DEBUGS(&msg);
 }
 void HashTable::simplify(){
-	_size=_size/2;
-	fseek(_hashFile,0,SEEK_SET);
-	fwrite(&_size,INT_SIZE,1,_hashFile);
-	ftruncate((int)_hashFile,(_size+1)*INT_SIZE);
+//	_size=_size/2;
+//	fseek(_hashFile,0,SEEK_SET);
+//	fwrite(&_size,INT_SIZE,1,_hashFile);
+//	ftruncate((int)_hashFile,(_size+1)*INT_SIZE);
 }

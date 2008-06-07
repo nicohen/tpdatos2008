@@ -32,8 +32,9 @@ void RecordsBlock::deserializeRecords(){
 	memcpy(&recordsCount,Block::getContent()+offset,sizeof(T_BLOCKSIZE));
 	offset+=sizeof(T_BLOCKSIZE);
 	for (i = 0; i < recordsCount; ++i) {
+		//va moviendo el offset y el metodo deserializeRecord lee desde posiciones distintas 
 		record=this->deserializeRecord(Block::getContent(),offset);
-		this->_records->push_back(record);
+		this->appendRecord(record);
 		offset+=this->getSerializationSize(record);
 	}
 }
