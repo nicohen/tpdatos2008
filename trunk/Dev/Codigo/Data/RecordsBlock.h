@@ -39,8 +39,9 @@ public:
 	virtual RawRecord* at(T_BLOCKSIZE i);
 	virtual void clear();
 	virtual bool canUpdate(RawRecord* current, RawRecord* newOne);
-	static bool canInsert(T_BLOCKSIZE size, RawRecord* record);
-	virtual int getReservedSpace();
+	static bool canInsert(int size, RawRecord* record);
+	virtual int getAvaliableSpace();
+	virtual void toString(string* buffer);
 };
 
 #endif /*RecordsBlock_H_*/

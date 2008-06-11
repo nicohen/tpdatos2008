@@ -122,12 +122,12 @@ bool RecordsBlock::canUpdate(RawRecord* current, RawRecord* newOne){
 	return true;
 }
 
-bool RecordsBlock::canInsert(T_BLOCKSIZE size, RawRecord* record){
+bool RecordsBlock::canInsert(int size, RawRecord* record){
 	if(sizeof(T_BLOCKSIZE) +getSerializationSize(record)>size){
 		return false;
 	}
 	return true;
-} 
+}
 
 vector<RawRecord*>::iterator RecordsBlock::begin(){
 	return this->_records->begin();
@@ -142,23 +142,26 @@ T_BLOCKSIZE RecordsBlock::RecordCount(){
 	return this->_records->size();
 }
 void RecordsBlock::push_back(RawRecord* rawrecord){
-	if(!canInsert(this->getSize()-this->getReservedSpace(),rawrecord)){
+	if(!canInsert(this->getAvaliableSpace(),rawrecord)){
 		throw new RecordSizeOverflowException();
 	}
 	if(this->getUsedSpace()+getSerializationSize(rawrecord)>this->getSize()){
 		throw new ContentOverflowBlockException();
 	}
-	return this->_records->push_back(rawrecord);
+	this->_records->push_back(rawrecord);
 }
 
 RawRecord* RecordsBlock::at(T_BLOCKSIZE i){
 	return this->_records->at(i);	
 }
 
-int RecordsBlock::getReservedSpace(){
-	return 0;
+int RecordsBlock::getAvaliableSpace(){
+	return this->getSize();
 }
 
 void RecordsBlock::clear(){
 	this->_records->clear();
+}
+
+void RecordsBlock::toString(string* buffer){
 }

@@ -30,19 +30,19 @@ void SystemBuffer::addElement(IComparable* key, IBuffereable* value){
 	string buffer;
 	ostringstream ss;
 	
-	if (this->_buffer.count(key)>0){
+	if (this->_buffer.count(key) > 0){
 		if (this->_buffer[key]==value){
 			DEBUG("No se agrego al buffer porque ya existe el elemento");
 			return;
 		}
 		this->removeElement(key);
 	}
-	if (this->_bufferSize<value->getSize()){
+	if (this->_bufferSize < value->getSize()){
 		//throw new BufferException("Tamaño de bloque mayor al del buffer");;
-		DEBUG("BUFFER: Tamaño de bloque a insertar mayor al del buffer");
+		DEBUG("BUFFER: Tamaño del elemento a insertar mayor al del buffer");
 		return;
 	}
-	if ((this->_bufferCurrentSize+value->getSize())>this->_bufferSize) {
+	if ((this->_bufferCurrentSize+value->getSize()) > this->_bufferSize) {
 		buffer.append("BUFFER: Se intenta hacer espacio de ");
 		ss<<value->getSize();
 		buffer.append(ss.str());

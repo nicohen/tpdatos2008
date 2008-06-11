@@ -22,7 +22,7 @@ public:
 	virtual char* getContent();
 	
 	virtual T_BLOCKSIZE getSize();
-	virtual T_BLOCKSIZE getUsedSpace();//Esto deberia ser sobreescrito por otros blocks
+	virtual int getAvaliableSpace();//Esto deberia ser sobreescrito por otros blocks
 };
 
 #endif /*Block_H_*/

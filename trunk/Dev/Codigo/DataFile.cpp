@@ -511,50 +511,59 @@ RecordsBlock* DataFile::getRecordBlock(int blockNumber){
 		DEBUG("El numero de bloque tiene que ser mayor a 0");
 		throw new RecordNotFoundException();
 	}
-	Block* result= this->_blocksBuffer->getBlock(this->getFileName(),blockNumber);	
+	Block* result=NULL;// this->_blocksBuffer->getBlock(this->getFileName(),blockNumber);
+//	Block* result=this->_blocksBuffer->getBlock(this->getFileName(),blockNumber);
 	if (result==NULL){
 		result= this->getBlockStructuredFile()->bGetContentBlock(blockNumber,this->getBlockFactory());
-		this->_blocksBuffer->addBlock(this->getFileName(),blockNumber,result);
+//		this->_blocksBuffer->addBlock(this->getFileName(),blockNumber,result);
 	}
 	return (RecordsBlock*)result;
 }
 
 bool DataFile::updateRecord(Record* record) {
-	if (this->canInsert(record)) {
-		//Uso el Hash
-		if (this->_primaryIndex!=NULL) {
-			if (this->isArrayOf(this->_metadataBlock->GetSecondaryFields(),record->getValues())==false){
-				throw new TypeMismatchException((char*)"Los datos ingresados no coinciden con la estructura del Archivo");
-			}
-			int blockNumber=0;
-			try{
-				blockNumber = this->_primaryIndex->getBlockNumber(record->getValues()->at(0));
-				return this->updateRecordAt(blockNumber,record);
-			} catch (CannotUpdateRecordException* cee) {
-				delete cee;
-				this->removeRecordAt(blockNumber,0,record->getValues()->at(0));
+	if(this->getRecordsBlockCount()==0){
+		this->appendEmptyBlock();
+	}
+	//verifico si puedo insertar o no
+	RecordsBlock* testRecordBlock=this->getRecordBlock(0);
+	if(!testRecordBlock->canInsert(testRecordBlock->getAvaliableSpace(),record->serialize())){
+		return false;
+	}
+//	if (this->canInsert(record)) {
+//		//Uso el Hash
+	if (this->_primaryIndex!=NULL) {
+		if (this->isArrayOf(this->_metadataBlock->GetSecondaryFields(),record->getValues())==false){
+			throw new TypeMismatchException((char*)"Los datos ingresados no coinciden con la estructura del Archivo");
+		}
+		int blockNumber=0;
+		try{
+			blockNumber = this->_primaryIndex->getBlockNumber(record->getValues()->at(0));
+			return this->updateRecordAt(blockNumber,record);
+		} catch (CannotUpdateRecordException* cee) {
+			delete cee;
+			this->removeRecordAt(blockNumber,0,record->getValues()->at(0));
+			this->insertRecord(record);
+			return true;
+		}catch(RecordNotFoundException* ex){
+			delete ex;
+		}			
+	} else {
+		int length= this->getRecordsBlockCount();
+		for(int j=1;j<=length;j++) {
+			try {
+				this->updateRecordAt(j,record);
+				return true;
+			} catch (CannotUpdateRecordException* ex1) {
+				delete ex1;
+				this->removeRecordAt(j,0,record->getValues()->at(0));
 				this->insertRecord(record);
 				return true;
-			}catch(RecordNotFoundException* ex){
-				delete ex;
-			}			
-		} else {
-			int length= this->getRecordsBlockCount();
-			for(int j=1;j<=length;j++) {
-				try {
-					this->updateRecordAt(j,record);
-					return true;
-				} catch (CannotUpdateRecordException* ex1) {
-					delete ex1;
-					this->removeRecordAt(j,0,record->getValues()->at(0));
-					this->insertRecord(record);
-					return true;
-				} catch (RecordNotFoundException* ex2) {
-					delete ex2;
-				}
+			} catch (RecordNotFoundException* ex2) {
+				delete ex2;
 			}
 		}
 	}
+//	}
 	return false;
 }
 
@@ -591,13 +600,13 @@ void DataFile::setBlockFactory(BlockFactory* blockFactory){
 	delete this->_blockFactory;
 	this->_blockFactory=blockFactory;
 }
-bool DataFile::canInsert(Record* record) {
-	RawRecord* data;
-	data=record->serialize();
-	bool res = RecordsBlock::canInsert(this->getBlockStructuredFile()->getBlockSize(),record->serialize());
-	delete data;
-	return res;	
-}
+//bool DataFile::canInsert(Record* record) {
+//	RawRecord* data;
+//	data=record->serialize();
+//	bool res = RecordsBlock::canInsert((int)this->getBlockStructuredFile()->getAvaliableSpace(),record->serialize());
+//	delete data;
+//	return res;	
+//}
 //
 //void DataFile::setPrimaryIndex(HashIndex* index){
 //	this->_primaryIndex=index;
@@ -611,15 +620,15 @@ void DataFile::toString(string* buffer) {
 	buffer->append(this->_fileName);
 	buffer->append("\nDATOS:");
 	int recordsBlockCount = this->getRecordsBlockCount();
-	if(recordsBlockCount<2){
-		buffer->append("\n(vacio)");
-	}
+	bool recordFound=false;
 	for (int i=1;i<=recordsBlockCount;i++) {
+		recordFound=true;
 		rb = this->getRecordBlock(i);
 		vector<RawRecord*>::iterator iter;
 		buffer->append("\nBloque ");
 		appendIntTo(buffer,i);
 		buffer->append(":");
+		rb->toString(buffer);
 		for (iter = rb->begin(); iter != rb->end(); iter++ ) {
 			each=((RawRecord*)*iter);
 			record= new Record();
@@ -628,6 +637,9 @@ void DataFile::toString(string* buffer) {
 			buffer->append("\t");
 			record->toString(buffer);
 		}
+	}
+	if(!recordFound){
+		buffer->append("\n(vacio)");
 	}
 	buffer->append("\n");
 	if(_primaryIndex!=NULL) {
