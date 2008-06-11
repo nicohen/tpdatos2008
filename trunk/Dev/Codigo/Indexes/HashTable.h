@@ -24,6 +24,7 @@ class HashTable{
 		void grow();
 		void simplify();
 		void toString(std::string* buffer);
+		void append(int value);
 };
 
 #endif /*HASHTABLE_H_*/

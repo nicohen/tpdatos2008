@@ -82,6 +82,28 @@ void HashTable::grow(){
 	msg.append("'");
 	DEBUGS(&msg);
 }
+
+void HashTable::append(int value){
+//	string msg;
+//	msg.append("HASH agregando elemento a la tabla");
+//	appendIntTo(&msg,_size);
+	int* buffer= (int*) malloc(INT_SIZE*1);
+	
+//	fseek(_hashFile,INT_SIZE,SEEK_SET);
+//	fread(buffer,INT_SIZE,_size,_hashFile);
+	fseek(_hashFile,INT_SIZE*(_size+1),SEEK_SET);
+	fwrite(&value,INT_SIZE,_size,_hashFile);
+	_size=_size+1;
+	fseek(_hashFile,0,SEEK_SET);
+	fwrite(&_size,INT_SIZE,1,_hashFile);
+	free(buffer);
+
+//	msg.append("', Valor nuevo '");
+//	appendIntTo(&msg,_size);
+//	msg.append("'");
+//	DEBUGS(&msg);
+}
+
 void HashTable::simplify(){
 	_size=_size/2;
 	fseek(_hashFile,0,SEEK_SET);

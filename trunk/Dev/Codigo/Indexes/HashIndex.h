@@ -14,6 +14,7 @@ class HashIndex: public IIndex
 private:
 	DataFile* _keysfile;
 	HashTable* _hashtable;
+	HashTable* _dispersionfile;
 	T_BLOCKSIZE _indexBlockSize;
 	int _conflictiveKeysfileBlockNumber;
 	DataType* _keyType;

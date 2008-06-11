@@ -18,12 +18,14 @@ HashIndex::HashIndex(T_BLOCKSIZE indexBlockSize, DataType* keyType) {
 
 HashIndex::~HashIndex() {
 	delete _keysfile;
+	delete _dispersionfile;
 	delete _hashtable;
 }
 
 void HashIndex::create(char* folderPath, char* filePath) {
 	string keysFileName;
 	string hashFileFullPath;
+	string dispersionFileFullPath;
 	string fullpath;
 
 	fullpath.append(folderPath);
@@ -34,6 +36,9 @@ void HashIndex::create(char* folderPath, char* filePath) {
 
 	hashFileFullPath.append(fullpath);
 	hashFileFullPath.append(".hash");
+	
+	dispersionFileFullPath.append(fullpath);
+	dispersionFileFullPath.append(".disp");
 
 	vector<Field*>* fields=new vector<Field*>();
 
@@ -47,22 +52,28 @@ void HashIndex::create(char* folderPath, char* filePath) {
 	fields->push_back(secondaryField1);
 
 	_keysfile=new DataFile((char*)keysFileName.c_str(),_indexBlockSize,keyField,fields,NULL);
-	_keysfile->setBlockFactory(new KeysBlockFactory());
+//	_keysfile->setBlockFactory(new KeysBlockFactory());
 	_keysfile->save(folderPath);
 
 	_hashtable=new HashTable();
 	_hashtable->create((char*)hashFileFullPath.c_str(), 1);
 	_hashtable->update(0, 1);
+	
+	_dispersionfile=new HashTable();
+	_dispersionfile->create((char*)dispersionFileFullPath.c_str(), 1);
+	_dispersionfile->update(0, 1);
 }
 
 void HashIndex::deleTe() {
 	_keysfile->deleTe();
 	_hashtable->deleTe();
+	_dispersionfile->deleTe();
 }
 
 void HashIndex::load(char* folderPath, char* filePath) {
 	string keysFileName;
 	string hashFileFullPath;
+	string dispersionFileFullPath;
 	string fullpath;
 
 	fullpath.append(folderPath);
@@ -73,6 +84,9 @@ void HashIndex::load(char* folderPath, char* filePath) {
 
 	hashFileFullPath.append(fullpath);
 	hashFileFullPath.append(".hash");
+	
+	dispersionFileFullPath.append(fullpath);
+	dispersionFileFullPath.append(".disp");
 
 	_keysfile=new DataFile((char*)keysFileName.c_str());
 	_keysfile->setBlockFactory(new KeysBlockFactory());
@@ -83,7 +97,9 @@ void HashIndex::load(char* folderPath, char* filePath) {
 
 	_hashtable=new HashTable();
 	_hashtable->load((char*)hashFileFullPath.c_str());
-
+	
+	_dispersionfile=new HashTable();
+	_dispersionfile->load((char*)dispersionFileFullPath.c_str());
 }
 
 void HashIndex::unIndex(DataValue* keyValue) {
@@ -249,7 +265,8 @@ void HashIndex::index(DataValue* keyValue, int blockNumber) {
 		string debugMartes;
 		debugMartes.append("_conflictiveKeysfileBlockNumber: ");
 		appendIntTo(&debugMartes,_conflictiveKeysfileBlockNumber);
-		this->_keysfile->toString(&debugMartes);
+		//this->_keysfile->toString(&debugMartes);
+		this->toString(&debugMartes);
 		DEBUGS(&debugMartes);
 		
 		string overflowMsg;
@@ -257,16 +274,16 @@ void HashIndex::index(DataValue* keyValue, int blockNumber) {
 		appendIntTo(&overflowMsg,keysBlockNumber);
 		overflowMsg.append(". Agregando bucket vacio.");
 		DEBUGS(&overflowMsg);
-		
-		KeysBlock* conflictiveBlock=(KeysBlock*)_keysfile->getRecordBlock(keysBlockNumber);
-		KeysBlock* newBlock=(KeysBlock*)_keysfile->appendEmptyBlock();
-		if (conflictiveBlock->getDispersion()==_hashtable->getSize()) {
+	
+		_keysfile->appendEmptyBlock();
+		_dispersionfile->append(1);
+		if (_dispersionfile->getAt(keysBlockNumber)==_hashtable->getSize()) {
 			_hashtable->grow();
 		}
-		int newDispersion = 2*conflictiveBlock->getDispersion();
-		conflictiveBlock->setDispersion(newDispersion);
-		newBlock->setDispersion(newDispersion);
-		int dispersionSet=conflictiveBlock->getDispersion();
+		int newDispersion = 2*_dispersionfile->getAt(keysBlockNumber);
+		_dispersionfile->update(keysBlockNumber,newDispersion);
+		_dispersionfile->update(this->_keysfile->getLastRecordsBlockIndex(),newDispersion);
+		
 		_hashtable->update(getHashTablePosition(keyValue),_keysfile->getLastRecordsBlockIndex());
 		this->reIndex(keysBlockNumber);
 		this->index(keyValue,blockNumber);
@@ -309,6 +326,8 @@ void HashIndex::setBlocksBuffer(BlocksBuffer* blocksBuffer) {
 void HashIndex::toString(string* buffer) {
 	this->_keysfile->toString(buffer);
 	this->_hashtable->toString(buffer);
+	buffer->append("\n tabla de dispersiones \n");
+	this->_dispersionfile->toString(buffer);
 }
 
 int HashIndex::getSize() {
