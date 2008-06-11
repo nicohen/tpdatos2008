@@ -1,5 +1,6 @@
 #include "KeysBlock.h"
 #include "Record.h"
+#include "../Utils.h"
 
 Block* KeysBlock::createKeysBlock(char* content, T_BLOCKSIZE size){
 	return new KeysBlock(content,size);
@@ -23,12 +24,16 @@ KeysBlock::KeysBlock(T_BLOCKSIZE size,int dispersion):RecordsBlock(size){
 	this->push_back(dispersionRecord->serialize());
 }
 
+KeysBlock::KeysBlock(char* content,T_BLOCKSIZE size):RecordsBlock(content,size){
+	this->loadDispersionField();
+	//No hace nada porque el registro de dispersion ya lo tiene
+}
+
 int KeysBlock::getDispersion(){ 
 	RawRecord* recordData= this->getRecords()->at(0);
 	Record* dispersionRecord =new Record();
 	dispersionRecord->deserialize(recordData,_fieldList);
 	IntValue* intvalue = (IntValue*)*dispersionRecord->getValues()->begin();
-	delete recordData;
 	return intvalue->getInt();
 }
 
@@ -39,11 +44,6 @@ void KeysBlock::setDispersion(int dispersion){
 	this->getRecords()->erase(this->getRecords()->begin());
 	this->getRecords()->insert(this->getRecords()->begin(),dispersionRecord->serialize());
 	delete dispersionRecord;
-}
-
-KeysBlock::KeysBlock(char* content,T_BLOCKSIZE size):RecordsBlock(content,size){
-	this->loadDispersionField();
-	//No hace nada porque el registro de dispersion ya lo tiene
 }
 
 KeysBlock::~KeysBlock()
@@ -81,7 +81,13 @@ void KeysBlock::clear(){
 	this->setDispersion(dispersion);
 }
 
-int KeysBlock::getReservedSpace(){
+int KeysBlock::getAvaliableSpace(){
 	//Es lo que ocupa el registro que tiene la informacion de dispersion
-	return 10;
+	return RecordsBlock::getAvaliableSpace() - 10;
+}
+
+void KeysBlock::toString(string* buffer){
+	buffer->append("Dispersion (");
+	appendIntTo(buffer,this->getDispersion());
+	buffer->append(")");
 }

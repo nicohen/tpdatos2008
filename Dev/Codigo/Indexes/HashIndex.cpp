@@ -151,8 +151,13 @@ void HashIndex::update(DataValue* keyValue, int blockNumber) {
 unsigned int HashIndex::getHash(DataValue* input) {
 	string inputString;
 	input->toString(&inputString);
+	string cubihashdebug;
+	cubihashdebug.append("-->TEST_CUBI_HASH: ");
+	input->toString(&cubihashdebug);
 	unsigned int hashResult= RSHash((char*)inputString.c_str());
-
+	cubihashdebug.append(", ");
+	appendIntTo(&cubihashdebug,hashResult);
+	DEBUGS(&cubihashdebug);
 	return hashResult;
 }
 
@@ -238,7 +243,14 @@ void HashIndex::index(DataValue* keyValue, int blockNumber) {
 		_keysfile->insertRecordAt(keysBlockNumber,keyRecord);
 	} catch(ContentOverflowBlockException* ex) {		
 		delete ex;
+		
 		_conflictiveKeysfileBlockNumber= keysBlockNumber;
+		
+		string debugMartes;
+		debugMartes.append("_conflictiveKeysfileBlockNumber: ");
+		appendIntTo(&debugMartes,_conflictiveKeysfileBlockNumber);
+		this->_keysfile->toString(&debugMartes);
+		DEBUGS(&debugMartes);
 		
 		string overflowMsg;
 		overflowMsg.append("HASH Overflow en el bucket número ");
@@ -251,19 +263,22 @@ void HashIndex::index(DataValue* keyValue, int blockNumber) {
 		if (conflictiveBlock->getDispersion()==_hashtable->getSize()) {
 			_hashtable->grow();
 		}
-		conflictiveBlock->setDispersion(_hashtable->getSize());
-		newBlock->setDispersion(_hashtable->getSize());
+		int newDispersion = 2*conflictiveBlock->getDispersion();
+		conflictiveBlock->setDispersion(newDispersion);
+		newBlock->setDispersion(newDispersion);
+		int dispersionSet=conflictiveBlock->getDispersion();
 		_hashtable->update(getHashTablePosition(keyValue),_keysfile->getLastRecordsBlockIndex());
 		this->reIndex(keysBlockNumber);
 		this->index(keyValue,blockNumber);
 	} catch(RecordSizeOverflowException* ex2) {
-		delete ex2;
+//		delete ex2;
 		string exmessage;
 
 		exmessage.append("HASH [ERROR] No se puede indexar el registro ");
 		keyRecord->toString(&exmessage);
 		exmessage.append(" porque su tamaño es mayor al de un bloque.");
 		DEBUGS(&exmessage);
+		throw ex2;
 	}
 }
 

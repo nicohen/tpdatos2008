@@ -27,9 +27,10 @@ public:
 	
 	void loadDispersionField();
 	int getDispersion();
+	virtual void toString(string* buffer);
 
 	void setDispersion(int dispersion);
-	virtual int getReservedSpace();
+	virtual int getAvaliableSpace();
 };
 
 #endif /*KEYSBLOCK_H_*/
