@@ -23,6 +23,7 @@ public:
 	
 	virtual T_BLOCKSIZE getSize();
 	virtual int getAvaliableSpace();//Esto deberia ser sobreescrito por otros blocks
+	virtual T_BLOCKSIZE getUsedSpace();//Esto deberia ser sobreescrito por otros blocks
 };
 
 #endif /*Block_H_*/
