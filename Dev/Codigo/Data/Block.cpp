@@ -47,6 +47,10 @@ T_BLOCKSIZE Block::getUsedSpace(){
 	return this->_size;
 } 
 
+int Block::getAvaliableSpace(){
+	return this->getSize();
+}
+
 void Block::setContent(char* content){
 	char clean='\0';
 	for (int i=0;i<this->_size;i++){
