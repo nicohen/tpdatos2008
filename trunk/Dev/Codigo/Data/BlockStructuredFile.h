@@ -64,6 +64,7 @@ public:
 	void deleTe();
 	
 	virtual ~BlockStructuredFile(void);
+	bool truncateLast();
 };
 
 #endif /*BlockStructuredFile_H_*/

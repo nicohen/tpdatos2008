@@ -45,7 +45,7 @@ private:
 	T_BLOCKCOUNT getFirstRecordsBlockIndex();
 	bool canInsert(Record* record);
 public:
-	T_BLOCKCOUNT getLastRecordsBlockIndex();
+	int getLastRecordsBlockIndex();
 	
 	
 	
@@ -100,6 +100,8 @@ public:
 	
 	T_FILESIZE getDataIndexUsedSpace();
 	T_FILESIZE getDataIndexFreeSpace();
+	bool truncateLast();
+	T_BLOCKCOUNT truncateLastEmptyBlocks();
 
 };
 

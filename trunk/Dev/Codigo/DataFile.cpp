@@ -337,17 +337,11 @@ vector<Record*>* DataFile::removeRecordAt(T_BLOCKCOUNT blockNumber, int fNumber,
 			DataValue* dummy=eachRecord->getValues()->at(0);
 			this->_primaryIndex->unIndex(dummy);		
 		}
-	}
-	
-//	if(rBlock->getRecords()->size()){
-//		string emptyblockmsg;
-//		emptyblockmsg.append("---->DATAFILE: bloque vacio n ");
-//		appendIntTo(&emptyblockmsg, blockNumber);
-//		DEBUGS(&emptyblockmsg);
-//	}
+	}	
 	
 	return removedRecords;
 }
+
 
 vector<Record*>* DataFile::removeRecordsAt(T_BLOCKCOUNT blockNumber) {
 	bool updateRecord=false;
@@ -446,7 +440,7 @@ bool DataFile::isArrayOf(vector<Field*>* fields, vector<DataValue*>* values){
 T_BLOCKCOUNT DataFile::getFirstRecordsBlockIndex(){
 	return 1;
 }
-T_BLOCKCOUNT DataFile::getLastRecordsBlockIndex(){
+int DataFile::getLastRecordsBlockIndex(){
 	return this->_blockStructuredFile->getContentBlockCount()-1;
 }
 
@@ -667,4 +661,25 @@ T_FILESIZE DataFile::getDataIndexUsedSpace() {
 
 T_FILESIZE DataFile::getDataIndexFreeSpace() {
 	return 0;
+}
+
+T_BLOCKCOUNT DataFile::truncateLastEmptyBlocks(){
+	T_BLOCKCOUNT removedBlocks=0; 
+	for(int i=this->getLastRecordsBlockIndex();i>=1;i--){
+		if(this->getRecordBlock(i)->getRecords()->size()==0 && this->truncateLast()){
+			removedBlocks++;
+		}else{
+			return removedBlocks;
+		}
+	}
+	return removedBlocks;
+}
+
+bool DataFile::truncateLast(){
+	if(this->getLastRecordsBlockIndex()>=1){
+		this->_blocksBuffer->removeBlock(this->getFileName(),this->getLastRecordsBlockIndex());
+		this->_blockStructuredFile->truncateLast();
+		return true;
+	}
+	return false;
 }
