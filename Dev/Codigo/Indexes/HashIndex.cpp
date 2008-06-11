@@ -286,7 +286,9 @@ int HashIndex::getBlockNumber(DataValue* keyValue) {
 
 void HashIndex::setBlocksBuffer(BlocksBuffer* blocksBuffer) {
 	_keysfile->setBlocksBuffer(blocksBuffer);
-	_keysfile->appendEmptyBlock();
+	if (_keysfile->getRecordsBlockCount()==0) {
+		_keysfile->appendEmptyBlock();
+	}
 }
 
 void HashIndex::toString(string* buffer) {
