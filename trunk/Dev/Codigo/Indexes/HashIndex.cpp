@@ -277,12 +277,12 @@ void HashIndex::index(DataValue* keyValue, int blockNumber) {
 	
 		_keysfile->appendEmptyBlock();
 		_dispersionfile->append(1);
-		if (_dispersionfile->getAt(keysBlockNumber)==_hashtable->getSize()) {
+		if (_dispersionfile->getAt(keysBlockNumber-1)==_hashtable->getSize()) {
 			_hashtable->grow();
 		}
-		int newDispersion = 2*_dispersionfile->getAt(keysBlockNumber);
-		_dispersionfile->update(keysBlockNumber,newDispersion);
-		_dispersionfile->update(this->_keysfile->getLastRecordsBlockIndex(),newDispersion);
+		int newDispersion = 2*_dispersionfile->getAt(keysBlockNumber-1);
+		_dispersionfile->update(keysBlockNumber-1,newDispersion);
+		_dispersionfile->update(this->_keysfile->getLastRecordsBlockIndex()-1,newDispersion);
 		
 		_hashtable->update(getHashTablePosition(keyValue),_keysfile->getLastRecordsBlockIndex());
 		this->reIndex(keysBlockNumber);
