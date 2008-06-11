@@ -37,6 +37,13 @@ StatementResult* RemoveStatement::execute(DataManager* anIDataManager){
 			each->toString(&buffer);
 		}
 		buffer.append(removedRecords->size()?"":"0");	
+		
+//		int lastBlockIndex =dataFile->getLastRecordsBlockIndex(); 
+//		int recordsSize= dataFile->getRecordBlock(lastBlockIndex)->getRecords()->size();
+//		if(recordsSize==0){
+//			dataFile->truncateLast();
+//		}
+		dataFile->truncateLastEmptyBlocks();
 	}catch(FileNotFoundException* ex){
 		buffer.append(" Error al eliminar registros (");
 		buffer.append(ex->toString());
