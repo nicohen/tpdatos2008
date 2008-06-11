@@ -214,7 +214,7 @@ void BlockStructuredFile::deleTe(){
 bool BlockStructuredFile::truncateLast(){
 	if(this->getBlockCount()>this->getHeaderBlockCount()){
 		this->setBlockCount(this->getBlockCount()-1);
-			
+		this->saveHeader();
 			if(this->_file->is_open()){
 				this->_file->close();
 			}
