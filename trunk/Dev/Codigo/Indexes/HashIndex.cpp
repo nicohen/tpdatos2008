@@ -107,23 +107,32 @@ void HashIndex::unIndex(DataValue* keyValue) {
 	buffer.append("HASH Desindexando clave ");
 	keyValue->toString(&buffer);
 	DEBUGS(&buffer);
-
+		string debugMartes;
+		debugMartes.append("_conflictiveKeysfileBlockNumber: ");
+		appendIntTo(&debugMartes,_conflictiveKeysfileBlockNumber);
+		//this->_keysfile->toString(&debugMartes);
+		this->toString(&debugMartes);
+		DEBUGS(&debugMartes);
 	int keysBlockNumber= getKeysFileBlockNumberFor(keyValue);
 	_keysfile->removeRecordAt(keysBlockNumber, 0, keyValue);
 	if (keysBlockNumber==_conflictiveKeysfileBlockNumber) {
 		this->simplify(keysBlockNumber);
 	}
-	int other=keysBlockNumber+(_hashtable->getSize()/2); 
+	int other=(keysBlockNumber+(_hashtable->getSize()/2))%_hashtable->getSize(); 
 	if (other ==_conflictiveKeysfileBlockNumber) {
 		this->simplify(other);
 	}
 }
 
 void HashIndex::simplify(int arg0) {
+	if (_hashtable->getSize()==1){
+		return;
+	}
 	int distance= _hashtable->getSize()/2;
 	int i=0;
+	int other= (arg0+distance)%_hashtable->getSize();
 	while (i<distance) {
-		if ((i!=arg0)&&(_hashtable->getAt(i)!=_hashtable->getAt(distance+i))) {
+		if ((i!=arg0)&&(i!=other)&&(_hashtable->getAt(i)!=_hashtable->getAt(distance+i))) {
 			_conflictiveKeysfileBlockNumber=i;
 			break;
 		}
@@ -136,12 +145,17 @@ void HashIndex::simplify(int arg0) {
 		appendIntTo(&buffer,_hashtable->getSize());
 		int lower=_hashtable->getAt(arg0);
 		int hier=_hashtable->getAt(arg0+distance);
+		int block1= _hashtable->getAt(arg0);
+		int block2= _hashtable->getAt(other);
+		_dispersionfile->update(block1-1,(_dispersionfile->getAt(block1-1)/2));
+		_dispersionfile->update(block2-1,(_dispersionfile->getAt(block2-1)/2));
 		_hashtable->simplify();
 		buffer.append(". Tamaño nuevo: ");
 		appendIntTo(&buffer,_hashtable->getSize());
 		buffer.append("\n");
 		DEBUGS(&buffer);
 		_hashtable->update(arg0,(lower<hier)?lower:hier);
+		
 		this->reIndex(arg0);
 		this->reIndex(arg0+distance);
 	}
