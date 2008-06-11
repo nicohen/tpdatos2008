@@ -339,6 +339,13 @@ vector<Record*>* DataFile::removeRecordAt(T_BLOCKCOUNT blockNumber, int fNumber,
 		}
 	}
 	
+//	if(rBlock->getRecords()->size()){
+//		string emptyblockmsg;
+//		emptyblockmsg.append("---->DATAFILE: bloque vacio n ");
+//		appendIntTo(&emptyblockmsg, blockNumber);
+//		DEBUGS(&emptyblockmsg);
+//	}
+	
 	return removedRecords;
 }
 
@@ -511,11 +518,16 @@ RecordsBlock* DataFile::getRecordBlock(int blockNumber){
 		DEBUG("El numero de bloque tiene que ser mayor a 0");
 		throw new RecordNotFoundException();
 	}
-	Block* result=NULL;// this->_blocksBuffer->getBlock(this->getFileName(),blockNumber);
-//	Block* result=this->_blocksBuffer->getBlock(this->getFileName(),blockNumber);
-	if (result==NULL){
+	bool useBuffer=true;
+	Block* result=NULL;
+	if(useBuffer){
+		result=this->_blocksBuffer->getBlock(this->getFileName(),blockNumber);
+		if (result==NULL){
+			result= this->getBlockStructuredFile()->bGetContentBlock(blockNumber,this->getBlockFactory());
+			this->_blocksBuffer->addBlock(this->getFileName(),blockNumber,result);
+		}	
+	}else{
 		result= this->getBlockStructuredFile()->bGetContentBlock(blockNumber,this->getBlockFactory());
-//		this->_blocksBuffer->addBlock(this->getFileName(),blockNumber,result);
 	}
 	return (RecordsBlock*)result;
 }
@@ -525,12 +537,10 @@ bool DataFile::updateRecord(Record* record) {
 		this->appendEmptyBlock();
 	}
 	//verifico si puedo insertar o no
-	RecordsBlock* testRecordBlock=this->getRecordBlock(0);
+	RecordsBlock* testRecordBlock=this->getRecordBlock(1);
 	if(!testRecordBlock->canInsert(testRecordBlock->getAvaliableSpace(),record->serialize())){
 		return false;
 	}
-//	if (this->canInsert(record)) {
-//		//Uso el Hash
 	if (this->_primaryIndex!=NULL) {
 		if (this->isArrayOf(this->_metadataBlock->GetSecondaryFields(),record->getValues())==false){
 			throw new TypeMismatchException((char*)"Los datos ingresados no coinciden con la estructura del Archivo");
