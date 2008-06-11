@@ -43,3 +43,9 @@ unsigned int BlocksBuffer::getCurrentSize() {
 unsigned int BlocksBuffer::getBlocksCount() {
 	return _systemBuffer.getElementsCount();
 }
+
+void  BlocksBuffer::removeBlock(char* fileName, int blockNumber){
+	BufferKey* bk= new BufferKey(fileName,blockNumber);
+	this->_systemBuffer.removeElement(bk);
+	delete bk;
+}

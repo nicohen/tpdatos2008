@@ -23,6 +23,7 @@ class  BlocksBuffer{
 		unsigned int getCurrentSize();
 		unsigned int getBlocksCount();
 		virtual ~BlocksBuffer();
+		virtual void removeBlock(char* fileName, int blockNumber);
 };
 
 
