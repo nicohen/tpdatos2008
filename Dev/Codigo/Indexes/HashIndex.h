@@ -39,7 +39,11 @@ public:
 	unsigned int RSHash(char* input);
 	virtual void toString(string* buffer);
 	virtual int getSize();
-	void appendBlock(int dispersion);
+	void appendBucket(int dispersion);
+	void removeLastBucket();
+	int getDispersion(int blockNumber);
+	void updateDispersion(int blockNumber, int withValue);
+	void updateHashTableCyclicaly(int startingPosition,int step,int updateWith);
 };
 
 #endif /*HASHINDEX_H_*/
