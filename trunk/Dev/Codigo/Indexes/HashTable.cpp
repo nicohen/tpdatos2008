@@ -108,7 +108,7 @@ void HashTable::simplify(){
 	_size=_size/2;
 	fseek(_hashFile,0,SEEK_SET);
 	fwrite(&_size,INT_SIZE,1,_hashFile);
-	ftruncate((int)_hashFile,(_size+1)*INT_SIZE);
+	truncate(_fileName,(_size+1)*INT_SIZE);
 }
 
 void HashTable::toString(string* buffer) {
