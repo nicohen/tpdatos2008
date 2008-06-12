@@ -13,7 +13,6 @@
 HashIndex::HashIndex(T_BLOCKSIZE indexBlockSize, DataType* keyType) {
 	_keyType=keyType;
 	_indexBlockSize=indexBlockSize;
-	_conflictiveKeysfileBlockNumber=0;
 }
 
 HashIndex::~HashIndex() {
@@ -107,58 +106,89 @@ void HashIndex::unIndex(DataValue* keyValue) {
 	buffer.append("HASH Desindexando clave ");
 	keyValue->toString(&buffer);
 	DEBUGS(&buffer);
-		string debugMartes;
-		debugMartes.append("_conflictiveKeysfileBlockNumber: ");
-		appendIntTo(&debugMartes,_conflictiveKeysfileBlockNumber);
-		//this->_keysfile->toString(&debugMartes);
-		this->toString(&debugMartes);
-		DEBUGS(&debugMartes);
+	string debugMartes;
+	//this->_keysfile->toString(&debugMartes);
+	this->toString(&debugMartes);
+	DEBUGS(&debugMartes);
 	int keysBlockNumber= getKeysFileBlockNumberFor(keyValue);
 	_keysfile->removeRecordAt(keysBlockNumber, 0, keyValue);
-	if (keysBlockNumber==_conflictiveKeysfileBlockNumber) {
-		this->simplify(keysBlockNumber);
-	}
-	int other=(keysBlockNumber+(_hashtable->getSize()/2))%_hashtable->getSize(); 
-	if (other ==_conflictiveKeysfileBlockNumber) {
-		this->simplify(other);
+	if (_keysfile->getRecordBlock(keysBlockNumber)->getRecords()->size() == 0) {
+		this->simplify(keysBlockNumber, keyValue);
 	}
 }
 
-void HashIndex::simplify(int arg0) {
-	if (_hashtable->getSize()==1){
-		return;
-	}
-	int distance= _hashtable->getSize()/2;
-	int i=0;
-	int other= (arg0+distance)%_hashtable->getSize();
-	while (i<distance) {
-		if ((i!=arg0)&&(i!=other)&&(_hashtable->getAt(i)!=_hashtable->getAt(distance+i))) {
-			_conflictiveKeysfileBlockNumber=i;
-			break;
-		}
-		i++;
-	}
-	if (i==distance) {
-		string buffer;
-		buffer.append("HASH Simplificando la tabla de hash.\n");
-		buffer.append("HASH Tamaño anterior: ");
-		appendIntTo(&buffer,_hashtable->getSize());
-		int lower=_hashtable->getAt(arg0);
-		int hier=_hashtable->getAt(arg0+distance);
-		int block1= _hashtable->getAt(arg0);
-		int block2= _hashtable->getAt(other);
-		_dispersionfile->update(block1-1,(_dispersionfile->getAt(block1-1)/2));
-		_dispersionfile->update(block2-1,(_dispersionfile->getAt(block2-1)/2));
-		_hashtable->simplify();
-		buffer.append(". Tamaño nuevo: ");
-		appendIntTo(&buffer,_hashtable->getSize());
-		buffer.append("\n");
-		DEBUGS(&buffer);
-		_hashtable->update(arg0,(lower<hier)?lower:hier);
+void HashIndex::simplify(int keysBlockNumber, DataValue* keyValue) {
+	int deltaDispersion = _dispersionfile->getAt(keysBlockNumber-1) / 2;
+	int hashTablePosition = getHashTablePosition(keyValue);
+	
+	int upperHashTablePosition = (_hashtable->getSize()+deltaDispersion)%_hashtable->getSize(); 
+	int lowerHashTablePosition = (_hashtable->getSize()-deltaDispersion)%_hashtable->getSize();
+	
+	//Verificar si esta igualdad es correcta
+	if (_hashtable->getAt(upperHashTablePosition)==_hashtable->getAt(lowerHashTablePosition)) {
 		
-		this->reIndex(arg0);
-		this->reIndex(arg0+distance);
+		int newDispersion = _hashtable->getAt(lowerHashTablePosition);
+		_hashtable->update(hashTablePosition,newDispersion);
+
+		int steps = _dispersionfile->getAt(keysBlockNumber-1);
+		int current = hashTablePosition;
+		for (int i = 0;i<(_hashtable->getSize()/steps);i++){
+			current = current % _hashtable->getSize();
+			_hashtable->update(current,newDispersion);
+			current = current + steps;					
+		}
+		
+		_dispersionfile->update(keysBlockNumber,_dispersionfile->getAt(keysBlockNumber-1) / 2);
+		
+		int distance= _hashtable->getSize()/2;
+		int i=0;
+		int other= (keysBlockNumber+distance)%_hashtable->getSize();
+		while (i<distance) {
+			if ((i!=keysBlockNumber)&&(i!=other)&&(_hashtable->getAt(i)!=_hashtable->getAt(distance+i))) {
+				return;
+			}
+			i++;
+		}
+		
+		_hashtable->simplify();				
 	}
+
+	
+
+
+//	if (_hashtable->getSize()==1){
+//		return;
+//	}
+//	int distance= _hashtable->getSize()/2;
+//	int i=0;
+//	int other= (arg0+distance)%_hashtable->getSize();
+//	while (i<distance) {
+//		if ((i!=arg0)&&(i!=other)&&(_hashtable->getAt(i)!=_hashtable->getAt(distance+i))) {
+//			return;
+//		}
+//		i++;
+//	}
+//	if (i==distance) {
+//		string buffer;
+//		buffer.append("HASH Simplificando la tabla de hash.\n");
+//		buffer.append("HASH Tamaño anterior: ");
+//		appendIntTo(&buffer,_hashtable->getSize());
+//		int lower=_hashtable->getAt(arg0);
+//		int hier=_hashtable->getAt(arg0+distance);
+//		int block1= _hashtable->getAt(arg0);
+//		int block2= _hashtable->getAt(other);
+//		_dispersionfile->update(block1-1,(_dispersionfile->getAt(block1-1)/2));
+//		_dispersionfile->update(block2-1,(_dispersionfile->getAt(block2-1)/2));
+//		_hashtable->simplify();
+//		buffer.append(". Tamaño nuevo: ");
+//		appendIntTo(&buffer,_hashtable->getSize());
+//		buffer.append("\n");
+//		DEBUGS(&buffer);
+//		_hashtable->update(arg0,(lower<hier)?lower:hier);
+//		
+//		this->reIndex(arg0);
+//		this->reIndex(arg0+distance);
+//	}
 }
 
 void HashIndex::update(DataValue* keyValue, int blockNumber) {
@@ -246,17 +276,12 @@ int HashIndex::getKeysFileBlockNumberFor(DataValue* keyValue) {
 }
 
 void HashIndex::index(DataValue* keyValue, int blockNumber) {
-	//	if (keyValue->getCharType()!=DataType::STRING_TYPE){
-	//		throw "se esperaba stringValue";
-	//	}
-
 	string startMsg;
 	startMsg.append("HASH Indexando la clave ");
 	keyValue->toString(&startMsg);
 	startMsg.append(" asociada al bloque de datos número ");
 	appendIntTo(&startMsg, blockNumber);
 	DEBUGS(&startMsg);
-
 	int keysBlockNumber= getKeysFileBlockNumberFor(keyValue);
 
 	Record* keyRecord=new Record();
@@ -274,11 +299,7 @@ void HashIndex::index(DataValue* keyValue, int blockNumber) {
 	} catch(ContentOverflowBlockException* ex) {		
 		delete ex;
 		
-		_conflictiveKeysfileBlockNumber= keysBlockNumber;
-		
 		string debugMartes;
-		debugMartes.append("_conflictiveKeysfileBlockNumber: ");
-		appendIntTo(&debugMartes,_conflictiveKeysfileBlockNumber);
 		//this->_keysfile->toString(&debugMartes);
 		this->toString(&debugMartes);
 		DEBUGS(&debugMartes);
@@ -288,17 +309,34 @@ void HashIndex::index(DataValue* keyValue, int blockNumber) {
 		appendIntTo(&overflowMsg,keysBlockNumber);
 		overflowMsg.append(". Agregando bucket vacio.");
 		DEBUGS(&overflowMsg);
-	
+		int hashTablePosition = getHashTablePosition(keyValue);
+		
+		//Crea nuevo bucket vacio
+		//TODO - En vez de appendear, fijarse si existe algun bloque libre y no referenciado
 		_keysfile->appendEmptyBlock();
-		_dispersionfile->append(1);
-		if (_dispersionfile->getAt(keysBlockNumber-1)==_hashtable->getSize()) {
-			_hashtable->grow();
-		}
+		
+		//duplica la dispersion del bucket confilctivo y el nuevo
 		int newDispersion = 2*_dispersionfile->getAt(keysBlockNumber-1);
 		_dispersionfile->update(keysBlockNumber-1,newDispersion);
-		_dispersionfile->update(this->_keysfile->getLastRecordsBlockIndex()-1,newDispersion);
+		_dispersionfile->append(newDispersion);
 		
-		_hashtable->update(getHashTablePosition(keyValue),_keysfile->getLastRecordsBlockIndex());
+		// REVISAR ESTA COMPARACION!!!
+		//VERIFICAS SI HAY QUE DUPLICAR LA TABLA
+		if (_dispersionfile->getAt(keysBlockNumber-1)>_hashtable->getSize()) {
+			_hashtable->grow();
+			_hashtable->update(hashTablePosition,_keysfile->getLastRecordsBlockIndex());
+		}else{
+			int steps= _hashtable->getSize()/newDispersion;
+			int current= hashTablePosition;
+			for (int i= 0;i<steps;i++){
+				current=current%_hashtable->getSize();
+				_hashtable->update(current,newDispersion);
+				current=current+newDispersion;					
+			}
+		}
+		//_dispersionfile->update(this->_keysfile->getLastRecordsBlockIndex()-1,newDispersion);
+		
+		//_hashtable->update(getHashTablePosition(keyValue),_keysfile->getLastRecordsBlockIndex());
 		this->reIndex(keysBlockNumber);
 		this->index(keyValue,blockNumber);
 	} catch(RecordSizeOverflowException* ex2) {

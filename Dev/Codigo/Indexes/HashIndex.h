@@ -33,7 +33,7 @@ public:
 	virtual void update (DataValue* keyValue, int blockNumber);
 	virtual void deleTe();
 	virtual void setBlocksBuffer(BlocksBuffer* blocksBuffer);
-	virtual	void simplify(int arg0);
+	virtual void simplify(int keysBlockNumber, DataValue* keyValue);
 	virtual unsigned int getHashTablePosition(DataValue* keyValue);
 	virtual int getKeysFileBlockNumberFor(DataValue* keyValue);
 	unsigned int RSHash(char* input);
