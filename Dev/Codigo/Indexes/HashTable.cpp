@@ -89,8 +89,6 @@ void HashTable::append(int value){
 //	appendIntTo(&msg,_size);
 	int* buffer= (int*) malloc(INT_SIZE*1);
 	
-//	fseek(_hashFile,INT_SIZE,SEEK_SET);
-//	fread(buffer,INT_SIZE,_size,_hashFile);
 	fseek(_hashFile,INT_SIZE*(_size+1),SEEK_SET);
 	fwrite(&value,INT_SIZE,_size,_hashFile);
 	_size=_size+1;
@@ -108,7 +106,7 @@ void HashTable::simplify(){
 	_size=_size/2;
 	fseek(_hashFile,0,SEEK_SET);
 	fwrite(&_size,INT_SIZE,1,_hashFile);
-	truncate(_fileName,(_size+1)*INT_SIZE);
+	truncate(_fileName,this->getPhysicalSize());
 }
 
 void HashTable::toString(string* buffer) {
@@ -129,4 +127,15 @@ void HashTable::toString(string* buffer) {
 
 int HashTable::getPhysicalSize() {
 	return (this->_size+1)*INT_SIZE;
+}
+
+bool HashTable::removeLast(){
+	if(_size> 0){//Para no borrar el primer elemento
+		_size=_size - 1;
+		fseek(_hashFile,0,SEEK_SET);
+		fwrite(&_size,INT_SIZE,1,_hashFile);
+		truncate(_fileName,this->getPhysicalSize());
+	}else{
+		return false;
+	}
 }
