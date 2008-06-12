@@ -104,45 +104,65 @@ void HashIndex::unIndex(DataValue* keyValue) {
 	buffer.append("HASH Desindexando clave ");
 	keyValue->toString(&buffer);
 	DEBUGS(&buffer);
-	string debugMartes;
-	//this->_keysfile->toString(&debugMartes);
-	this->toString(&debugMartes);
-	DEBUGS(&debugMartes);
+	
 	int keysBlockNumber= getKeysFileBlockNumberFor(keyValue);
+	string debugMartes1;
+	this->toString(&debugMartes1);
+	DEBUGS(&debugMartes1);
+
 	_keysfile->removeRecordAt(keysBlockNumber, 0, keyValue);
+
+	string debugMartes2;
+	this->toString(&debugMartes2);
+	DEBUGS(&debugMartes2);
+
 	if (_keysfile->getRecordBlock(keysBlockNumber)->getRecords()->size() == 0) {
 		this->simplify(keysBlockNumber, keyValue);
+		
+		string debugMartes3;
+		this->toString(&debugMartes3);
+		DEBUGS(&debugMartes3);
+
 	}
 }
 
-void HashIndex::simplify(int keysBlockNumber, DataValue* keyValue) {
-	int deltaDispersion = _dispersionfile->getAt(keysBlockNumber-1) / 2;
+void HashIndex::simplify(int emptyKeysBlockNumber, DataValue* keyValue) {
+	if (_hashtable->getSize()==1) {
+		return;
+	}
+
+	int deltaDispersion = _dispersionfile->getAt(emptyKeysBlockNumber-1) / 2;
 	int hashTablePosition = getHashTablePosition(keyValue);
 	
-	int upperHashTablePosition = (_hashtable->getSize()+deltaDispersion)%_hashtable->getSize(); 
-	int lowerHashTablePosition = (_hashtable->getSize()-deltaDispersion)%_hashtable->getSize();
-	
-	//Verificar si esta igualdad es correcta
-	if (_hashtable->getAt(upperHashTablePosition)==_hashtable->getAt(lowerHashTablePosition)) {
-		
-		int newDispersion = _hashtable->getAt(lowerHashTablePosition);
-		_hashtable->update(hashTablePosition,newDispersion);
+	int upperHashTablePosition = (hashTablePosition+deltaDispersion)%_hashtable->getSize(); 
+	int lowerHashTablePosition = (hashTablePosition-deltaDispersion)%_hashtable->getSize();
+	int upperKeysBlockNumber = _hashtable->getAt(upperHashTablePosition); 
+	int lowerKeysBlockNumber = _hashtable->getAt(lowerHashTablePosition);
 
-		int steps = _dispersionfile->getAt(keysBlockNumber-1);
+	//Verificar si esta igualdad es correcta
+	if (_dispersionfile->getAt(upperKeysBlockNumber-1)==_dispersionfile->getAt(lowerKeysBlockNumber-1)) {
+
+		int newKeyBlockNumber= (emptyKeysBlockNumber==lowerKeysBlockNumber)?upperKeysBlockNumber:lowerKeysBlockNumber;
+		_hashtable->update(hashTablePosition,newKeyBlockNumber);
+
+		//Recorro la hashtable desde la posicion X=emptyKeysBlockNumber-1 de a saltos 
+		//dispersion(X) y le asigno lowerKeysBlockNumber
+		int steps = _dispersionfile->getAt(emptyKeysBlockNumber-1);
 		int current = hashTablePosition;
 		for (int i = 0;i<(_hashtable->getSize()/steps);i++){
 			current = current % _hashtable->getSize();
-			_hashtable->update(current,newDispersion);
+			_hashtable->update(current,newKeyBlockNumber);
 			current = current + steps;					
 		}
-		
-		_dispersionfile->update(keysBlockNumber,_dispersionfile->getAt(keysBlockNumber-1) / 2);
-		
+		_dispersionfile->update(emptyKeysBlockNumber-1,_dispersionfile->getAt(emptyKeysBlockNumber-1) / 2);
+		_dispersionfile->update(newKeyBlockNumber-1,_dispersionfile->getAt(newKeyBlockNumber-1) / 2);
+
+		//Si las dos mitades de la hashtable son iguales, trunco la hashtable a la mitad		
 		int distance= _hashtable->getSize()/2;
 		int i=0;
-		int other= (keysBlockNumber+distance)%_hashtable->getSize();
+		int other= (emptyKeysBlockNumber+distance)%_hashtable->getSize();
 		while (i<distance) {
-			if ((i!=keysBlockNumber)&&(i!=other)&&(_hashtable->getAt(i)!=_hashtable->getAt(distance+i))) {
+			if ((i!=emptyKeysBlockNumber)&&(i!=other)&&(_hashtable->getAt(i)!=_hashtable->getAt(distance+i))) {
 				return;
 			}
 			i++;
@@ -347,7 +367,7 @@ void HashIndex::index(DataValue* keyValue, int blockNumber) {
 			int current= hashTablePosition;
 			for (int i= 0;i<steps;i++){
 				current=current%_hashtable->getSize();
-				_hashtable->update(current,newDispersion);
+				_hashtable->update(current,_keysfile->getLastRecordsBlockIndex());
 				current=current+newDispersion;					
 			}
 		}
