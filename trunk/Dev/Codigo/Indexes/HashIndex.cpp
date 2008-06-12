@@ -337,21 +337,21 @@ void HashIndex::index(DataValue* keyValue, int blockNumber) {
 		DEBUGS(&overflowMsg);
 		int hashTablePosition = getHashTablePosition(keyValue);
 		
+		//duplica la dispersion del bucket confilctivo y el nuevo
+		int dispersionOriginal = _dispersionfile->getAt(keysBlockNumber-1);
+		int newDispersion = 2*dispersionOriginal;
+
 		//Crea nuevo bucket vacio
 		//TODO - En vez de appendear, fijarse si existe algun bloque libre y no referenciado
-		_keysfile->appendEmptyBlock();
-		
-		int dispersionOriginal = _dispersionfile->getAt(keysBlockNumber-1);
+		this->appendBucket(newDispersion);
 		
 		if (dispersionOriginal<=_hashtable->getSize()) {
 			_hashtable->grow();
 			_hashtable->update(hashTablePosition,_keysfile->getLastRecordsBlockIndex());
 		}
-		
+
 		//duplica la dispersion del bucket confilctivo y el nuevo
-		int newDispersion = 2*dispersionOriginal;
-		_dispersionfile->update(keysBlockNumber-1,newDispersion);
-		_dispersionfile->append(newDispersion);
+		updateDispersion(keysBlockNumber,newDispersion);
 		
 		// REVISAR ESTA COMPARACION!!!
 		//VERIFICAS SI HAY QUE DUPLICAR LA TABLA
@@ -432,6 +432,31 @@ int HashIndex::getSize() {
 	return (this->_keysfile->getDataUsedSpace()+this->_hashtable->getPhysicalSize());
 }
 
-void HashIndex::appendBlock(int dispersion){
-	
+void HashIndex::appendBucket(int dispersion){
+	_keysfile->appendEmptyBlock();
+	_dispersionfile->append(dispersion);
 }
+
+void HashIndex::removeLastBucket(){
+	_keysfile->truncateLast();
+	_dispersionfile->removeLast();
+}
+
+int HashIndex::getDispersion(int blockNumber){
+	return _dispersionfile->getAt(blockNumber-1);
+}
+
+void HashIndex::updateDispersion(int blockNumber, int withValue){
+	_dispersionfile->update(blockNumber-1,withValue);
+}
+
+void HashIndex::updateHashTableCyclicaly(int startingPosition,int step,int updateWith){
+	int stepCount= _hashtable->getSize()/step;
+	int current= startingPosition;
+	for (int i= 0;i<stepCount;i++){
+		current=current%_hashtable->getSize();
+		_hashtable->update(current,updateWith);
+		current=current+step;				
+	}
+}
+
