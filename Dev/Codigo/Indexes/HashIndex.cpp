@@ -3,8 +3,6 @@
 #include "../Utils.h"
 #include "../Data/ContentOverflowBlockException.h"
 #include "../Data/RecordSizeOverflowException.h"
-#include "../Data/KeysBlockFactory.h"
-#include "../Data/KeysBlock.h"
 #include "../IntValue.h"
 #include "../Data/RecordNotFoundException.h"
 #include "../Field.h"
@@ -88,7 +86,7 @@ void HashIndex::load(char* folderPath, char* filePath) {
 	dispersionFileFullPath.append(".disp");
 
 	_keysfile=new DataFile((char*)keysFileName.c_str());
-	_keysfile->setBlockFactory(new KeysBlockFactory());
+	_keysfile->setBlockFactory(new RecordsBlockFactory());
 	_keysfile->load(folderPath);
 	this->_keyType= _keysfile->getFields()->at(0)->getDataType();
 
