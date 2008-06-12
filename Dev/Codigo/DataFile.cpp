@@ -683,3 +683,18 @@ bool DataFile::truncateLast(){
 	}
 	return false;
 }
+
+bool DataFile::truncateBlocks(T_BLOCKCOUNT newRecordsBlockCount){
+	int currentRecordsBlockCount=this->getRecordsBlockCount();
+	for(int i=currentRecordsBlockCount;i>newRecordsBlockCount;i--){
+		if(!this->truncateLast()){
+			currentRecordsBlockCount=this->getRecordsBlockCount();
+			return false;
+		}
+	}
+	currentRecordsBlockCount=this->getRecordsBlockCount();
+	if(newRecordsBlockCount!=newRecordsBlockCount){
+		throw new CannotUpdateRecordException();
+	}
+	return true;
+}
