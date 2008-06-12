@@ -215,13 +215,13 @@ bool BlockStructuredFile::truncateLast(){
 	if(this->getBlockCount()>this->getHeaderBlockCount()){
 		this->setBlockCount(this->getBlockCount()-1);
 		this->saveHeader();
-			if(this->_file->is_open()){
-				this->_file->close();
-			}
-			delete this->_file;
-			truncate(this->_filename,this->getBlockCount()*this->getBlockSize());
-			this->_file = new fstream(this->_filename,ios::in|ios::out|ios::binary);
-			return true;	
+		if(this->_file->is_open()){
+			this->_file->close();
+		}
+		delete this->_file;
+		truncate(this->_filename,this->getBlockCount()*this->getBlockSize());
+		this->_file = new fstream(this->_filename,ios::in|ios::out|ios::binary);
+		return true;	
 	}else{
 		return false;
 	}
