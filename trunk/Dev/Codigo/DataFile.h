@@ -102,6 +102,7 @@ public:
 	T_FILESIZE getDataIndexFreeSpace();
 	bool truncateLast();
 	T_BLOCKCOUNT truncateLastEmptyBlocks();
+	bool truncateBlocks(T_BLOCKCOUNT newRecordsBlockCount);
 
 };
 
