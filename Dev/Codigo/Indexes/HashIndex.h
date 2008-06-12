@@ -34,6 +34,7 @@ public:
 	virtual void deleTe();
 	virtual void setBlocksBuffer(BlocksBuffer* blocksBuffer);
 	virtual void simplify(int keysBlockNumber, DataValue* keyValue);
+	virtual	void recursivelyShrink(void);
 	virtual unsigned int getHashTablePosition(DataValue* keyValue);
 	virtual int getKeysFileBlockNumberFor(DataValue* keyValue);
 	unsigned int RSHash(char* input);

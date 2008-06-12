@@ -157,22 +157,29 @@ void HashIndex::simplify(int emptyKeysBlockNumber, DataValue* keyValue) {
 		_dispersionfile->update(emptyKeysBlockNumber-1,_dispersionfile->getAt(emptyKeysBlockNumber-1) / 2);
 		_dispersionfile->update(newKeyBlockNumber-1,_dispersionfile->getAt(newKeyBlockNumber-1) / 2);
 
-		//Si las dos mitades de la hashtable son iguales, trunco la hashtable a la mitad		
-		int distance= _hashtable->getSize()/2;
-		int i=0;
-		int other= (emptyKeysBlockNumber+distance)%_hashtable->getSize();
-		while (i<distance) {
-			if ((i!=emptyKeysBlockNumber)&&(i!=other)&&(_hashtable->getAt(i)!=_hashtable->getAt(distance+i))) {
-				return;
-			}
-			i++;
-		}
-		
-		_hashtable->simplify();				
+		//Si las dos mitades de la hashtable son iguales, trunco la hashtable a la mitad
+		recursivelyShrink();
 	}
+}
 
-	
-
+void HashIndex::recursivelyShrink(void){
+	int distance= _hashtable->getSize()/2;
+	int i=0;
+	bool equals= true;
+	while (i<distance && equals) {
+		if (_hashtable->getAt(i)!=_hashtable->getAt(distance+i)) {
+			equals= false;
+		}
+		i++;
+	}
+	if (_hashtable->getSize()==1) {
+		equals= false;
+	}
+	if(equals){
+		_hashtable->simplify();
+		this->recursivelyShrink();
+	}
+}
 
 //	if (_hashtable->getSize()==1){
 //		return;
@@ -207,7 +214,7 @@ void HashIndex::simplify(int emptyKeysBlockNumber, DataValue* keyValue) {
 //		this->reIndex(arg0);
 //		this->reIndex(arg0+distance);
 //	}
-}
+
 
 void HashIndex::update(DataValue* keyValue, int blockNumber) {
 	string buffer;
@@ -345,7 +352,7 @@ void HashIndex::index(DataValue* keyValue, int blockNumber) {
 		//TODO - En vez de appendear, fijarse si existe algun bloque libre y no referenciado
 		this->appendBucket(newDispersion);
 		
-		if (dispersionOriginal<=_hashtable->getSize()) {
+		if (dispersionOriginal>=_hashtable->getSize()) {
 			_hashtable->grow();
 			_hashtable->update(hashTablePosition,_keysfile->getLastRecordsBlockIndex());
 		}
