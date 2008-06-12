@@ -135,6 +135,7 @@ bool HashTable::removeLast(){
 		fseek(_hashFile,0,SEEK_SET);
 		fwrite(&_size,INT_SIZE,1,_hashFile);
 		truncate(_fileName,this->getPhysicalSize());
+		return true;
 	}else{
 		return false;
 	}
