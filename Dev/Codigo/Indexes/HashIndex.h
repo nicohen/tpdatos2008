@@ -39,6 +39,7 @@ public:
 	unsigned int RSHash(char* input);
 	virtual void toString(string* buffer);
 	virtual int getSize();
+	void appendBlock(int dispersion);
 };
 
 #endif /*HASHINDEX_H_*/
