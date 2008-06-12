@@ -111,7 +111,6 @@ void HashTable::simplify(){
 
 void HashTable::toString(string* buffer) {
 	int at;
-	buffer->append("HASHTABLE: ");
 	if (_size>0) {
 		for(int i=0;i<_size;i++) {
 			at = getAt(i);

@@ -399,13 +399,19 @@ void HashIndex::setBlocksBuffer(BlocksBuffer* blocksBuffer) {
 	}
 }
 
+
 void HashIndex::toString(string* buffer) {
 	this->_keysfile->toString(buffer);
-	this->_hashtable->toString(buffer);
-	buffer->append("\n tabla de dispersiones \n");
+	buffer->append("\n TABLA DE DISPERSIONES \n");
 	this->_dispersionfile->toString(buffer);
+	buffer->append("\n HASHTABLE \n");
+	this->_hashtable->toString(buffer);
 }
 
 int HashIndex::getSize() {
 	return (this->_keysfile->getDataUsedSpace()+this->_hashtable->getPhysicalSize());
+}
+
+void HashIndex::appendBlock(int dispersion){
+	
 }
