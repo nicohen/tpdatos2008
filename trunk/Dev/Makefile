@@ -14,7 +14,6 @@ MAIN_NAHUEL= $(CODE_PATH)TestSuite_BlockStructuredFile.cpp
 
 SOURCES:=	$(CODE_PATH)BufferedDataManager.cpp\
 	$(DATA_PATH)Block.cpp\
-	$(DATA_PATH)KeysBlockFactory.cpp\
 	$(DATA_PATH)RecordsBlockFactory.cpp\
 	$(DATA_PATH)BlockFactory.cpp\
 	$(DATA_PATH)MetadataBlockFactory.cpp\
@@ -84,7 +83,6 @@ SOURCES:=	$(CODE_PATH)BufferedDataManager.cpp\
 	$(BUFFER_PATH)DataFilesBuffer.cpp\
 	$(DATA_PATH)ContentOverflowBlockException.cpp\
 	$(DATA_PATH)RecordSizeOverflowException.cpp\
-	$(DATA_PATH)KeysBlock.cpp\
 	$(INDEXES_PATH)HashTable.cpp\
 	$(INDEXES_PATH)HashIndex.cpp\
 	$(DATA_PATH)CannotUpdateRecordException.cpp\
