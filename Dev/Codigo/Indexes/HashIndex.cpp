@@ -211,6 +211,7 @@ unsigned int HashIndex::getHash(DataValue* input) {
 	input->toString(&inputString);
 	string cubihashdebug;
 	cubihashdebug.append("-->TEST_CUBI_HASH: ");
+	cubihashdebug.append((char*)inputString.c_str());
 	input->toString(&cubihashdebug);
 	unsigned int hashResult= RSHash((char*)inputString.c_str());
 	cubihashdebug.append(", ");
@@ -293,14 +294,21 @@ void HashIndex::index(DataValue* keyValue, int blockNumber) {
 		insertMsg.append(" en el bucket número ");
 		appendIntTo(&insertMsg,keysBlockNumber);
 		insertMsg.append(".");
+		
+		string debugMartes1;
+		//this->_keysfile->toString(&debugMartes);
+		this->toString(&debugMartes1);
+		DEBUGS(&debugMartes1);
+
 		_keysfile->insertRecordAt(keysBlockNumber,keyRecord);
+		
+		string debugMartes2;
+		//this->_keysfile->toString(&debugMartes);
+		this->toString(&debugMartes2);
+		DEBUGS(&debugMartes2);
+
 	} catch(ContentOverflowBlockException* ex) {		
 		delete ex;
-		
-		string debugMartes;
-		//this->_keysfile->toString(&debugMartes);
-		this->toString(&debugMartes);
-		DEBUGS(&debugMartes);
 		
 		string overflowMsg;
 		overflowMsg.append("HASH Overflow en el bucket número ");
@@ -313,17 +321,28 @@ void HashIndex::index(DataValue* keyValue, int blockNumber) {
 		//TODO - En vez de appendear, fijarse si existe algun bloque libre y no referenciado
 		_keysfile->appendEmptyBlock();
 		
+		int dispersionOriginal = _dispersionfile->getAt(keysBlockNumber-1);
+		
+		if (dispersionOriginal<=_hashtable->getSize()) {
+			_hashtable->grow();
+			_hashtable->update(hashTablePosition,_keysfile->getLastRecordsBlockIndex());
+		}
+		
 		//duplica la dispersion del bucket confilctivo y el nuevo
-		int newDispersion = 2*_dispersionfile->getAt(keysBlockNumber-1);
+		int newDispersion = 2*dispersionOriginal;
 		_dispersionfile->update(keysBlockNumber-1,newDispersion);
 		_dispersionfile->append(newDispersion);
 		
 		// REVISAR ESTA COMPARACION!!!
 		//VERIFICAS SI HAY QUE DUPLICAR LA TABLA
-		if (_dispersionfile->getAt(keysBlockNumber-1)>_hashtable->getSize()) {
-			_hashtable->grow();
-			_hashtable->update(hashTablePosition,_keysfile->getLastRecordsBlockIndex());
-		}else{
+		string verifica;
+		verifica.append("---->HASH verifica si hay que duplicar la tabla, dispersion: ");
+		appendIntTo(&verifica,_dispersionfile->getAt(keysBlockNumber-1));
+		verifica.append("tamaño de hashtable: ");
+		appendIntTo(&verifica,_hashtable->getSize());
+		DEBUGS(&verifica);
+
+		if (dispersionOriginal>_hashtable->getSize()) {
 			int steps= _hashtable->getSize()/newDispersion;
 			int current= hashTablePosition;
 			for (int i= 0;i<steps;i++){
@@ -337,6 +356,13 @@ void HashIndex::index(DataValue* keyValue, int blockNumber) {
 		//_hashtable->update(getHashTablePosition(keyValue),_keysfile->getLastRecordsBlockIndex());
 		this->reIndex(keysBlockNumber);
 		this->index(keyValue,blockNumber);
+		
+		string debugMartes;
+		//this->_keysfile->toString(&debugMartes);
+		this->toString(&debugMartes);
+		DEBUGS(&debugMartes);
+
+		
 	} catch(RecordSizeOverflowException* ex2) {
 //		delete ex2;
 		string exmessage;
