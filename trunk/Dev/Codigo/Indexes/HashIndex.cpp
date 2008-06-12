@@ -354,9 +354,10 @@ void HashIndex::index(DataValue* keyValue, int blockNumber) {
 		
 		if (dispersionOriginal>=_hashtable->getSize()) {
 			_hashtable->grow();
-			_hashtable->update(hashTablePosition,_keysfile->getLastRecordsBlockIndex());
+			
 		}
-
+	//		_hashtable->update((hashTablePosition+_hashtable->getSize()/2)%_hashtable->getSize(),_keysfile->getLastRecordsBlockIndex());
+		_hashtable->update(hashTablePosition,_keysfile->getLastRecordsBlockIndex());
 		//duplica la dispersion del bucket confilctivo y el nuevo
 		updateDispersion(keysBlockNumber,newDispersion);
 		
@@ -378,6 +379,7 @@ void HashIndex::index(DataValue* keyValue, int blockNumber) {
 				current=current+newDispersion;					
 			}
 		}
+		
 		//_dispersionfile->update(this->_keysfile->getLastRecordsBlockIndex()-1,newDispersion);
 		
 		//_hashtable->update(getHashTablePosition(keyValue),_keysfile->getLastRecordsBlockIndex());
