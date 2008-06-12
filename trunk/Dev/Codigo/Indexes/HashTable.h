@@ -25,6 +25,7 @@ class HashTable{
 		void simplify();
 		void toString(std::string* buffer);
 		void append(int value);
+		bool removeLast();
 };
 
 #endif /*HASHTABLE_H_*/
