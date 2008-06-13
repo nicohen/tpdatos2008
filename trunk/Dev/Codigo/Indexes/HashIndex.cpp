@@ -7,6 +7,7 @@
 #include "../Data/RecordNotFoundException.h"
 #include "../Field.h"
 #include <vector>
+#include <set>
 
 HashIndex::HashIndex(T_BLOCKSIZE indexBlockSize, DataType* keyType) {
 	_keyType=keyType;
@@ -51,7 +52,7 @@ void HashIndex::create(char* folderPath, char* filePath) {
 	_keysfile=new DataFile((char*)keysFileName.c_str(),_indexBlockSize,keyField,fields,NULL);
 //	_keysfile->setBlockFactory(new KeysBlockFactory());
 	_keysfile->save(folderPath);
- 
+
 	_hashtable=new HashTable((char*)"HASH TABLE ");
 	_hashtable->create((char*)hashFileFullPath.c_str(), 1);
 	_hashtable->update(0, 1);
@@ -316,14 +317,13 @@ void HashIndex::index(DataValue* keyValue, int blockNumber) {
 
 		//Crea nuevo bucket vacio
 		//TODO - En vez de appendear, fijarse si existe algun bloque libre y no referenciado
-		this->appendBucket(newDispersion);
+		//this->appendBucket(newDispersion);
+		int newBlockNumber= this->getFreeBucket(newDispersion);
 		
 		if (dispersionOriginal>=_hashtable->getSize()) {
-			_hashtable->grow();
-			
+			_hashtable->grow();	
 		}
-	//		_hashtable->update((hashTablePosition+_hashtable->getSize()/2)%_hashtable->getSize(),_keysfile->getLastRecordsBlockIndex());
-		_hashtable->update(hashTablePosition,_keysfile->getLastRecordsBlockIndex());
+		_hashtable->update(hashTablePosition,newBlockNumber);
 		//duplica la dispersion del bucket confilctivo y el nuevo
 		updateDispersion(keysBlockNumber,newDispersion);
 		
@@ -341,11 +341,11 @@ void HashIndex::index(DataValue* keyValue, int blockNumber) {
 			int current= hashTablePosition;
 			for (int i= 0;i<steps;i++){
 				current=current%_hashtable->getSize();
-				_hashtable->update(current,_keysfile->getLastRecordsBlockIndex());
-				current=current+newDispersion;					
+				_hashtable->update(current,newBlockNumber);
+				current=current+newDispersion;
 			}
 		}
-		
+
 		//_dispersionfile->update(this->_keysfile->getLastRecordsBlockIndex()-1,newDispersion);
 		
 		//_hashtable->update(getHashTablePosition(keyValue),_keysfile->getLastRecordsBlockIndex());
@@ -451,3 +451,33 @@ int HashIndex::getGreatestReferencedKeyBlockNumber(){
 	return max;
 }
 
+struct intCmp {
+	bool operator()( const int s1, const int s2 ) const {
+		return s1<s2;
+	}
+};
+
+
+int HashIndex::getFreeBucket(int newDispersion){
+	set<int,intCmp> referenced;
+	bool found=false;
+	int i;
+	for(i=0;i<_hashtable->getSize();i++){
+		int value=	_hashtable->getAt(i);
+		referenced.insert(value);
+	}
+	for(int blockNumber=1;blockNumber<=_keysfile->getRecordsBlockCount()&&!found;blockNumber++){
+		if(referenced.count(blockNumber)==0){
+			found=true;
+			i=blockNumber;
+		}
+	}
+	if (found){
+		updateDispersion(i,newDispersion);
+		return i;
+	}else{
+		appendBucket(newDispersion);
+		int lastRecordIndex =_keysfile->getLastRecordsBlockIndex();
+		return lastRecordIndex;
+	}
+}

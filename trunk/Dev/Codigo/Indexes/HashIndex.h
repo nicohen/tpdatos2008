@@ -41,6 +41,7 @@ public:
 	virtual void toString(string* buffer);
 	virtual int getSize();
 	void appendBucket(int dispersion);
+	int getFreeBucket(int newDispersion);
 	void removeLastBucket();
 	int getDispersion(int blockNumber);
 	void updateDispersion(int blockNumber, int withValue);
