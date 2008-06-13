@@ -51,7 +51,7 @@ void HashIndex::create(char* folderPath, char* filePath) {
 	_keysfile=new DataFile((char*)keysFileName.c_str(),_indexBlockSize,keyField,fields,NULL);
 //	_keysfile->setBlockFactory(new KeysBlockFactory());
 	_keysfile->save(folderPath);
-
+ 
 	_hashtable=new HashTable((char*)"HASH TABLE ");
 	_hashtable->create((char*)hashFileFullPath.c_str(), 1);
 	_hashtable->update(0, 1);
