@@ -45,6 +45,8 @@ public:
 	int getDispersion(int blockNumber);
 	void updateDispersion(int blockNumber, int withValue);
 	void updateHashTableCyclicaly(int startingPosition,int step,int updateWith);
+	void truncateKeysFileIfPossible();
+	int getGreatestReferencedKeyBlockNumber();
 };
 
 #endif /*HASHINDEX_H_*/
