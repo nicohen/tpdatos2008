@@ -123,7 +123,7 @@ void HashIndex::simplify(int emptyKeysBlockNumber, DataValue* keyValue) {
 	int hashTablePosition = getHashTablePosition(keyValue);
 	
 	int upperHashTablePosition = (hashTablePosition+deltaDispersion)%_hashtable->getSize(); 
-	int lowerHashTablePosition = (hashTablePosition-deltaDispersion)%_hashtable->getSize();
+	int lowerHashTablePosition = (_hashtable->getSize()+hashTablePosition-deltaDispersion)%_hashtable->getSize();
 	int upperKeysBlockNumber = _hashtable->getAt(upperHashTablePosition); 
 	int lowerKeysBlockNumber = _hashtable->getAt(lowerHashTablePosition);
 
@@ -291,7 +291,8 @@ void HashIndex::index(DataValue* keyValue, int blockNumber) {
 		int newBlockNumber= this->getFreeBucket(newDispersion);
 		
 		if (dispersionOriginal>=_hashtable->getSize()) {
-			_hashtable->grow();	
+			_hashtable->grow();
+//			_hashtable->update(hashTablePosition,newBlockNumber);	
 		}
 		_hashtable->update(hashTablePosition,newBlockNumber);
 		//duplica la dispersion del bucket confilctivo y el nuevo
