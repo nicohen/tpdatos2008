@@ -3,8 +3,9 @@
 #include "../Utils.h"
 #include "../Data/FileNotFoundException.h"
 
-HashTable::HashTable(){
+HashTable::HashTable(char* debugHeader){
 	_hashFile=NULL;
+	_debugHeader = cloneStr(debugHeader);
 }
 
 HashTable::~HashTable(){
@@ -52,7 +53,8 @@ int HashTable::getAt(int i){
 
 void HashTable::update(int index, int value){
 	string msg;
-	msg.append("HASH Actualizando la tabla de hashes. Posicion '");
+	msg.append(_debugHeader);
+	msg.append("Actualizando la tabla. Posicion '");
 	appendIntTo(&msg,index);
 	msg.append("', Valor '");
 	appendIntTo(&msg,value);
@@ -65,7 +67,8 @@ void HashTable::update(int index, int value){
 
 void HashTable::grow(){
 	string msg;
-	msg.append("HASH Agrandando la tabla de hashes. Valor anterior '");
+	msg.append(_debugHeader);
+	msg.append("Agrandando la tabla. Valor anterior '");
 	appendIntTo(&msg,_size);
 	int* buffer= (int*) malloc(INT_SIZE*_size);
 	fseek(_hashFile,INT_SIZE,SEEK_SET);
