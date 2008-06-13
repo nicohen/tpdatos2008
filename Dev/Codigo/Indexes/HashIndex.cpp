@@ -107,23 +107,10 @@ void HashIndex::unIndex(DataValue* keyValue) {
 	DEBUGS(&buffer);
 	
 	int keysBlockNumber= getKeysFileBlockNumberFor(keyValue);
-	string debugMartes1;
-	this->toString(&debugMartes1);
-	DEBUGS(&debugMartes1);
-
 	_keysfile->removeRecordAt(keysBlockNumber, 0, keyValue);
-
-	string debugMartes2;
-	this->toString(&debugMartes2);
-	DEBUGS(&debugMartes2);
 
 	if (_keysfile->getRecordBlock(keysBlockNumber)->getRecords()->size() == 0) {
 		this->simplify(keysBlockNumber, keyValue);
-		
-		string debugMartes3;
-		this->toString(&debugMartes3);
-		DEBUGS(&debugMartes3);
-
 	}
 }
 
@@ -203,14 +190,7 @@ void HashIndex::update(DataValue* keyValue, int blockNumber) {
 unsigned int HashIndex::getHash(DataValue* input) {
 	string inputString;
 	input->toString(&inputString);
-	string cubihashdebug;
-	cubihashdebug.append("-->TEST_CUBI_HASH: ");
-	cubihashdebug.append((char*)inputString.c_str());
-	input->toString(&cubihashdebug);
 	unsigned int hashResult= RSHash((char*)inputString.c_str());
-	cubihashdebug.append(", ");
-	appendIntTo(&cubihashdebug,hashResult);
-	DEBUGS(&cubihashdebug);
 	return hashResult;
 }
 
@@ -289,17 +269,7 @@ void HashIndex::index(DataValue* keyValue, int blockNumber) {
 		appendIntTo(&insertMsg,keysBlockNumber);
 		insertMsg.append(".");
 		
-		string debugMartes1;
-		//this->_keysfile->toString(&debugMartes);
-		this->toString(&debugMartes1);
-		DEBUGS(&debugMartes1);
-
 		_keysfile->insertRecordAt(keysBlockNumber,keyRecord);
-		
-		string debugMartes2;
-		//this->_keysfile->toString(&debugMartes);
-		this->toString(&debugMartes2);
-		DEBUGS(&debugMartes2);
 
 	} catch(ContentOverflowBlockException* ex) {		
 		delete ex;
@@ -330,7 +300,7 @@ void HashIndex::index(DataValue* keyValue, int blockNumber) {
 		// REVISAR ESTA COMPARACION!!!
 		//VERIFICAS SI HAY QUE DUPLICAR LA TABLA
 		string verifica;
-		verifica.append("---->HASH verifica si hay que duplicar la tabla, dispersion: ");
+		verifica.append("HASH verifica si hay que duplicar la tabla, dispersion: ");
 		appendIntTo(&verifica,_dispersionfile->getAt(keysBlockNumber-1));
 		verifica.append("tamaño de hashtable: ");
 		appendIntTo(&verifica,_hashtable->getSize());
@@ -351,12 +321,6 @@ void HashIndex::index(DataValue* keyValue, int blockNumber) {
 		//_hashtable->update(getHashTablePosition(keyValue),_keysfile->getLastRecordsBlockIndex());
 		this->reIndex(keysBlockNumber);
 		this->index(keyValue,blockNumber);
-		
-		string debugMartes;
-		//this->_keysfile->toString(&debugMartes);
-		this->toString(&debugMartes);
-		DEBUGS(&debugMartes);
-
 		
 	} catch(RecordSizeOverflowException* ex2) {
 //		delete ex2;
