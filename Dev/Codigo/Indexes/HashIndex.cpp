@@ -52,11 +52,11 @@ void HashIndex::create(char* folderPath, char* filePath) {
 //	_keysfile->setBlockFactory(new KeysBlockFactory());
 	_keysfile->save(folderPath);
 
-	_hashtable=new HashTable();
+	_hashtable=new HashTable((char*)"HASH TABLE ");
 	_hashtable->create((char*)hashFileFullPath.c_str(), 1);
 	_hashtable->update(0, 1);
 	
-	_dispersionfile=new HashTable();
+	_dispersionfile=new HashTable((char*)"DISPERSION TABLE ");
 	_dispersionfile->create((char*)dispersionFileFullPath.c_str(), 1);
 	_dispersionfile->update(0, 1);
 }
@@ -92,10 +92,10 @@ void HashIndex::load(char* folderPath, char* filePath) {
 
 	_indexBlockSize= _keysfile->getBlockStructuredFile()->getBlockSize();
 
-	_hashtable=new HashTable();
+	_hashtable=new HashTable((char*)"HASH TABLE ");
 	_hashtable->load((char*)hashFileFullPath.c_str());
 	
-	_dispersionfile=new HashTable();
+	_dispersionfile=new HashTable((char*)"DISPERSION TABLE ");
 	_dispersionfile->load((char*)dispersionFileFullPath.c_str());
 }
 

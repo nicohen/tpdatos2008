@@ -9,10 +9,11 @@ class HashTable{
 		int _size;
 		FILE* _hashFile;
 		char* _fileName;
+		char* _debugHeader;
 		
 		static const int INT_SIZE= sizeof(int);
 	public:
-		HashTable();
+		HashTable(char* debugHeader);
 		virtual ~HashTable();
 		void create(char* filePath, int size);
 		void load(char* filePath);
