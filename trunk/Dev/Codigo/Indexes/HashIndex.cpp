@@ -160,6 +160,7 @@ void HashIndex::simplify(int emptyKeysBlockNumber, DataValue* keyValue) {
 		//Si las dos mitades de la hashtable son iguales, trunco la hashtable a la mitad
 		recursivelyShrink();
 	}
+	truncateKeysFileIfPossible();
 }
 
 void HashIndex::recursivelyShrink(void){
@@ -180,41 +181,6 @@ void HashIndex::recursivelyShrink(void){
 		this->recursivelyShrink();
 	}
 }
-
-//	if (_hashtable->getSize()==1){
-//		return;
-//	}
-//	int distance= _hashtable->getSize()/2;
-//	int i=0;
-//	int other= (arg0+distance)%_hashtable->getSize();
-//	while (i<distance) {
-//		if ((i!=arg0)&&(i!=other)&&(_hashtable->getAt(i)!=_hashtable->getAt(distance+i))) {
-//			return;
-//		}
-//		i++;
-//	}
-//	if (i==distance) {
-//		string buffer;
-//		buffer.append("HASH Simplificando la tabla de hash.\n");
-//		buffer.append("HASH Tamaño anterior: ");
-//		appendIntTo(&buffer,_hashtable->getSize());
-//		int lower=_hashtable->getAt(arg0);
-//		int hier=_hashtable->getAt(arg0+distance);
-//		int block1= _hashtable->getAt(arg0);
-//		int block2= _hashtable->getAt(other);
-//		_dispersionfile->update(block1-1,(_dispersionfile->getAt(block1-1)/2));
-//		_dispersionfile->update(block2-1,(_dispersionfile->getAt(block2-1)/2));
-//		_hashtable->simplify();
-//		buffer.append(". Tamaño nuevo: ");
-//		appendIntTo(&buffer,_hashtable->getSize());
-//		buffer.append("\n");
-//		DEBUGS(&buffer);
-//		_hashtable->update(arg0,(lower<hier)?lower:hier);
-//		
-//		this->reIndex(arg0);
-//		this->reIndex(arg0+distance);
-//	}
-
 
 void HashIndex::update(DataValue* keyValue, int blockNumber) {
 	string buffer;
@@ -467,5 +433,21 @@ void HashIndex::updateHashTableCyclicaly(int startingPosition,int step,int updat
 		_hashtable->update(current,updateWith);
 		current=current+step;				
 	}
+}
+
+void HashIndex::truncateKeysFileIfPossible(){
+	int maxBlockNumber = this->getGreatestReferencedKeyBlockNumber();
+	this->_keysfile->truncateBlocks(maxBlockNumber);
+}
+
+int HashIndex::getGreatestReferencedKeyBlockNumber(){
+	int max=0;
+	for(int i=0;i<=this->_hashtable->getSize();i++){
+		int current=this->_hashtable->getAt(i);
+		if(current>max){
+			max=current;
+		}
+	}
+	return max;
 }
 
