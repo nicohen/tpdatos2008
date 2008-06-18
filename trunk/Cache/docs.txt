@@ -1,7 +1,43 @@
 
-
+#################################################################################
 Para correr el Valgrind:
 valgrind --tool=cachegrind --D1=2048,4,64 ./cache.exe
+#################################################################################
 
+
+
+#################################################################################
 Para generar el cg_annotate:
 cg_annotate <nombredearchivo>
+#################################################################################
+
+
+
+#################################################################################
+Salida del cg_annotate
+#################################################################################
+
+nicolas@nicohen:~/workspace/Facultad/OrganizacionDeDatos/Cache$ cg_annotate cachegrind.out.6801
+--------------------------------------------------------------------------------
+I1 cache:         32768 B, 64 B, 8-way associative
+D1 cache:         2048 B, 64 B, 4-way associative
+L2 cache:         2097152 B, 64 B, 8-way associative
+Command:          ./cache.exe
+Data file:        cachegrind.out.6801
+Events recorded:  Ir I1mr I2mr Dr D1mr D2mr Dw D1mw D2mw
+Events shown:     Ir I1mr I2mr Dr D1mr D2mr Dw D1mw D2mw
+Event sort order: Ir I1mr I2mr Dr D1mr D2mr Dw D1mw D2mw
+Thresholds:       99 0 0 0 0 0 0 0 0
+Include dirs:
+User annotated:
+Auto-annotation:  off
+
+--------------------------------------------------------------------------------
+         Ir I1mr I2mr         Dr      D1mr   D2mr        Dw  D1mw D2mw
+--------------------------------------------------------------------------------
+263,536,793  683  675 92,535,795 7,391,246 17,418 7,269,933 6,812  235  PROGRAM TOTALS
+
+--------------------------------------------------------------------------------
+         Ir I1mr I2mr         Dr      D1mr   D2mr        Dw  D1mw D2mw  file:function
+--------------------------------------------------------------------------------
+262,141,269    3    3 92,123,719 7,341,965 13,778 7,114,950     0    0  /home/nicolas/workspace/Facultad/OrganizacionDeDatos/Cache/src/Cache.c:main
