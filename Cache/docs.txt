@@ -1,0 +1,7 @@
+
+
+Para correr el Valgrind:
+valgrind --tool=cachegrind --D1=2048,4,64 ./cache.exe
+
+Para generar el cg_annotate:
+cg_annotate <nombredearchivo>
