@@ -1,6 +1,6 @@
 CXX = g++
 SRCFOLDER =	src/
-CXXFLAGS =	-ansi -g -Wall -O0
+CXXFLAGS =	-ansi -g -Wall -pedantic
 TARGET = cache.exe
 
 all:
