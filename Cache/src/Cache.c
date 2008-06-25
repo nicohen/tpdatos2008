@@ -1,7 +1,7 @@
 #define N 192
 #define B 128
 #define P 8
-#define D 4 
+#define D 16 
 
 int mainOriginal(void) {
 	double a[N][N],b[N][N],c[N][N];
@@ -13,20 +13,40 @@ int mainOriginal(void) {
 			__builtin_prefetch(&a[i][j]);
 		}
 	}
-	
+	__builtin_prefetch(&a[i+D][k+D]);
 	//Se deberia recorrer hasta TOTAL-D
-	for (i=0;i<N;i++) 
-		for (j=0;j<N;j++)
-			for (k=0;k<N;k++) {
-				__builtin_prefetch(&a[i+D][k+D]);
-				c[i][j] += a[i][k]*b[k][j];
+	for (i=0;i<N;i++){ 
+		for (j=0;j<N;j++){
+			for (k=0;k<D;k+=8) {
+				__builtin_prefetch(&a[i][k]);
+				__builtin_prefetch(&a[i][k+1]);
+				__builtin_prefetch(&a[i][k+2]);
+				__builtin_prefetch(&a[i][k+3]);
+				__builtin_prefetch(&a[i][k+4]);
+				__builtin_prefetch(&a[i][k+5]);
+				__builtin_prefetch(&a[i][k+6]);
+				__builtin_prefetch(&a[i][k+7]);
 			}
-
-	//Se recorre a partir de TOTAL-D hasta TOTAL
-	for (i=0;i<D;i++) { 
-		for (j=0;j<D;j++) {
-			for (k=0;k<N;k++) {
+			for (k=0;k<N-D;k+=8) {
+				__builtin_prefetch(&a[i][k+D]);
 				c[i][j] += a[i][k]*b[k][j];
+				c[i][j] += a[i][k+1]*b[k+1][j];
+				c[i][j] += a[i][k+2]*b[k+2][j];
+				c[i][j] += a[i][k+3]*b[k+3][j];
+				c[i][j] += a[i][k+4]*b[k+4][j];
+				c[i][j] += a[i][k+5]*b[k+5][j];
+				c[i][j] += a[i][k+6]*b[k+6][j];
+				c[i][j] += a[i][k+7]*b[k+7][j];
+			}
+			for (k=N-D;k<N;k+=8) {
+				c[i][j] += a[i][k]*b[k][j];
+				c[i][j] += a[i][k+1]*b[k+1][j];
+				c[i][j] += a[i][k+2]*b[k+2][j];
+				c[i][j] += a[i][k+3]*b[k+3][j];
+				c[i][j] += a[i][k+4]*b[k+4][j];
+				c[i][j] += a[i][k+5]*b[k+5][j];
+				c[i][j] += a[i][k+6]*b[k+6][j];
+				c[i][j] += a[i][k+7]*b[k+7][j];
 			}
 		}
 	}
