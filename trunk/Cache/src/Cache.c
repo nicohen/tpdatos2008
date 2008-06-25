@@ -1,15 +1,36 @@
 #define N 192
 #define B 128
 #define P 8
+#define D 4 
 
 int mainOriginal(void) {
 	double a[N][N],b[N][N],c[N][N];
 	int i,j,k;
+	int aux;
 	
+	for (i=0;i<D;i++) { 
+		for (j=0;j<D;j++) {
+			__builtin_prefetch(&a[i][j]);
+		}
+	}
+	
+	//Se deberia recorrer hasta TOTAL-D
 	for (i=0;i<N;i++) 
 		for (j=0;j<N;j++)
-			for (k=0;k<N;k++)
+			for (k=0;k<N;k++) {
+				__builtin_prefetch(&a[i+D][k+D]);
 				c[i][j] += a[i][k]*b[k][j];
+			}
+
+	//Se recorre a partir de TOTAL-D hasta TOTAL
+	for (i=0;i<D;i++) { 
+		for (j=0;j<D;j++) {
+			for (k=0;k<N;k++) {
+				c[i][j] += a[i][k]*b[k][j];
+			}
+		}
+	}
+	
 	return 0;
 }
 
