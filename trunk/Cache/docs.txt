@@ -80,40 +80,37 @@ Auto-annotation:  off
 
 
 nicolas@nicohen:~/workspace/Facultad/OrganizacionDeDatos/Cache$ valgrind --tool=cachegrind --D1=2048,4,64 ./cache.exe
-==6975== Cachegrind, a cache and branch-prediction profiler.
-==6975== Copyright (C) 2002-2007, and GNU GPL'd, by Nicholas Nethercote et al.
-==6975== Using LibVEX rev 1804, a library for dynamic binary translation.
-==6975== Copyright (C) 2004-2007, and GNU GPL'd, by OpenWorks LLP.
-==6975== Using valgrind-3.3.0-Debian, a dynamic binary instrumentation framework.
-==6975== Copyright (C) 2000-2007, and GNU GPL'd, by Julian Seward et al.
-==6975== For more details, rerun with: -v
-==6975==
-==6975==
-==6975== I   refs:      257,859,754
-==6975== I1  misses:            711
-==6975== L2i misses:            703
-==6975== I1  miss rate:        0.00%
-==6975== L2i miss rate:        0.00%
-==6975==
-==6975== D   refs:       87,714,341  (80,370,678 rd   + 7,343,663 wr)
-==6975== D1  misses:      7,263,958  ( 7,258,414 rd   +     5,544 wr)
-==6975== L2d misses:         17,652  (    17,418 rd   +       234 wr)
-==6975== D1  miss rate:         8.2% (       9.0%     +       0.0%  )
-==6975== L2d miss rate:         0.0% (       0.0%     +       0.0%  )
-==6975==
-==6975== L2 refs:         7,264,669  ( 7,259,125 rd   +     5,544 wr)
-==6975== L2 misses:          18,355  (    18,121 rd   +       234 wr)
-==6975== L2 miss rate:          0.0% (       0.0%     +       0.0%  )
-
-
-
-nicolas@nicohen:~/workspace/Facultad/OrganizacionDeDatos/Cache$ cg_annotate cachegrind.out.6975 --auto=yes
+==8499== Cachegrind, a cache and branch-prediction profiler.
+==8499== Copyright (C) 2002-2007, and GNU GPL'd, by Nicholas Nethercote et al.
+==8499== Using LibVEX rev 1804, a library for dynamic binary translation.
+==8499== Copyright (C) 2004-2007, and GNU GPL'd, by OpenWorks LLP.
+==8499== Using valgrind-3.3.0-Debian, a dynamic binary instrumentation framework.
+==8499== Copyright (C) 2000-2007, and GNU GPL'd, by Julian Seward et al.
+==8499== For more details, rerun with: -v
+==8499==
+==8499==
+==8499== I   refs:      257,859,754
+==8499== I1  misses:            710
+==8499== L2i misses:            702
+==8499== I1  miss rate:        0.00%
+==8499== L2i miss rate:        0.00%
+==8499==
+==8499== D   refs:       87,714,341  (80,370,678 rd   + 7,343,663 wr)
+==8499== D1  misses:      7,263,350  ( 7,257,283 rd   +     6,067 wr)
+==8499== L2d misses:         17,651  (    17,417 rd   +       234 wr)
+==8499== D1  miss rate:         8.2% (       9.0%     +       0.0%  )
+==8499== L2d miss rate:         0.0% (       0.0%     +       0.0%  )
+==8499==
+==8499== L2 refs:         7,264,060  ( 7,257,993 rd   +     6,067 wr)
+==8499== L2 misses:          18,353  (    18,119 rd   +       234 wr)
+==8499== L2 miss rate:          0.0% (       0.0%     +       0.0%  )
+nicolas@nicohen:~/workspace/Facultad/OrganizacionDeDatos/Cache$ cg_annotate cachegrind.out.8499 --auto=yes
 --------------------------------------------------------------------------------
 I1 cache:         32768 B, 64 B, 8-way associative
 D1 cache:         2048 B, 64 B, 4-way associative
 L2 cache:         2097152 B, 64 B, 8-way associative
 Command:          ./cache.exe
-Data file:        cachegrind.out.6975
+Data file:        cachegrind.out.8499
 Events recorded:  Ir I1mr I2mr Dr D1mr D2mr Dw D1mw D2mw
 Events shown:     Ir I1mr I2mr Dr D1mr D2mr Dw D1mw D2mw
 Event sort order: Ir I1mr I2mr Dr D1mr D2mr Dw D1mw D2mw
@@ -125,12 +122,12 @@ Auto-annotation:  on
 --------------------------------------------------------------------------------
          Ir I1mr I2mr         Dr      D1mr   D2mr        Dw  D1mw D2mw
 --------------------------------------------------------------------------------
-257,859,754  711  703 80,370,678 7,258,414 17,418 7,343,663 5,544  234  PROGRAM TOTALS
+257,859,754  710  702 80,370,678 7,257,283 17,417 7,343,663 6,067  234  PROGRAM TOTALS
 
 --------------------------------------------------------------------------------
          Ir I1mr I2mr         Dr      D1mr   D2mr        Dw  D1mw D2mw  file:function
 --------------------------------------------------------------------------------
-256,464,207   29   29 79,958,597 7,210,368 13,778 7,188,676     0    0  /home/nicolas/workspace/Facultad/OrganizacionDeDatos/Cache/src/Cache.c:mainOriginal()
+256,464,207   28   28 79,958,597 7,210,368 13,778 7,188,676     0    0  /home/nicolas/workspace/Facultad/OrganizacionDeDatos/Cache/src/Cache.c:mainOriginal()
 
 --------------------------------------------------------------------------------
 -- Auto-annotated source: /home/nicolas/workspace/Facultad/OrganizacionDeDatos/Cache/src/Cache.c
@@ -141,37 +138,38 @@ Auto-annotation:  on
          .    .    .         .       .     .       .    .    .  #define B 128
          .    .    .         .       .     .       .    .    .  #define P 8
          .    .    .         .       .     .       .    .    .  #define D 16
+         .    .    .         .       .     .       .    .    .  #define PREFETCH(m,x,y) prefetch = (int) m[x][y];
          .    .    .         .       .     .       .    .    .
-         5    2    2         0       0     0       3    0    0  int mainOriginal(void) {
+         5    0    0         0       0     0       3    0    0  int mainOriginal(void) {
          .    .    .         .       .     .       .    .    .          double a[N][N],b[N][N],c[N][N];
          .    .    .         .       .     .       .    .    .          int i,j,k;
-         .    .    .         .       .     .       .    .    .          int aux;
+         .    .    .         .       .     .       .    .    .          register int prefetch;
          .    .    .         .       .     .       .    .    .
-       580    0    0       385       0     0       1    0    0          for (i=0;i<N;i++){
-   111,360    0    0    73,920       0     0     192    0    0                  for (j=0;j<N;j++){
+       580    1    1       385       0     0       1    0    0          for (i=0;i<N;i++){
+   111,360    1    1    73,920       0     0     192    0    0                  for (j=0;j<N;j++){
    368,640    0    0   184,320       0     0  36,864    0    0                          for (k=0;k<D;k+=8) {
-         .    .    .         .       .     .       .    .    .                                  __builtin_prefetch(&a[i][k]);
+         .    .    .         .       .     .       .    .    .                                  PREFETCH(a,i,k);
          .    .    .         .       .     .       .    .    .                          }
- 2,580,480    1    1 1,658,880       0     0  36,864    0    0                          for (k=0;k<N-D;k+=8) {
-         .    .    .         .       .     .       .    .    .                                  __builtin_prefetch(&a[i][k+D]);
+ 2,580,480    2    2 1,658,880       0     0  36,864    0    0                          for (k=0;k<N-D;k+=8) {
+         .    .    .         .       .     .       .    .    .                                  PREFETCH(a,i,k+D);
 27,574,272    2    2 8,921,088 932,928 9,318 811,008    0    0                                  c[i][j] += a[i][k]*b[k][j];
-29,196,288    2    2 8,921,088 811,008   528 811,008    0    0                                  c[i][j] += a[i][k+1]*b[k+1][j];
-29,196,288    1    1 8,921,088 811,008   528 811,008    0    0                                  c[i][j] += a[i][k+2]*b[k+2][j];
+29,196,288    1    1 8,921,088 811,008   528 811,008    0    0                                  c[i][j] += a[i][k+1]*b[k+1][j];
+29,196,288    2    2 8,921,088 811,008   528 811,008    0    0                                  c[i][j] += a[i][k+2]*b[k+2][j];
 29,196,288    2    2 8,921,088 811,008   528 811,008    0    0                                  c[i][j] += a[i][k+3]*b[k+3][j];
-29,196,288    2    2 8,921,088 811,008   528 811,008    0    0                                  c[i][j] += a[i][k+4]*b[k+4][j];
-29,196,288    1    1 8,921,088 811,008   528 811,008    0    0                                  c[i][j] += a[i][k+5]*b[k+5][j];
+29,196,288    1    1 8,921,088 811,008   528 811,008    0    0                                  c[i][j] += a[i][k+4]*b[k+4][j];
+29,196,288    2    2 8,921,088 811,008   528 811,008    0    0                                  c[i][j] += a[i][k+5]*b[k+5][j];
 29,196,288    2    2 8,921,088 811,008   528 811,008    0    0                                  c[i][j] += a[i][k+6]*b[k+6][j];
-29,196,288    1    1 8,921,088 811,008   528 811,008    0    0                                  c[i][j] += a[i][k+7]*b[k+7][j];
+29,196,288    0    0 8,921,088 811,008   528 811,008    0    0                                  c[i][j] += a[i][k+7]*b[k+7][j];
          .    .    .         .       .     .       .    .    .                          }
-   368,640    1    1   184,320       0     0  36,864    0    0                          for (k=N-D;k<N;k+=8) {
- 2,506,752    2    2   811,008  84,288   428  73,728    0    0                                  c[i][j] += a[i][k]*b[k][j];
- 2,654,208    1    1   811,008  73,728    48  73,728    0    0                                  c[i][j] += a[i][k+1]*b[k+1][j];
+   368,640    0    0   184,320       0     0  36,864    0    0                          for (k=N-D;k<N;k+=8) {
+ 2,506,752    1    1   811,008  84,288   428  73,728    0    0                                  c[i][j] += a[i][k]*b[k][j];
+ 2,654,208    2    2   811,008  73,728    48  73,728    0    0                                  c[i][j] += a[i][k+1]*b[k+1][j];
  2,654,208    2    2   811,008  73,728    48  73,728    0    0                                  c[i][j] += a[i][k+2]*b[k+2][j];
- 2,654,208    2    2   811,008  73,728    48  73,728    0    0                                  c[i][j] += a[i][k+3]*b[k+3][j];
- 2,654,208    1    1   811,008  73,728    48  73,728    0    0                                  c[i][j] += a[i][k+4]*b[k+4][j];
+ 2,654,208    1    1   811,008  73,728    48  73,728    0    0                                  c[i][j] += a[i][k+3]*b[k+3][j];
+ 2,654,208    2    2   811,008  73,728    48  73,728    0    0                                  c[i][j] += a[i][k+4]*b[k+4][j];
  2,654,208    2    2   811,008  73,728    48  73,728    0    0                                  c[i][j] += a[i][k+5]*b[k+5][j];
- 2,654,208    2    2   811,008  73,728    48  73,728    0    0                                  c[i][j] += a[i][k+6]*b[k+6][j];
- 2,654,208    0    0   811,008  73,728    48  73,728    0    0                                  c[i][j] += a[i][k+7]*b[k+7][j];
+ 2,654,208    1    1   811,008  73,728    48  73,728    0    0                                  c[i][j] += a[i][k+6]*b[k+6][j];
+ 2,654,208    1    1   811,008  73,728    48  73,728    0    0                                  c[i][j] += a[i][k+7]*b[k+7][j];
          .    .    .         .       .     .       .    .    .                          }
          .    .    .         .       .     .       .    .    .                  }
          .    .    .         .       .     .       .    .    .          }
@@ -186,8 +184,8 @@ Auto-annotation:  on
          .    .    .         .       .     .       .    .    .          for (i=0;i<N;i++)
          .    .    .         .       .     .       .    .    .                  for (j=0;j<N;j++)
          .    .    .         .       .     .       .    .    .                          for (k=0;k<N;k++)
--- line 49 ----------------------------------------
--- line 135 ----------------------------------------
+-- line 50 ----------------------------------------
+-- line 190 ----------------------------------------
          .    .    .         .       .     .       .    .    .                                  c[i][j] += a[i][k+7]*b[k+7][j];
          .    .    .         .       .     .       .    .    .                          }
          .    .    .         .       .     .       .    .    .                  }
@@ -358,37 +356,37 @@ Ir I1mr I2mr Dr D1mr D2mr Dw D1mw D2mw
 
 
 nicolas@nicohen:~/workspace/Facultad/OrganizacionDeDatos/Cache$ valgrind --tool=cachegrind --D1=2048,4,64 ./cache.exe
-==7949== Cachegrind, a cache and branch-prediction profiler.
-==7949== Copyright (C) 2002-2007, and GNU GPL'd, by Nicholas Nethercote et al.
-==7949== Using LibVEX rev 1804, a library for dynamic binary translation.
-==7949== Copyright (C) 2004-2007, and GNU GPL'd, by OpenWorks LLP.
-==7949== Using valgrind-3.3.0-Debian, a dynamic binary instrumentation framework.
-==7949== Copyright (C) 2000-2007, and GNU GPL'd, by Julian Seward et al.
-==7949== For more details, rerun with: -v
-==7949==
-==7949==
-==7949== I   refs:      257,859,754
-==7949== I1  misses:            711
-==7949== L2i misses:            703
-==7949== I1  miss rate:        0.00%
-==7949== L2i miss rate:        0.00%
-==7949==
-==7949== D   refs:       87,714,341  (80,370,678 rd   + 7,343,663 wr)
-==7949== D1  misses:      7,263,350  ( 7,257,283 rd   +     6,067 wr)
-==7949== L2d misses:         17,651  (    17,417 rd   +       234 wr)
-==7949== D1  miss rate:         8.2% (       9.0%     +       0.0%  )
-==7949== L2d miss rate:         0.0% (       0.0%     +       0.0%  )
-==7949==
-==7949== L2 refs:         7,264,061  ( 7,257,994 rd   +     6,067 wr)
-==7949== L2 misses:          18,354  (    18,120 rd   +       234 wr)
-==7949== L2 miss rate:          0.0% (       0.0%     +       0.0%  )
-nicolas@nicohen:~/workspace/Facultad/OrganizacionDeDatos/Cache$ cg_annotate cachegrind.out.7949 --auto=yes
+==8253== Cachegrind, a cache and branch-prediction profiler.
+==8253== Copyright (C) 2002-2007, and GNU GPL'd, by Nicholas Nethercote et al.
+==8253== Using LibVEX rev 1804, a library for dynamic binary translation.
+==8253== Copyright (C) 2004-2007, and GNU GPL'd, by OpenWorks LLP.
+==8253== Using valgrind-3.3.0-Debian, a dynamic binary instrumentation framework.
+==8253== Copyright (C) 2000-2007, and GNU GPL'd, by Julian Seward et al.
+==8253== For more details, rerun with: -v
+==8253==
+==8253==
+==8253== I   refs:      257,859,754
+==8253== I1  misses:            711
+==8253== L2i misses:            703
+==8253== I1  miss rate:        0.00%
+==8253== L2i miss rate:        0.00%
+==8253==
+==8253== D   refs:       87,714,341  (80,370,678 rd   + 7,343,663 wr)
+==8253== D1  misses:      7,263,350  ( 7,257,283 rd   +     6,067 wr)
+==8253== L2d misses:         17,651  (    17,417 rd   +       234 wr)
+==8253== D1  miss rate:         8.2% (       9.0%     +       0.0%  )
+==8253== L2d miss rate:         0.0% (       0.0%     +       0.0%  )
+==8253==
+==8253== L2 refs:         7,264,061  ( 7,257,994 rd   +     6,067 wr)
+==8253== L2 misses:          18,354  (    18,120 rd   +       234 wr)
+==8253== L2 miss rate:          0.0% (       0.0%     +       0.0%  )
+nicolas@nicohen:~/workspace/Facultad/OrganizacionDeDatos/Cache$ cg_annotate cachegrind.out.8253 --auto=yes
 --------------------------------------------------------------------------------
 I1 cache:         32768 B, 64 B, 8-way associative
 D1 cache:         2048 B, 64 B, 4-way associative
 L2 cache:         2097152 B, 64 B, 8-way associative
 Command:          ./cache.exe
-Data file:        cachegrind.out.7949
+Data file:        cachegrind.out.8253
 Events recorded:  Ir I1mr I2mr Dr D1mr D2mr Dw D1mw D2mw
 Events shown:     Ir I1mr I2mr Dr D1mr D2mr Dw D1mw D2mw
 Event sort order: Ir I1mr I2mr Dr D1mr D2mr Dw D1mw D2mw
@@ -405,14 +403,14 @@ Auto-annotation:  on
 --------------------------------------------------------------------------------
          Ir I1mr I2mr         Dr      D1mr   D2mr        Dw  D1mw D2mw  file:function
 --------------------------------------------------------------------------------
-256,464,207   28   28 79,958,597 7,210,368 13,778 7,188,676     0    0  /home/nicolas/workspace/Facultad/OrganizacionDeDatos/Cache/src/Cache.c:mainTriplePrefetch()
+256,464,207   29   29 79,958,597 7,210,368 13,778 7,188,676     0    0  /home/nicolas/workspace/Facultad/OrganizacionDeDatos/Cache/src/Cache.c:mainTriplePrefetch()
 
 --------------------------------------------------------------------------------
 -- Auto-annotated source: /home/nicolas/workspace/Facultad/OrganizacionDeDatos/Cache/src/Cache.c
 --------------------------------------------------------------------------------
         Ir I1mr I2mr        Dr    D1mr  D2mr      Dw D1mw D2mw
 
--- line 133 ----------------------------------------
+-- line 136 ----------------------------------------
          .    .    .         .       .     .       .    .    .                                  c[i][j] += a[i][k+7]*b[k+7][j];
          .    .    .         .       .     .       .    .    .                          }
          .    .    .         .       .     .       .    .    .                  }
@@ -424,49 +422,50 @@ Auto-annotation:  on
          5    1    1         0       0     0       3    0    0  int mainTriplePrefetch(void) {
          .    .    .         .       .     .       .    .    .          double a[N][N],b[N][N],c[N][N];
          .    .    .         .       .     .       .    .    .          int i,j,k;
+         .    .    .         .       .     .       .    .    .          register int prefetch;
          .    .    .         .       .     .       .    .    .
-       580    0    0       385       0     0       1    0    0          for (i=0;i<N;i++){
-   111,360    0    0    73,920       0     0     192    0    0                  for (j=0;j<N;j++){
-         .    .    .         .       .     .       .    .    .                          __builtin_prefetch(&c[i][j]);
+       580    1    1       385       0     0       1    0    0          for (i=0;i<N;i++){
+   111,360    1    1    73,920       0     0     192    0    0                  for (j=0;j<N;j++){
+         .    .    .         .       .     .       .    .    .                          PREFETCH(c,i,j);
    368,640    0    0   184,320       0     0  36,864    0    0                          for (k=0;k<D;k+=8) {
-         .    .    .         .       .     .       .    .    .                                  __builtin_prefetch(&a[i][k]);
-         .    .    .         .       .     .       .    .    .                                  __builtin_prefetch(&b[i][k]);
-         .    .    .         .       .     .       .    .    .                                  __builtin_prefetch(&b[i][k+1]);
-         .    .    .         .       .     .       .    .    .                                  __builtin_prefetch(&b[i][k+2]);
-         .    .    .         .       .     .       .    .    .                                  __builtin_prefetch(&b[i][k+3]);
-         .    .    .         .       .     .       .    .    .                                  __builtin_prefetch(&b[i][k+4]);
-         .    .    .         .       .     .       .    .    .                                  __builtin_prefetch(&b[i][k+5]);
-         .    .    .         .       .     .       .    .    .                                  __builtin_prefetch(&b[i][k+6]);
-         .    .    .         .       .     .       .    .    .                                  __builtin_prefetch(&b[i][k+7]);
+         .    .    .         .       .     .       .    .    .                                  PREFETCH(a,i,k);
+         .    .    .         .       .     .       .    .    .                                  PREFETCH(b,i,k);
+         .    .    .         .       .     .       .    .    .                                  PREFETCH(b,i,k+1);
+         .    .    .         .       .     .       .    .    .                                  PREFETCH(b,i,k+2);
+         .    .    .         .       .     .       .    .    .                                  PREFETCH(b,i,k+3);
+         .    .    .         .       .     .       .    .    .                                  PREFETCH(b,i,k+4);
+         .    .    .         .       .     .       .    .    .                                  PREFETCH(b,i,k+5);
+         .    .    .         .       .     .       .    .    .                                  PREFETCH(b,i,k+6);
+         .    .    .         .       .     .       .    .    .                                  PREFETCH(b,i,k+7);
          .    .    .         .       .     .       .    .    .                          }
- 2,580,480    2    2 1,658,880       0     0  36,864    0    0                          for (k=0;k<N-D;k+=8) {
-         .    .    .         .       .     .       .    .    .                                  __builtin_prefetch(&a[i][k+D]);
-         .    .    .         .       .     .       .    .    .                                  __builtin_prefetch(&b[i][k+D]);
-27,574,272    1    1 8,921,088 932,928 9,318 811,008    0    0                                  c[i][j] += a[i][k]*b[k][j];
-         .    .    .         .       .     .       .    .    .                                  __builtin_prefetch(&b[i][k+D+1]);
+ 2,580,480    1    1 1,658,880       0     0  36,864    0    0                          for (k=0;k<N-D;k+=8) {
+         .    .    .         .       .     .       .    .    .                                  PREFETCH(a,i,k+D);
+         .    .    .         .       .     .       .    .    .                                  PREFETCH(b,i,k+D);
+27,574,272    2    2 8,921,088 932,928 9,318 811,008    0    0                                  c[i][j] += a[i][k]*b[k][j];
+         .    .    .         .       .     .       .    .    .                                  PREFETCH(b,i,k+D+1);
 29,196,288    2    2 8,921,088 811,008   528 811,008    0    0                                  c[i][j] += a[i][k+1]*b[k+1][j];
-         .    .    .         .       .     .       .    .    .                                  __builtin_prefetch(&b[i][k+D+2]);
+         .    .    .         .       .     .       .    .    .                                  PREFETCH(b,i,k+D+2);
 29,196,288    1    1 8,921,088 811,008   528 811,008    0    0                                  c[i][j] += a[i][k+2]*b[k+2][j];
-         .    .    .         .       .     .       .    .    .                                  __builtin_prefetch(&b[i][k+D+3]);
+         .    .    .         .       .     .       .    .    .                                  PREFETCH(b,i,k+D+3);
 29,196,288    2    2 8,921,088 811,008   528 811,008    0    0                                  c[i][j] += a[i][k+3]*b[k+3][j];
-         .    .    .         .       .     .       .    .    .                                  __builtin_prefetch(&b[i][k+D+4]);
-29,196,288    2    2 8,921,088 811,008   528 811,008    0    0                                  c[i][j] += a[i][k+4]*b[k+4][j];
-         .    .    .         .       .     .       .    .    .                                  __builtin_prefetch(&b[i][k+D+5]);
-29,196,288    1    1 8,921,088 811,008   528 811,008    0    0                                  c[i][j] += a[i][k+5]*b[k+5][j];
-         .    .    .         .       .     .       .    .    .                                  __builtin_prefetch(&b[i][k+D+6]);
+         .    .    .         .       .     .       .    .    .                                  PREFETCH(b,i,k+D+4);
+29,196,288    1    1 8,921,088 811,008   528 811,008    0    0                                  c[i][j] += a[i][k+4]*b[k+4][j];
+         .    .    .         .       .     .       .    .    .                                  PREFETCH(b,i,k+D+5);
+29,196,288    2    2 8,921,088 811,008   528 811,008    0    0                                  c[i][j] += a[i][k+5]*b[k+5][j];
+         .    .    .         .       .     .       .    .    .                                  PREFETCH(b,i,k+D+6);
 29,196,288    2    2 8,921,088 811,008   528 811,008    0    0                                  c[i][j] += a[i][k+6]*b[k+6][j];
-         .    .    .         .       .     .       .    .    .                                  __builtin_prefetch(&b[i][k+D+7]);
+         .    .    .         .       .     .       .    .    .                                  PREFETCH(b,i,k+D+7);
 29,196,288    1    1 8,921,088 811,008   528 811,008    0    0                                  c[i][j] += a[i][k+7]*b[k+7][j];
          .    .    .         .       .     .       .    .    .                          }
-   368,640    1    1   184,320       0     0  36,864    0    0                          for (k=N-D;k<N;k+=8) {
- 2,506,752    2    2   811,008  84,288   428  73,728    0    0                                  c[i][j] += a[i][k]*b[k][j];
- 2,654,208    1    1   811,008  73,728    48  73,728    0    0                                  c[i][j] += a[i][k+1]*b[k+1][j];
+   368,640    0    0   184,320       0     0  36,864    0    0                          for (k=N-D;k<N;k+=8) {
+ 2,506,752    1    1   811,008  84,288   428  73,728    0    0                                  c[i][j] += a[i][k]*b[k][j];
+ 2,654,208    2    2   811,008  73,728    48  73,728    0    0                                  c[i][j] += a[i][k+1]*b[k+1][j];
  2,654,208    2    2   811,008  73,728    48  73,728    0    0                                  c[i][j] += a[i][k+2]*b[k+2][j];
- 2,654,208    2    2   811,008  73,728    48  73,728    0    0                                  c[i][j] += a[i][k+3]*b[k+3][j];
- 2,654,208    1    1   811,008  73,728    48  73,728    0    0                                  c[i][j] += a[i][k+4]*b[k+4][j];
+ 2,654,208    1    1   811,008  73,728    48  73,728    0    0                                  c[i][j] += a[i][k+3]*b[k+3][j];
+ 2,654,208    2    2   811,008  73,728    48  73,728    0    0                                  c[i][j] += a[i][k+4]*b[k+4][j];
  2,654,208    2    2   811,008  73,728    48  73,728    0    0                                  c[i][j] += a[i][k+5]*b[k+5][j];
- 2,654,208    2    2   811,008  73,728    48  73,728    0    0                                  c[i][j] += a[i][k+6]*b[k+6][j];
- 2,654,208    0    0   811,008  73,728    48  73,728    0    0                                  c[i][j] += a[i][k+7]*b[k+7][j];
+ 2,654,208    1    1   811,008  73,728    48  73,728    0    0                                  c[i][j] += a[i][k+6]*b[k+6][j];
+ 2,654,208    1    1   811,008  73,728    48  73,728    0    0                                  c[i][j] += a[i][k+7]*b[k+7][j];
          .    .    .         .       .     .       .    .    .                          }
          .    .    .         .       .     .       .    .    .                  }
          .    .    .         .       .     .       .    .    .          }
@@ -474,7 +473,7 @@ Auto-annotation:  on
          1    0    0         0       0     0       0    0    0          return 0;
          5    0    0         4       0     0       0    0    0  }
          .    .    .         .       .     .       .    .    .
-         7    2    2         1       0     0       3    0    0  int main(void){
+         7    1    1         1       0     0       3    0    0  int main(void){
          1    0    0         0       0     0       1    0    0          return mainTriplePrefetch();
          .    .    .         .       .     .       .    .    .          //return mainPadding();
          .    .    .         .       .     .       .    .    .          //return mainBloquing();
@@ -485,3 +484,122 @@ Auto-annotation:  on
 Ir I1mr I2mr Dr D1mr D2mr Dw D1mw D2mw
 --------------------------------------------------------------------------------
 99    4    4 99   99   79 98    0    0  percentage of events annotated
+
+
+
+
+
+$$$$$$$$$$$$$$$$$$$$$$ MAIN5 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+
+nicolas@nicohen:~/workspace/Facultad/OrganizacionDeDatos/Cache$ valgrind --tool=cachegrind --D1=2048,4,64 ./cache.exe
+==9043== Cachegrind, a cache and branch-prediction profiler.
+==9043== Copyright (C) 2002-2007, and GNU GPL'd, by Nicholas Nethercote et al.
+==9043== Using LibVEX rev 1804, a library for dynamic binary translation.
+==9043== Copyright (C) 2004-2007, and GNU GPL'd, by OpenWorks LLP.
+==9043== Using valgrind-3.3.0-Debian, a dynamic binary instrumentation framework.
+==9043== Copyright (C) 2000-2007, and GNU GPL'd, by Julian Seward et al.
+==9043== For more details, rerun with: -v
+==9043==
+==9043==
+==9043== I   refs:      318,237,071
+==9043== I1  misses:            688
+==9043== L2i misses:            680
+==9043== I1  miss rate:        0.00%
+==9043== L2i miss rate:        0.00%
+==9043==
+==9043== D   refs:      140,163,385  (127,129,798 rd   + 13,033,587 wr)
+==9043== D1  misses:     12,976,558  ( 12,872,196 rd   +    104,362 wr)
+==9043== L2d misses:         17,652  (     12,809 rd   +      4,843 wr)
+==9043== D1  miss rate:         9.2% (       10.1%     +        0.8%  )
+==9043== L2d miss rate:         0.0% (        0.0%     +        0.0%  )
+==9043==
+==9043== L2 refs:        12,977,246  ( 12,872,884 rd   +    104,362 wr)
+==9043== L2 misses:          18,332  (     13,489 rd   +      4,843 wr)
+==9043== L2 miss rate:          0.0% (        0.0%     +        0.0%  )
+nicolas@nicohen:~/workspace/Facultad/OrganizacionDeDatos/Cache$ cg_annotate cachegrind.out.9043 --auto=yes
+--------------------------------------------------------------------------------
+I1 cache:         32768 B, 64 B, 8-way associative
+D1 cache:         2048 B, 64 B, 4-way associative
+L2 cache:         2097152 B, 64 B, 8-way associative
+Command:          ./cache.exe
+Data file:        cachegrind.out.9043
+Events recorded:  Ir I1mr I2mr Dr D1mr D2mr Dw D1mw D2mw
+Events shown:     Ir I1mr I2mr Dr D1mr D2mr Dw D1mw D2mw
+Event sort order: Ir I1mr I2mr Dr D1mr D2mr Dw D1mw D2mw
+Thresholds:       99 0 0 0 0 0 0 0 0
+Include dirs:
+User annotated:
+Auto-annotation:  on
+
+--------------------------------------------------------------------------------
+         Ir I1mr I2mr          Dr       D1mr   D2mr         Dw    D1mw  D2mw
+--------------------------------------------------------------------------------
+318,237,071  688  680 127,129,798 12,872,196 12,809 13,033,587 104,362 4,843  PROGRAM TOTALS
+
+--------------------------------------------------------------------------------
+         Ir I1mr I2mr          Dr       D1mr  D2mr         Dw   D1mw  D2mw  file:function
+--------------------------------------------------------------------------------
+316,841,524    6    6 126,717,717 12,825,281 9,170 12,878,600 98,296 4,609  /home/nicolas/workspace/Facultad/OrganizacionDeDatos/Cache/src/Cache.c:main5()
+
+--------------------------------------------------------------------------------
+-- Auto-annotated source: /home/nicolas/workspace/Facultad/OrganizacionDeDatos/Cache/src/Cache.c
+--------------------------------------------------------------------------------
+         Ir I1mr I2mr         Dr       D1mr  D2mr         Dw   D1mw  D2mw
+
+-- line 64 ----------------------------------------
+          .    .    .          .          .     .          .      .     .       for (i=0;i<N;i++)
+          .    .    .          .          .     .          .      .     .               for (j=jj;j<jj+B;j++)
+          .    .    .          .          .     .          .      .     .                       for (k=kk;k<kk+B;k++)
+          .    .    .          .          .     .          .      .     .                               c[i][j] += a[i][k]*b[k][j];
+          .    .    .          .          .     .          .      .     .
+          .    .    .          .          .     .          .      .     .       return 0;
+          .    .    .          .          .     .          .      .     .  }
+          .    .    .          .          .     .          .      .     .
+          3    1    1          0          0     0          1      0     0  int main5 (void) {
+          .    .    .          .          .     .          .      .     .       volatile double  a[N][N],b[N][N],c[N][N];
+          .    .    .          .          .     .          .      .     .       register int i,j,k,jj,kk;
+          .    .    .          .          .     .          .      .     .       register double temp;
+          .    .    .          .          .     .          .      .     .
+         10    2    2          5          0     0          1      1     1       for (jj=0;jj<N;jj+=B)
+         20    0    0         10          0     0          2      0     0               for (kk=0;kk<N;kk+=B)
+      2,320    1    1      1,540          0     0          4      1     1                       for (i=0; i<N;i++)
+    496,896    0    0    297,216          0     0        768      0     0                               for (j=jj;j<jj+B;j++){
+          .    .    .          .          .     .          .      .     .
+    196,608    0    0          0          0     0     98,304      0     0                                   temp = 0.0;
+ 63,602,688    2    2 38,043,648          0     0     98,304      0     0                                   for (k=kk;k<kk+B;k++) {
+251,658,240    0    0 88,080,384 12,825,280 9,170 12,582,912      0     0                                       temp+=a[i][k]*b[k][j];
+          .    .    .          .          .     .          .      .     .                                   }
+    884,736    0    0    294,912          0     0     98,304 98,294 4,607                                   c[i][j] = temp;
+          .    .    .          .          .     .          .      .     .                               }
+          1    0    0          0          0     0          0      0     0       return 0;
+          2    0    0          2          1     0          0      0     0  }
+          .    .    .          .          .     .          .      .     .
+          .    .    .          .          .     .          .      .     .  int mainDoblePrefetch(void) {
+          .    .    .          .          .     .          .      .     .       double a[N][N],b[N][N],c[N][N];
+          .    .    .          .          .     .          .      .     .       int i,j,k;
+          .    .    .          .          .     .          .      .     .       register int prefetch;
+          .    .    .          .          .     .          .      .     .
+          .    .    .          .          .     .          .      .     .       for (i=0;i<N;i++){
+          .    .    .          .          .     .          .      .     .               for (j=0;j<N;j++){
+-- line 97 ----------------------------------------
+-- line 190 ----------------------------------------
+          .    .    .          .          .     .          .      .     .                               c[i][j] += a[i][k+7]*b[k+7][j];
+          .    .    .          .          .     .          .      .     .                       }
+          .    .    .          .          .     .          .      .     .               }
+          .    .    .          .          .     .          .      .     .       }
+          .    .    .          .          .     .          .      .     .
+          .    .    .          .          .     .          .      .     .       return 0;
+          .    .    .          .          .     .          .      .     .  }
+          .    .    .          .          .     .          .      .     .
+          7    1    1          1          0     0          3      0     0  int main(void){
+          1    0    0          0          0     0          1      0     0       return main5();
+          .    .    .          .          .     .          .      .     .       //return mainPadding();
+          .    .    .          .          .     .          .      .     .       //return mainBloquing();
+          .    .    .          .          .     .          .      .     .       //return main5();
+          5    0    0          3          0     0          0      0     0  }
+
+--------------------------------------------------------------------------------
+ Ir I1mr I2mr  Dr D1mr D2mr Dw D1mw D2mw
+--------------------------------------------------------------------------------
+100    1    1 100  100   72 99   94   95  percentage of events annotated
