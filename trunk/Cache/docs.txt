@@ -603,3 +603,101 @@ Auto-annotation:  on
  Ir I1mr I2mr  Dr D1mr D2mr Dw D1mw D2mw
 --------------------------------------------------------------------------------
 100    1    1 100  100   72 99   94   95  percentage of events annotated
+
+
+
+
+$$$$$$$$$$$$$$ MAIN EXTRACCION $$$$$$$$$$$$$$$$$$$$
+
+
+nicolas@nicohen:~/workspace/Facultad/OrganizacionDeDatos/Cache$ valgrind --tool=cachegrind --D1=2048,4,64 ./cache.exe
+==5691== Cachegrind, a cache and branch-prediction profiler.
+==5691== Copyright (C) 2002-2007, and GNU GPL'd, by Nicholas Nethercote et al.
+==5691== Using LibVEX rev 1804, a library for dynamic binary translation.
+==5691== Copyright (C) 2004-2007, and GNU GPL'd, by OpenWorks LLP.
+==5691== Using valgrind-3.3.0-Debian, a dynamic binary instrumentation framework.
+==5691== Copyright (C) 2000-2007, and GNU GPL'd, by Julian Seward et al.
+==5691== For more details, rerun with: -v
+==5691==
+==5691==
+==5691== I   refs:      164,851,877
+==5691== I1  misses:            685
+==5691== L2i misses:            677
+==5691== I1  miss rate:        0.00%
+==5691== L2i miss rate:        0.00%
+==5691==
+==5691== D   refs:       71,678,497  (64,334,836 rd   + 7,343,661 wr)
+==5691== D1  misses:      7,430,010  ( 7,387,605 rd   +    42,405 wr)
+==5691== L2d misses:         17,652  (    12,810 rd   +     4,842 wr)
+==5691== D1  miss rate:        10.3% (      11.4%     +       0.5%  )
+==5691== L2d miss rate:         0.0% (       0.0%     +       0.0%  )
+==5691==
+==5691== L2 refs:         7,430,695  ( 7,388,290 rd   +    42,405 wr)
+==5691== L2 misses:          18,329  (    13,487 rd   +     4,842 wr)
+==5691== L2 miss rate:          0.0% (       0.0%     +       0.0%  )
+nicolas@nicohen:~/workspace/Facultad/OrganizacionDeDatos/Cache$ cg_annotate cachegrind.out.5691 --auto=yes
+--------------------------------------------------------------------------------
+I1 cache:         32768 B, 64 B, 8-way associative
+D1 cache:         2048 B, 64 B, 4-way associative
+L2 cache:         2097152 B, 64 B, 8-way associative
+Command:          ./cache.exe
+Data file:        cachegrind.out.5691
+Events recorded:  Ir I1mr I2mr Dr D1mr D2mr Dw D1mw D2mw
+Events shown:     Ir I1mr I2mr Dr D1mr D2mr Dw D1mw D2mw
+Event sort order: Ir I1mr I2mr Dr D1mr D2mr Dw D1mw D2mw
+Thresholds:       99 0 0 0 0 0 0 0 0
+Include dirs:
+User annotated:
+Auto-annotation:  on
+
+--------------------------------------------------------------------------------
+         Ir I1mr I2mr         Dr      D1mr   D2mr        Dw   D1mw  D2mw
+--------------------------------------------------------------------------------
+164,851,877  685  677 64,334,836 7,387,605 12,810 7,343,661 42,405 4,842  PROGRAM TOTALS
+
+--------------------------------------------------------------------------------
+         Ir I1mr I2mr         Dr      D1mr  D2mr        Dw   D1mw  D2mw  file:function
+--------------------------------------------------------------------------------
+163,456,330    3    3 63,922,755 7,338,047 9,170 7,188,674 36,860 4,608  /home/nicolas/workspace/Facultad/OrganizacionDeDatos/Cache/src/Cache.c:mainExtraccion()
+
+--------------------------------------------------------------------------------
+-- Auto-annotated source: /home/nicolas/workspace/Facultad/OrganizacionDeDatos/Cache/src/Cache.c
+--------------------------------------------------------------------------------
+         Ir I1mr I2mr         Dr      D1mr  D2mr        Dw   D1mw  D2mw
+
+-- line 95 ----------------------------------------
+          .    .    .          .         .     .         .      .     .      for (i=0;i<N;i++)
+          .    .    .          .         .     .         .      .     .          for (j=0;j<N;j++)
+          .    .    .          .         .     .         .      .     .              for (k=0;k<N;k++)
+          .    .    .          .         .     .         .      .     .                  c[i][j] += a[i][k]*b[k][j];
+          .    .    .          .         .     .         .      .     .
+          .    .    .          .         .     .         .      .     .      return 0;
+          .    .    .          .         .     .         .      .     .  }
+          .    .    .          .         .     .         .      .     .
+          3    1    1          0         0     0         1      0     0  int mainExtraccion (void) {
+          .    .    .          .         .     .         .      .     .         volatile double a[N][N],b[N][N],c[N][N];
+          .    .    .          .         .     .         .      .     .         register int i,j,k;
+          .    .    .          .         .     .         .      .     .         register double temp;
+          .    .    .          .         .     .         .      .     .
+        580    0    0        385         0     0         1      1     1         for (i=0;i<N;i++)
+    111,360    0    0     73,920         0     0       192      0     0                 for (j=0;j<N;j++){
+     73,728    0    0          0         0     0    36,864      0     0                         temp=0;
+ 21,381,120    2    2 14,192,640         0     0    36,864      0     0                         for (k=0;k<N;k++)
+141,557,760    0    0 49,545,216 7,338,047 9,170 7,077,888      0     0                                 temp+=a[i][k]*b[k][j];
+    331,776    0    0    110,592         0     0    36,864 36,859 4,607                         c[i][j]=temp;
+          .    .    .          .         .     .         .      .     .                 }
+          1    0    0          0         0     0         0      0     0         return 0;
+          2    0    0          2         0     0         0      0     0  }
+          .    .    .          .         .     .         .      .     .
+          7    1    1          1         0     0         3      0     0  int main(void){
+          1    0    0          0         0     0         1      0     0      return mainExtraccion();
+          .    .    .          .         .     .         .      .     .      //return mainPadding();
+          .    .    .          .         .     .         .      .     .      //return mainBlocking();
+          .    .    .          .         .     .         .      .     .      //return mainPrefetch();
+          .    .    .          .         .     .         .      .     .      //return mainExtraccion();
+          5    0    0          3         0     0         0      0     0  }
+
+--------------------------------------------------------------------------------
+Ir I1mr I2mr Dr D1mr D2mr Dw D1mw D2mw
+--------------------------------------------------------------------------------
+99    1    1 99   99   72 98   87   95  percentage of events annotated
