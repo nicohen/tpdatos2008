@@ -2,11 +2,51 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
+import focus.files.File;
+import focus.files.SecuencialFile;
+import focus.persistors.BytePersistor;
+
 public class FileTest {
 
-	public static void main(String[] args) {
-		create();
-		read();
+	public static void main(String[] args){
+		//create();
+		//read();
+		BytePersistor persistor= new BytePersistor();
+		try {
+			File<Byte> file= new SecuencialFile<Byte>("c:/datos.bin",persistor);
+			file.add(new Byte((byte)7));
+			file.add(new Byte((byte)8));
+			file.add(new Byte((byte)9));
+			file.add(new Byte((byte)10));
+			Byte aux= file.get(0);
+			if (aux.equals(new Byte((byte)7))){
+				System.out.println("1° comparacion correcta");
+			}else{
+				System.out.println("1° comparacion fallo");
+			}
+			aux= file.get(3);
+			if (aux.equals(new Byte((byte)10))){
+				System.out.println("2° comparacion correcta");
+			}else{
+				System.out.println("2° comparacion fallo");
+			}
+			aux= file.get(2);
+			if (aux.equals(new Byte((byte)9))){
+				System.out.println("3° comparacion correcta");
+			}else{
+				System.out.println("3° comparacion fallo");
+			}
+			aux= file.get(1);
+			if (aux.equals(new Byte((byte)8))){
+				System.out.println("4° comparacion correcta");
+			}else{
+				System.out.println("4° comparacion fallo");
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private static void create(){
