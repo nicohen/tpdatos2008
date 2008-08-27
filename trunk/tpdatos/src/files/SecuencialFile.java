@@ -1,36 +1,33 @@
 package files;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.RandomAccessFile;
 
 import persistors.Persistor;
+import exceptions.DataAccessException;
 
-public class SecuencialFile<E> implements File<E> {
+public class SecuencialFile<E> extends AbstractFile<E> {
 	
-	private RandomAccessFile file;
-	private Persistor<E> persistor;
-	public SecuencialFile(String fileName, Persistor<E> persistor) throws FileNotFoundException{
-		this.persistor=persistor;
-		file= new RandomAccessFile(fileName,"rw");
+	public SecuencialFile(String fileName, Persistor<E> persistor) throws DataAccessException{
+		super(fileName,persistor);
 	}
+	
 	public int add(E element) throws IOException {
-		int length=(int) file.length();
-		file.write(persistor.toBytes(element));
+		int length=(int) dataFile.length();
+		dataFile.write(persistor.toBytes(element));
 		return (length/persistor.getDataSize())+1;
 	}
 
 	public E get(int elementId) throws IOException {
-		int offset=persistor.getDataSize()*elementId;
-		byte[] buffer= new byte[persistor.getDataSize()];
-		file.seek(offset);
-		file.read(buffer);
+		int offset = persistor.getDataSize()*elementId;
+		byte[] buffer = new byte[persistor.getDataSize()];
+		dataFile.seek(offset);
+		dataFile.read(buffer);
 		return persistor.decode(buffer);
 	}
 
 	public int modify(int elementId, E newElement) throws IOException {
 		int offset=persistor.getDataSize()+elementId;
-		file.write(persistor.toBytes(newElement),offset, persistor.getDataSize());
+		dataFile.write(persistor.toBytes(newElement), offset, persistor.getDataSize());
 		return elementId;
 	}
 

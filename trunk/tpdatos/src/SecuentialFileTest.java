@@ -1,10 +1,11 @@
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import junit.framework.TestCase;
 import persistors.BytePersistor;
+import exceptions.DataAccessException;
 import files.File;
 import files.SecuencialFile;
-import junit.framework.TestCase;
 
 
 public class SecuentialFileTest extends TestCase {
@@ -12,7 +13,7 @@ public class SecuentialFileTest extends TestCase {
 		
 	}
 
-	public void testMe() {
+	public void testMe() throws DataAccessException {
 		BytePersistor persistor= new BytePersistor();
 		try {
 			File<Byte> file= new SecuencialFile<Byte>("c:/datos.bin",persistor);

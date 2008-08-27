@@ -2,13 +2,14 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
+import persistors.BytePersistor;
+import exceptions.DataAccessException;
 import files.File;
 import files.SecuencialFile;
-import persistors.BytePersistor;
 
 public class FileTest {
 
-	public static void main(String[] args){
+	public static void main(String[] args) throws DataAccessException{
 		//create();
 		//read();
 		BytePersistor persistor= new BytePersistor();
