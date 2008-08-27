@@ -1,4 +1,4 @@
-package focus.files;
+package files;
 
 import java.io.IOException;
 

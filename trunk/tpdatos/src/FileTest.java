@@ -2,9 +2,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
-import focus.files.File;
-import focus.files.SecuencialFile;
-import focus.persistors.BytePersistor;
+import files.File;
+import files.SecuencialFile;
+import persistors.BytePersistor;
 
 public class FileTest {
 

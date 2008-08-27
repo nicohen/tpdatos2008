@@ -1,10 +1,10 @@
-package focus.files;
+package files;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
-import focus.persistors.Persistor;
+import persistors.Persistor;
 
 public class SecuencialFile<E> implements File<E> {
 	
