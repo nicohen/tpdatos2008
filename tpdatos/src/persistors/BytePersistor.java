@@ -1,4 +1,4 @@
-package focus.persistors;
+package persistors;
 import java.lang.Byte;
 public class BytePersistor implements Persistor<java.lang.Byte>{
 

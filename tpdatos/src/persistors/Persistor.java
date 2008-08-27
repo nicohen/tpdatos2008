@@ -1,4 +1,4 @@
-package focus.persistors;
+package persistors;
 
 public interface Persistor<E> {
 	byte[] toBytes(E element);
