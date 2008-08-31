@@ -4,7 +4,7 @@ import java.io.RandomAccessFile;
 
 import persistors.BytePersistor;
 import exceptions.DataAccessException;
-import files.File;
+import files.IFile;
 import files.SecuencialFile;
 
 public class FileTest {
@@ -14,34 +14,34 @@ public class FileTest {
 		//read();
 		BytePersistor persistor= new BytePersistor();
 		try {
-			File<Byte> file= new SecuencialFile<Byte>("c:/datos.bin",persistor);
+			IFile<Byte> file= new SecuencialFile<Byte>("c:/datos.bin",persistor);
 			file.add(new Byte((byte)7));
 			file.add(new Byte((byte)8));
 			file.add(new Byte((byte)9));
 			file.add(new Byte((byte)10));
 			Byte aux= file.get(0);
 			if (aux.equals(new Byte((byte)7))){
-				System.out.println("1° comparacion correcta");
+				System.out.println("1 comparacion correcta");
 			}else{
-				System.out.println("1° comparacion fallo");
+				System.out.println("1 comparacion fallo");
 			}
 			aux= file.get(3);
 			if (aux.equals(new Byte((byte)10))){
-				System.out.println("2° comparacion correcta");
+				System.out.println("2 comparacion correcta");
 			}else{
-				System.out.println("2° comparacion fallo");
+				System.out.println("2 comparacion fallo");
 			}
 			aux= file.get(2);
 			if (aux.equals(new Byte((byte)9))){
-				System.out.println("3° comparacion correcta");
+				System.out.println("3 comparacion correcta");
 			}else{
-				System.out.println("3° comparacion fallo");
+				System.out.println("3 comparacion fallo");
 			}
 			aux= file.get(1);
 			if (aux.equals(new Byte((byte)8))){
-				System.out.println("4° comparacion correcta");
+				System.out.println("4 comparacion correcta");
 			}else{
-				System.out.println("4° comparacion fallo");
+				System.out.println("4 comparacion fallo");
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
