@@ -3,12 +3,11 @@ package files;
 import java.io.FileNotFoundException;
 import java.io.RandomAccessFile;
 
+import persistors.Persistor;
 import exceptions.DataAccessException;
 
-import persistors.Persistor;
 
-
-public abstract class AbstractFile<E> implements File<E> {
+public abstract class AbstractFile<E> implements IFile<E> {
 
 	protected RandomAccessFile dataFile;
 	protected Persistor<E> persistor;
@@ -22,4 +21,9 @@ public abstract class AbstractFile<E> implements File<E> {
 		}
 	}
 
+	@Override
+	public void delete() {
+		// TODO Auto-generated method stub
+		
+	}
 }
