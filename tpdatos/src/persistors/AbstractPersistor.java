@@ -9,7 +9,7 @@ public abstract class AbstractPersistor<E> implements Persistor<E> {
 	}
 	
 	@Override
-	public int getDataSize() {
+	public int getDataSize(E element) {
 		return this.maxSize;
 	}
 }
