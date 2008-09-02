@@ -1,5 +1,4 @@
 package persistors;
-import java.lang.Byte;
 public class BytePersistor extends AbstractPersistor<java.lang.Byte>{
 
 	public BytePersistor() {
