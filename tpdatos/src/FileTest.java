@@ -4,6 +4,7 @@ import java.io.RandomAccessFile;
 
 import persistors.BytePersistor;
 import exceptions.DataAccessException;
+import files.File;
 import files.IFile;
 import files.SecuencialFile;
 
@@ -13,8 +14,8 @@ public class FileTest {
 		//create();
 		//read();
 		BytePersistor persistor= new BytePersistor();
-		try {
-			IFile<Byte> file= new SecuencialFile<Byte>("c:/datos.bin",persistor);
+
+			File<Byte> file= new SecuencialFile<Byte>("c:/datos.bin",4,persistor);
 			file.add(new Byte((byte)7));
 			file.add(new Byte((byte)8));
 			file.add(new Byte((byte)9));
@@ -43,11 +44,6 @@ public class FileTest {
 			}else{
 				System.out.println("4 comparacion fallo");
 			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	private static void create(){

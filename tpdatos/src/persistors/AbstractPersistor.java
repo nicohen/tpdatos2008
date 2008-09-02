@@ -7,8 +7,9 @@ public abstract class AbstractPersistor<E> implements Persistor<E> {
 	public AbstractPersistor(int maxSize) {
 		this.maxSize = maxSize;
 	}
-	
-	@Override
+
+	// FIXME: no me acepta el metodo con el @override :(
+	/*@Override*/
 	public int getDataSize(E element) {
 		return this.maxSize;
 	}
