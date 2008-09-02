@@ -1,14 +1,8 @@
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
 import junit.framework.TestCase;
-
-//import junit.framework.TestCase;
 import persistors.BytePersistor;
 import persistors.StringPersistor;
 import exceptions.DataAccessException;
 import files.File;
-import files.IFile;
 import files.SecuencialFile;
 
 

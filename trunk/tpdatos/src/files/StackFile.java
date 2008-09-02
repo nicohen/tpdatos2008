@@ -19,15 +19,16 @@ public class StackFile<E>{
 		this.size= size;
 		try {
 			this.dataFile = new RandomAccessFile(fileName,"rw");
+			dataFile.seek(dataFile.length());
 		} catch(FileNotFoundException e) {
+			throw new DataAccessException("Error construyendo archivo "+fileName,e);
+		} catch (IOException e) {
 			throw new DataAccessException("Error construyendo archivo "+fileName,e);
 		}
 	}
 	
 	public void push(E element) throws DataAccessException{
 		try {
-			int length=(int) dataFile.length();
-			dataFile.seek(length);
 			dataFile.write(persistor.toBytes(element));
 		} catch (IOException e) {
 			throw new DataAccessException("Error agregando elemento.",e);			

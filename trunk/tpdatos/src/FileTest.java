@@ -5,7 +5,6 @@ import java.io.RandomAccessFile;
 import persistors.BytePersistor;
 import exceptions.DataAccessException;
 import files.File;
-import files.IFile;
 import files.SecuencialFile;
 
 public class FileTest {
