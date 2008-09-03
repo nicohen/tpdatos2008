@@ -8,7 +8,7 @@ import persistors.Persistor;
 import exceptions.DataAccessException;
 
 
-public class StackFile<E>{
+public class StackFile<E> implements IApilable<E>{
 
 	protected RandomAccessFile dataFile;
 	protected Persistor<E> persistor;
@@ -27,7 +27,7 @@ public class StackFile<E>{
 		}
 	}
 	
-	public void push(E element) throws DataAccessException{
+	public void push(E element) throws DataAccessException {
 		try {
 			dataFile.write(persistor.toBytes(element));
 		} catch (IOException e) {
@@ -35,7 +35,7 @@ public class StackFile<E>{
 		}
 	}
 	
-	public E pop() throws DataAccessException{
+	public E pop() throws DataAccessException {
 		try {
 			int length=(int) dataFile.length();
 			dataFile.seek(length-size);
