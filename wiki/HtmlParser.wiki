@@ -1,0 +1,2 @@
+#labels html,parser,Phase-Design
+Basciamente con htmlParser hacemos la mayor parte del trabajo al tratar el html (Nico, agrega a este wiki lo que sea necesario )
