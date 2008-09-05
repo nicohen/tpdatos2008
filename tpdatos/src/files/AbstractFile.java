@@ -22,7 +22,7 @@ public abstract class AbstractFile<E> implements File<E> {
 		}
 	}
 
-//	@Override
+	@Override
 	public void delete() {
 		// TODO Auto-generated method stub
 		

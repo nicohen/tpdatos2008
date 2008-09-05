@@ -6,7 +6,7 @@ public class IntegerPersistor extends AbstractPersistor<java.lang.Integer>{
 		super(maxSize);
 	}
 
-	//@Override
+	@Override
 	public Integer decode(byte[] buffer) {
 		// TODO Auto-generated method stub
 		return null;
