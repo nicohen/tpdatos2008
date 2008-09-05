@@ -1,13 +1,10 @@
 #summary One-sentence summary of this page.
 
-= Introduction =
+= Diagrama de clases del TP0 =
 
 [http://tpdatos2008.googlecode.com/files/Diagrama%20de%20clases%20TP0.jpg Diagrama de clases TP0]
 
 
-= Details =
+= Detalles =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+Ninguno
