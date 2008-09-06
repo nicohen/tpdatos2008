@@ -1,6 +1,6 @@
 #labels preguntas,respuestas
 Enunciado: http://materias.fi.uba.ar/7506C/docs/wiki/doku.php?id=tp:2do_cuatrimestre_2008
-
+----
  * *Nuestro INPUT son archivos de texto unicamente.??*
  Sep.
 ----
