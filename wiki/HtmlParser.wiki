@@ -1,2 +1,8 @@
 #labels html,parser,Phase-Design
-Basciamente con htmlParser hacemos la mayor parte del trabajo al tratar el html (Nico, agrega a este wiki lo que sea necesario )
+==Uso del HTMLPARSER==
+
+  * Obtener el body de la pagina
+  * Eliminar todos los tags del codigo HTML
+  * (Analizar otras utilidades)
+
+~~API~~ http://htmlparser.sourceforge.net/javadoc/index.html
