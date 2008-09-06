@@ -5,4 +5,4 @@
   * Eliminar todos los tags del codigo HTML
   * (Analizar otras utilidades)
 
-~~API~~ http://htmlparser.sourceforge.net/javadoc/index.html
+La API la pueden encontrar en: http://htmlparser.sourceforge.net/javadoc/index.html
