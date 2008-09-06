@@ -1,0 +1,29 @@
+#labels consideraciones,equipo,buenaspracticas
+*= INFORMACION PARA QUE TODOS TENGAMOS EN CUENTA =*
+
+== SVN - TICKETS - WIKI ==
+
+  * Hacer svn update antes de hacer svn commit
+  * Luego de hacer un update no olvidarse de hacer un refresh en el eclipse
+  * Testear las cosas antes de commitear
+  * No subir codigo que no compila
+  * Usar la carga de tickets para informar cosas pendientes por hacer
+
+
+== PROGRAMACION ==
+
+  * Tratar de programar en ingles
+  * Los nombres de los metodos lo mas explicitos posibles (primer letra en minuscula y luego mayusculas)
+  * Los nombres de las clases, primer letra de cada palabra en mayuscula, que los nombres traten de dar la mayor informacion de lo que hace esa clase (ej: una clase abstracta que brinda metodos para trabajar con codigo html: "AbstractHtmlUtils"
+  * Las interfaces empiezan con I (a definir)
+  * Explicar framework a utilizar que es un ...Dto...Bo...Dao...View...Model...
+  * Escribir comentarios en el codigo, lo mas detallado posible
+  * No escribir variables sin sentido (i,j,k salvo casos particulares como un for)
+
+
+== EQUIPO ==
+
+  * Es importantisimo que haya comunicacion en el equipo
+  * Es fundamental que hagamos reuniones *semanales*
+  * Es muy importante saber todo el tiempo que estan haciendo los demas integrantes asi comprenemos que cosas faltan por hacer y que cosas ya estan hechas
+  * Presencia y compromiso con las tareas de cada uno
