@@ -1,0 +1,23 @@
+#labels preguntas,respuestas
+Enunciado: http://materias.fi.uba.ar/7506C/docs/wiki/doku.php?id=tp:2do_cuatrimestre_2008
+
+* Nuestro INPUT son archivos de texto unicamente.??
+# Sep.
+
+* El listado de resultado sera un archivo de salida (pregunto por el
+volumen del reporte)?
+# Puede serlo, o puede ser salida por pantalla. La última entrega es por
+pantalla. Pero debe tener cierto diseño para humanos, aún no leemos
+bits.
+
+* Nuestro TP se conecta a la WEB?
+# Nop, les vamos a proveer una aplicación para bajar las páginas.
+
+* En que capa se encuentra el modulo de la catedra?
+# Es la aplicación "bajadora de páginas"
+
+* Al encontrar caracteres como este &eacute; == (é) se escapean ,cierto??
+# Si están dentro del Body, nuestra área de trabajo, estaría bueno que
+lo interpreten como el usuario lo leería (osea, cambien las entidades
+por letras y procesen la palabra), sino perdemos mucho texto en
+español.
