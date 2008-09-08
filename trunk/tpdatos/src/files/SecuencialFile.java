@@ -2,23 +2,35 @@ package files;
 
 import java.io.IOException;
 
+import persistors.IntegerPersistor;
 import persistors.Persistor;
 import exceptions.DataAccessException;
 
 public class SecuencialFile<E> extends AbstractFile<E> {
 	
-	public SecuencialFile(String fileName, int recordSize, Persistor<E> persistor) throws DataAccessException{
-		super(fileName,recordSize,persistor);
+	private StackFile<Integer> freeSpacesStack;
+	
+	public SecuencialFile(String fileName, Persistor<E> persistor) throws DataAccessException{
+		super(fileName,persistor.getDataSize(),persistor);
+		freeSpacesStack= new StackFile<Integer>(fileName+".fss",new IntegerPersistor());
 	}
 	
 	public int add(E element) throws DataAccessException {
 		try {
-			int length=(int) dataFile.length();
+			int index=0;
+			long length=0;
+			try {
+				index= freeSpacesStack.pop();
+				length= index+size;
+			}catch (DataAccessException e) {
+				length= this.dataFile.length();
+				index= (int) ((length/size)+1); 
+			}
 			dataFile.seek(length);
 			dataFile.write(persistor.toBytes(element));
-			return (length/size)+1;
+			return index;
 		} catch (IOException e) {
-			throw new DataAccessException("Error agregando elemento.",e);			
+			throw new DataAccessException("Error insertando elemento",e);
 		}
 	}
 
@@ -37,15 +49,15 @@ public class SecuencialFile<E> extends AbstractFile<E> {
 	public int modify(int elementId, E newElement) throws DataAccessException {
 		try {
 			int offset=size+elementId;
-			dataFile.write(persistor.toBytes(newElement), offset, persistor.getDataSize(newElement));
+			dataFile.write(persistor.toBytes(newElement), offset, size);
 			return elementId;
 		} catch (IOException e) {
 			throw new DataAccessException("Error modificando elemento.",e);
 		}
 	}
 
-	public void remove(int elementId) {
-		// TODO Auto-generated method stub
+	public void remove(int elementId) throws DataAccessException {
+		freeSpacesStack.push(elementId);
 	}
 
 }

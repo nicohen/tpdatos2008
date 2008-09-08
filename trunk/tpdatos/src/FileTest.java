@@ -14,7 +14,7 @@ public class FileTest {
 		//read();
 		BytePersistor persistor= new BytePersistor();
 
-			File<Byte> file= new SecuencialFile<Byte>("c:/datos.bin",4,persistor);
+			File<Byte> file= new SecuencialFile<Byte>("c:/datos.bin",persistor);
 			file.add(new Byte((byte)7));
 			file.add(new Byte((byte)8));
 			file.add(new Byte((byte)9));

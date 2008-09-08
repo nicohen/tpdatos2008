@@ -2,8 +2,8 @@ package persistors;
 
 public class IntegerPersistor extends AbstractPersistor<java.lang.Integer>{
 
-	public IntegerPersistor(int maxSize) {
-		super(maxSize);
+	public IntegerPersistor() {
+		super(4);
 	}
 
 	@Override
@@ -12,7 +12,7 @@ public class IntegerPersistor extends AbstractPersistor<java.lang.Integer>{
 		return null;
 	}
 
-//	@Override
+	@Override
 	public byte[] toBytes(Integer element) {
 		// TODO Auto-generated method stub
 		return null;
