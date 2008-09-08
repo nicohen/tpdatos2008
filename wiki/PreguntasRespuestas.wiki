@@ -31,3 +31,9 @@
  * *La aplicación que baja los html a disco, en que codificación se los guarda?, Es decir, tenemos que contemplar los casos en que esten en utf-8, utf-16, unicode, etc?*
  Creo que si utilizan una librería de HTML, pueden resolver esto. Lo cambian todo a la codificación de trabajo del sistema (una sola, ASCII, UNICODE, etc.)
 ----
+ * *Tenemos que persistir el index set o se debe levantar en memoria cada vez que se inicia el programa?*
+ El arbol lo tenes que persistir en disco y levantar de a partes -que necesites-, no podes tener el index-set todo en memoria, a lo sumo si podes tener una 'rama' del index-set en memoria, pero de hecho la vas a tener que levantar nodo x nodo.
+----
+ * *Se permite reindexar o dar de baja paginas ya indexadas (Baja/Modificacion de paginas) ?*
+ No hay baja/modificacion de registros.
+----
