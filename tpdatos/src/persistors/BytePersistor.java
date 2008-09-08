@@ -1,12 +1,7 @@
 package persistors;
-public class BytePersistor extends AbstractPersistor<java.lang.Byte>{
+public class BytePersistor implements Persistor<Byte>{
 
 	public BytePersistor() {
-		super(1);
-	}
-	
-	public BytePersistor(int maxSize) {
-		super(1);
 	}
 
 	public Byte decode(byte[] buffer) {
@@ -19,6 +14,11 @@ public class BytePersistor extends AbstractPersistor<java.lang.Byte>{
 		byte[] result= new byte[1];
 		result[0]=element.byteValue();
 		return result;
+	}
+
+	public int getDataSize() {
+		// TODO Auto-generated method stub
+		return 1;
 	}
 
 }
