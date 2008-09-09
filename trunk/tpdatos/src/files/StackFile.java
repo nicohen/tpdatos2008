@@ -8,7 +8,7 @@ import persistors.Persistor;
 import exceptions.DataAccessException;
 
 
-public class StackFile<E> implements IApilable<E>{
+public class StackFile<E> implements Stack<E>{
 
 	protected RandomAccessFile dataFile;
 	protected Persistor<E> persistor;
