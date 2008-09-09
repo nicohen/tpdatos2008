@@ -23,7 +23,7 @@ echo  >> Makefile
 echo "default: classes"  >> Makefile
 echo 'classes:   $(CLASSES:.java=.class)'  >> makefile
 echo 'clean:
-	   rm $(find -name '"'"'*.class'"'"')'  >> makefile
+	   rm $(CLASSES:.java=.class)'  >> makefile
 
 echo >> makefile
 
