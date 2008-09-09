@@ -4,7 +4,7 @@ JC = javac
 CLASSES = ./src/files/IApilable.java ./src/files/AbstractFile.java ./src/files/SecuencialFile.java ./src/files/File.java ./src/files/StackFile.java ./src/persistors/Persistor.java ./src/persistors/StringPersistor.java ./src/persistors/AbstractPersistor.java ./src/persistors/IntegerPersistor.java ./src/persistors/BytePersistor.java ./src/exceptions/BusinessException.java ./src/exceptions/DataAccessException.java ./src/api/ObjectFactory.java ./src/ControllerServlet.java ./src/test.java ./src/SecuentialFileTest.java ./src/FileTest.java ./src/StackFileTest.java
 classes:   $(CLASSES:.java=.class)
 clean:
-	   rm $(find -name '*.class')
+	   rm $(CLASSES:.java=.class)
 
 ./src/files/IApilable.class: ./src/files/IApilable.java
 		$(JC) $(JFLAGS) ./src/files/IApilable.java
