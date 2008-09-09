@@ -1,3 +1,4 @@
+#labels trabajo,equipo
 *Trabajo en equipo*
 
 El trabajo de desarrollo de software se basa en el trabajo en equipo. Un equipo no es sólo un grupo de personas, porque cada parte del mismo tiene una función definida, con responsabilidades claras. Esto permite el control de avances entre los miembros y la rápida detección de algún problema o atraso.
