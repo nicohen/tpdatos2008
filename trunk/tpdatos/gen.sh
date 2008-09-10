@@ -6,7 +6,7 @@ BINNAME=mrt
 
 echo 'CLASSPATHS=src:lib/htmlparser.jar:lib/servlet-api.jar:lib/junit-4.5.jar:lib/log4j-1.2.15.jar' > makefile
 
-echo >> Makefile
+echo >> makefile
 
 echo 'JFLAGS = -g -classpath $(CLASSPATHS)' >> makefile
 echo 'JC = javac' >> makefile
@@ -15,12 +15,12 @@ echo 'JC = javac' >> makefile
 #echo '.java.class:        $(JC) $(JFLAGS) $*.java' >> makefile
 
 
-echo >> Makefile
-echo >> Makefile
+echo >> makefile
+echo >> makefile
 
 echo "CLASSES = "$( find -name '*.java' ) >> makefile
-echo  >> Makefile
-echo "default: classes"  >> Makefile
+echo  >> makefile
+echo "default: classes"  >> makefile
 echo 'classes:   $(CLASSES:.java=.class)'  >> makefile
 echo 'clean:
 	   rm $(CLASSES:.java=.class)'  >> makefile
