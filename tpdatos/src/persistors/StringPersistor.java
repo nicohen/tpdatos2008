@@ -1,5 +1,11 @@
 package persistors;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+
+import exceptions.PersistionException;
+
 public class StringPersistor extends AbstractPersistor<java.lang.String> {
 
 	public StringPersistor(int maxSize) {
@@ -7,7 +13,6 @@ public class StringPersistor extends AbstractPersistor<java.lang.String> {
 	}
 
 	public String decode(byte[] buffer) {
-		// TODO Auto-generated method stub
 		String resultado="";
 		for(int i=0;(i<buffer.length && buffer[i]!=0);i++) {
 			resultado+=(char)buffer[i];
@@ -22,6 +27,31 @@ public class StringPersistor extends AbstractPersistor<java.lang.String> {
 			bytes[i] = (byte)element.charAt(i);
 		}
 		return bytes;
+	}
+
+	public String read(DataInputStream stream) throws PersistionException {
+		try {
+			byte size= stream.readByte();
+			StringBuffer sb= new StringBuffer();
+			for(int i=0;i<size;i++){
+				sb.append(stream.readChar());
+			}
+			return sb.toString();
+		} catch (IOException e) {
+			throw new PersistionException("Error recuperando elemento.",e);
+		}
+	}
+
+	public void write(String element, DataOutputStream stream) throws PersistionException {
+		try {
+			byte size=(byte)element.length();
+			stream.writeByte(size);
+			for(int i=0;i<element.length();i++){
+				stream.writeChar(element.charAt(i));
+			}
+		} catch (IOException e) {
+			throw new PersistionException("Error persistiendo elemento: "+element,e);
+		}
 	}
 
 }

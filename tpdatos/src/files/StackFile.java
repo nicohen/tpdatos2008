@@ -1,11 +1,16 @@
 package files;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
 import persistors.Persistor;
 import exceptions.DataAccessException;
+import exceptions.PersistionException;
 
 
 public class StackFile<E> implements Stack<E>{
@@ -29,9 +34,14 @@ public class StackFile<E> implements Stack<E>{
 	
 	public void push(E element) throws DataAccessException {
 		try {
-			dataFile.write(persistor.toBytes(element));
+			ByteArrayOutputStream baos= new ByteArrayOutputStream();
+			DataOutputStream dos= new DataOutputStream(baos);
+			persistor.write(element, dos);
+			dataFile.write(baos.toByteArray());
 		} catch (IOException e) {
 			throw new DataAccessException("Error agregando elemento.",e);			
+		} catch (PersistionException e) {
+			throw new DataAccessException("Error agregando elemento.",e);
 		}
 	}
 	
@@ -42,9 +52,14 @@ public class StackFile<E> implements Stack<E>{
 			byte[] buffer = new byte[size];
 			dataFile.read(buffer);
 			dataFile.setLength(length-size);
-			return persistor.decode(buffer);
+			dataFile.read(buffer);
+			ByteArrayInputStream bais= new ByteArrayInputStream(buffer);
+			DataInputStream dis= new DataInputStream(bais);
+			return persistor.read(dis);
 		} catch (IOException e) {
 			throw new DataAccessException("Error obteniendo elemento.",e);			
+		} catch (PersistionException e) {
+			throw new DataAccessException("Error obteniendo elemento.",e);
 		}
 	}
 }

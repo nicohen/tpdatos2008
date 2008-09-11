@@ -1,24 +1,34 @@
 package persistors;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+
+import exceptions.PersistionException;
+
 public class BytePersistor implements Persistor<Byte>{
 
 	public BytePersistor() {
 	}
 
-	public Byte decode(byte[] buffer) {
-		// TODO Auto-generated method stub
-		return buffer[0];
-	}
-
-	public byte[] toBytes(Byte element) {
-		// TODO Auto-generated method stub
-		byte[] result= new byte[1];
-		result[0]=element.byteValue();
-		return result;
-	}
-
 	public int getDataSize() {
-		// TODO Auto-generated method stub
 		return 1;
+	}
+
+	public Byte read(DataInputStream stream) throws PersistionException {
+		try {
+			return stream.readByte();
+		} catch (IOException e) {
+			throw new PersistionException("Error Recuperando Elemento.",e);
+		}
+	}
+
+	public void write(Byte element, DataOutputStream stream) throws PersistionException {
+		try {
+			stream.writeByte(element);
+		} catch (IOException e) {
+			throw new PersistionException("Error Persistiendo Elemento: "+element.toString(),e);
+		}
 	}
 
 }
