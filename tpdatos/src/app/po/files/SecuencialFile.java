@@ -1,4 +1,4 @@
-package files;
+package app.po.files;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -6,8 +6,9 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import persistors.IntegerPersistor;
-import persistors.Persistor;
+import api.po.persistors.Persistor;
+import app.po.persistors.IntegerPersistor;
+
 import exceptions.DataAccessException;
 import exceptions.PersistionException;
 

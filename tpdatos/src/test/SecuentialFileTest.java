@@ -1,10 +1,11 @@
+package test;
+import api.po.files.File;
+import app.po.files.SecuencialFile;
+import app.po.persistors.BytePersistor;
+import app.po.persistors.IntegerPersistor;
+import app.po.persistors.StringPersistor;
 import junit.framework.TestCase;
-import persistors.BytePersistor;
-import persistors.IntegerPersistor;
-import persistors.StringPersistor;
 import exceptions.DataAccessException;
-import files.File;
-import files.SecuencialFile;
 
 
 public class SecuentialFileTest extends TestCase {

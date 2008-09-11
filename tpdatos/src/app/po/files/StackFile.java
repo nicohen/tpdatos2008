@@ -1,4 +1,4 @@
-package files;
+package app.po.files;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -8,7 +8,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
-import persistors.Persistor;
+import api.po.files.Stack;
+import api.po.persistors.Persistor;
+
 import exceptions.DataAccessException;
 import exceptions.PersistionException;
 

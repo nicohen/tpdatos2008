@@ -1,4 +1,4 @@
-package registros;
+package dto;
 
 import java.util.ArrayList;
 

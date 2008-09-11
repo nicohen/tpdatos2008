@@ -2,10 +2,12 @@ package api;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import dto.LinkedBlock;
+
+import app.po.files.SecuencialFile;
+import app.po.persistors.LinkedBlockPersistor;
+
 import exceptions.DataAccessException;
-import files.SecuencialFile;
-import persistors.LinkedBlockPersistor;
-import registros.LinkedBlock;
 public class LinkedBlocksManager {
 
 	int blockSize;
@@ -60,12 +62,12 @@ public class LinkedBlocksManager {
 				regAux.getListaDocs().add(idDoc);
 				newBlockId=archivo.add(regAux);//obtengo id del siguiente bloque
 				reg.setNextBlock(newBlockId);//seteo el puntero a siguiente
-				archivo.modify(reg.getCurrentBlock(), reg);//actualizo
+				archivo.update(reg.getCurrentBlock(), reg);//actualizo
 			}
 			
 			else{//hay lugar en el bloque
 			reg.getListaDocs().add(idDoc);
-			archivo.modify(reg.getCurrentBlock(),reg);
+			archivo.update(reg.getCurrentBlock(),reg);
 			}
 		} catch (DataAccessException e) {
 			// TODO Auto-generated catch block

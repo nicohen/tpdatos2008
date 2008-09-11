@@ -1,4 +1,4 @@
-package files;
+package api.po.files;
 
 public interface Stack<E> {
 	public void push(E element) throws Exception;
