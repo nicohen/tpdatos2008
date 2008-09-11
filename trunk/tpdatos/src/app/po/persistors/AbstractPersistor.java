@@ -1,4 +1,6 @@
-package persistors;
+package app.po.persistors;
+
+import api.po.persistors.Persistor;
 
 public abstract class AbstractPersistor<E> implements Persistor<E> {
 

@@ -1,11 +1,13 @@
+package test;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
-import persistors.BytePersistor;
+import api.po.files.File;
+import app.po.files.SecuencialFile;
+import app.po.persistors.BytePersistor;
+
 import exceptions.DataAccessException;
-import files.File;
-import files.SecuencialFile;
 
 public class FileTest {
 

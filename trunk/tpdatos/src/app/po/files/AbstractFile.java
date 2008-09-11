@@ -1,9 +1,11 @@
-package files;
+package app.po.files;
 
 import java.io.FileNotFoundException;
 import java.io.RandomAccessFile;
 
-import persistors.Persistor;
+import api.po.files.File;
+import api.po.persistors.Persistor;
+
 import exceptions.DataAccessException;
 
 public abstract class AbstractFile<E> implements File<E> {
