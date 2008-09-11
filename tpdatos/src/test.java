@@ -12,7 +12,7 @@ public class test {
 	public static void main(String[] args) throws IOException {
 		File file = new File("c:/lala/lala.txt");
 		File fileDir = new File("c:/lala");
-		
+		 
 		if (!fileDir.isDirectory()) {
 			fileDir.mkdir();
 			file.createNewFile();
