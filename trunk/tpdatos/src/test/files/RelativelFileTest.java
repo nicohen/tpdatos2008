@@ -1,11 +1,11 @@
 package test.files;
 import junit.framework.TestCase;
 import api.po.files.File;
+import app.po.files.RelativeFile;
 import app.po.persistors.BytePersistor;
 import app.po.persistors.IntegerPersistor;
 import app.po.persistors.StringPersistor;
 import exceptions.DataAccessException;
-import files.RelativeFile;
 
 
 public class RelativelFileTest extends TestCase {
