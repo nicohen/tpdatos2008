@@ -1,19 +1,19 @@
-package test;
+package test.files;
+import junit.framework.TestCase;
 import api.po.files.File;
-import app.po.files.SecuencialFile;
 import app.po.persistors.BytePersistor;
 import app.po.persistors.IntegerPersistor;
 import app.po.persistors.StringPersistor;
-import junit.framework.TestCase;
 import exceptions.DataAccessException;
+import files.RelativeFile;
 
 
-public class SecuentialFileTest extends TestCase {
+public class RelativelFileTest extends TestCase {
 
 	// FIXME: no rethrowear mejor hacer algo con el junit ?
 	public void testSecuentialFileBytePersistor() throws DataAccessException {
 		BytePersistor persistor= new BytePersistor();
-		File<Byte> file= new SecuencialFile<Byte>("test_secuencial_byte.bin",persistor);
+		File<Byte> file= new RelativeFile<Byte>("test_relative_byte.bin",persistor);
 		file.add(new Byte((byte)7));
 		file.add(new Byte((byte)8));
 		file.add(new Byte((byte)9));
@@ -33,7 +33,7 @@ public class SecuentialFileTest extends TestCase {
 	// FIXME: no rethrowear mejor hacer algo con el junit ?
 	public void testSecuentialFileIntegerPersistor() throws DataAccessException {
 		IntegerPersistor persistor= new IntegerPersistor();
-		File<Integer> file= new SecuencialFile<Integer>("test_secuencial_integer.bin",persistor);
+		File<Integer> file= new RelativeFile<Integer>("test_relative_integer.bin",persistor);
 		file.add(7);
 		file.add(8);
 		file.add(9);
@@ -54,7 +54,7 @@ public class SecuentialFileTest extends TestCase {
 	public void testSecuentialFileStringPersistor() throws DataAccessException {
 		StringPersistor persistor= new StringPersistor(10);
 
-		File<String> file= new SecuencialFile<String>("test_secuencial_string.bin",persistor);
+		File<String> file= new RelativeFile<String>("test_relative_string.bin",persistor);
 		file.add("Cuarto");
 		file.add("Primero");
 		file.add("Tercero");

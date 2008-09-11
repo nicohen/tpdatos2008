@@ -1,4 +1,4 @@
-package test;
+package test.files;
 import app.po.files.StackFile;
 import app.po.persistors.BytePersistor;
 import junit.framework.TestCase;

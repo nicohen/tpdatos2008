@@ -2,12 +2,8 @@ package app.po.persistors;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.IOException;
 
 import dto.LinkedBlock;
-
-
-
 import exceptions.PersistionException;
 
 public class LinkedBlockPersistor extends AbstractPersistor<LinkedBlock> {
