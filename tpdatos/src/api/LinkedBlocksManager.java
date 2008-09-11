@@ -48,6 +48,8 @@ public class LinkedBlocksManager {
 	public void add(int idDoc,int blockId){
 		
 		LinkedBlock reg=new LinkedBlock();
+		LinkedBlock regAux=new LinkedBlock();
+		int newBlockId;
 		try {
 			reg=archivo.get(blockId);
 			while(reg.getNextBlock()!=0){
@@ -55,8 +57,10 @@ public class LinkedBlocksManager {
 			}
 			//si no hay puntero a siguiente pero el bloque esta lleno
 			if (reg.getListaDocs().size()==blockSize){
-				//TODO completar nextBlock, y agregar nuevo bloque con idDoc al final del archivo
-		
+				regAux.getListaDocs().add(idDoc);
+				newBlockId=archivo.add(regAux);//obtengo id del siguiente bloque
+				reg.setNextBlock(newBlockId);//seteo el puntero a siguiente
+				archivo.modify(reg.getCurrentBlock(), reg);//actualizo
 			}
 			
 			else{//hay lugar en el bloque

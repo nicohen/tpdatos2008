@@ -7,6 +7,11 @@ public class LinkedBlock {
 	private int nextBlock;
 	ArrayList<Integer> listaDocs;
 	
+	public LinkedBlock(){
+		this.currentBlock=0;
+		this.nextBlock=0;
+		listaDocs=new ArrayList<Integer>();
+	}
 	public int getNextBlock(){
 		return this.nextBlock;
 	}
