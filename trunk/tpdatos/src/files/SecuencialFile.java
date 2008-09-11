@@ -43,6 +43,8 @@ public class SecuencialFile<E> extends AbstractFile<E> {
 			throw new DataAccessException("Error insertando elemento",e);
 		}
 	}
+	
+	
 
 	public E get(int elementId) throws DataAccessException {
 		try {

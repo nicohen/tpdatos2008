@@ -22,7 +22,7 @@ public class StackFile<E> implements Stack<E>{
 	public StackFile(String fileName, Persistor<E> persistor) throws DataAccessException {
 		this.persistor = persistor;
 		this.size= persistor.getDataSize();
-		try {
+		try { 
 			this.dataFile = new RandomAccessFile(fileName,"rw");
 			dataFile.seek(dataFile.length());
 		} catch(FileNotFoundException e) {
