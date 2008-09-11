@@ -6,7 +6,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import persistors.Persistor;
+import api.po.persistors.Persistor;
+import app.po.files.AbstractFile;
 import exceptions.DataAccessException;
 import exceptions.PersistionException;
 

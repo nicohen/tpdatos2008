@@ -1,4 +1,4 @@
-package test;
+package test.files;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
