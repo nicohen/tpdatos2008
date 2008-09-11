@@ -1,7 +1,12 @@
 package persistors;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+
+import exceptions.PersistionException;
+
 public interface Persistor<E> {
-	byte[] toBytes(E element);
+	void write(E element, DataOutputStream stream) throws PersistionException;
 	public int getDataSize();
-	E decode(byte[] buffer);
+	E read(DataInputStream stream) throws PersistionException;
 }

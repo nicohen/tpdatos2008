@@ -1,10 +1,15 @@
 package files;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 
 import persistors.IntegerPersistor;
 import persistors.Persistor;
 import exceptions.DataAccessException;
+import exceptions.PersistionException;
 
 public class SecuencialFile<E> extends AbstractFile<E> {
 	
@@ -27,9 +32,14 @@ public class SecuencialFile<E> extends AbstractFile<E> {
 				index= (int) ((length/size)+1); 
 			}
 			dataFile.seek(length);
-			dataFile.write(persistor.toBytes(element));
+			ByteArrayOutputStream baos= new ByteArrayOutputStream();
+			DataOutputStream dos= new DataOutputStream(baos);
+			persistor.write(element, dos);
+			dataFile.write(baos.toByteArray());
 			return index;
 		} catch (IOException e) {
+			throw new DataAccessException("Error insertando elemento",e);
+		} catch (PersistionException e) {
 			throw new DataAccessException("Error insertando elemento",e);
 		}
 	}
@@ -40,18 +50,28 @@ public class SecuencialFile<E> extends AbstractFile<E> {
 			byte[] buffer = new byte[size];
 			dataFile.seek(offset);
 			dataFile.read(buffer);
-			return persistor.decode(buffer);
+			ByteArrayInputStream bais= new ByteArrayInputStream(buffer);
+			DataInputStream dis= new DataInputStream(bais);
+			return persistor.read(dis);
 		} catch (IOException e) {
+			throw new DataAccessException("Error obteniendo elemento.",e);
+		} catch (PersistionException e) {
 			throw new DataAccessException("Error obteniendo elemento.",e);
 		}
 	}
 
 	public int modify(int elementId, E newElement) throws DataAccessException {
 		try {
-			int offset=size+elementId;
-			dataFile.write(persistor.toBytes(newElement), offset, size);
+			int offset=size*elementId;
+			dataFile.seek(offset);
+			ByteArrayOutputStream baos= new ByteArrayOutputStream();
+			DataOutputStream dos= new DataOutputStream(baos);
+			persistor.write(newElement, dos);
+			dataFile.write(baos.toByteArray());
 			return elementId;
 		} catch (IOException e) {
+			throw new DataAccessException("Error modificando elemento.",e);
+		} catch (PersistionException e) {
 			throw new DataAccessException("Error modificando elemento.",e);
 		}
 	}
