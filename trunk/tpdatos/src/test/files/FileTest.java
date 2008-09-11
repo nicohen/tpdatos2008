@@ -1,12 +1,7 @@
 package test.files;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.RandomAccessFile;
-
 import api.po.files.File;
 import app.po.files.SecuencialFile;
 import app.po.persistors.BytePersistor;
-
 import exceptions.DataAccessException;
 
 public class FileTest {
@@ -16,7 +11,7 @@ public class FileTest {
 		//read();
 		BytePersistor persistor= new BytePersistor();
 
-			File<Byte> file= new SecuencialFile<Byte>("c:/datos.bin",persistor);
+			File<Byte> file= new SecuencialFile<Byte>("datos.bin",persistor);
 			file.add(new Byte((byte)7));
 			file.add(new Byte((byte)8));
 			file.add(new Byte((byte)9));
@@ -45,33 +40,19 @@ public class FileTest {
 			}else{
 				System.out.println("4 comparacion fallo");
 			}
-	}
-	
-	private static void create(){
-		try {
-			RandomAccessFile file= new RandomAccessFile("c:/pablo.bin","rw");
-			byte[] name= {'P','a','b','l','o'};
-			file.write(name);
-			file.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	private static void read(){
-		try {
-			RandomAccessFile file= new RandomAccessFile("c:/pablo.bin","rw");
-			file.seek(1);
-			System.out.print((char)file.readByte());
-			file.seek(4);
-			System.out.print((char)file.readByte());
-			file.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+			file.remove(1);
+			aux= file.get(1);
+			if (aux==null){
+				System.out.println("5 comparacion correcta");
+			}else{
+				System.out.println("5 comparacion fallo");
+			}			
+			file.add(new Byte((byte)15));
+			aux= file.get(1);
+			if (aux.equals(new Byte((byte)15))){
+				System.out.println("6 comparacion correcta");
+			}else{
+				System.out.println("6 comparacion fallo");
+			}			
 	}
 }

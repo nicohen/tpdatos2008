@@ -8,16 +8,17 @@ import java.io.IOException;
 
 import api.po.persistors.Persistor;
 import app.po.persistors.IntegerPersistor;
-
 import exceptions.DataAccessException;
 import exceptions.PersistionException;
 
 public class SecuencialFile<E> extends AbstractFile<E> {
 	
 	private StackFile<Integer> freeSpacesStack;
+	private static final byte REMOVED_ELEMENT= (byte) 0xFF;
+	private static final byte VALID_ELEMENT= (byte) 0x00;
 	
 	public SecuencialFile(String fileName, Persistor<E> persistor) throws DataAccessException{
-		super(fileName,persistor.getDataSize(),persistor);
+		super(fileName,persistor.getDataSize()+1,persistor);
 		freeSpacesStack= new StackFile<Integer>(fileName+".fss",new IntegerPersistor());
 	}
 	
@@ -27,7 +28,7 @@ public class SecuencialFile<E> extends AbstractFile<E> {
 			long length=0;
 			try {
 				index= freeSpacesStack.pop();
-				length= index+size;
+				length= index*size;
 			}catch (DataAccessException e) {
 				length= this.dataFile.length();
 				index= (int) ((length/size)+1); 
@@ -35,6 +36,7 @@ public class SecuencialFile<E> extends AbstractFile<E> {
 			dataFile.seek(length);
 			ByteArrayOutputStream baos= new ByteArrayOutputStream();
 			DataOutputStream dos= new DataOutputStream(baos);
+			dos.writeByte(VALID_ELEMENT);
 			persistor.write(element, dos);
 			dataFile.write(baos.toByteArray());
 			return index;
@@ -55,7 +57,13 @@ public class SecuencialFile<E> extends AbstractFile<E> {
 			dataFile.read(buffer);
 			ByteArrayInputStream bais= new ByteArrayInputStream(buffer);
 			DataInputStream dis= new DataInputStream(bais);
-			return persistor.read(dis);
+			byte flag=dis.readByte();
+			if (flag==VALID_ELEMENT){
+				return persistor.read(dis);
+			}else{
+				return null;
+			}
+			
 		} catch (IOException e) {
 			throw new DataAccessException("Error obteniendo elemento.",e);
 		} catch (PersistionException e) {
@@ -69,6 +77,7 @@ public class SecuencialFile<E> extends AbstractFile<E> {
 			dataFile.seek(offset);
 			ByteArrayOutputStream baos= new ByteArrayOutputStream();
 			DataOutputStream dos= new DataOutputStream(baos);
+			dos.writeByte(VALID_ELEMENT);
 			persistor.write(newElement, dos);
 			dataFile.write(baos.toByteArray());
 			return elementId;
@@ -80,7 +89,17 @@ public class SecuencialFile<E> extends AbstractFile<E> {
 	}
 
 	public void remove(int elementId) throws DataAccessException {
-		freeSpacesStack.push(elementId);
+		try {
+			int offset=size*elementId;
+			dataFile.seek(offset);
+			ByteArrayOutputStream baos= new ByteArrayOutputStream();
+			DataOutputStream dos= new DataOutputStream(baos);
+			dos.writeByte(REMOVED_ELEMENT);
+			dataFile.write(baos.toByteArray());
+			freeSpacesStack.push(elementId);
+		} catch (IOException e) {
+			throw new DataAccessException("Error modificando elemento.",e);
+		}
 	}
 
 }

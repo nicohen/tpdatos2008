@@ -1,18 +1,15 @@
 package api;
 
+import java.util.HashMap;
+
 public class ObjectFactory {
 
-	public ObjectFactory() {}
+	private ObjectFactory() {}
+	private static HashMap<Class, Object> objects= new HashMap<Class, Object>();
 	
 	@SuppressWarnings("unchecked")
 	public static Object getObject(Class interfaz) {
-
-//		if (interfaz.equals(ISpiderBo.class)) {
-//			return SpiderBo.class;
-//		} else if (interfaz.equals(ISpiderDao.class)) {
-//			return SpiderDao.class;
-//		}
-		
+		objects.get(interfaz);
 		return null;
 	}
 	
