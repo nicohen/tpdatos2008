@@ -55,11 +55,11 @@ public class LinkedBlocksManager {
 			}
 			//si no hay puntero a siguiente pero el bloque esta lleno
 			if (reg.getListaDocs().size()==blockSize){
-			//TODO completar nextBlock, y agregar nuevo bloque con idDoc al final del archivo
+				//TODO completar nextBlock, y agregar nuevo bloque con idDoc al final del archivo
 			}
 			
 			else{//hay lugar en el bloque
-			//TODO cargar la listaDocs de reg con el idDoc
+			reg.getListaDocs().add(idDoc);
 			//TODO grabar el reg en esa posicion
 			archivo.add(reg);
 			}
