@@ -62,7 +62,7 @@ public class SecuencialFile<E> extends AbstractFile<E> {
 		}
 	}
 
-	public int modify(int elementId, E newElement) throws DataAccessException {
+	public int update(int elementId, E newElement) throws DataAccessException {
 		try {
 			int offset=size*elementId;
 			dataFile.seek(offset);
