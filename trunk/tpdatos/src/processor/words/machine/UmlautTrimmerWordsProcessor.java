@@ -9,8 +9,8 @@ public class UmlautTrimmerWordsProcessor extends AbstractWordsProcessor {
 		super();
 	}
 	
-	@Override
+/*	@Override
 	public void process(WordDto wordDto) {
-	}
+	}*/
 
 }

@@ -11,6 +11,9 @@ public class CaseFoldingWordsProcessor extends AbstractWordsProcessor {
 	
 	@Override
 	public void process(WordDto wordDto) {
+		super.process(
+				new WordDto( wordDto.toString().toLowerCase() )
+				);
 	}
 
 }
