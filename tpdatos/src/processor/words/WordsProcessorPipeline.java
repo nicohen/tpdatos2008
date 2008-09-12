@@ -4,21 +4,28 @@ import java.util.List;
 
 import dto.WordDto;
 
-public class WordsProcessorPipeline implements WordsProcessor {
+public class WordsProcessorPipeline extends AbstractWordsProcessor {
 
-	private List<WordsProcessor> pipeline = null;
-	
-	public WordsProcessorPipeline(List<WordsProcessor> pipeline) {
-		this.pipeline = pipeline;
+	public WordsProcessorPipeline(List<AbstractWordsProcessor> pipeline, WordsProcessor next) {
+		boolean has_first = false;
+		AbstractWordsProcessor last = null;
+		
+		for ( AbstractWordsProcessor proc : pipeline ) {
+			if ( !has_first ) {
+				this.setNext( proc );	
+				has_first = false;
+			} else {
+				last.setNext( proc );
+			}
+			
+			last = proc;
+		}
+		
+		last.setNext( next );
 	}
 
 	@Override
-	public String process(WordDto wordDto) {
-		
-		for (WordsProcessor wordsProcessor : pipeline) {
-			wordsProcessor.process(wordDto);
-		}
-		
-		return wordDto.toString();
+	public void process(WordDto wordDto) {
+		super.process(wordDto);
 	}
 }

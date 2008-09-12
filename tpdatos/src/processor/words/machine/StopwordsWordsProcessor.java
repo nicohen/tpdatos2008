@@ -10,9 +10,7 @@ public class StopwordsWordsProcessor extends AbstractWordsProcessor {
 	}
 	
 	@Override
-	public String process(WordDto wordDto) {
-		// TODO Auto-generated method stub
-		return null;
+	public void process(WordDto wordDto) {
 	}
 
 }
