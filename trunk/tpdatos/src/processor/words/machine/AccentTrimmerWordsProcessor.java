@@ -9,10 +9,8 @@ public class AccentTrimmerWordsProcessor extends AbstractWordsProcessor {
 		super();
 	}
 	
-	@Override
-	public String process(WordDto wordDto) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+/*	@Override
+	public void process(WordDto wordDto) {
+	}*/
 
 }

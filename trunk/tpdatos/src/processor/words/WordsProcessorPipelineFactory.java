@@ -11,15 +11,15 @@ import processor.words.machine.UmlautTrimmerWordsProcessor;
 
 public class WordsProcessorPipelineFactory {
 	
-	public WordsProcessorPipeline getProcessor() {
-		List<WordsProcessor> pipeline = new ArrayList<WordsProcessor>();
+	public WordsProcessorPipeline getProcessor(WordsProcessor next) {
+		List<AbstractWordsProcessor> pipeline = new ArrayList<AbstractWordsProcessor>();
 		pipeline.add(new UmlautTrimmerWordsProcessor());
 		pipeline.add(new AccentTrimmerWordsProcessor());
 		pipeline.add(new CaseFoldingWordsProcessor());
 		pipeline.add(new StopwordsWordsProcessor());
 		pipeline.add(new StemmerWordsProcessor());
 		
-		return (new WordsProcessorPipeline(pipeline));
+		return (new WordsProcessorPipeline(pipeline,next));
 	}
 	
 }
