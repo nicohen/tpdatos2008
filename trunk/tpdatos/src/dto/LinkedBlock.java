@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class LinkedBlock {
 	private int currentBlock;
 	private int nextBlock;
-	ArrayList<Integer> listaDocs;
+	private ArrayList<Integer> listaDocs;
 	
 	public LinkedBlock(){
 		this.currentBlock=0;
@@ -23,6 +23,13 @@ public class LinkedBlock {
 		return this.listaDocs;
 	}
 	
+	public void setDoc(Integer doc) {
+		this.listaDocs.add(doc);
+	}
+	
+	public void setListaDocs(ArrayList<Integer> listaDocs) {
+		this.listaDocs = listaDocs;
+	}
 	public void setNextBlock(int blockId){
 		this.nextBlock=blockId;
 	}

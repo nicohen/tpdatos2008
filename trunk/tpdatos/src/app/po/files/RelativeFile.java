@@ -8,7 +8,7 @@ import java.io.IOException;
 
 import api.po.persistors.Persistor;
 import exceptions.DataAccessException;
-import exceptions.PersistionException;
+import exceptions.PersistanceException;
 
 public class RelativeFile<E> extends AbstractFile<E> {
 
@@ -30,7 +30,7 @@ public class RelativeFile<E> extends AbstractFile<E> {
 			return index;
 		} catch (IOException e) {
 			throw new DataAccessException("Error insertando elemento",e);
-		} catch (PersistionException e) {
+		} catch (PersistanceException e) {
 			throw new DataAccessException("Error insertando elemento",e);
 		}
 	}
@@ -47,7 +47,7 @@ public class RelativeFile<E> extends AbstractFile<E> {
 			return persistor.read(dis);
 		} catch (IOException e) {
 			throw new DataAccessException("Error obteniendo elemento.",e);
-		} catch (PersistionException e) {
+		} catch (PersistanceException e) {
 			throw new DataAccessException("Error obteniendo elemento.",e);
 		}
 	}
@@ -64,7 +64,7 @@ public class RelativeFile<E> extends AbstractFile<E> {
 			return elementId;
 		} catch (IOException e) {
 			throw new DataAccessException("Error modificando elemento: "+newElement.toString(),e);
-		} catch (PersistionException e) {
+		} catch (PersistanceException e) {
 			throw new DataAccessException("Error modificando elemento: "+newElement.toString(),e);
 		}
 	}

@@ -2,13 +2,22 @@ package dto;
 
 public class WordDto {
 	
-	private String str; 
+	private String word; 
 	
-	public WordDto( String str ) {
-		this.str = str;
+	public WordDto( String word ) {
+		this.word = word;
 	}
 	
+	public String getWord() {
+		return word;
+	}
+
+	public void setWord(String word) {
+		this.word = word;
+	}
+
 	public String toString() {
-		return str;
+		return word;
 	}
+	
 }

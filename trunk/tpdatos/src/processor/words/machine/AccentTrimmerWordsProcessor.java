@@ -1,6 +1,5 @@
 package processor.words.machine;
 
-import dto.WordDto;
 import processor.words.AbstractWordsProcessor;
 
 public class AccentTrimmerWordsProcessor extends AbstractWordsProcessor {

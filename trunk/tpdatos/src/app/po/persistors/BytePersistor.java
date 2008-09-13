@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import api.po.persistors.Persistor;
 
-import exceptions.PersistionException;
+import exceptions.PersistanceException;
 
 public class BytePersistor implements Persistor<Byte>{
 
@@ -17,19 +17,19 @@ public class BytePersistor implements Persistor<Byte>{
 		return 1;
 	}
 
-	public Byte read(DataInputStream stream) throws PersistionException {
+	public Byte read(DataInputStream stream) throws PersistanceException {
 		try {
 			return stream.readByte();
 		} catch (IOException e) {
-			throw new PersistionException("Error Recuperando Elemento.",e);
+			throw new PersistanceException("Error Recuperando Elemento.",e);
 		}
 	}
 
-	public void write(Byte element, DataOutputStream stream) throws PersistionException {
+	public void write(Byte element, DataOutputStream stream) throws PersistanceException {
 		try {
 			stream.writeByte(element);
 		} catch (IOException e) {
-			throw new PersistionException("Error Persistiendo Elemento: "+element.toString(),e);
+			throw new PersistanceException("Error Persistiendo Elemento: "+element.toString(),e);
 		}
 	}
 

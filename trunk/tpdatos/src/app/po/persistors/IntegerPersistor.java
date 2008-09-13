@@ -7,7 +7,7 @@ import java.io.IOException;
 
 import api.po.persistors.Persistor;
 
-import exceptions.PersistionException;
+import exceptions.PersistanceException;
 
 public class IntegerPersistor implements Persistor<Integer>{
 	
@@ -24,19 +24,19 @@ public class IntegerPersistor implements Persistor<Integer>{
 		}
 	}
 
-	public Integer read(DataInputStream stream) throws PersistionException {
+	public Integer read(DataInputStream stream) throws PersistanceException {
 		try {
 			return stream.readInt();
 		} catch (IOException e) {
-			throw new PersistionException("Error Recuperando Elemento.",e);
+			throw new PersistanceException("Error Recuperando Elemento.",e);
 		}
 	}
 
-	public void write(Integer element, DataOutputStream stream) throws PersistionException {
+	public void write(Integer element, DataOutputStream stream) throws PersistanceException {
 		try {
 			stream.writeInt(element);
 		} catch (IOException e) {
-			throw new PersistionException("Error Persistiendo Elemento: "+element.toString(),e);
+			throw new PersistanceException("Error Persistiendo Elemento: "+element.toString(),e);
 		}
 		
 	}

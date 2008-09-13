@@ -5,7 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 
-import exceptions.PersistionException;
+import exceptions.PersistanceException;
 
 public class StringPersistor extends AbstractPersistor<java.lang.String> {
 
@@ -30,7 +30,7 @@ public class StringPersistor extends AbstractPersistor<java.lang.String> {
 		return bytes;
 	}
 
-	public String read(DataInputStream stream) throws PersistionException {
+	public String read(DataInputStream stream) throws PersistanceException {
 		try {
 			byte size= stream.readByte();
 			StringBuffer sb= new StringBuffer();
@@ -39,11 +39,11 @@ public class StringPersistor extends AbstractPersistor<java.lang.String> {
 			}
 			return sb.toString();
 		} catch (IOException e) {
-			throw new PersistionException("Error recuperando elemento.",e);
+			throw new PersistanceException("Error recuperando elemento.",e);
 		}
 	}
 
-	public void write(String element, DataOutputStream stream) throws PersistionException {
+	public void write(String element, DataOutputStream stream) throws PersistanceException {
 		try {
 			byte size=(byte)element.length();
 			stream.writeByte(size);
@@ -51,7 +51,7 @@ public class StringPersistor extends AbstractPersistor<java.lang.String> {
 				stream.writeChar(element.charAt(i));
 			}
 		} catch (IOException e) {
-			throw new PersistionException("Error persistiendo elemento: "+element,e);
+			throw new PersistanceException("Error persistiendo elemento: "+element,e);
 		}
 	}
 

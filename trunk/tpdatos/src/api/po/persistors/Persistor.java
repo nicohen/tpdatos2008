@@ -3,10 +3,10 @@ package api.po.persistors;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
-import exceptions.PersistionException;
+import exceptions.PersistanceException;
 
 public interface Persistor<E> {
-	void write(E element, DataOutputStream stream) throws PersistionException;
+	void write(E element, DataOutputStream stream) throws PersistanceException;
 	public int getDataSize();
-	E read(DataInputStream stream) throws PersistionException;
+	E read(DataInputStream stream) throws PersistanceException;
 }
