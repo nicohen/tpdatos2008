@@ -12,7 +12,7 @@ import api.po.files.Stack;
 import api.po.persistors.Persistor;
 
 import exceptions.DataAccessException;
-import exceptions.PersistionException;
+import exceptions.PersistanceException;
 
 
 public class StackFile<E> implements Stack<E>{
@@ -42,7 +42,7 @@ public class StackFile<E> implements Stack<E>{
 			dataFile.write(baos.toByteArray());
 		} catch (IOException e) {
 			throw new DataAccessException("Error agregando elemento.",e);			
-		} catch (PersistionException e) {
+		} catch (PersistanceException e) {
 			throw new DataAccessException("Error agregando elemento.",e);
 		}
 	}
@@ -60,7 +60,7 @@ public class StackFile<E> implements Stack<E>{
 			return persistor.read(dis);
 		} catch (IOException e) {
 			throw new DataAccessException("Error obteniendo elemento.",e);			
-		} catch (PersistionException e) {
+		} catch (PersistanceException e) {
 			throw new DataAccessException("Error obteniendo elemento.",e);
 		}
 	}

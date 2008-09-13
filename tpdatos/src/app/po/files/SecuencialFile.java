@@ -9,7 +9,7 @@ import java.io.IOException;
 import api.po.persistors.Persistor;
 import app.po.persistors.IntegerPersistor;
 import exceptions.DataAccessException;
-import exceptions.PersistionException;
+import exceptions.PersistanceException;
 
 public class SecuencialFile<E> extends AbstractFile<E> {
 	
@@ -42,7 +42,7 @@ public class SecuencialFile<E> extends AbstractFile<E> {
 			return index;
 		} catch (IOException e) {
 			throw new DataAccessException("Error insertando elemento",e);
-		} catch (PersistionException e) {
+		} catch (PersistanceException e) {
 			throw new DataAccessException("Error insertando elemento",e);
 		}
 	}
@@ -66,7 +66,7 @@ public class SecuencialFile<E> extends AbstractFile<E> {
 			
 		} catch (IOException e) {
 			throw new DataAccessException("Error obteniendo elemento.",e);
-		} catch (PersistionException e) {
+		} catch (PersistanceException e) {
 			throw new DataAccessException("Error obteniendo elemento.",e);
 		}
 	}
@@ -83,7 +83,7 @@ public class SecuencialFile<E> extends AbstractFile<E> {
 			return elementId;
 		} catch (IOException e) {
 			throw new DataAccessException("Error modificando elemento.",e);
-		} catch (PersistionException e) {
+		} catch (PersistanceException e) {
 			throw new DataAccessException("Error modificando elemento.",e);
 		}
 	}

@@ -4,7 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
 import dto.LinkedBlock;
-import exceptions.PersistionException;
+import exceptions.PersistanceException;
 
 public class LinkedBlockPersistor extends AbstractPersistor<LinkedBlock> {
 
@@ -32,13 +32,13 @@ public class LinkedBlockPersistor extends AbstractPersistor<LinkedBlock> {
 	
 	@Override
 	public void write(LinkedBlock element, DataOutputStream stream)
-			throws PersistionException {
+			throws PersistanceException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public LinkedBlock read(DataInputStream stream) throws PersistionException {
+	public LinkedBlock read(DataInputStream stream) throws PersistanceException {
 		// TODO Auto-generated method stub
 		return null;
 	}
