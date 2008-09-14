@@ -18,10 +18,16 @@ public class BPlusNodeDao {
 		file = new RelativeFile<BPlusNode>( "bplus.dat", persistor );
 	}
 
-	public void insertNode( BPlusNode node ) {
+	public void updateNode( BPlusNode node ) throws DataAccessException {
+		file.update( node.getNodeKey().getValue(), node );
 	}
 	
-/*	public BPlusNode getNode( BPlusNodeKey id )  {
-		
-	}*/
+	public BPlusNodeKey insertNode( BPlusNode node ) throws DataAccessException {
+		// TODO
+		return new BPlusNodeKey( file.add(node) );
+	}
+	
+	public BPlusNode getNode( BPlusNodeKey id ) throws DataAccessException  {
+		return file.get( id.getValue() );
+	}
 }
