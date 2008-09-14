@@ -2,13 +2,13 @@ package documents.keys;
 
 import bplus.keys.BPlusKey;
 
-public class BPlusDocumentIndexKey implements BPlusKey<Integer> {
+public class DocumentIndexKey implements BPlusKey<Integer> {
 
 	private Integer id;
 	
-	public BPlusDocumentIndexKey() {}
+	public DocumentIndexKey() {}
 	
-	public BPlusDocumentIndexKey(Integer id) {
+	public DocumentIndexKey(Integer id) {
 		this.id = id;
 	}
 	
