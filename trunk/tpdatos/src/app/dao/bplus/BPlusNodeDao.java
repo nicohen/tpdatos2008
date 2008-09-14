@@ -3,6 +3,7 @@ package app.dao.bplus;
 import api.po.persistors.Persistor;
 import app.po.files.RelativeFile;
 import app.po.persistors.BPlusNodePersistor;
+import bplus.keys.BPlusNodeKey;
 import bplus.nodes.BPlusNode;
 import exceptions.DataAccessException;
 
@@ -18,10 +19,9 @@ public class BPlusNodeDao {
 	}
 
 	public void insertNode( BPlusNode node ) {
-			node
 	}
 	
-	public BPlusNode getNode( BPlusNodeKey id )  {
+/*	public BPlusNode getNode( BPlusNodeKey id )  {
 		
-	}
+	}*/
 }
