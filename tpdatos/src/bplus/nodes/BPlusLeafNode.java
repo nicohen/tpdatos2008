@@ -3,13 +3,17 @@ package bplus.nodes;
 import bplus.keys.BPlusNodeKey;
 
 public class BPlusLeafNode extends AbstractBPlusNode {
-	private BPlusNodeKey nextNodeKey;
+	private BPlusNodeKey siblingNodeKey;
+
+	public BPlusLeafNode(BPlusNodeKey nodeKey) {
+		super(nodeKey);
+	}
 
 	public BPlusNodeKey getNextNodeKey() {
-		return nextNodeKey;
+		return siblingNodeKey;
 	}
 
 	public void setNextNodeKey(BPlusNodeKey nextNodeKey) {
-		this.nextNodeKey = nextNodeKey;
+		this.siblingNodeKey = nextNodeKey;
 	}
 }

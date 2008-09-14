@@ -11,13 +11,21 @@ import bplus.keys.BPlusNodeKey;
 
 public class AbstractBPlusNode implements BPlusNode {
 
-	Map<BPlusElementKey, BPlusElement> elements = 
+	private BPlusNodeKey nodeKey;
+	private Map<BPlusElementKey, BPlusElement> elements = 
 				new HashMap<BPlusElementKey, BPlusElement>();
 	
-	Integer maxNodeSize;
-	Integer currentNodeSize;
+	private Integer maxNodeSize;
+	private Integer currentNodeSize;
+
 	
-	public AbstractBPlusNode() {
+	public BPlusNodeKey getNodeKey() {
+		return nodeKey;
+	}
+
+
+	public AbstractBPlusNode( BPlusNodeKey nodeKey ) {
+		this.nodeKey = nodeKey;
 		currentNodeSize = 0;
 	}
 	
@@ -40,19 +48,14 @@ public class AbstractBPlusNode implements BPlusNode {
 		BPlusElement currentElement = elements.get(element.getKey() );
 		
 		if (currentElement != null) {
-			if (currentElement.equals(element)) {
-				
-				if (currentNodeSize - currentElement.getSize() + element.getSize() >= maxNodeSize) {
-					throw new NodeOverflowException();
-				}
-				
-				currentNodeSize -= currentElement.getSize();
-				elements.remove(currentElement.getKey() );
-			} else {
-				if (currentNodeSize + element.getSize() >= maxNodeSize) {
-					throw new NodeOverflowException();
-				}
+			
+			if (currentNodeSize - currentElement.getSize() + element.getSize() >= maxNodeSize) {
+				throw new NodeOverflowException();
 			}
+				
+			currentNodeSize -= currentElement.getSize();
+			elements.remove(currentElement.getKey() );
+			
 		} else {
 			if (currentNodeSize + element.getSize() >= maxNodeSize) {
 				throw new NodeOverflowException();
