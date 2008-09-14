@@ -22,9 +22,9 @@ public class AbstractBPlusNode implements BPlusNode {
 	}
 	
 	@Override
-	public BPlusElement getElement(BPlusNodeKey nodeKey) throws KeyNotFoundException {
+	public BPlusElement getElement(BPlusElementKey elementKey) throws KeyNotFoundException {
 		
-		BPlusElement currentElement = elements.get(nodeKey);
+		BPlusElement currentElement = elements.get(elementKey);
 		
 		if ( currentElement == null) {
 			throw new KeyNotFoundException();
