@@ -4,8 +4,8 @@ import bplus.keys.BPlusElementKey;
 
 public class BPlusIndexElement implements BPlusElement{
 
-	BPlusElementKey elementKey;
-	Integer size;
+	private BPlusElementKey elementKey;
+	private Integer size;
 	
 	public BPlusIndexElement(BPlusElementKey elementKey) {
 		this.elementKey = elementKey;
