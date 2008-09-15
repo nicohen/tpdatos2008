@@ -7,7 +7,6 @@ import dto.LinkedBlock;
 import api.po.files.File;
 import api.po.persistors.Persistor;
 import app.po.files.RelativeFile;
-import app.po.persistors.LinkedBlockIntPersistor;
 
 import exceptions.DataAccessException;
 public class LinkedBlocksManager<E> {
@@ -15,9 +14,7 @@ public class LinkedBlocksManager<E> {
 	int blockSize;
 	File<LinkedBlock<E>> archivo;
 	
-	public LinkedBlocksManager(String path,int size) throws DataAccessException{
-		//LinkedBlockPersistor persistor=new LinkedBlockPersistor(blockSize);
-		Persistor<LinkedBlock<E>> persistor = null;
+	public LinkedBlocksManager(String path,int size,Persistor<LinkedBlock<E>> persistor) throws DataAccessException{
 		archivo=new RelativeFile<LinkedBlock<E>>(path, persistor );
 		blockSize=size;
 	}
