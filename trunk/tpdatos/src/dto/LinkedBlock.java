@@ -2,15 +2,15 @@ package dto;
 
 import java.util.ArrayList;
 
-public class LinkedBlock {
+public class LinkedBlock<E> {
 	private int currentBlock;
 	private int nextBlock;
-	private ArrayList<Integer> listaDocs;
+	private ArrayList<E> listaElem;
 	
 	public LinkedBlock(){
 		this.currentBlock=0;
 		this.nextBlock=0;
-		listaDocs=new ArrayList<Integer>();
+		listaElem=new ArrayList<E>();
 	}
 	public int getNextBlock(){
 		return this.nextBlock;
@@ -19,16 +19,16 @@ public class LinkedBlock {
 		return this.currentBlock;
 	}
 	
-	public ArrayList<Integer> getListaDocs(){
-		return this.listaDocs;
+	public ArrayList<E> getListaElem(){
+		return this.listaElem;
 	}
 	
-	public void setDoc(Integer doc) {
-		this.listaDocs.add(doc);
+	public void setDoc(E elem) {
+		this.listaElem.add(elem);
 	}
 	
-	public void setListaDocs(ArrayList<Integer> listaDocs) {
-		this.listaDocs = listaDocs;
+	public void setListaDocs(ArrayList<E> listaEl) {
+		this.listaElem = listaEl;
 	}
 	public void setNextBlock(int blockId){
 		this.nextBlock=blockId;

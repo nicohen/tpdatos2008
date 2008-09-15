@@ -7,7 +7,7 @@ import java.io.IOException;
 import dto.LinkedBlock;
 import exceptions.PersistanceException;
 
-public class LinkedBlockPersistor extends AbstractPersistor<LinkedBlock> {
+public class LinkedBlockPersistor extends AbstractPersistor<LinkedBlock<Integer>> {
 
 	public LinkedBlockPersistor(int maxSize) {
 		super(maxSize);
@@ -15,21 +15,15 @@ public class LinkedBlockPersistor extends AbstractPersistor<LinkedBlock> {
 
 	
 	
+	
 	@Override
-	public void write(LinkedBlock element, DataOutputStream stream)
-			throws PersistanceException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public LinkedBlock read(DataInputStream stream) throws PersistanceException {
+	public LinkedBlock<Integer> read(DataInputStream stream) throws PersistanceException {
 		// TODO Auto-generated method stub
 		int i=0;
-		LinkedBlock reg=new LinkedBlock();
+		LinkedBlock<Integer> reg=new LinkedBlock<Integer>();
 		try{
 			while (i<this.maxSize){
-			reg.setDoc(stream.readInt());	 
+			reg.setDoc(stream.readInt());
 			}
 			reg.setNextBlock(stream.readInt());
 		}
@@ -40,4 +34,17 @@ public class LinkedBlockPersistor extends AbstractPersistor<LinkedBlock> {
 		
 		return reg;
 	}
+
+
+
+	@Override
+	public void write(LinkedBlock<Integer> element, DataOutputStream stream)
+			throws PersistanceException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
 }
