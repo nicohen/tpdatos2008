@@ -1,7 +1,7 @@
 package processor.words;
 
-import dto.WordDto;
+import dto.LineDto;
 
 public interface WordsProcessor {
-	public void process(WordDto wordDto);
+	public LineDto process(LineDto lineDto);
 }
