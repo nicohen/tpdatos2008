@@ -3,7 +3,7 @@ package processor.words.machine;
 import java.util.HashSet;
 
 import processor.words.AbstractWordsProcessor;
-import dto.LineDto;
+import dto.WordDto;
 
 public class StopwordsWordsProcessor extends AbstractWordsProcessor {
 
@@ -18,8 +18,8 @@ public class StopwordsWordsProcessor extends AbstractWordsProcessor {
 	}
 	
 	@Override
-	public LineDto process(LineDto pipelineDto) {
-		return pipelineDto;
+	public WordDto process(WordDto wordDto) {
+		return wordDto;
 	}
 
 }

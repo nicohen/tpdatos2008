@@ -2,9 +2,10 @@ package processor.words.machine;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.ArrayList;
+import java.util.List;
 
 import processor.words.AbstractWordsProcessor;
-import dto.LineDto;
 import dto.WordDto;
 
 public class AccentUmlautCorrectorWordsProcessor extends AbstractWordsProcessor {
@@ -13,17 +14,16 @@ public class AccentUmlautCorrectorWordsProcessor extends AbstractWordsProcessor 
 		super();
 	}
 
-	@Override
-	public LineDto process(LineDto pipelineDto) {
-		LineDto otherPipelineDto = new LineDto(pipelineDto.getRawLine());
-		for (WordDto word : pipelineDto.getWordsPipeline()) {
+	public WordDto process(WordDto wordDto) {
+		List<String> words = new ArrayList<String>();
+		for (String word : wordDto.getWord()) {
 			try {
-				otherPipelineDto.addWord(new WordDto(URLDecoder.decode(word.toString(), "UTF-8")));
+				words.add(URLDecoder.decode(word, "UTF-8"));
 			} catch (UnsupportedEncodingException e) {
-				otherPipelineDto.addWord(word);
+				words.add(word);
 			}
 		}
-		return otherPipelineDto;
+		return new WordDto(words);
 	}
-	
+
 }

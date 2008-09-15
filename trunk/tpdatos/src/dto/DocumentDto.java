@@ -5,17 +5,17 @@ import java.util.List;
 
 public class DocumentDto {
 	private String document;
-	private List<LineDto> pipelines = null;
+	private List<WordDto> pipelines = null;
 	
 	public DocumentDto() {
-		this.pipelines = new ArrayList<LineDto>();
+		this.pipelines = new ArrayList<WordDto>();
 	}
 	
-	public List<LineDto> getPipelines() {
+	public List<WordDto> getPipelines() {
 		return pipelines;
 	}
 
-	public void addPipeline(LineDto pipeline) {
+	public void addPipeline(WordDto pipeline) {
 		this.pipelines.add(pipeline);
 	}
 
@@ -30,8 +30,8 @@ public class DocumentDto {
 	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
-		for (LineDto dto : pipelines) {
-			sb.append(dto.getWordsPipeline().toString());
+		for (WordDto dto : pipelines) {
+			sb.append(dto.toString());
 		}
 		return sb.toString();
 	}

@@ -11,7 +11,6 @@ import java.util.Collections;
 import java.util.List;
 
 import dto.DocumentDto;
-import dto.LineDto;
 import dto.WordDto;
 
 public class PipelinedWordsProcessor {
@@ -21,7 +20,7 @@ public class PipelinedWordsProcessor {
 //		DocumentDto correctedDocument = new DocumentDto();
 //		correctedDocument.setDocument(document.getDocument());
 	
-		List<LineDto> stopwords = prepareStopwords();
+		List<WordDto> stopwords = prepareStopwords();
 		
 //		for (LineDto pipelineDto : document.getPipelines()) {
 //			for (AbstractWordsProcessor processor : WordsProcessorPipelineFactory.getPipeline()) {
@@ -34,8 +33,8 @@ public class PipelinedWordsProcessor {
 	}
 	
 	@SuppressWarnings("deprecation")
-	public static List<LineDto> prepareStopwords() throws IOException {
-		List<LineDto> pipelinesList = new ArrayList<LineDto>();
+	public static List<WordDto> prepareStopwords() throws IOException {
+		List<WordDto> stopwordsList = new ArrayList<WordDto>();
 		
 	    File file = new File("C:\\Documents and Settings\\Nico\\Escritorio\\Organizacion de Datos\\tpdatos\\src\\utils\\stopwords\\stopwords.txt");
 	    FileInputStream fis = null;
@@ -50,12 +49,13 @@ public class PipelinedWordsProcessor {
 
 			while (dis.available() != 0) {
 				String rawStopword = dis.readLine();
-				LineDto pDto = new LineDto(rawStopword);
+				List<String> stopword = new ArrayList<String>(); 
 				String[] dividedStopWord = rawStopword.split(" ");
 				for (int i=0;i<dividedStopWord.length;i++) {
-					pDto.addWord(new WordDto(dividedStopWord[i]));
+					stopword.add(dividedStopWord[i]);
 				}
-				pipelinesList.add(pDto);
+				WordDto wDto = new WordDto(stopword);
+				stopwordsList.add(wDto);
 			}
 
 			fis.close();
@@ -68,19 +68,17 @@ public class PipelinedWordsProcessor {
 		  e.printStackTrace();
 		}		
 		
-	    return pipelinesList;
+	    return stopwordsList;
 	}
 	
 	public static void main(String[] args) throws IOException {
-		List<LineDto> sw = prepareStopwords();
+		List<WordDto> sw = prepareStopwords();
 		Collections.sort(sw);
 		String last = "";
 		StringBuffer sb = null;
-		for (LineDto pDto : sw) {
+		for (WordDto wDto : sw) {
 			sb = new StringBuffer();
-			for (WordDto wDto : pDto.getWordsPipeline()) {
-				sb.append(wDto.toString()+" ");
-			}
+			sb.append(wDto.toString()+" ");
 			if (!last.equals(sb.toString().trim().toLowerCase())) {
 				System.out.println(sb.toString().trim().toLowerCase());
 			}
