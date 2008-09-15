@@ -1,7 +1,7 @@
 package processor.words.machine;
 
-import dto.WordDto;
 import processor.words.AbstractWordsProcessor;
+import dto.LineDto;
 
 public class StemmerWordsProcessor extends AbstractWordsProcessor {
 
@@ -10,7 +10,8 @@ public class StemmerWordsProcessor extends AbstractWordsProcessor {
 	}
 	
 	@Override
-	public void process(WordDto wordDto) {
+	public LineDto process(LineDto pipelineDto) {
+		return pipelineDto;
 	}
 
 }
