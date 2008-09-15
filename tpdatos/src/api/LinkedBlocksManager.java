@@ -66,7 +66,7 @@ public class LinkedBlocksManager {
 			}
 			
 			else{//hay lugar en el bloque
-			reg.getListaDocs().add(idDoc);
+			reg.setDoc(idDoc);
 			archivo.update(reg.getCurrentBlock(),reg);
 			}
 		} catch (DataAccessException e) {
