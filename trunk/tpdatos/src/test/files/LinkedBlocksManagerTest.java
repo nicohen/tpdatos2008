@@ -20,10 +20,33 @@ public class LinkedBlocksManagerTest extends TestCase {
 		reg.setDoc(4);
 		reg.setDoc(5);
 		file.add(reg);
-		
+		LinkedBlock<Integer> reg2=new LinkedBlock<Integer>();
+		reg2.setDoc(6);
+		reg2.setDoc(7);
+		reg2.setDoc(8);
+		reg2.setDoc(9);
+		reg2.setDoc(10);
+		file.add(reg2);
+		LinkedBlock<Integer> reg3=new LinkedBlock<Integer>();
+		reg.setDoc(11);
+		reg.setDoc(12);
+		reg.setDoc(13);
+		reg.setDoc(14);
+		reg.setDoc(15);
+		file.add(reg3);
+		LinkedBlock<Integer> reg4=new LinkedBlock<Integer>();
+		reg2.setDoc(16);
+		reg2.setDoc(17);
+		reg2.setDoc(18);
+		reg2.setDoc(19);
+		reg2.setDoc(20);
+		file.add(reg4);
 		
 		LinkedBlock<Integer> aux= file.get(0);
-		assertEquals(aux, reg);
+		LinkedBlock<Integer> aux2= file.get(1);
+		LinkedBlock<Integer> aux3= file.get(2);
+		LinkedBlock<Integer> aux4= file.get(3);
+		//assertEquals(aux, reg);
 		
 	}
 	
