@@ -21,10 +21,13 @@ public class LinkedBlockIntPersistor extends AbstractPersistor<LinkedBlock<Integ
 	public LinkedBlock<Integer> read(DataInputStream stream) throws PersistanceException {
 		// TODO Auto-generated method stub
 		int i=0;
+		int aux;
 		LinkedBlock<Integer> reg=new LinkedBlock<Integer>();
 		try{
 			while (i<this.maxSize/4 -1){
-			reg.setDoc(stream.readInt());
+			aux=stream.readInt();
+			if (aux!=0)
+			reg.setDoc(aux);
 			i++;
 			}
 			reg.setNextBlock(stream.readInt());
