@@ -1,7 +1,9 @@
 package processor.words.machine;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import processor.words.AbstractWordsProcessor;
-import dto.LineDto;
 import dto.WordDto;
 
 public class CaseFoldingWordsProcessor extends AbstractWordsProcessor {
@@ -11,12 +13,12 @@ public class CaseFoldingWordsProcessor extends AbstractWordsProcessor {
 	}
 	
 	@Override
-	public LineDto process(LineDto pipelineDto) {
-		LineDto otherPipelineDto = new LineDto(pipelineDto.getRawLine());
-		for (WordDto word : pipelineDto.getWordsPipeline()) {
-			otherPipelineDto.addWord(new WordDto(word.toString().toLowerCase()));
+	public WordDto process(WordDto wordDto) {
+		List<String> words = new ArrayList<String>();
+		for (String word : wordDto.getWord()){
+			words.add(word.toLowerCase());
 		}
-		return otherPipelineDto;
+		return new WordDto(words);
 	}
 
 }

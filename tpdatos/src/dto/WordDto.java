@@ -1,23 +1,46 @@
 package dto;
 
-public class WordDto {
+import java.util.List;
+
+
+public class WordDto implements Comparable<WordDto> {
+	private List<String> words = null;
 	
-	private String word; 
-	
-	public WordDto( String word ) {
-		this.word = word;
+	public WordDto(List<String> words) {
+		this.words = words;
 	}
 	
-	public String getWord() {
-		return word;
+	public List<String> getWord() {
+		return words;
 	}
 
-	public void setWord(String word) {
-		this.word = word;
-	}
-
+	@Override
 	public String toString() {
-		return word;
+		StringBuffer sb = new StringBuffer();
+		for (String dto : words ) {
+			sb.append(dto.toString()+" ");
+		}
+		return sb.toString().trim();
 	}
-	
+
+	@Override
+	public int compareTo(WordDto o) {
+		if (words.size()<o.getWord().size()) { 
+			return 1;
+		} else {
+			if (words.size()>o.getWord().size()) { 
+				return -1;
+			} else {
+				if (toString().compareTo(o.toString())>0) {
+					return 1;
+				} else if (toString().compareTo(o.toString())<0) {
+					return -1;
+				} else {
+					return 0;
+				}
+			}
+		}
+	}
+
+
 }

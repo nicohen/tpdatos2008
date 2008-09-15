@@ -1,7 +1,7 @@
 package processor.words.machine;
 
 import processor.words.AbstractWordsProcessor;
-import dto.LineDto;
+import dto.WordDto;
 
 public class StemmerWordsProcessor extends AbstractWordsProcessor {
 
@@ -10,8 +10,9 @@ public class StemmerWordsProcessor extends AbstractWordsProcessor {
 	}
 	
 	@Override
-	public LineDto process(LineDto pipelineDto) {
-		return pipelineDto;
+	public WordDto process(WordDto wordDto) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
