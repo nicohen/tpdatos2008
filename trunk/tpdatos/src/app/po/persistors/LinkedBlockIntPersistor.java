@@ -7,9 +7,9 @@ import java.io.IOException;
 import dto.LinkedBlock;
 import exceptions.PersistanceException;
 
-public class LinkedBlockPersistor extends AbstractPersistor<LinkedBlock<Integer>> {
+public class LinkedBlockIntPersistor extends AbstractPersistor<LinkedBlock<Integer>> {
 
-	public LinkedBlockPersistor(int maxSize) {
+	public LinkedBlockIntPersistor(int maxSize) {
 		super(maxSize);
 	}
 
