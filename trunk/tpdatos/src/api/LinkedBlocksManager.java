@@ -31,11 +31,11 @@ public class LinkedBlocksManager<E> {
 				listaRet.add(it.next());
 			}
 			while (reg.getNextBlock()!=0){
+				reg=archivo.get(reg.getNextBlock());
 				it=reg.getListaElem().iterator();
 				while(it.hasNext()){
 					listaRet.add(it.next());
 				}
-				reg=archivo.get(reg.getNextBlock());
 			}
 			
 			
@@ -51,23 +51,30 @@ public class LinkedBlocksManager<E> {
 		
 		LinkedBlock<E> reg=new LinkedBlock<E>();
 		LinkedBlock<E> regAux=new LinkedBlock<E>();
-		int newBlockId;
+		int newBlockId=0,nextBlockId=0;
 		try {
 			reg=archivo.get(blockId);
 			while(reg.getNextBlock()!=0){
+				nextBlockId=reg.getNextBlock();
 				reg=archivo.get(reg.getNextBlock());
 			}
 			//si no hay puntero a siguiente pero el bloque esta lleno
 			if (reg.getListaElem().size()==blockSize){
-				regAux.setDoc(elem);
+				regAux.setElem(elem);
 				newBlockId=archivo.add(regAux);//obtengo id del siguiente bloque
-				reg.setNextBlock(newBlockId);//seteo el puntero a siguiente
-				archivo.update(reg.getCurrentBlock(), reg);//actualizo
+				reg.setNextBlock(newBlockId-1);//seteo el puntero a siguiente
+				if (nextBlockId!=0)
+				   archivo.update(nextBlockId,reg);
+				else
+				   archivo.update(blockId, reg);
 			}
 			
 			else{//hay lugar en el bloque
-			reg.setDoc(elem);
-			archivo.update(reg.getCurrentBlock(),reg);
+			reg.setElem(elem);
+			if (nextBlockId!=0)
+			archivo.update(nextBlockId,reg);
+			else
+			archivo.update(blockId, reg);
 			}
 		} catch (DataAccessException e) {
 			// TODO Auto-generated catch block
