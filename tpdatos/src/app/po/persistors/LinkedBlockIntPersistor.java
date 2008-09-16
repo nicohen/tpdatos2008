@@ -27,7 +27,7 @@ public class LinkedBlockIntPersistor extends AbstractPersistor<LinkedBlock<Integ
 			while (i<this.maxSize/4 -1){
 			aux=stream.readInt();
 			if (aux!=0)
-			reg.setDoc(aux);
+			reg.setElem(aux);
 			i++;
 			}
 			reg.setNextBlock(stream.readInt());
