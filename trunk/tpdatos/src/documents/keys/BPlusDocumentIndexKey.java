@@ -1,14 +1,15 @@
 package documents.keys;
 
 import bplus.keys.BPlusKey;
+import bplus.keys.BPlusNodeKey;
 
-public class DocumentIndexKey extends BPlusKey<Integer> {
+public class BPlusDocumentIndexKey extends BPlusKey<Integer> {
 
 	private Integer id;
 	
-	public DocumentIndexKey() {}
+	public BPlusDocumentIndexKey() {}
 	
-	public DocumentIndexKey(Integer id) {
+	public BPlusDocumentIndexKey(Integer id) {
 		this.id = id;
 	}
 	
@@ -29,8 +30,8 @@ public class DocumentIndexKey extends BPlusKey<Integer> {
 
 	@Override
 	public int compareTo(BPlusKey element) {
-		// TODO Auto-generated method stub
-		return 0;
+		BPlusDocumentIndexKey intKey= (BPlusDocumentIndexKey) element;
+		return id.compareTo(intKey.id);
 	}
 
 	@Override

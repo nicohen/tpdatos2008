@@ -1,6 +1,8 @@
 package bplus.keys;
 
-public interface BPlusKey<E> {
-	public E getValue();
-	public void setValue(E element);
+public abstract class BPlusKey<E>  implements Comparable<BPlusKey>{
+	public abstract E getValue();
+	public abstract void setValue(E element);
+	public abstract int getSize();
+	public abstract int compareTo(BPlusKey element);
 }
