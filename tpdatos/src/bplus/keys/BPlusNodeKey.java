@@ -1,6 +1,6 @@
 package bplus.keys;
 
-public class BPlusNodeKey implements BPlusKey<Integer> {
+public class BPlusNodeKey extends BPlusKey<Integer> {
 
 	private Integer id;
 	
@@ -23,5 +23,17 @@ public class BPlusNodeKey implements BPlusKey<Integer> {
 	@Override
 	public String toString() {
 		return String.valueOf(id);
+	}
+
+	@Override
+	public int compareTo(BPlusKey element) {
+		BPlusNodeKey intKey= (BPlusNodeKey) element;
+		return id.compareTo(intKey.id);
+	}
+
+	@Override
+	public int getSize() {
+		// TODO Auto-generated method stub
+		return 4;
 	}
 }

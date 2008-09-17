@@ -1,29 +1,23 @@
 package bplus.elements;
 
 import bplus.keys.BPlusElementKey;
+import bplus.keys.BPlusNodeKey;
 
-public class BPlusIndexElement implements BPlusElement{
 
-	private BPlusElementKey elementKey;
-	private Integer size;
+public class BPlusIndexElement extends BPlusAbstractElement{
+
+	private BPlusNodeKey relatedNode;
 	
-	public BPlusIndexElement(BPlusElementKey elementKey) {
-		this.elementKey = elementKey;
+	public BPlusIndexElement(BPlusElementKey key) {
+		super(key);
+	}
+
+	public BPlusNodeKey getRelatedNode() {
+		return relatedNode;
+	}
+
+	public void setRelatedNode(BPlusNodeKey relatedNode) {
+		this.relatedNode = relatedNode;
 	}
 	
-	@Override
-	public BPlusElementKey getKey() {
-		return this.elementKey;
-	}
-
-	@Override
-	public Integer getSize() {
-		return this.size;
-	}
-
-	@Override
-	public void setKey(BPlusElementKey elementKey) {
-		this.elementKey = elementKey;
-	}
-
 }

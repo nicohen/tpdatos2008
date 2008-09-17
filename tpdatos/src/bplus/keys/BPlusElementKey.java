@@ -1,6 +1,6 @@
 package bplus.keys;
 
-public class BPlusElementKey implements BPlusKey<String> {
+public class BPlusElementKey extends BPlusKey<String>{
 
 	private String word;
 
@@ -24,5 +24,14 @@ public class BPlusElementKey implements BPlusKey<String> {
 	public String toString() {
 		return word;
 	}
+	
+	public int compareTo(BPlusKey key) {
+		BPlusElementKey stringKey = (BPlusElementKey) key;
+		return word.compareTo(stringKey.word);
+	}
 
+	@Override
+	public int getSize() {
+		return 1+2*word.length();		
+	}
 }
