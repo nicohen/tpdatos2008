@@ -1,8 +1,6 @@
 package documents.keys;
 
-import bplus.keys.BPlusKey;
-
-public class BPlusDocumentIndexKey extends BPlusKey<Integer> {
+public class BPlusDocumentIndexKey {
 
 	private Integer id;
 	
@@ -12,28 +10,23 @@ public class BPlusDocumentIndexKey extends BPlusKey<Integer> {
 		this.id = id;
 	}
 	
-	@Override
 	public Integer getValue() {
 		return id;
 	}
 
-	@Override
 	public void setValue(Integer id) {
 		this.id = id;
 	}
 
-	@Override
 	public String toString() {
 		return String.valueOf(id);
 	}
 
-	@Override
-	public int compareTo(BPlusKey element) {
-		BPlusDocumentIndexKey intKey= (BPlusDocumentIndexKey) element;
+	public int compareTo(BPlusDocumentIndexKey element) {
+		BPlusDocumentIndexKey intKey= element;
 		return id.compareTo(intKey.id);
 	}
 
-	@Override
 	public int getSize() {
 		// TODO Auto-generated method stub
 		return 0;
