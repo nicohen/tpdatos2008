@@ -1,19 +1,26 @@
 package utils;
 
+import java.util.BitSet;
+
 public class KeyCodificationUtils {
 
-	public static Byte[] unarioEncode(String key) {
-		Integer longitud = key.length();
-		Byte[] unario = new Byte[longitud];
-		for (int i=0;i<longitud-1;i++) {
-			unario[i] = 0;
+	public static Byte[] unarioEncode(Integer key) {
+		
+		BitSet cjto=new BitSet(key);
+		
+		for(int i=0;i<cjto.length();i++){
+			cjto.set(i,true);
+			if (i==cjto.length())
+			cjto.set(i,false);
 		}
-		unario[longitud]=1;
-		return unario;
+		
+		
+		return toByteArray(cjto) ;
 	}
 	
-	public static String unarioDecode(Byte[] key) {
-		return String.valueOf(key.length);
+	
+	public static Integer unarioDecode(Byte[] key) {
+		return fromByteArray(key).length();
 	}
 	
 	public static Byte[] gammaEncode(Integer key) { 
@@ -48,6 +55,27 @@ public class KeyCodificationUtils {
 		return null; 
 	}
 	
+	public static Byte[] toByteArray(BitSet bits) {
+        Byte[] bytes = new Byte[bits.length()/8+1];
+        for (int i=0; i<bits.length(); i++) {
+            if (bits.get(i)) {
+                bytes[bytes.length-i/8-1] |= 1<<(i%8);
+            }
+        }
+        return bytes;
+    }
+	
+	public static BitSet fromByteArray(Byte[] bytes) {
+        BitSet bits = new BitSet();
+        for (int i=0; i<bytes.length*8; i++) {
+            if ((bytes[bytes.length-i/8-1]&(1<<(i%8))) > 0) {
+                bits.set(i);
+            }
+        }
+        return bits;
+    }
+
+
 //	public static Byte[] deltaEncode(Integer key) { 
 //		//TODO - Implementar deltaEncode
 //		return null; 
