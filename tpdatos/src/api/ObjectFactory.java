@@ -8,6 +8,7 @@ import app.po.persistors.IntegerPersistor;
 public class ObjectFactory {
 
 	private ObjectFactory() {}
+	@SuppressWarnings("unchecked")
 	private static HashMap<Class, Object> objects= new HashMap<Class, Object>();
 	
 	@SuppressWarnings("unchecked")

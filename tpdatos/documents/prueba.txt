@@ -1,0 +1,15 @@
+<html>
+<head>
+[head sin script]
+<script>
+[head con script]
+</script>
+</head>
+<body>
+[este es el body sin scripts version 1]
+<script>
+[este es el body pero con el script]
+</script>
+[este es el body sin scripts version 2]
+</body>
+</html>
