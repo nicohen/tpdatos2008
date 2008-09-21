@@ -7,7 +7,7 @@ import bplus.keys.BPlusNodeKey;
 import bplus.nodes.BPlusNode;
 import exceptions.DataAccessException;
 
-public class BPlusNodeDao {
+public class BPlusNodeDao implements IBPlusNodeDao {
 	
 	private RelativeFile<BPlusNode> file;
 	
@@ -18,15 +18,24 @@ public class BPlusNodeDao {
 		file = new RelativeFile<BPlusNode>( "bplus.dat", persistor );
 	}
 
+	/* (non-Javadoc)
+	 * @see app.dao.bplus.IBPlusNodeDao#updateNode(bplus.nodes.BPlusNode)
+	 */
 	public void updateNode( BPlusNode node ) throws DataAccessException {
 		file.update( node.getNodeKey().getValue(), node );
 	}
 	
+	/* (non-Javadoc)
+	 * @see app.dao.bplus.IBPlusNodeDao#insertNode(bplus.nodes.BPlusNode)
+	 */
 	public BPlusNodeKey insertNode( BPlusNode node ) throws DataAccessException {
 		// TODO
 		return new BPlusNodeKey( file.add(node) );
 	}
 	
+	/* (non-Javadoc)
+	 * @see app.dao.bplus.IBPlusNodeDao#getNode(bplus.keys.BPlusNodeKey)
+	 */
 	public BPlusNode getNode( BPlusNodeKey id ) throws DataAccessException  {
 		return file.get( id.getValue() );
 	}
