@@ -45,7 +45,7 @@ public class BPlusTreeBoTest implements BPlusTreeBo {
 	public void updateElement(BPlusLeafElement element)
 			throws KeyNotFoundException {
 		// TODO Auto-generated method stub
-		if (map.get(element.getKey()) == null) throw new KeyNotFoundException();
+		if (map.get(element.getKey().getValue() ) == null) throw new KeyNotFoundException();
 		map.put(element.getKey().getValue(), element);
 	}
 
