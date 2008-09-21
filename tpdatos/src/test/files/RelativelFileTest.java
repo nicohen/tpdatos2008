@@ -52,7 +52,7 @@ public class RelativelFileTest extends TestCase {
 	
 	// FIXME: no rethrowear mejor hacer algo con el junit ?
 	public void testSecuentialFileStringPersistor() throws DataAccessException {
-		StringPersistor persistor= new StringPersistor(10);
+		StringPersistor persistor= new StringPersistor(20);
 
 		File<String> file= new RelativeFile<String>("test_relative_string.bin",persistor);
 		file.add("Cuarto");

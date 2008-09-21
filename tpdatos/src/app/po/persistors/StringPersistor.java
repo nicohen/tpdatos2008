@@ -4,37 +4,21 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-
 import exceptions.PersistanceException;
 
 public class StringPersistor extends AbstractPersistor<java.lang.String> {
-
+	private static char ZERO= Character.forDigit(0,2);
 	public StringPersistor(int maxSize) {
 		super(maxSize);
 	}
 
-	public String decode(byte[] buffer) {
-		String resultado="";
-		for(int i=0;(i<buffer.length && buffer[i]!=0);i++) {
-			resultado+=(char)buffer[i];
-		}
-		return resultado;
-	}
-
-	public byte[] toBytes(String element) {
-		byte[] bytes = new byte[maxSize];
-		int i=0;
-		for(i=0;i<element.length();i++) {
-			bytes[i] = (byte)element.charAt(i);
-		}
-		return bytes;
-	}
-
 	public String read(DataInputStream stream) throws PersistanceException {
 		try {
-			byte size= stream.readByte();
+			int i=0;
 			StringBuffer sb= new StringBuffer();
-			for(int i=0;i<size;i++){
+			stream.readByte();
+			byte size= stream.readByte();
+			for(;i<size;i++){
 				sb.append(stream.readChar());
 			}
 			return sb.toString();
@@ -44,11 +28,21 @@ public class StringPersistor extends AbstractPersistor<java.lang.String> {
 	}
 
 	public void write(String element, DataOutputStream stream) throws PersistanceException {
+		if (this.maxSize<=(element.length()+1)*2){
+			throw new PersistanceException("Texto demaciado largo como para persistir con este Persistor.");
+		}
 		try {
+			int i=0; //va acumulando la cantidad de bytes escritos
 			byte size=(byte)element.length();
+			stream.writeByte(0);
 			stream.writeByte(size);
-			for(int i=0;i<element.length();i++){
+			for(i=0;i<size;i++){
 				stream.writeChar(element.charAt(i));
+			}
+			// lo multiplico por 2 ya que cada char ocupa 2 bytes y le sumo 1 por el byte con la cantidad de chars
+			i=(i+1)*2;
+			for(;i<this.maxSize;i=i+2){
+				stream.writeChar(ZERO);
 			}
 		} catch (IOException e) {
 			throw new PersistanceException("Error persistiendo elemento: "+element,e);

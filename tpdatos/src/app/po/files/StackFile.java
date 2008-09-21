@@ -10,7 +10,6 @@ import java.io.RandomAccessFile;
 
 import api.po.files.Stack;
 import api.po.persistors.Persistor;
-
 import exceptions.DataAccessException;
 import exceptions.PersistanceException;
 

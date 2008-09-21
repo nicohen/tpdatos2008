@@ -1,10 +1,10 @@
 package test.files;
+import junit.framework.TestCase;
 import api.po.files.File;
 import app.po.files.SecuencialFile;
 import app.po.persistors.BytePersistor;
 import app.po.persistors.IntegerPersistor;
 import app.po.persistors.StringPersistor;
-import junit.framework.TestCase;
 import exceptions.DataAccessException;
 
 
@@ -52,7 +52,7 @@ public class SecuentialFileTest extends TestCase {
 	
 	// FIXME: no rethrowear mejor hacer algo con el junit ?
 	public void testSecuentialFileStringPersistor() throws DataAccessException {
-		StringPersistor persistor= new StringPersistor(10);
+		StringPersistor persistor= new StringPersistor(20);
 
 		File<String> file= new SecuencialFile<String>("test_secuencial_string.bin",persistor);
 		file.add("Cuarto");

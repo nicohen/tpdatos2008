@@ -1,7 +1,7 @@
 package test.files;
+import junit.framework.TestCase;
 import app.po.files.StackFile;
 import app.po.persistors.BytePersistor;
-import junit.framework.TestCase;
 import exceptions.DataAccessException;
 
 public class StackFileTest extends TestCase{

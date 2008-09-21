@@ -1,7 +1,6 @@
 package documents.keys;
 
 import bplus.keys.BPlusKey;
-import bplus.keys.BPlusNodeKey;
 
 public class BPlusDocumentIndexKey extends BPlusKey<Integer> {
 
