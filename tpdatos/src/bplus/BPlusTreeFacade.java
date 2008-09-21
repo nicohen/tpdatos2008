@@ -1,7 +1,10 @@
 package bplus;
 
-import documents.keys.DocumentIndexKey;
-import dto.WordDto;
+import bplus.elements.BPlusLeafElement;
+import bplus.exceptions.KeyNotFoundException;
+import bplus.keys.BPlusElementKey;
+import api.bo.BPlusTree.BPlusTreeBo;
+import app.bo.bplus.BPlusTreeBoImp;
 
 public class BPlusTreeFacade {
 
@@ -13,14 +16,16 @@ public class BPlusTreeFacade {
 		//TODO - Implementar getNode
 	}*/
 	
-	public DocumentIndexKey getElement( WordDto key ) {
-		
+	private BPlusTreeBo bo = new BPlusTreeBoImp();
+	
+	public BPlusLeafElement getElement( String key ) throws KeyNotFoundException {
 		// TODO
-		return new DocumentIndexKey( 0 );
+		return bo.getElement(new BPlusElementKey(key) );
 	}
 	
-	public void insertElement (WordDto key , Integer value ) {
-		// TODO
+	public void insertElement (String key , Integer value ) {
+		// TODO: asignar valor al elemento !!!!
+		bo.insertElement( new BPlusLeafElement(new BPlusElementKey(key) ) );
 	}
 	
 	
