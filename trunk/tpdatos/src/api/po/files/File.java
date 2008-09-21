@@ -1,5 +1,7 @@
 package api.po.files;
 
+import java.io.IOException;
+
 import exceptions.DataAccessException;
 
 public interface File<E>{
