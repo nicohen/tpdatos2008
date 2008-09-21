@@ -13,16 +13,15 @@ import junit.framework.TestCase;
 public class BPlusTreeBoTestTest extends TestCase {
 
 	
-	private BPlusTreeBoTest bo;
-	
-	
-	void tearUp() {
-		bo = new BPlusTreeBoTest();
-	}
+	private BPlusTreeBoTest bo = new BPlusTreeBoTest();
 	
 	public void _test_insert( String word, Integer value) throws KeyNotFoundException {
-		bo.insertElement( new BPlusLeafElement( new BPlusElementKey(word), value) );
-		Assert.assertEquals(value , bo.getElement( new BPlusElementKey(word) ) );
+		
+		BPlusElementKey key = new BPlusElementKey(word);
+		BPlusElementKey key_ = new BPlusElementKey(word);
+		
+		bo.insertElement( new BPlusLeafElement( key , value) );
+		Assert.assertEquals(value , bo.getElement( key_ ).getValue() );
 	}
 	public void test() throws KeyNotFoundException {
 		

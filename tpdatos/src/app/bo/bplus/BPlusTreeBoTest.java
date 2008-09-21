@@ -1,6 +1,7 @@
 package app.bo.bplus;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import bplus.elements.BPlusLeafElement;
 import bplus.exceptions.KeyNotFoundException;
@@ -10,7 +11,7 @@ import api.bo.BPlusTree.BPlusTreeBo;
 public class BPlusTreeBoTest implements BPlusTreeBo {
 
 	
-	private HashMap<BPlusElementKey, BPlusLeafElement> map;
+	private Map<BPlusElementKey, BPlusLeafElement> map = new HashMap<BPlusElementKey, BPlusLeafElement>();
 	
 	@Override
 	public BPlusLeafElement getElement(BPlusElementKey elementKey)
