@@ -4,10 +4,6 @@ public class BPlusElementKey{
 
 	private String word;
 
-	public BPlusElementKey() {
-		super();
-	}
-	
 	public BPlusElementKey(String word) {
 		this.word = word;
 	}
