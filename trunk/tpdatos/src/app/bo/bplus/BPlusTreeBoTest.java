@@ -11,13 +11,13 @@ import api.bo.BPlusTree.BPlusTreeBo;
 public class BPlusTreeBoTest implements BPlusTreeBo {
 
 	
-	private Map<BPlusElementKey, BPlusLeafElement> map = new HashMap<BPlusElementKey, BPlusLeafElement>();
+	private Map<String, BPlusLeafElement> map = new HashMap<String, BPlusLeafElement>();
 	
 	@Override
 	public BPlusLeafElement getElement(BPlusElementKey elementKey)
 			throws KeyNotFoundException {
 		// TODO Auto-generated method stub
-		BPlusLeafElement element = map.get(elementKey);
+		BPlusLeafElement element = map.get(elementKey.getValue());
 		if ( element == null) {
 			throw new KeyNotFoundException();
 		} else {
@@ -28,7 +28,7 @@ public class BPlusTreeBoTest implements BPlusTreeBo {
 	@Override
 	public void insertElement(BPlusLeafElement element) {
 		// TODO Auto-generated method stub
-		map.put(element.getKey(), element);
+		map.put(element.getKey().getValue(), element);
 
 	}
 
@@ -46,7 +46,7 @@ public class BPlusTreeBoTest implements BPlusTreeBo {
 			throws KeyNotFoundException {
 		// TODO Auto-generated method stub
 		if (map.get(element.getKey()) == null) throw new KeyNotFoundException();
-		map.put(element.getKey(), element);
+		map.put(element.getKey().getValue(), element);
 	}
 
 }

@@ -18,9 +18,9 @@ public class BPlusTreeBoTestTest extends TestCase {
 	public void _test_insert( String word, Integer value) throws KeyNotFoundException {
 		
 		BPlusElementKey key = new BPlusElementKey(word);
-		BPlusElementKey key_ = new BPlusElementKey(word);
-		
 		bo.insertElement( new BPlusLeafElement( key , value) );
+
+		BPlusElementKey key_ = new BPlusElementKey(word);
 		Assert.assertEquals(value , bo.getElement( key_ ).getValue() );
 	}
 	public void test() throws KeyNotFoundException {
