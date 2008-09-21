@@ -5,7 +5,6 @@ import java.io.RandomAccessFile;
 
 import api.po.files.File;
 import api.po.persistors.Persistor;
-
 import exceptions.DataAccessException;
 
 public abstract class AbstractFile<E> implements File<E> {

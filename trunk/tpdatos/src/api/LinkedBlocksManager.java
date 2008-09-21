@@ -2,12 +2,10 @@ package api;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import dto.LinkedBlock;
-
 import api.po.files.File;
 import api.po.persistors.Persistor;
 import app.po.files.RelativeFile;
-
+import dto.LinkedBlock;
 import exceptions.DataAccessException;
 public class LinkedBlocksManager<E> {
 

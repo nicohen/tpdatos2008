@@ -5,7 +5,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 import api.po.persistors.Persistor;
-
 import exceptions.PersistanceException;
 
 public class BytePersistor implements Persistor<Byte>{
