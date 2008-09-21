@@ -1,6 +1,6 @@
 package bplus.keys;
 
-public class BPlusElementKey{
+public class BPlusElementKey {
 
 	private String word;
 
@@ -23,5 +23,9 @@ public class BPlusElementKey{
 	
 	public int compareTo(BPlusElementKey key) {
 		return this.word.compareTo(key.word);
+	}
+	
+	public boolean equals(Object other) {
+		return ((BPlusElementKey)other).getValue().equals(this.getValue() );
 	}
 }
