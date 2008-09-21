@@ -5,6 +5,8 @@ import java.util.Iterator;
 import bplus.elements.BPlusElement;
 import bplus.elements.BPlusIndexElement;
 import bplus.elements.BPlusLeafElement;
+import bplus.exceptions.NodeNotFoundException;
+import bplus.exceptions.NodeOverflowException;
 import bplus.keys.BPlusElementKey;
 import bplus.keys.BPlusNodeKey;
 import bplus.nodes.BPlusIndexNode;
@@ -26,9 +28,10 @@ public class BPlusTree {
 		this.insertElement(this.root,element);
 	}
 	
-	private void insertElement(BPlusNode node, BPlusLeafElement element){
+	private void insertElement(BPlusNode node, BPlusLeafElement element) throws NodeOverflowException,NodeNotFoundException {
 		if(node.isLeafNode()){
 			node.insertElement(element);
+			nodeHandler.updateNode(node);
 		}else{
 			BPlusIndexNode indexNode= (BPlusIndexNode) node;
 			BPlusNodeKey nextNode= indexNode.getLeftChildId();
@@ -39,7 +42,15 @@ public class BPlusTree {
 					nextNode= auxElement.getRelatedNode();
 				}
 			}
-			insertElement(nodeHandler.getNode(nextNode), element);
+			BPlusNode childNode=  nodeHandler.getNode(nextNode);
+			try{
+				insertElement(childNode, element);
+			}catch(NodeOverflowException exception){
+				BPlusNode newNode = nodeHandler.newLeafNode(nodeSize);
+				childNode.splitInto(newNode);
+				nodeHandler.updateNode(childNode);
+				nodeHandler.updateNode(newNode);
+			}
 		}
 	}
 	

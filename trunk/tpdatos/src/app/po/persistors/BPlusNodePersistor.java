@@ -25,7 +25,6 @@ public class BPlusNodePersistor implements Persistor<BPlusNode> {
 	public void write(BPlusNode element, DataOutputStream stream)
 			throws PersistanceException {
 		// TODO Auto-generated method stub
-		
 	}
 
 }
