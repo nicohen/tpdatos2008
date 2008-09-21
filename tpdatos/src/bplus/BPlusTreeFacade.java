@@ -19,6 +19,10 @@ public class BPlusTreeFacade {
 	
 	private BPlusTreeBo bo = new BPlusTreeBoImp();
 	
+	public BPlusTreeFacade() {
+		bo = this.createBo();
+	}
+	
 	public DocumentIndexKey getElement( String key ) throws KeyNotFoundException {
 		// TODO
 		return new DocumentIndexKey(  
@@ -31,5 +35,7 @@ public class BPlusTreeFacade {
 		bo.insertElement( new BPlusLeafElement(new BPlusElementKey(key), value.getValue() ) );
 	}
 	
-	
+	private BPlusTreeBo createBo(){
+		return new BPlusTreeBoImp();
+	}
 }
