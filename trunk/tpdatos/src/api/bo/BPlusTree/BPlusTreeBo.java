@@ -7,7 +7,7 @@ import bplus.keys.BPlusElementKey;
 // EL BO encapsula la logica de interaccion con nodos, index set, secuencial set, etc...
 // por lo tanto solo provee metodo para insertar ,eliminar, actualizar y recuperar elementos de hojas
 
-public interface BPlusNodeBo {
+public interface BPlusTreeBo {
 	/*public abstract void updateNode(BPlusNode node) throws DataAccessException;
 	public abstract BPlusNodeKey insertNode(BPlusNode node) throws DataAccessException;
 	public abstract BPlusNode getNode(BPlusNodeKey id) throws DataAccessException;*/

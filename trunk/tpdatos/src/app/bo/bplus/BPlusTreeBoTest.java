@@ -5,9 +5,9 @@ import java.util.HashMap;
 import bplus.elements.BPlusLeafElement;
 import bplus.exceptions.KeyNotFoundException;
 import bplus.keys.BPlusElementKey;
-import api.bo.BPlusTree.BPlusNodeBo;
+import api.bo.BPlusTree.BPlusTreeBo;
 
-public class BPlusNodeBoTest implements BPlusNodeBo {
+public class BPlusTreeBoTest implements BPlusTreeBo {
 
 	
 	private HashMap<BPlusElementKey, BPlusLeafElement> map;

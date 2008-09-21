@@ -3,9 +3,9 @@ package app.bo.bplus;
 import bplus.elements.BPlusLeafElement;
 import bplus.exceptions.KeyNotFoundException;
 import bplus.keys.BPlusElementKey;
-import api.bo.BPlusTree.BPlusNodeBo;
+import api.bo.BPlusTree.BPlusTreeBo;
 
-public class BPlusNodeBoImp implements BPlusNodeBo {
+public class BPlusTreeBoImp implements BPlusTreeBo {
 
 	@Override
 	public BPlusLeafElement getElement(BPlusElementKey elementKey)
