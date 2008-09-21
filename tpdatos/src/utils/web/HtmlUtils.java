@@ -1,4 +1,4 @@
-package processor.web.utils;
+package utils.web;
 
 import org.htmlparser.NodeFilter;
 import org.htmlparser.Parser;
