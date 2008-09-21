@@ -12,6 +12,8 @@ public interface BPlusTreeBo {
 	public abstract BPlusNodeKey insertNode(BPlusNode node) throws DataAccessException;
 	public abstract BPlusNode getNode(BPlusNodeKey id) throws DataAccessException;*/
 
+	// TODO: agregar excepciones al insertElement
+	
 	public void insertElement( BPlusLeafElement element ) ;
 	public void removeElement( BPlusElementKey elementKey ) throws KeyNotFoundException ;
 	public void updateElement( BPlusLeafElement element ) throws KeyNotFoundException ;
