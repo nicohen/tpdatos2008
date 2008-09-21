@@ -1,4 +1,4 @@
-package processor.web.utils;
+package utils.processor;
 
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
@@ -54,18 +54,23 @@ public final class DigesterUtils {
 
 	    try {
 	    	fis = new FileInputStream(file);
-
 			bis = new BufferedInputStream(fis);
 			dis = new DataInputStream(bis);
-
+			
+			String stopword = null;
+			
 			while (dis.available() != 0) {
 				String rawStopword = dis.readLine();
-				List<String> stopword = new ArrayList<String>(); 
+				List<String> words = new ArrayList<String>(); 
 				String[] dividedStopWord = rawStopword.split(" ");
 				for (int i=0;i<dividedStopWord.length;i++) {
-					stopword.add(dividedStopWord[i]);
+					stopword = dividedStopWord[i];
+					stopword = applyCaseFolding(stopword);
+					stopword = deleteSpecialCharacters(stopword);
+					stopword = updateAccentAndUmlaut(stopword);
+					words.add(stopword);
 				}
-				WordDto wDto = new WordDto(stopword);
+				WordDto wDto = new WordDto(words);
 				stopwordsList.add(wDto);
 			}
 
@@ -80,6 +85,33 @@ public final class DigesterUtils {
 		}		
 		
 	    return stopwordsList;
+	}
+
+	public static String stemWord(String token) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String applyCaseFolding(String document) {
+		return document.toLowerCase();
+	}
+
+	public static String deleteSpecialCharacters(String document) {
+		return document.replaceAll("|°¬!\"#$%&/()=?'\\¿¡´¨+-*~{}[]^`,;.:_", " ");
+	}
+
+	public static String updateAccentAndUmlaut(String document) {
+		//Elimino acentos de las vocales
+		document = document.replace("á","a");
+		document = document.replace("é","e");
+		document = document.replace("í","i");
+		document = document.replace("ó","o");
+		document = document.replace("ú","u");
+		
+		//Elimino dieresis de la "u"
+		document = document.replace("ü","u");
+		
+		return document;
 	}
 
 }
