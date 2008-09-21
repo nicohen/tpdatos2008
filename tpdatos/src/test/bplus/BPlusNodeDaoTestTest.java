@@ -28,7 +28,7 @@ public class BPlusNodeDaoTestTest extends TestCase {
 
 		BPlusNode nodoInsertado = dao.getNode(key);
 		
-		this.assertTrue ( nodoInsertado.equals(node) );
+		Assert.assertTrue ( nodoInsertado.equals(node) );
 		
 		return key.getValue();
 		
