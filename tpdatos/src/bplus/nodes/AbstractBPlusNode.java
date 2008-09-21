@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import bplus.elements.BPlusElement;
+import bplus.exceptions.KeyNotFoundException;
 import bplus.keys.BPlusNodeKey;
 
 /**
@@ -15,18 +16,16 @@ public abstract class AbstractBPlusNode implements BPlusNode {
 
 	private BPlusNodeKey nodeKey;
 	private List<BPlusElement> elements;
-	private Integer maxNodeSize;
-	private Integer currentNodeSize;
 	
-	public AbstractBPlusNode(Integer maxNodeSize) {
-		this.maxNodeSize= maxNodeSize;
+	public AbstractBPlusNode() {
 		this.elements= new ArrayList<BPlusElement>(); 
-		this.currentNodeSize= 0;
 	}
 	
 	@Override
-	public BPlusElement getElement(BPlusNodeKey nodeKey) {
-		return this.elements.get(nodeKey.getValue());
+	public BPlusElement getElement(BPlusNodeKey nodeKey) throws KeyNotFoundException {
+		BPlusElement element = this.elements.get(nodeKey.getValue());
+		if (element == null) throw new KeyNotFoundException();
+		return element;
 	}
 
 	@Override
