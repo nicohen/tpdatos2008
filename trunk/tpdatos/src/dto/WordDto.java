@@ -42,5 +42,20 @@ public class WordDto implements Comparable<WordDto> {
 		}
 	}
 
+	@Override
+	public boolean equals(Object arg0) {
+		List<String> otherWords = ((WordDto)arg0).words;
+		if(this.words.size()==otherWords.size()) {
+			int wordCount = 0;
+			for(String word : this.words) {
+				if(!word.equals(otherWords.get(wordCount++))) {
+					return false;
+				}
+			}
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 }
