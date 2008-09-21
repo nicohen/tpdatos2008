@@ -4,8 +4,18 @@ import bplus.keys.BPlusElementKey;
 
 public class BPlusLeafElement extends BPlusAbstractElement {
 
-	public BPlusLeafElement(BPlusElementKey key) {
-		super(key);
+	
+	private Integer value;
+	
+	public Integer getValue() {
+		return value;
 	}
+	
+	public BPlusLeafElement(BPlusElementKey key, Integer value) {
+		super(key);
+		this.value = value;
+	}
+	
+	
 
 }

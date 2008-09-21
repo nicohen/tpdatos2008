@@ -1,5 +1,6 @@
 package bplus;
 
+import documents.keys.DocumentIndexKey;
 import bplus.elements.BPlusLeafElement;
 import bplus.exceptions.KeyNotFoundException;
 import bplus.keys.BPlusElementKey;
@@ -18,14 +19,16 @@ public class BPlusTreeFacade {
 	
 	private BPlusTreeBo bo = new BPlusTreeBoImp();
 	
-	public BPlusLeafElement getElement( String key ) throws KeyNotFoundException {
+	public DocumentIndexKey getElement( String key ) throws KeyNotFoundException {
 		// TODO
-		return bo.getElement(new BPlusElementKey(key) );
+		return new DocumentIndexKey(  
+				bo.getElement(new BPlusElementKey(key) ).getValue()
+			);
 	}
 	
-	public void insertElement (String key , Integer value ) {
+	public void insertElement (String key , DocumentIndexKey value ) {
 		// TODO: asignar valor al elemento !!!!
-		bo.insertElement( new BPlusLeafElement(new BPlusElementKey(key) ) );
+		bo.insertElement( new BPlusLeafElement(new BPlusElementKey(key), value.getValue() ) );
 	}
 	
 	
