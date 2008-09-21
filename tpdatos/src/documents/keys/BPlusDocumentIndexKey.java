@@ -4,7 +4,9 @@ public class BPlusDocumentIndexKey {
 
 	private Integer id;
 	
-	public BPlusDocumentIndexKey() {}
+	public BPlusDocumentIndexKey() {
+		super();
+	}
 	
 	public BPlusDocumentIndexKey(Integer id) {
 		this.id = id;
@@ -26,10 +28,4 @@ public class BPlusDocumentIndexKey {
 		BPlusDocumentIndexKey intKey= element;
 		return id.compareTo(intKey.id);
 	}
-
-	public int getSize() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	
 }

@@ -33,7 +33,6 @@ public class SimpleStringPersistor extends AbstractPersistor<java.lang.String> {
 			for(i=0;i<size;i++){
 				stream.writeChar(element.charAt(i));
 			}
-			// lo multiplico por 2 ya que cada char ocupa 2 bytes y le sumo 1 por el byte con la cantidad de chars
 		} catch (IOException e) {
 			throw new PersistanceException("Error persistiendo elemento: "+element,e);
 		}

@@ -71,8 +71,6 @@ public class RelativeFile<E> extends AbstractFile<E> {
 
 	@Override
 	public void remove(int elementId) throws DataAccessException {
-		// TODO Auto-generated method stub
-
 	}
 
 }
