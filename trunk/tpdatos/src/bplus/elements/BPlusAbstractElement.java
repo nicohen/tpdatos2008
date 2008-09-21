@@ -5,11 +5,9 @@ import bplus.keys.BPlusElementKey;
 public abstract class BPlusAbstractElement implements BPlusElement {
 	
 	protected BPlusElementKey elementKey;
-	protected Integer size;
 	
 	public BPlusAbstractElement(BPlusElementKey key) {
 		this.elementKey=key;
-		this.size=key.getSize();
 	}
 	
 	public BPlusElementKey getKey() {
@@ -18,10 +16,6 @@ public abstract class BPlusAbstractElement implements BPlusElement {
 	
 	public void setKey(BPlusElementKey elementKey) {
 		this.elementKey = elementKey;
-	}
-	
-	public Integer getSize() {
-		return size;
 	}
 
 	public int compareTo(BPlusElement arg0) {
