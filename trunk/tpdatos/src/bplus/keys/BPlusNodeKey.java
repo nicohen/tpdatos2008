@@ -1,21 +1,21 @@
 package bplus.keys;
 
-public class BPlusNodeKey extends BPlusKey<Integer> {
+public class BPlusNodeKey {
 
 	private Integer id;
 	
-	public BPlusNodeKey() {}
+	public BPlusNodeKey(){
+		super();
+	}
 	
 	public BPlusNodeKey(Integer id) {
 		this.id = id;
 	}
 	
-	@Override
 	public Integer getValue() {
-		return id;
+		return this.id;
 	}
 
-	@Override
 	public void setValue(Integer id) {
 		this.id = id;
 	}
@@ -25,15 +25,7 @@ public class BPlusNodeKey extends BPlusKey<Integer> {
 		return String.valueOf(id);
 	}
 
-	@Override
-	public int compareTo(BPlusKey element) {
-		BPlusNodeKey intKey= (BPlusNodeKey) element;
-		return id.compareTo(intKey.id);
-	}
-
-	@Override
-	public int getSize() {
-		// TODO Auto-generated method stub
-		return 4;
+	public int compareTo(BPlusNodeKey element) {
+		return this.id.compareTo(element.id);
 	}
 }
