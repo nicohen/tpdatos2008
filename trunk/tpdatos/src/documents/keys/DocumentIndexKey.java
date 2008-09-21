@@ -1,7 +1,5 @@
 package documents.keys;
 
-import bplus.keys.BPlusKey;
-
 public class DocumentIndexKey {
 
 	private Integer id;
