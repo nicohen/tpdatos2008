@@ -25,7 +25,15 @@ public class BPlusTree {
 	}
 	
 	public void addElement(BPlusLeafElement element){
-		this.insertElement(this.root,element);
+		try {
+			this.insertElement(this.root,element);
+		} catch (NodeOverflowException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NodeNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	private void insertElement(BPlusNode node, BPlusLeafElement element) throws NodeOverflowException,NodeNotFoundException {
@@ -47,7 +55,10 @@ public class BPlusTree {
 				insertElement(childNode, element);
 			}catch(NodeOverflowException exception){
 				BPlusNode newNode = nodeHandler.newLeafNode(nodeSize);
-				childNode.splitInto(newNode);
+				
+				// FIXME: resolver la division del nodo
+				
+			//	childNode.splitInto(newNode);
 				nodeHandler.updateNode(childNode);
 				nodeHandler.updateNode(newNode);
 			}
