@@ -23,6 +23,17 @@ public class BPlusTreeBoTestTest extends TestCase {
 		BPlusElementKey key_ = new BPlusElementKey(word);
 		Assert.assertEquals(value , bo.getElement( key_ ).getValue() );
 	}
+
+	public void _test_update( String word, Integer value) throws KeyNotFoundException {
+		
+		BPlusElementKey key = new BPlusElementKey(word);
+		bo.updateElement( new BPlusLeafElement( key , value) );
+
+		BPlusElementKey key_ = new BPlusElementKey(word);
+		Assert.assertEquals(value , bo.getElement( key_ ).getValue() );
+	}
+	
+	
 	public void test() throws KeyNotFoundException {
 		
 		//bo.insertElement( new BPlusLeafElement( new BPlusElement) );
@@ -31,5 +42,9 @@ public class BPlusTreeBoTestTest extends TestCase {
 		_test_insert( "documentos", 254);
 		_test_insert( "laruta", 1000);
 		_test_insert( "parseaste", 34);
+		
+		_test_update( "bplus", 90);
+		_test_update( "b9999", 8888);
+		_test_update( "documentos", 892);
 	}
 }
