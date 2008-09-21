@@ -1,5 +1,6 @@
 package app.dao.bplus;
 
+import api.dao.BPlusTree.BPlusNodeDao;
 import api.po.persistors.Persistor;
 import app.po.files.RelativeFile;
 import app.po.persistors.BPlusNodePersistor;
@@ -7,11 +8,11 @@ import bplus.keys.BPlusNodeKey;
 import bplus.nodes.BPlusNode;
 import exceptions.DataAccessException;
 
-public class BPlusNodeDao implements IBPlusNodeDao {
+public class BPlusNodeDaoImp implements BPlusNodeDao {
 	
 	private RelativeFile<BPlusNode> file;
 	
-	public BPlusNodeDao( ) throws DataAccessException {
+	public BPlusNodeDaoImp( ) throws DataAccessException {
 		// TODO: hacer parametrizable el nombre
 		
 		Persistor<BPlusNode> persistor = new BPlusNodePersistor();
