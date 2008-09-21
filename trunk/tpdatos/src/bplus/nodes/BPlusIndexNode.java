@@ -9,7 +9,8 @@ public class BPlusIndexNode extends AbstractBPlusNode {
 	
 	private BPlusNodeKey leftChildId;
 	
-	public BPlusIndexNode() {
+	public BPlusIndexNode(BPlusNodeKey nodeKey) {
+		super(nodeKey);
 	}
 
 	public void addElement(BPlusLeafElement element) {

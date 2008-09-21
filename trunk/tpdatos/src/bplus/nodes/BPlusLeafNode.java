@@ -3,7 +3,8 @@ package bplus.nodes;
 import bplus.keys.BPlusNodeKey;
 
 public class BPlusLeafNode extends AbstractBPlusNode {
-	public BPlusLeafNode() {
+	public BPlusLeafNode(BPlusNodeKey nodeKey) {
+		super(nodeKey);
 	}
 
 	private BPlusNodeKey nextNodeKey;

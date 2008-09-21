@@ -17,8 +17,9 @@ public abstract class AbstractBPlusNode implements BPlusNode {
 	private BPlusNodeKey nodeKey;
 	private List<BPlusElement> elements;
 	
-	public AbstractBPlusNode() {
-		this.elements= new ArrayList<BPlusElement>(); 
+	public AbstractBPlusNode( BPlusNodeKey nodeKey) {
+		this.elements= new ArrayList<BPlusElement>();
+		this.nodeKey = nodeKey;
 	}
 	
 	@Override
