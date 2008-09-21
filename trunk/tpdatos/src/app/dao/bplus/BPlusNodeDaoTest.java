@@ -42,6 +42,7 @@ public class BPlusNodeDaoTest implements IBPlusNodeDao {
 	@Override
 	public void updateNode(BPlusNode node) throws DataAccessException {
 		// TODO Auto-generated method stub
+		map.put(node.getNodeKey(), node);
 
 	}
 
