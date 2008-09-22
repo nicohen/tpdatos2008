@@ -45,12 +45,15 @@ public class KeyCodificationUtils {
 		Integer parteBinaria = Integer.valueOf((key-((int)Math.pow(2,logaritmoEnBase2DeN))));
 		String binario= Integer.toBinaryString(parteBinaria);
 		String aux = new String();
-		if (parteBinaria<logaritmoEnBase2DeN){
+		if (binario.length()<logaritmoEnBase2DeN){
 			
-			for(int k=0;k<logaritmoEnBase2DeN-1;k++)
+			for(int k=0;k<logaritmoEnBase2DeN-binario.length();k++)
 			aux+="0";
 			aux+=binario;
 		}
+		else
+		aux+=binario;
+		
 		for (;i<logaritmoEnBase2DeN+logaritmoEnBase2DeN+1;i++) {
 		
 			if (aux.charAt(j)=='1')
