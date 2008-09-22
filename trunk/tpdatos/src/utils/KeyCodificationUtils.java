@@ -25,7 +25,6 @@ public class KeyCodificationUtils {
 	}
 	
 	public static byte[] gammaEncode(Integer key) { 
-		Byte[] gamma = null;
 		BitSet cjto=new BitSet();
 		int i,j=0;
 		boolean flag;
@@ -35,13 +34,13 @@ public class KeyCodificationUtils {
 			return toByteArray(cjto);
 		}
 		
-		String gammaStr = "";
 		Integer logaritmoEnBase2DeN = Integer.valueOf((int)Math.floor(Math.log(key)/Math.log(2)));
 		for (i=0;i<logaritmoEnBase2DeN;i++) {
-			cjto.set(i,true); //tanto unos como valor del log
+			cjto.set(i,false); //tanto unos como valor del log
 		}
+		//i++;
+		cjto.set(i, true); //el 0 separador
 		i++;
-		cjto.set(i, false); //el 0 separador
 		Integer parteBinaria = Integer.valueOf((key-((int)Math.pow(2,logaritmoEnBase2DeN))));
 		String binario= Integer.toBinaryString(parteBinaria);
 		String aux = new String();
@@ -63,7 +62,7 @@ public class KeyCodificationUtils {
 			cjto.set(i,flag);
 			j++;
 		}
-		
+		cjto.set(i,true);//se cierra con un 1
 		return toByteArray(cjto);
 	}
 	
@@ -73,12 +72,12 @@ public class KeyCodificationUtils {
 		int i=0,contUnario=0,contBinario=0;
 		String parteBinaria=new String();
 		Integer valorEnBinario;
-		while(set.get(i)){ //leo hasta el primer 0
+		while(!set.get(i)){ //leo hasta el primer 1
 			contUnario++;
 			i++;
 		}
-		i++;//ignoro el 0
-		for(int k=i;k<set.length();k++){
+		i++;//ignoro el 1
+		for(int k=i;k<set.length()-1;k++){
 			contBinario++;
 			if(set.get(k))
 			parteBinaria+="1";
@@ -105,9 +104,6 @@ public class KeyCodificationUtils {
         for (int i=0; i<bytes.length*8; i++) {
             if ((bytes[bytes.length-i/8-1]&(1<<(i%8))) > 0) {
                 bits.set(i);
-            }
-            else{
-            	bits.set(i,false);
             }
         }
         return bits;
