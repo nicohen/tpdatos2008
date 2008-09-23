@@ -43,7 +43,7 @@ public class BPlusTree {
 		}else{
 			BPlusIndexNode indexNode= (BPlusIndexNode) node;
 			BPlusNodeKey nextNode= indexNode.getLeftChildId();
-			Iterator<BPlusElement> it= node.getElementsIterator();
+			Iterator<BPlusElement> it= node.getElements().iterator();
 			while (it.hasNext()){
 				BPlusIndexElement auxElement= (BPlusIndexElement) it.next();
 				if (auxElement.getKey().compareTo(element.getKey())<1){
