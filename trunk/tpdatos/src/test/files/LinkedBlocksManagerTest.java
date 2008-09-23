@@ -13,7 +13,6 @@ public class LinkedBlocksManagerTest extends TestCase {
 	public void testLinkedBlocksManager() throws DataAccessException {
 		LinkedBlockIntPersistor persistor=new LinkedBlockIntPersistor(24);
 		LinkedBlocksManager<Integer> manager=new LinkedBlocksManager<Integer>("test_relative_block.bin",5 , persistor);
-		ArrayList<Integer> aux;
 		manager.add(1, 0);
 		manager.add(2, 0);
 		manager.add(3, 0);

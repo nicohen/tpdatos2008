@@ -1,7 +1,5 @@
 package test.utils;
 
-import java.util.BitSet;
-
 import junit.framework.TestCase;
 import utils.KeyCodificationUtils;
 
