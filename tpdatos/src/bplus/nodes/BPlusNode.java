@@ -1,6 +1,6 @@
 package bplus.nodes;
 
-import java.util.Iterator;
+import java.util.List;
 
 import bplus.elements.BPlusElement;
 import bplus.exceptions.KeyNotFoundException;
@@ -11,7 +11,7 @@ public interface BPlusNode {
 	public void insertElement(BPlusElement element);
 	public BPlusElement getElement(BPlusElementKey elementKey) throws KeyNotFoundException;
 	public boolean isLeafNode();
-	public Iterator<BPlusElement> getElementsIterator();
+	public List<BPlusElement> getElements();
 	public BPlusNodeKey getNodeKey();
 //	public void splitInto(BPlusNode node);
 }

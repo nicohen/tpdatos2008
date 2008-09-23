@@ -2,7 +2,6 @@ package bplus.nodes;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import bplus.elements.BPlusElement;
@@ -31,9 +30,31 @@ public abstract class AbstractBPlusNode implements BPlusNode {
 		return element;
 	}
 
-	private BPlusElement findElement(List<BPlusElement> elements,
-			BPlusElementKey elementKey) {
-		// TODO: implementar!!!
+	private BPlusElement findElement(List<BPlusElement> elements,BPlusElementKey elementKey) {
+		int start=0;
+		int end=elements.size()-1;
+		BPlusElement auxElement=elements.get(0);
+		if (auxElement.getKey().equals(elementKey)){
+			return auxElement;
+		}
+		auxElement=elements.get(end);
+		if(auxElement.getKey().equals(elementKey)){
+			return auxElement;
+		}
+		while(end-start>0){
+			int index=(end+start)/2;
+			auxElement= elements.get(index);
+			switch(auxElement.getKey().compareTo(elementKey)){
+				case -1:
+					start=index;
+					break;
+				case 0:
+					return auxElement;
+				case 1:
+					end=index;
+					break;
+			}
+		}
 		return null;
 	}
 
@@ -52,7 +73,7 @@ public abstract class AbstractBPlusNode implements BPlusNode {
 	}
 
 	@Override
-	public Iterator<BPlusElement> getElementsIterator(){
-		return elements.iterator();
+	public List<BPlusElement> getElements(){
+		return elements;
 	}
 }
