@@ -13,5 +13,5 @@ public interface BPlusNode {
 	public boolean isLeafNode();
 	public List<BPlusElement> getElements();
 	public BPlusNodeKey getNodeKey();
-//	public void splitInto(BPlusNode node);
+	public void setElements(List<BPlusElement> elements);
 }
