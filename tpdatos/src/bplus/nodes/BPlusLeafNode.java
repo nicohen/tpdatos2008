@@ -1,5 +1,6 @@
 package bplus.nodes;
 
+import bplus.elements.BPlusIndexElement;
 import bplus.keys.BPlusNodeKey;
 
 public class BPlusLeafNode extends AbstractBPlusNode {
@@ -20,5 +21,11 @@ public class BPlusLeafNode extends AbstractBPlusNode {
 	@Override
 	public boolean isLeafNode() {
 		return true;
+	}
+	
+	public BPlusIndexElement getIndexElement(){
+		BPlusIndexElement indexElement= new BPlusIndexElement(this.elements.get(0).getKey());
+		indexElement.setRelatedNode(this.getNodeKey());
+		return indexElement;
 	}
 }

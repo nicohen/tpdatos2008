@@ -1,6 +1,7 @@
 package app.bo.bplus;
 
 import java.util.Iterator;
+import java.util.List;
 
 import api.bo.BPlusTree.BPlusTreeBo;
 import api.dao.BPlusTree.BPlusNodeDao;
@@ -13,6 +14,7 @@ import bplus.exceptions.NodeOverflowException;
 import bplus.keys.BPlusElementKey;
 import bplus.keys.BPlusNodeKey;
 import bplus.nodes.BPlusIndexNode;
+import bplus.nodes.BPlusLeafNode;
 import bplus.nodes.BPlusNode;
 import exceptions.DataAccessException;
 
@@ -78,14 +80,26 @@ public class BPlusTreeBoImp implements BPlusTreeBo {
 			try {
 				this.insertElement(childNode,element);
 			} catch (NodeOverflowException e) {
-				this.splitNode(childNode);
+				this.splitNode(node,childNode.getNodeKey());
 				this.insertElement(node,element);
 			}
 		}
 	}
 	
-	private void splitNode(BPlusNode node) throws NodeOverflowException{
-		if(node.isLeafNode()){
+	private void splitNode(BPlusNode node, BPlusNodeKey ChildId) throws NodeOverflowException, DataAccessException{
+		BPlusNode childNode=nodeDao.getNode(ChildId);
+		if(childNode.isLeafNode()){
+			List<BPlusElement> elements =childNode.getElements();
+			int index= elements.size()/2;
+			BPlusLeafNode newNode= nodeDao.newLeafNode();
+			while (index<elements.size()){
+				newNode.insertElement(elements.get(index));
+				elements.remove(index);
+			}
+			node.insertElement(newNode.getIndexElement());
+			nodeDao.updateNode(node);
+			nodeDao.updateNode(childNode);
+			nodeDao.updateNode(newNode);
 		}else{			
 		}
 	}

@@ -15,8 +15,8 @@ import bplus.keys.BPlusNodeKey;
  */
 public abstract class AbstractBPlusNode implements BPlusNode {
 
-	private BPlusNodeKey nodeKey;
-	private List<BPlusElement> elements;
+	protected BPlusNodeKey nodeKey;
+	protected List<BPlusElement> elements;
 	
 	public AbstractBPlusNode( BPlusNodeKey nodeKey) {
 		this.elements= new ArrayList<BPlusElement>();
@@ -75,5 +75,10 @@ public abstract class AbstractBPlusNode implements BPlusNode {
 	@Override
 	public List<BPlusElement> getElements(){
 		return elements;
+	}
+	
+	@Override
+	public void setElements(List<BPlusElement> elements) {
+		this.elements=elements;
 	}
 }
