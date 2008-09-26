@@ -9,29 +9,22 @@ import exceptions.DataAccessException;
 public class BPlusTreeBoImp extends AbstractBPlusTreeBo {
 
 	private String filename;
+	private int nodeSize;
 	
 	public BPlusTreeBoImp( String filename, int nodeSize ) throws DataAccessException {
-		super();
 		this.filename= filename;
-		// TODO Auto-generated constructor stub
-		this.nodeDao= new BPlusNodeDaoImp(filename,nodeSize);
-		if (this.nodeDao.getSize()==0){
-			this.root= new BPlusLeafNode();
-			nodeDao.insertNode(root);
-		}else{
-			nodeDao.getRootNode(new BPlusNodeKey(0));
-		}
+		this.nodeSize = nodeSize;
 	}
 
-	public BPlusTreeBoImp( ) throws DataAccessException {
+/*	public BPlusTreeBoImp( ) throws DataAccessException {
 		super();
 		// TODO Auto-generated constructor stub
 		this.filename = "bplus.dat";
-	}
+	}*/
 
 	@Override
 	protected BPlusNodeDao createDao() throws DataAccessException {
-		return null;
+		 return new BPlusNodeDaoImp(filename,nodeSize);
 	}
 
 		

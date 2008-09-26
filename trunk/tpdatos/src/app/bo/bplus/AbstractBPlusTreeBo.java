@@ -22,13 +22,22 @@ import exceptions.DataAccessException;
 
 abstract public class AbstractBPlusTreeBo implements BPlusTreeBo {
 
-	protected BPlusNodeDao nodeDao;
-	protected BPlusNode root;
+	private BPlusNodeDao nodeDao;
+	private BPlusNode root;
 	
 	abstract protected BPlusNodeDao createDao() throws DataAccessException ;
 	
 	public AbstractBPlusTreeBo() throws DataAccessException{
 		this.nodeDao = createDao();
+		
+		if (this.nodeDao.getSize()==0){
+			this.root= new BPlusLeafNode();
+			nodeDao.insertNode(root);
+		}else{
+			// FIXME: root queda como puntero nulo si se cumple esta condicion
+			nodeDao.getRootNode(new BPlusNodeKey(0));
+		}
+		
 	}
 	
 	@Override
@@ -50,7 +59,7 @@ abstract public class AbstractBPlusTreeBo implements BPlusTreeBo {
 					nextNode= auxElement.getRelatedNode();
 				}
 			}
-			BPlusNode childNode=  nodeDao.getNode(nextNode);
+			BPlusNode childNode=nodeDao.getNode(nextNode);
 			return this.getElement(childNode,elementKey);
 		}
 	}

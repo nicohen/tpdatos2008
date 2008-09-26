@@ -9,7 +9,7 @@ public class TestBPlusTreeBoImp extends TestBPlusTreeBo {
 	@Override
 	protected BPlusTreeBo createTestObject() throws DataAccessException {
 		// TODO Auto-generated method stub
-		return new BPlusTreeBoImp() ;
+		return new BPlusTreeBoImp("bplus-bo-test.dat",128) ;
 	}
 
 }
