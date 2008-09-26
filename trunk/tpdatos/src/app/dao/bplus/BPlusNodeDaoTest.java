@@ -46,12 +46,25 @@ public class BPlusNodeDaoTest implements BPlusNodeDao {
 	public void updateNode(BPlusNode node) throws DataAccessException {
 		// TODO Auto-generated method stub
 		map.put(node.getNodeKey().getValue(), node);
-
 	}
 
 	@Override
 	public int getSize() {
 		return this.map.size();
+	}
+
+	@Override
+	public BPlusNode getRootNode(BPlusNodeKey plusNodeKey)
+			throws DataAccessException {
+		// TODO IMPLEMENTAR!!!
+		
+		return null;
+	}
+
+	@Override
+	public void setRootNode(BPlusNodeKey plusNodeKey) {
+		// TODO IMPLEMENTAR!!!
+		
 	}
 
 }
