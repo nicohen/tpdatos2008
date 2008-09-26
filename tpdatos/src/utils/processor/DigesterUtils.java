@@ -9,16 +9,13 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-
 import utils.folders.Constants;
 import dto.WordDto;
 import exceptions.BusinessException;
 
 public final class DigesterUtils {
 	
-	public static final String LETTERS_TO_STRIP = "\"_,:.#()?¿/\\!$%&*'@ºª=¡{}[];";
+	public static final String LETTERS_TO_STRIP = "\"_,:.#()?ï¿½/\\!$%&*'@ï¿½ï¿½=ï¿½{}[];";
 	public static final String LETTERS_TO_TRANSLATE_FROM	= "\u00E1\u00E0\u00E9\u00E8\u00ED\u00EC\u00F3\u00F2\u00FA\u00F9\u00FC";
 	public static final String LETTERS_TO_TRANSLATE_TO	= "aaeeiioouuu";
 	
@@ -45,8 +42,11 @@ public final class DigesterUtils {
 		return files;
 	}
 	
-	public static Map<Integer,String> prepareIndexedDocuments() throws BusinessException {
-		Map<Integer,String> documentsMap = new TreeMap<Integer,String>();
+	public static IndexedDocumentChecker prepareIndexedDocuments() throws BusinessException {
+		
+		IndexedDocumentChecker checker = new IndexedDocumentChecker();
+		//Map<Integer,String> documentsMap = new TreeMap<Integer,String>();
+		
 //		AbstractPersistor<DocumentDto> persistor = new DocumentPersistor(10);
 //		try {
 //			RelativeFile<DocumentDto> relativeFile = new RelativeFile<DocumentDto>("indexed_documents.bin",persistor);
@@ -60,7 +60,7 @@ public final class DigesterUtils {
 //		} catch (DataAccessException e) {
 //			throw new BusinessException("Error inicializando RelativeFile de documentos indexados",e);
 //		}
-		return documentsMap;
+		return checker;
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -117,62 +117,62 @@ public final class DigesterUtils {
 //			-es:-/
 //			-a:-//-e:-/
 //			-amos/-emos/-imos
-//			-áis/-éis/-ís
+//			-ï¿½is/-ï¿½is/-ï¿½s
 //			-an/-en
-//			==== Pretérito imperfecto ====
-//			-aba/-ía
-//			-abas/-ías
-//			-aba/-ía
-//			-ábamos/-íamos
-//			-abais/-íais
-//			-aban/-ían
-//			==== Pretérito perfecto ====
-//			-é:-//-í
+//			==== Pretï¿½rito imperfecto ====
+//			-aba/-ï¿½a
+//			-abas/-ï¿½as
+//			-aba/-ï¿½a
+//			-ï¿½bamos/-ï¿½amos
+//			-abais/-ï¿½ais
+//			-aban/-ï¿½an
+//			==== Pretï¿½rito perfecto ====
+//			-ï¿½:-//-ï¿½
 //			-aste/-iste
-//			-ó:-//-ió
+//			-ï¿½:-//-iï¿½
 //			-amos/-imos
 //			-asteis/-isteis
 //			-aron/-ieron
 //			==== Futuro ====
-//			-aré/-eré/-iré
-//			-arás/-erás/-irás
-//			-ará/-erá/-irá
+//			-arï¿½/-erï¿½/-irï¿½
+//			-arï¿½s/-erï¿½s/-irï¿½s
+//			-arï¿½/-erï¿½/-irï¿½
 //			-aremos/-eremos/-iremos
-//			-aréis/-eréis/-iréis
-//			-arán/-erán/-irán
+//			-arï¿½is/-erï¿½is/-irï¿½is
+//			-arï¿½n/-erï¿½n/-irï¿½n
 //			==== Condicional ====
-//			-aría/-ería/-iría
-//			-arías/-erías/-irías
-//			-aría/-ería/-iría
-//			-aríamos/-eríamos/-iríamos
-//			-aríais/-eríais/-iríais
-//			-arían/-erían/-irían
+//			-arï¿½a/-erï¿½a/-irï¿½a
+//			-arï¿½as/-erï¿½as/-irï¿½as
+//			-arï¿½a/-erï¿½a/-irï¿½a
+//			-arï¿½amos/-erï¿½amos/-irï¿½amos
+//			-arï¿½ais/-erï¿½ais/-irï¿½ais
+//			-arï¿½an/-erï¿½an/-irï¿½an
 //			===== SUBJUNTIVO =====
 //			==== Presente ====
 //			-e:-//-a:-/
 //			-es:-//-as:-/
 //			-e:-//-a:-/
 //			-emos/-amos
-//			-éis/-áis
+//			-ï¿½is/-ï¿½is
 //			-en/-an
-//			==== Pretérito imperfecto ====
+//			==== Pretï¿½rito imperfecto ====
 //			-ara/-ase/-iera/-iese
 //			-aras/-ases/-ieras/-ieses
 //			-ara/-ase/-iera/-iese
-//			-áramos/-ásemos/-iéramos/-iésemos
+//			-ï¿½ramos/-ï¿½semos/-iï¿½ramos/-iï¿½semos
 //			-arais/-aseis/-ierais/-ieseis
 //			-aran/-asen/-ieran/-iesen
 //			==== Futuro ====
 //			-are/-iere
 //			-ares/-ieres
 //			-are/-iere
-//			-áremos/-iéremos
+//			-ï¿½remos/-iï¿½remos
 //			-areis/-iereis
 //			-aren/-ieren
 //			===== IMPERATIVO =====
 //			-a:-
 //			-e:-/
-//			-á:-//-e:-//-í
+//			-ï¿½:-//-e:-//-ï¿½
 //			-ad/-ed/-id
 //			-en/-an
 		return token;
