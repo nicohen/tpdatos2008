@@ -18,95 +18,27 @@ import bplus.nodes.BPlusLeafNode;
 import bplus.nodes.BPlusNode;
 import exceptions.DataAccessException;
 
-public class BPlusTreeBoImp implements BPlusTreeBo {
+public class BPlusTreeBoImp extends AbstractBPlusTreeBo {
 
-	private BPlusNodeDao nodeDao;
+	private String filename;
 	
-	public BPlusTreeBoImp() throws DataAccessException{
-		this.nodeDao= new BPlusNodeDaoImp();
-	}
-	
-	@Override
-	public BPlusLeafElement getElement(BPlusElementKey elementKey)
-			throws KeyNotFoundException, DataAccessException {
-		BPlusNode root= this.getRootNode();
-		return this.getElement(root,elementKey);
+	public BPlusTreeBoImp( String filename ) throws DataAccessException {
+		super();
+		// TODO Auto-generated constructor stub
+		this.filename = filename;
 	}
 
-	private BPlusLeafElement getElement(BPlusNode node,BPlusElementKey elementKey) throws KeyNotFoundException, DataAccessException {
-		if (node.isLeafNode()){
-			return (BPlusLeafElement)node.getElement(elementKey);
-		}else{
-			BPlusIndexNode indexNode= (BPlusIndexNode) node;
-			BPlusNodeKey nextNode= indexNode.getLeftChildId();
-			Iterator<BPlusElement> it= node.getElements().iterator();
-			while (it.hasNext()){
-				BPlusIndexElement auxElement= (BPlusIndexElement) it.next();
-				if (auxElement.getKey().compareTo(elementKey)<=1){
-					nextNode= auxElement.getRelatedNode();
-				}
-			}
-			BPlusNode childNode=  nodeDao.getNode(nextNode);
-			return this.getElement(childNode,elementKey);
-		}
+	public BPlusTreeBoImp( ) throws DataAccessException {
+		super();
+		// TODO Auto-generated constructor stub
+		this.filename = "bplus.dat";
 	}
 
 	@Override
-	public void insertElement(BPlusLeafElement element) throws DataAccessException {
-		BPlusNode root= this.getRootNode();
-		try {
-			this.insertElement(root,element);
-		} catch (NodeOverflowException e) {
-			// TODO resolver overflow en raiz del arbol.
-			e.printStackTrace();
-		}
+	protected BPlusNodeDao createDao() throws DataAccessException {
+		// TODO Auto-generated method stub
+		return new BPlusNodeDaoImp(filename);
 	}
 
-	private void insertElement(BPlusNode node, BPlusLeafElement element) throws DataAccessException, NodeOverflowException {
-		if (node.isLeafNode()){
-			node.insertElement(element);
-			nodeDao.updateNode(node);
-		}else{
-			BPlusIndexNode indexNode= (BPlusIndexNode) node;
-			BPlusNodeKey nextNode= indexNode.getLeftChildId();
-			Iterator<BPlusElement> it= node.getElements().iterator();
-			while (it.hasNext()){
-				BPlusIndexElement auxElement= (BPlusIndexElement) it.next();
-				if (auxElement.getKey().compareTo(element.getKey())<=1){
-					nextNode= auxElement.getRelatedNode();
-				}
-			}
-			BPlusNode childNode=  nodeDao.getNode(nextNode);
-			try {
-				this.insertElement(childNode,element);
-			} catch (NodeOverflowException e) {
-				this.splitNode(node,childNode.getNodeKey());
-				this.insertElement(node,element);
-			}
-		}
-	}
-	
-	private void splitNode(BPlusNode node, BPlusNodeKey ChildId) throws NodeOverflowException, DataAccessException{
-		BPlusNode childNode=nodeDao.getNode(ChildId);
-		if(childNode.isLeafNode()){
-			List<BPlusElement> elements =childNode.getElements();
-			int index= elements.size()/2;
-			BPlusLeafNode newNode= new BPlusLeafNode(ChildId);
-			nodeDao.insertNode(newNode);
-			while (index<elements.size()){
-				newNode.insertElement(elements.get(index));
-				elements.remove(index);
-			}
-			node.insertElement(newNode.getIndexElement());
-			nodeDao.updateNode(node);
-			nodeDao.updateNode(childNode);
-			nodeDao.updateNode(newNode);
-		}else{			
-		}
-	}
-
-	public BPlusNode getRootNode(){
-		// TODO Implementar!!!!
-		return null;
-	}
+		
 }
