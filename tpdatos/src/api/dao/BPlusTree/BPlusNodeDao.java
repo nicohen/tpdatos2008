@@ -10,4 +10,6 @@ public interface BPlusNodeDao {
 	public BPlusNodeKey insertNode(BPlusNode node) throws DataAccessException;
 	public BPlusNode getNode(BPlusNodeKey id) throws DataAccessException;
 	public int getSize();
+	public void setRootNode(BPlusNodeKey plusNodeKey) throws DataAccessException;
+	public BPlusNode getRootNode(BPlusNodeKey plusNodeKey) throws DataAccessException;
 }

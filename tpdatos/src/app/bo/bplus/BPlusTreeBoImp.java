@@ -19,7 +19,7 @@ public class BPlusTreeBoImp extends AbstractBPlusTreeBo {
 			this.root= new BPlusLeafNode();
 			nodeDao.insertNode(root);
 		}else{
-			nodeDao.getNode(new BPlusNodeKey(0));
+			nodeDao.getRootNode(new BPlusNodeKey(0));
 		}
 	}
 
