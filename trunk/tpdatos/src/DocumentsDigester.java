@@ -3,11 +3,9 @@
 import java.io.File;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import utils.folders.Constants;
 import utils.processor.DigesterUtils;
+import utils.processor.IndexedDocumentChecker;
 import utils.web.HtmlUtils;
 import dto.DocumentDto;
 import dto.WordDto;
@@ -35,7 +33,7 @@ public class DocumentsDigester {
 		try {
 		
 			//Preparo los documentos que ya fueron indexados
-			Map<Integer, String> indexedDocuments = DigesterUtils.prepareIndexedDocuments();
+			IndexedDocumentChecker indexedDocuments = DigesterUtils.prepareIndexedDocuments();
 
 			//Recorro los nuevos documentos a indexar
 			for (int i=0;i<newDocuments.length;i++) {
@@ -43,10 +41,10 @@ public class DocumentsDigester {
 				System.out.println("Intentando indexar documento ["+document.getFileName()+"]...");
 
 				//Verifico que el documento a indexar, no este dentro de los ya indexados
-				if (!indexedDocuments.containsValue(document.getFileName())) {
+				if (!indexedDocuments.documentIsIndexed(document.getFileName())) {
 					System.out.println("Indexando documento ["+document.getFileName()+"]...");
 					//Le seteo un nuevo documentId al documento a indexar
-					document.setDocumentId(getNewDocumentId(indexedDocuments));
+					document.setDocumentId(indexedDocuments.getNewDocumentId() );
 					
 					String documentText = HtmlUtils.readHtmlFile(Constants.FOLDER_DOCUMENTS+File.separator+document.getFileName());
 					documentText = HtmlUtils.getHtmlBody(documentText);
@@ -76,7 +74,7 @@ public class DocumentsDigester {
 			throw new Exception("Error preparando nuevos documentos pendientes a indexar",e);
 		}
 	}
-	
+/*	
 	private static Integer getNewDocumentId(Map<Integer, String> indexedDocuments) {
 		Set<Integer> newDocuments = indexedDocuments.keySet();
 		Integer maxDocumentId = 0;
@@ -87,7 +85,7 @@ public class DocumentsDigester {
 		}
 		return (newDocuments.size()>0) ? maxDocumentId+1 : 0;
 	}
-
+*/
 //	private void processDocument(String document, List<WordDto> stopwords) throws IOException {
 //		document = DigesterUtils.deleteSpecialCharacters(document);
 //		document = DigesterUtils.updateAcuteAndUmlaut(document);
