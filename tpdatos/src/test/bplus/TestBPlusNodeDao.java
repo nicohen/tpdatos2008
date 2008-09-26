@@ -54,6 +54,12 @@ abstract public class TestBPlusNodeDao extends TestCase {
 		
 	}
 	
+	public void _test_root(BPlusNode node) throws DataAccessException {
+		dao.setRootNode(node.getNodeKey());
+		BPlusNode nodoInsertado = dao.getRootNode(new BPlusNodeKey(0));
+		Assert.assertTrue( nodoInsertado.equals(node));
+	}
+	
 	
 	public void test() throws DataAccessException, NodeOverflowException {
 		
@@ -69,6 +75,10 @@ abstract public class TestBPlusNodeDao extends TestCase {
 		_test_update( node1 );
 		_test_update( node2 );
 		_test_update( node3 );
+		
+		_test_root(node1);
+		_test_root(node2);
+		_test_root(node3);
 		
 	}
 

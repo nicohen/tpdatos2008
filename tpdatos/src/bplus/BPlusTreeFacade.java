@@ -37,6 +37,6 @@ public class BPlusTreeFacade {
 	}
 	
 	private BPlusTreeBo createBo() throws DataAccessException{
-		return new BPlusTreeBoImp();
+		return new BPlusTreeBoImp("bplus.dat",128);
 	}
 }
