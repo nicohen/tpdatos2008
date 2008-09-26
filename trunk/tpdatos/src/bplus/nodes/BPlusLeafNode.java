@@ -1,11 +1,10 @@
 package bplus.nodes;
 
-import bplus.elements.BPlusIndexElement;
 import bplus.keys.BPlusNodeKey;
 
 public class BPlusLeafNode extends AbstractBPlusNode {
-	public BPlusLeafNode(BPlusNodeKey nodeKey) {
-		super(nodeKey);
+	public BPlusLeafNode() {
+		super();
 	}
 
 	private BPlusNodeKey nextNodeKey;
@@ -23,9 +22,4 @@ public class BPlusLeafNode extends AbstractBPlusNode {
 		return true;
 	}
 	
-	public BPlusIndexElement getIndexElement(){
-		BPlusIndexElement indexElement= new BPlusIndexElement(this.elements.get(0).getKey());
-		indexElement.setRelatedNode(this.getNodeKey());
-		return indexElement;
-	}
 }

@@ -1,6 +1,6 @@
 package bplus.keys;
 
-public class BPlusElementKey {
+public class BPlusElementKey implements Comparable<BPlusElementKey> {
 
 	private String word;
 

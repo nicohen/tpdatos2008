@@ -1,6 +1,6 @@
 package bplus.keys;
 
-public class BPlusNodeKey {
+public class BPlusNodeKey implements Comparable<BPlusNodeKey>{
 
 	private Integer id;
 	

@@ -3,7 +3,8 @@ package app.bo.bplus;
 import java.util.Iterator;
 import java.util.List;
 
-import exceptions.DataAccessException;
+import api.bo.BPlusTree.BPlusTreeBo;
+import api.dao.BPlusTree.BPlusNodeDao;
 import bplus.elements.BPlusElement;
 import bplus.elements.BPlusIndexElement;
 import bplus.elements.BPlusLeafElement;
@@ -14,10 +15,7 @@ import bplus.keys.BPlusNodeKey;
 import bplus.nodes.BPlusIndexNode;
 import bplus.nodes.BPlusLeafNode;
 import bplus.nodes.BPlusNode;
-import api.bo.BPlusTree.BPlusNodeBo;
-import api.bo.BPlusTree.BPlusTreeBo;
-import api.dao.BPlusTree.BPlusNodeDao;
-import app.dao.bplus.BPlusNodeDaoImp;
+import exceptions.DataAccessException;
 
 // ABSTRACT FACTORY, asi la logica del bo puede abstraerse de la interfaz
 // del dao, y el que instancia la clase tambien
@@ -93,22 +91,27 @@ abstract public class AbstractBPlusTreeBo implements BPlusTreeBo {
 	}
 	
 	private void splitNode(BPlusNode node, BPlusNodeKey ChildId) throws NodeOverflowException, DataAccessException{
+		BPlusNode newNode;
 		BPlusNode childNode=nodeDao.getNode(ChildId);
+		List<BPlusElement> elements =childNode.getElements();
+		int index= elements.size()/2;
 		if(childNode.isLeafNode()){
-			List<BPlusElement> elements =childNode.getElements();
-			int index= elements.size()/2;
-			BPlusLeafNode newNode= new BPlusLeafNode(ChildId);
-			nodeDao.insertNode(newNode);
-			while (index<elements.size()){
-				newNode.insertElement(elements.get(index));
-				elements.remove(index);
-			}
-			node.insertElement(newNode.getIndexElement());
-			nodeDao.updateNode(node);
-			nodeDao.updateNode(childNode);
-			nodeDao.updateNode(newNode);
-		}else{			
+			newNode= new BPlusLeafNode();
+		}else{
+			newNode= new BPlusIndexNode();
 		}
+		nodeDao.insertNode(newNode);
+		while (index<elements.size()){
+			newNode.insertElement(elements.get(index));
+			elements.remove(index);
+		}
+		if(childNode.isLeafNode()){
+			((BPlusLeafNode)childNode).setNextNodeKey(newNode.getNodeKey());
+		}
+		node.insertElement(newNode.getIndexElement());
+		nodeDao.updateNode(node);
+		nodeDao.updateNode(childNode);
+		nodeDao.updateNode(newNode);
 	}
 
 	public BPlusNode getRootNode(){

@@ -1,8 +1,8 @@
 package test.bplus;
 
-import exceptions.DataAccessException;
 import api.dao.BPlusTree.BPlusNodeDao;
 import app.dao.bplus.BPlusNodeDaoImp;
+import exceptions.DataAccessException;
 
 public class TestBPlusNodeDaoImp extends TestBPlusNodeDao {
 
