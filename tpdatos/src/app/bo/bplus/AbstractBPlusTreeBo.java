@@ -22,7 +22,8 @@ import exceptions.DataAccessException;
 
 abstract public class AbstractBPlusTreeBo implements BPlusTreeBo {
 
-	private BPlusNodeDao nodeDao;
+	protected BPlusNodeDao nodeDao;
+	protected BPlusNode root;
 	
 	abstract protected BPlusNodeDao createDao() throws DataAccessException ;
 	
@@ -33,7 +34,6 @@ abstract public class AbstractBPlusTreeBo implements BPlusTreeBo {
 	@Override
 	public BPlusLeafElement getElement(BPlusElementKey elementKey)
 			throws KeyNotFoundException, DataAccessException {
-		BPlusNode root= this.getRootNode();
 		return this.getElement(root,elementKey);
 	}
 
@@ -42,7 +42,7 @@ abstract public class AbstractBPlusTreeBo implements BPlusTreeBo {
 			return (BPlusLeafElement)node.getElement(elementKey);
 		}else{
 			BPlusIndexNode indexNode= (BPlusIndexNode) node;
-			BPlusNodeKey nextNode= indexNode.getLeftChildId();
+			BPlusNodeKey nextNode= indexNode.getLeftChildId().getRelatedNode();
 			Iterator<BPlusElement> it= node.getElements().iterator();
 			while (it.hasNext()){
 				BPlusIndexElement auxElement= (BPlusIndexElement) it.next();
@@ -57,7 +57,6 @@ abstract public class AbstractBPlusTreeBo implements BPlusTreeBo {
 
 	@Override
 	public void insertElement(BPlusLeafElement element) throws DataAccessException {
-		BPlusNode root= this.getRootNode();
 		try {
 			this.insertElement(root,element);
 		} catch (NodeOverflowException e) {
@@ -72,7 +71,7 @@ abstract public class AbstractBPlusTreeBo implements BPlusTreeBo {
 			nodeDao.updateNode(node);
 		}else{
 			BPlusIndexNode indexNode= (BPlusIndexNode) node;
-			BPlusNodeKey nextNode= indexNode.getLeftChildId();
+			BPlusNodeKey nextNode= indexNode.getLeftChildId().getRelatedNode();
 			Iterator<BPlusElement> it= node.getElements().iterator();
 			while (it.hasNext()){
 				BPlusIndexElement auxElement= (BPlusIndexElement) it.next();
@@ -113,10 +112,4 @@ abstract public class AbstractBPlusTreeBo implements BPlusTreeBo {
 		nodeDao.updateNode(childNode);
 		nodeDao.updateNode(newNode);
 	}
-
-	public BPlusNode getRootNode(){
-		// TODO Implementar!!!!
-		return null;
-	}
-
 }

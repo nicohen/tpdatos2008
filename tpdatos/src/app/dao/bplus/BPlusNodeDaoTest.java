@@ -36,7 +36,7 @@ public class BPlusNodeDaoTest implements BPlusNodeDao {
 		BPlusNodeKey auxNextKey = new BPlusNodeKey( nextKey.getValue() );
 		
 		map.put(nextKey.getValue(), node);
-		
+		node.setNodeKey(auxNextKey);
 		// incrementar el nextKey
 		nextKey.setValue(nextKey.getValue()+1);
 		return auxNextKey;
@@ -47,6 +47,11 @@ public class BPlusNodeDaoTest implements BPlusNodeDao {
 		// TODO Auto-generated method stub
 		map.put(node.getNodeKey().getValue(), node);
 
+	}
+
+	@Override
+	public int getSize() {
+		return this.map.size();
 	}
 
 }

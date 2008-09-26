@@ -12,17 +12,17 @@ public class BPlusNodeDaoImp implements BPlusNodeDao {
 	
 	private RelativeFile<BPlusNode> file;
 	
-	public BPlusNodeDaoImp( String filename ) throws DataAccessException {
+	public BPlusNodeDaoImp( String filename,int nodeSize ) throws DataAccessException {
 		// TODO: hacer parametrizable el nombre
 		
-		Persistor<BPlusNode> persistor = new BPlusNodePersistor();
+		Persistor<BPlusNode> persistor = new BPlusNodePersistor(nodeSize);
 		file = new RelativeFile<BPlusNode>( filename, persistor );
 	}
 
-	public BPlusNodeDaoImp(  ) throws DataAccessException {
+	public BPlusNodeDaoImp(int nodeSize) throws DataAccessException {
 		// TODO: hacer parametrizable el nombre
 		
-		Persistor<BPlusNode> persistor = new BPlusNodePersistor();
+		Persistor<BPlusNode> persistor = new BPlusNodePersistor(nodeSize);
 		file = new RelativeFile<BPlusNode>( "bplus.dat", persistor );
 	}
 
@@ -46,5 +46,10 @@ public class BPlusNodeDaoImp implements BPlusNodeDao {
 	 */
 	public BPlusNode getNode( BPlusNodeKey id ) throws DataAccessException  {
 		return file.get( id.getValue() );
+	}
+
+	@Override
+	public int getSize() {
+		return this.file.getSize();
 	}
 }

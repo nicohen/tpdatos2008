@@ -3,6 +3,7 @@
 import java.io.File;
 import java.util.Collections;
 import java.util.List;
+
 import utils.folders.Constants;
 import utils.processor.DigesterUtils;
 import utils.processor.IndexedDocumentChecker;
