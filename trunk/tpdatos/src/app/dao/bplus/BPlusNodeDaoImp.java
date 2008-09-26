@@ -12,7 +12,14 @@ public class BPlusNodeDaoImp implements BPlusNodeDao {
 	
 	private RelativeFile<BPlusNode> file;
 	
-	public BPlusNodeDaoImp( ) throws DataAccessException {
+	public BPlusNodeDaoImp( String filename ) throws DataAccessException {
+		// TODO: hacer parametrizable el nombre
+		
+		Persistor<BPlusNode> persistor = new BPlusNodePersistor();
+		file = new RelativeFile<BPlusNode>( filename, persistor );
+	}
+
+	public BPlusNodeDaoImp(  ) throws DataAccessException {
 		// TODO: hacer parametrizable el nombre
 		
 		Persistor<BPlusNode> persistor = new BPlusNodePersistor();
