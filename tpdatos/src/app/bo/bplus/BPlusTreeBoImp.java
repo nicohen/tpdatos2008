@@ -91,7 +91,8 @@ public class BPlusTreeBoImp implements BPlusTreeBo {
 		if(childNode.isLeafNode()){
 			List<BPlusElement> elements =childNode.getElements();
 			int index= elements.size()/2;
-			BPlusLeafNode newNode= nodeDao.newLeafNode();
+			BPlusLeafNode newNode= new BPlusLeafNode(ChildId);
+			nodeDao.insertNode(newNode);
 			while (index<elements.size()){
 				newNode.insertElement(elements.get(index));
 				elements.remove(index);
