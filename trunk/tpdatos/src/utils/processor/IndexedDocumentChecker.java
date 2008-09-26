@@ -1,11 +1,16 @@
 package utils.processor;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 public class IndexedDocumentChecker {
 	
 	private Map<Integer,String> documentsMap;
+	
+	public IndexedDocumentChecker() {
+		this.documentsMap= new HashMap<Integer, String>();
+	}
 	
 	public void addDocument( Integer id, String str ) {
 		documentsMap.put(id,str);

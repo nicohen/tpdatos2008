@@ -24,14 +24,14 @@ public class BPlusNodeBoImp implements BPlusNodeBo {
 	public void removeElement(BPlusElementKey elementKey)
 			throws KeyNotFoundException {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void updateElement(BPlusLeafElement element)
 			throws KeyNotFoundException {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 }

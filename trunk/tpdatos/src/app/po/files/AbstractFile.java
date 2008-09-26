@@ -37,4 +37,9 @@ public abstract class AbstractFile<E> implements api.po.files.File<E> {
 		}
 		
 	}
+	
+	@Override
+	public int getSize() {
+		return (int) (this.file.length()/this.size);
+	}
 }

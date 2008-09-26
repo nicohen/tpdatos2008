@@ -9,10 +9,16 @@ import exceptions.PersistanceException;
 
 public class BPlusNodePersistor implements Persistor<BPlusNode> {
 
+	private int nodeSize;
+	
+	public BPlusNodePersistor(int nodeSize) {
+		this.nodeSize=nodeSize;
+	}
+
 	@Override
 	public int getDataSize() {
 		// TODO Auto-generated method stub
-		return 0;
+		return nodeSize;
 	}
 
 	@Override

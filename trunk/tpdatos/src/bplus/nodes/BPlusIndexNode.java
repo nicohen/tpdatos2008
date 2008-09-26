@@ -1,11 +1,12 @@
 package bplus.nodes;
 
-import bplus.keys.BPlusNodeKey;
+import bplus.elements.BPlusElement;
+import bplus.elements.BPlusIndexElement;
 
 
 public class BPlusIndexNode extends AbstractBPlusNode {
 	
-	private BPlusNodeKey leftChildId;
+	private BPlusIndexElement leftChildId;
 	
 	public BPlusIndexNode() {
 		super();
@@ -16,11 +17,20 @@ public class BPlusIndexNode extends AbstractBPlusNode {
 		return false;
 	}
 
-	public void setLeftChildId(BPlusNodeKey leftChildId) {
+	@Override
+	public void insertElement(BPlusElement element) {
+		if (this.leftChildId.compareTo(element)<1){
+			super.insertElement(this.leftChildId);
+			this.leftChildId=(BPlusIndexElement)element;
+		}
+		super.insertElement(element);
+	}
+	
+	public void setLeftChildId(BPlusIndexElement leftChildId) {
 		this.leftChildId = leftChildId;
 	}
 
-	public BPlusNodeKey getLeftChildId() {
+	public BPlusIndexElement getLeftChildId() {
 		return leftChildId;
 	}
 }
