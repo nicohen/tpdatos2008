@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class LinkedBlock<E> {
 	private int nextBlock;
+	private int freeRegsNum;
 	private ArrayList<E> listaElem;
 	
 	public LinkedBlock(){
@@ -13,7 +14,9 @@ public class LinkedBlock<E> {
 	public int getNextBlock(){
 		return this.nextBlock;
 	}
-	
+	public int getFreeRegsNum(){
+		return this.freeRegsNum;
+	}
 	public ArrayList<E> getListaElem(){
 		return this.listaElem;
 	}
@@ -27,6 +30,9 @@ public class LinkedBlock<E> {
 	}
 	public void setNextBlock(int blockId){
 		this.nextBlock=blockId;
+	}
+	public void setFreeRegsNum(int num){
+		this.freeRegsNum=num;
 	}
 	
 }

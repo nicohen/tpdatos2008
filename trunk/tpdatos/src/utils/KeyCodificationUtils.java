@@ -52,7 +52,6 @@ public class KeyCodificationUtils {
 		}
 		else
 		aux+=binario;
-		
 		for (;i<logaritmoEnBase2DeN+logaritmoEnBase2DeN+1;i++) {
 		
 			if (aux.charAt(j)=='1')
