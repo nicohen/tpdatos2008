@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import bplus.elements.BPlusElement;
+import bplus.elements.BPlusIndexElement;
 import bplus.exceptions.KeyNotFoundException;
 import bplus.keys.BPlusElementKey;
 import bplus.keys.BPlusNodeKey;
@@ -18,9 +19,8 @@ public abstract class AbstractBPlusNode implements BPlusNode {
 	protected BPlusNodeKey nodeKey;
 	protected List<BPlusElement> elements;
 	
-	public AbstractBPlusNode( BPlusNodeKey nodeKey) {
+	public AbstractBPlusNode() {
 		this.elements= new ArrayList<BPlusElement>();
-		this.nodeKey = nodeKey;
 	}
 	
 	@Override
@@ -80,5 +80,12 @@ public abstract class AbstractBPlusNode implements BPlusNode {
 	@Override
 	public void setElements(List<BPlusElement> elements) {
 		this.elements=elements;
+	}
+	
+	@Override
+	public BPlusIndexElement getIndexElement(){
+		BPlusIndexElement indexElement= new BPlusIndexElement(this.elements.get(0).getKey());
+		indexElement.setRelatedNode(this.getNodeKey());
+		return indexElement;
 	}
 }

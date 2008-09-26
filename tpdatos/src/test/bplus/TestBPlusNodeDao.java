@@ -1,13 +1,15 @@
 package test.bplus;
 
+import junit.framework.TestCase;
+
 import org.junit.Assert;
+
 import api.dao.BPlusTree.BPlusNodeDao;
 import bplus.exceptions.NodeOverflowException;
 import bplus.keys.BPlusNodeKey;
 import bplus.nodes.BPlusLeafNode;
 import bplus.nodes.BPlusNode;
 import exceptions.DataAccessException;
-import junit.framework.TestCase;
 
 // Este test generico testea todas las implementaciones
 // de BPlusNodeDao, es un ABSTRACT FACTORY que se abstrae
@@ -58,7 +60,7 @@ abstract public class TestBPlusNodeDao extends TestCase {
 		
 		// TODO: probar distintos nodos , con diferente contenido, etc...
 		
-		BPlusNode node = new BPlusLeafNode(new BPlusNodeKey(0) );
+		BPlusNode node = new BPlusLeafNode();
 		
 		BPlusNode node1 = _test_insert(node);
 		BPlusNode node2 = _test_insert(node);
