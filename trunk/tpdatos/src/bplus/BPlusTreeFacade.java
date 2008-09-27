@@ -33,7 +33,9 @@ public class BPlusTreeFacade {
 	
 	public void insertElement (String key , DocumentIndexKey value ) throws DataAccessException {
 		// TODO: asignar valor al elemento !!!!
-		bo.insertElement( new BPlusLeafElement(new BPlusElementKey(key), value.getValue() ) );
+		BPlusLeafElement element= new BPlusLeafElement(new BPlusElementKey(key));
+		element.setValue(value.getValue());
+		bo.insertElement( element);
 	}
 	
 	private BPlusTreeBo createBo() throws DataAccessException{

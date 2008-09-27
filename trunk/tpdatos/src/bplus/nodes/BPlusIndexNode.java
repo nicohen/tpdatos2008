@@ -6,7 +6,7 @@ import bplus.elements.BPlusIndexElement;
 
 public class BPlusIndexNode extends AbstractBPlusNode {
 	
-	private BPlusIndexElement leftChildId;
+	private BPlusIndexElement leftChild;
 	
 	public BPlusIndexNode() {
 		super();
@@ -19,18 +19,18 @@ public class BPlusIndexNode extends AbstractBPlusNode {
 
 	@Override
 	public void insertElement(BPlusElement element) {
-		if (this.leftChildId.compareTo(element)<1){
-			super.insertElement(this.leftChildId);
-			this.leftChildId=(BPlusIndexElement)element;
+		if (this.leftChild.compareTo(element)<1){
+			super.insertElement(this.leftChild);
+			this.leftChild=(BPlusIndexElement)element;
 		}
 		super.insertElement(element);
 	}
 	
-	public void setLeftChildId(BPlusIndexElement leftChildId) {
-		this.leftChildId = leftChildId;
+	public void setLeftChild(BPlusIndexElement leftChild) {
+		this.leftChild = leftChild;
 	}
 
-	public BPlusIndexElement getLeftChildId() {
-		return leftChildId;
+	public BPlusIndexElement getLeftChild() {
+		return leftChild;
 	}
 }

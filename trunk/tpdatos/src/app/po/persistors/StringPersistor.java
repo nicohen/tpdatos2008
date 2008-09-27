@@ -49,4 +49,8 @@ public class StringPersistor extends AbstractPersistor<java.lang.String> {
 		}
 	}
 
+	public int getElementSize(String element) {
+		return (element.length()*2)+1;
+	}
+
 }

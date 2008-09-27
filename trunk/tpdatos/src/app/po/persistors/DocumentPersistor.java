@@ -27,4 +27,10 @@ public class DocumentPersistor extends AbstractPersistor<DocumentDto> {
 		stringPersistor.write(element.getFileName(), stream);
 	}
 
+	@Override
+	public int getElementSize(DocumentDto element) {
+		return integerPersistor.getElementSize(element.getDocumentId()) +
+				stringPersistor.getElementSize(element.getFileName());
+	}
+
 }
