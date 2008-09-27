@@ -5,10 +5,9 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import api.po.persistors.Persistor;
 import exceptions.PersistanceException;
 
-public class IntegerPersistor implements Persistor<Integer>{
+public class IntegerPersistor extends AbstractPersistor<Integer>{
 	
 	private int size;
 	

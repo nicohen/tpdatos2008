@@ -14,7 +14,7 @@ import bplus.nodes.BPlusLeafNode;
 import bplus.nodes.BPlusNode;
 import exceptions.PersistanceException;
 
-public class BPlusNodePersistor implements Persistor<BPlusNode> {
+public class BPlusNodePersistor extends AbstractPersistor<BPlusNode> {
 	
 	private byte LEAF_TYPE= 0;
 	private byte INDEX_TYPE= 1;
@@ -119,8 +119,8 @@ public class BPlusNodePersistor implements Persistor<BPlusNode> {
 	}
 
 //	@Override
-	public int getElementSize(BPlusNode element) {
+/*	public int getElementSize(BPlusNode element) {
 		return getDataSize();
-	}
+	}*/
 
 }

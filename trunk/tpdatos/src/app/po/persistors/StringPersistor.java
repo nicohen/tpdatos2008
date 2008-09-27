@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import exceptions.PersistanceException;
 
-public class StringPersistor extends AbstractPersistor<java.lang.String> {
+public class StringPersistor extends MaxSizeAbstractPersistor<java.lang.String> {
 	private static char ZERO= Character.forDigit(0,2);
 	public StringPersistor(int maxSize) {
 		super(maxSize);
