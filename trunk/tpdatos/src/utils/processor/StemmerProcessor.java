@@ -5,6 +5,8 @@ import java.util.List;
 
 public class StemmerProcessor {
 	
+	// TODO: optimizar esta funcionalidad para no tener
+	// que recorrer toda la lista cada vez que se hace stem a un termino
 	
 	private List<String> suffixList = new ArrayList<String>();
 	
