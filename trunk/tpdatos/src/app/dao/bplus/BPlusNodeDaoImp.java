@@ -60,7 +60,9 @@ public class BPlusNodeDaoImp implements BPlusNodeDao {
 	 * @see app.dao.bplus.IBPlusNodeDao#getNode(bplus.keys.BPlusNodeKey)
 	 */
 	public BPlusNode getNode( BPlusNodeKey id ) throws DataAccessException  {
-		return file.get( id.getValue() );
+		BPlusNode node= file.get(id.getValue());
+		node.setNodeKey(id);
+		return node;
 	}
 
 	@Override
