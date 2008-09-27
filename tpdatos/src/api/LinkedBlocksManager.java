@@ -20,20 +20,18 @@ public class LinkedBlocksManager<E> {
 	public ArrayList<E> get(int blockId){
 		
 		LinkedBlock<E> reg=new LinkedBlock<E>();
-		Iterator<E> it;
+		//Iterator<E> it;
+	
 		ArrayList<E> listaRet=new ArrayList<E>();
 		try {
 			reg=archivo.get(blockId);
-			it=reg.getListaElem().iterator();
-			while(it.hasNext()){
-				listaRet.add(it.next());
-			}
+			for(int i=0;i<reg.getListaElem().size();i++)
+				listaRet.add(reg.getListaElem().get(i));
+			
 			while (reg.getNextBlock()!=0){
 				reg=archivo.get(reg.getNextBlock());
-				it=reg.getListaElem().iterator();
-				while(it.hasNext()){
-					listaRet.add(it.next());
-				}
+				for(int i=0;i<reg.getListaElem().size();i++)
+					listaRet.add(reg.getListaElem().get(i));
 			}
 			
 			

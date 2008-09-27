@@ -21,7 +21,7 @@ public class LinkedBlockByteArrayPersistor extends AbstractPersistor<LinkedBlock
 	public LinkedBlock<byte[]> read(DataInputStream stream) throws PersistanceException {
 		// TODO Auto-generated method stub
 		int i=0;
-		char regsize;
+		short regsize=0;
 		//Registro:
 		//nextblock,freespace,cantbytes,byte[],cantbytes,byte[], y asi
 		
@@ -30,10 +30,16 @@ public class LinkedBlockByteArrayPersistor extends AbstractPersistor<LinkedBlock
 		try{
 			reg.setNextBlock(stream.readInt());
 			reg.setFreeRegsNum(stream.readInt()); //cantidad de bytes libres en el bloque
+			//i+=8;
 			while (i<this.maxSize){
-				regsize=stream.readChar(); //antes de cada tira de bytes hay un char que indica bytes a leer
-				i++;
-				if (regsize!=0){
+				regsize=stream.readShort(); //antes de cada tira de bytes hay un char que indica bytes a leer
+				if ((regsize==0)&&(i==0)) //el bloque esta vacio, esto es para evitar un flag de vacio
+				{
+					reg.setFreeRegsNum(this.maxSize);
+					return reg;
+				}
+					i+=2;
+				if (regsize>0){
 					byte[] aux=new byte[regsize];
 					for(int j=0;j<regsize;j++){
 						aux[j]=stream.readByte();
@@ -41,6 +47,8 @@ public class LinkedBlockByteArrayPersistor extends AbstractPersistor<LinkedBlock
 						}
 					reg.setElem(aux);
 				}
+				else
+				return reg;
 			}
 			
 		}
@@ -58,19 +66,23 @@ public class LinkedBlockByteArrayPersistor extends AbstractPersistor<LinkedBlock
 	public void write(LinkedBlock<byte[]> element, DataOutputStream stream)
 			throws PersistanceException {
 		// TODO Auto-generated method stub
-		int i;
-		Iterator<byte[]> it;
-		it=element.getListaElem().iterator();
+		int dataSize=getDataSize(element);
+		//Iterator<byte[]> it;
+		//it=element.getListaElem().iterator();
 		try{
 			stream.writeInt(element.getNextBlock());
-			stream.writeInt(element.getFreeRegsNum());
-			while(it.hasNext()){
-				stream.writeChar(it.next().length);
-				for(int j=0;j<it.next().length;j++)
-				stream.writeByte(it.next()[j]);
+			stream.writeInt(element.getFreeRegsNum()-dataSize);
+			for(int j=0;j<element.getListaElem().size();j++)
+			{
+				stream.writeShort(element.getListaElem().get(j).length);
+				for(int k=0;k<element.getListaElem().get(j).length;k++)
+				{
+					stream.writeByte(element.getListaElem().get(j)[k]);
+				}
 			}
-			for(i=element.getListaElem().size();i<this.maxSize/4-1;i++){
-				stream.writeInt(0);
+			
+			for(int l=0;l<element.getFreeRegsNum()-dataSize;l++){
+				stream.writeByte(0);
 			}
 			
 		}
@@ -80,7 +92,20 @@ public class LinkedBlockByteArrayPersistor extends AbstractPersistor<LinkedBlock
 		
 	}
 
-
-
+	//devuelve cantidad de bytes que ocupa el registro
+	//tuve que hacer esto para poder meter el dato administrativo al principio del bloque
+	private int getDataSize(LinkedBlock<byte[]> element){
+		int i=8;
+		for(int j=0;j<element.getListaElem().size();j++)
+		{
+			//stream.writeShort(element.getListaElem().size());
+			i+=2;
+			for(int k=0;k<element.getListaElem().get(j).length;k++)
+			{
+				i++;
+			}
+		}
+	return i;
+	}
 
 }

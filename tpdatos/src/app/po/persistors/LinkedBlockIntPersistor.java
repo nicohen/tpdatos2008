@@ -50,9 +50,10 @@ public class LinkedBlockIntPersistor extends AbstractPersistor<LinkedBlock<Integ
 		Iterator<Integer> it;
 		it=element.getListaElem().iterator();
 		try{
-			while(it.hasNext()){
-				stream.writeInt(it.next());
-			}
+			//stream.writeInt(element.getListaElem().get(0));
+			for(int j=0;j<element.getListaElem().size();j++)
+				stream.writeInt(element.getListaElem().get(j));
+			
 			for(i=element.getListaElem().size();i<this.maxSize/4-1;i++){
 				stream.writeInt(0);
 			}
