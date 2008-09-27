@@ -32,7 +32,6 @@ public class BytePersistor implements Persistor<Byte>{
 		}
 	}
 
-	@Override
 	public int getElementSize(Byte element) {
 		return getDataSize();
 	}
