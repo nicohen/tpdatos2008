@@ -1,8 +1,8 @@
 package test.persistors;
 
-import exceptions.PersistanceException;
 import api.po.persistors.Persistor;
 import app.po.persistors.BytePersistor;
+import exceptions.PersistanceException;
 
 public class TestBytePersistor extends TestPersistor<Byte> {
 

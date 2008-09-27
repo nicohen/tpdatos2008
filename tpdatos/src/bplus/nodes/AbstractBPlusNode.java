@@ -88,4 +88,10 @@ public abstract class AbstractBPlusNode implements BPlusNode {
 		indexElement.setRelatedNode(this.getNodeKey());
 		return indexElement;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		BPlusNode node= (BPlusNode)obj;
+		return this.getNodeKey().equals(node.getNodeKey());
+	}
 }

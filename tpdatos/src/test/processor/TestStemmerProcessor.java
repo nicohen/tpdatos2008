@@ -1,7 +1,7 @@
 package test.processor;
 
-import utils.processor.StemmerProcessor;
 import junit.framework.TestCase;
+import utils.processor.StemmerProcessor;
 
 
 public class TestStemmerProcessor extends TestCase {

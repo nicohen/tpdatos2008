@@ -16,7 +16,7 @@ public class BPlusNodeDaoImp implements BPlusNodeDao {
 	
 	private RelativeFile<BPlusNode> file;
 	private RelativeFile<Integer> metaFile;
-	private int rootNode;
+	private BPlusNodeKey rootNode;
 	
 	public BPlusNodeDaoImp( String filename,int nodeSize ) throws DataAccessException {		
 		Persistor<BPlusNode> persistor;
@@ -24,15 +24,15 @@ public class BPlusNodeDaoImp implements BPlusNodeDao {
 		metaFile= new RelativeFile<Integer>(filename+".meta",integerPersistor);
 		if(metaFile.getSize()==0){
 			persistor = new BPlusNodePersistor(nodeSize);
-			this.rootNode=0;
+			this.rootNode=new BPlusNodeKey(0);
 			metaFile.add(0);
 			metaFile.add(nodeSize);
 			file = new RelativeFile<BPlusNode>( filename, persistor );
-			this.rootNode= this.insertNode(new BPlusLeafNode()).getValue();
+			this.rootNode= this.insertNode(new BPlusLeafNode());
 		}else{
 			persistor = new BPlusNodePersistor(metaFile.get(NODE_SIZE_POSITION));
 			file = new RelativeFile<BPlusNode>( filename, persistor );
-			this.rootNode= this.metaFile.get(TREE_ROOT_POSITION);
+			this.rootNode= new BPlusNodeKey(this.metaFile.get(TREE_ROOT_POSITION));
 		}		
 	}
 
@@ -71,13 +71,15 @@ public class BPlusNodeDaoImp implements BPlusNodeDao {
 	}
 
 	@Override
-	public BPlusNode getRootNode(BPlusNodeKey plusNodeKey) throws DataAccessException {
-		return this.file.get(this.rootNode);
+	public BPlusNode getRootNode() throws DataAccessException {
+		BPlusNode node= file.get(this.rootNode.getValue());
+		node.setNodeKey(this.rootNode);
+		return node;
 	}
 
 	@Override
 	public void setRootNode(BPlusNodeKey plusNodeKey) throws DataAccessException {
-		this.rootNode= plusNodeKey.getValue();
-		this.metaFile.update(TREE_ROOT_POSITION, this.rootNode);
+		this.rootNode= plusNodeKey;
+		this.metaFile.update(TREE_ROOT_POSITION, this.rootNode.getValue());
 	}
 }

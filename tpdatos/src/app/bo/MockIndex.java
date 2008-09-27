@@ -6,9 +6,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import exceptions.BusinessException;
-
 import api.bo.Index;
+import exceptions.BusinessException;
 
 public class MockIndex implements Index {
 

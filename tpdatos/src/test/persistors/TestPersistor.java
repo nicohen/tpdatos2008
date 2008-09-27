@@ -5,11 +5,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
-import exceptions.PersistanceException;
-
-import api.po.persistors.Persistor;
 import junit.framework.Assert;
 import junit.framework.TestCase;
+import api.po.persistors.Persistor;
+import exceptions.PersistanceException;
 
 
 abstract public class TestPersistor<E> extends TestCase {

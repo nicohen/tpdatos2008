@@ -33,4 +33,6 @@ public class BPlusIndexNode extends AbstractBPlusNode {
 	public BPlusIndexElement getLeftChild() {
 		return leftChild;
 	}
+	
+	
 }

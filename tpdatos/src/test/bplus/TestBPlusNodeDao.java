@@ -7,6 +7,7 @@ import org.junit.Assert;
 import api.dao.BPlusTree.BPlusNodeDao;
 import bplus.exceptions.NodeOverflowException;
 import bplus.keys.BPlusNodeKey;
+import bplus.nodes.BPlusIndexNode;
 import bplus.nodes.BPlusLeafNode;
 import bplus.nodes.BPlusNode;
 import exceptions.DataAccessException;
@@ -56,7 +57,7 @@ abstract public class TestBPlusNodeDao extends TestCase {
 	
 	public void _test_root(BPlusNode node) throws DataAccessException {
 		dao.setRootNode(node.getNodeKey());
-		BPlusNode nodoInsertado = dao.getRootNode(new BPlusNodeKey(0));
+		BPlusNode nodoInsertado = dao.getRootNode();
 		Assert.assertTrue( nodoInsertado.equals(node));
 	}
 	
@@ -66,19 +67,23 @@ abstract public class TestBPlusNodeDao extends TestCase {
 		
 		// TODO: probar distintos nodos , con diferente contenido, etc...
 		
-		BPlusNode node = new BPlusLeafNode();
+		BPlusNode nodeL = new BPlusLeafNode();
+		BPlusNode nodeI = new BPlusIndexNode();
 		
-		BPlusNode node1 = _test_insert(node);
-		BPlusNode node2 = _test_insert(node);
-		BPlusNode node3 = _test_insert(node);
+		BPlusNode node1 = _test_insert(nodeL);
+		BPlusNode node2 = _test_insert(nodeI);
+		BPlusNode node3 = _test_insert(nodeL);
+		BPlusNode node4 = _test_insert(nodeI);
 		
 		_test_update( node1 );
 		_test_update( node2 );
 		_test_update( node3 );
+		_test_update( node4 );
 		
 		_test_root(node1);
 		_test_root(node2);
 		_test_root(node3);
+		_test_root(node4);
 		
 	}
 
