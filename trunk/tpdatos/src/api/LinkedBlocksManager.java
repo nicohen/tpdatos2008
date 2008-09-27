@@ -1,6 +1,5 @@
 package api;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import api.po.files.File;
 import api.po.persistors.Persistor;

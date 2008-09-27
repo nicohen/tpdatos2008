@@ -1,8 +1,8 @@
 package test.persistors;
 
-import exceptions.PersistanceException;
 import api.po.persistors.Persistor;
 import app.po.persistors.StringPersistor;
+import exceptions.PersistanceException;
 
 public class TestStringPersistor extends TestPersistor<String>{
 

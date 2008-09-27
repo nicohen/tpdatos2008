@@ -1,9 +1,8 @@
 package test.files;
 import java.util.ArrayList;
 
-import utils.KeyCodificationUtils;
-
 import junit.framework.TestCase;
+import utils.KeyCodificationUtils;
 import api.LinkedBlocksManager;
 import app.po.persistors.LinkedBlockByteArrayPersistor;
 import app.po.persistors.LinkedBlockIntPersistor;

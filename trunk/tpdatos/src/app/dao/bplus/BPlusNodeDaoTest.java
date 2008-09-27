@@ -55,11 +55,11 @@ public class BPlusNodeDaoTest implements BPlusNodeDao {
 	}
 
 	@Override
-	public BPlusNode getRootNode(BPlusNodeKey plusNodeKey)
+	public BPlusNode getRootNode()
 			throws DataAccessException {
 		// TODO IMPLEMENTAR!!!
 		
-		return getNode( plusNodeKey );
+		return null;
 	}
 
 	@Override

@@ -34,7 +34,7 @@ abstract public class AbstractBPlusTreeBo implements BPlusTreeBo {
 			this.root= new BPlusLeafNode();
 			nodeDao.insertNode(root);
 		}else{
-			this.root=nodeDao.getRootNode(new BPlusNodeKey(0));
+			this.root=nodeDao.getRootNode();
 		}
 		
 	}
