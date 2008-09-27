@@ -12,7 +12,7 @@ public class StemmerProcessor {
 		suffixList.add(suffix);
 	}
 	
-	public String digest(String str) {
+	public String stem(String str) {
 		for ( String suffix : suffixList ) {
 			if ( str.substring( str.length() - suffix.length() ) == suffix ) {
 				return str.substring(0, str.length() - suffix.length() );

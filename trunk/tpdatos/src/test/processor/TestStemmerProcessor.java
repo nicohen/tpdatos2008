@@ -17,7 +17,7 @@ public class TestStemmerProcessor extends TestCase {
 	}
 	
 	void eq( String str1, String str2 ) {
-		assertEquals( stemmer.digest(str1), str2 );
+		assertEquals( stemmer.stem(str1), str2 );
 	}
 	void test() {
 		eq( "programando","program");
