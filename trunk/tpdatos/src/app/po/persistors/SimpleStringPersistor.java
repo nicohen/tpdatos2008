@@ -45,7 +45,6 @@ public class SimpleStringPersistor implements Persistor<String> {
 		return 0;
 	}
 
-	@Override
 	public int getElementSize(String element) {
 		return getDataSize();
 	}
