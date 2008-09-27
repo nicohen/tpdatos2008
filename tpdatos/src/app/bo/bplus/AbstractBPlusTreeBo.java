@@ -34,8 +34,7 @@ abstract public class AbstractBPlusTreeBo implements BPlusTreeBo {
 			this.root= new BPlusLeafNode();
 			nodeDao.insertNode(root);
 		}else{
-			// FIXME: root queda como puntero nulo si se cumple esta condicion
-			nodeDao.getRootNode(new BPlusNodeKey(0));
+			this.root=nodeDao.getRootNode(new BPlusNodeKey(0));
 		}
 		
 	}
@@ -69,8 +68,15 @@ abstract public class AbstractBPlusTreeBo implements BPlusTreeBo {
 		try {
 			this.insertElement(root,element);
 		} catch (NodeOverflowException e) {
-			// TODO resolver overflow en raiz del arbol.
-			e.printStackTrace();
+			BPlusIndexNode newRoot= new BPlusIndexNode();
+			nodeDao.insertNode(newRoot);
+			try {
+				splitNode(newRoot, root.getNodeKey());
+				insertElement(newRoot,element);
+			} catch (NodeOverflowException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 	}
 
