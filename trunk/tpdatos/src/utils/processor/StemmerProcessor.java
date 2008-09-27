@@ -14,8 +14,13 @@ public class StemmerProcessor {
 	
 	public String stem(String str) {
 		for ( String suffix : suffixList ) {
-			if ( str.substring( str.length() - suffix.length() ) == suffix ) {
-				return str.substring(0, str.length() - suffix.length() );
+			if ( str.length() - suffix.length() <= 0 ) continue;
+			
+			String finalString = str.substring( str.length() - suffix.length() );
+			if ( finalString.equals( suffix ) ) {
+				if (str.length() - suffix.length() > 3) {
+					return str.substring(0, str.length() - suffix.length() );
+				}
 			}
 		}
 		return str; 
