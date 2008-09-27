@@ -4,18 +4,17 @@ import bplus.keys.BPlusElementKey;
 
 public class BPlusLeafElement extends BPlusAbstractElement {
 
-	
 	private Integer value;
 	
 	public Integer getValue() {
 		return value;
 	}
 	
-	public BPlusLeafElement(BPlusElementKey key, Integer value) {
+	public BPlusLeafElement(BPlusElementKey key) {
 		super(key);
-		this.value = value;
 	}
 	
-	
-
+	public void setValue(Integer value){
+		this.value= value;
+	}
 }

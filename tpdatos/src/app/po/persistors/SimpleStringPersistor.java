@@ -4,11 +4,13 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
+import api.po.persistors.Persistor;
 import exceptions.PersistanceException;
 
-public class SimpleStringPersistor extends AbstractPersistor<java.lang.String> {
-	public SimpleStringPersistor(int maxSize) {
-		super(maxSize);
+public class SimpleStringPersistor implements Persistor<String> {
+	
+	public SimpleStringPersistor() {
+		super();
 	}
 
 	public String read(DataInputStream stream) throws PersistanceException {
@@ -36,6 +38,16 @@ public class SimpleStringPersistor extends AbstractPersistor<java.lang.String> {
 		} catch (IOException e) {
 			throw new PersistanceException("Error persistiendo elemento: "+element,e);
 		}
+	}
+
+	@Override
+	public int getDataSize() {
+		return 0;
+	}
+
+	@Override
+	public int getElementSize(String element) {
+		return getDataSize();
 	}
 
 }

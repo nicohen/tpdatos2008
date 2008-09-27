@@ -50,7 +50,7 @@ abstract public class AbstractBPlusTreeBo implements BPlusTreeBo {
 			return (BPlusLeafElement)node.getElement(elementKey);
 		}else{
 			BPlusIndexNode indexNode= (BPlusIndexNode) node;
-			BPlusNodeKey nextNode= indexNode.getLeftChildId().getRelatedNode();
+			BPlusNodeKey nextNode= indexNode.getLeftChild().getRelatedNode();
 			Iterator<BPlusElement> it= node.getElements().iterator();
 			while (it.hasNext()){
 				BPlusIndexElement auxElement= (BPlusIndexElement) it.next();
@@ -86,7 +86,7 @@ abstract public class AbstractBPlusTreeBo implements BPlusTreeBo {
 			nodeDao.updateNode(node);
 		}else{
 			BPlusIndexNode indexNode= (BPlusIndexNode) node;
-			BPlusNodeKey nextNode= indexNode.getLeftChildId().getRelatedNode();
+			BPlusNodeKey nextNode= indexNode.getLeftChild().getRelatedNode();
 			Iterator<BPlusElement> it= node.getElements().iterator();
 			while (it.hasNext()){
 				BPlusIndexElement auxElement= (BPlusIndexElement) it.next();

@@ -44,4 +44,9 @@ public class IntegerPersistor implements Persistor<Integer>{
 		return size;
 	}
 
+	@Override
+	public int getElementSize(Integer element) {
+		return getDataSize();
+	}
+
 }
