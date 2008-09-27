@@ -3,7 +3,6 @@ package test.persistors;
 import exceptions.PersistanceException;
 import api.po.persistors.Persistor;
 import app.po.persistors.BytePersistor;
-import junit.framework.TestCase;
 
 public class TestBytePersistor extends TestPersistor<Byte> {
 
