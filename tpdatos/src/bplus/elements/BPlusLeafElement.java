@@ -13,6 +13,11 @@ public class BPlusLeafElement extends BPlusAbstractElement {
 	public BPlusLeafElement(BPlusElementKey key) {
 		super(key);
 	}
+
+	public BPlusLeafElement(BPlusElementKey key, Integer value ) {
+		super(key);
+		this.setValue(value);
+	}
 	
 	public void setValue(Integer value){
 		this.value= value;
