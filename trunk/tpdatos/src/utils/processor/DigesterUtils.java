@@ -16,9 +16,9 @@ import exceptions.BusinessException;
 
 public final class DigesterUtils {
 	
-	public static final String LETTERS_TO_STRIP = "\"_,:.#()¿?/\\!¡$%&*'@={}[];|®";
-	public static final String LETTERS_TO_TRANSLATE_FROM	= "\u00E1\u00E0\u00E9\u00E8\u00ED\u00EC\u00F3\u00F2\u00FA\u00F9\u00FC";
-	public static final String LETTERS_TO_TRANSLATE_TO	= "aaeeiioouuu";
+	private static final String LETTERS_TO_STRIP = "\"_,:.#()¿?/\\!¡$%&*'@={}[];|®";
+	private static final String LETTERS_TO_TRANSLATE_FROM	= "\u00E1\u00E0\u00E9\u00E8\u00ED\u00EC\u00F3\u00F2\u00FA\u00F9\u00FC";
+	private static final String LETTERS_TO_TRANSLATE_TO	= "aaeeiioouuu";
 	
 	public static File[] prepareNewDocuments(String documentsPath) {
 	    File dir = new File(documentsPath);
@@ -28,19 +28,14 @@ public final class DigesterUtils {
 	    	System.out.println("Directorio inexistente ["+dir.getPath()+"]");
 	    }
 	    
-	    // The list of files can also be retrieved as File objects
-	    File[] files = dir.listFiles();
-	    
-	    // This filter only returns directories
+	    // Este filtro solamente retorna archivos
 	    FileFilter fileFilter = new FileFilter() {
 	        public boolean accept(File file) {
 	            return file.isFile();
 	        }
 	    };
-	    files = dir.listFiles(fileFilter);
-
-
-		return files;
+	    
+	    return dir.listFiles(fileFilter);
 	}
 	
 	public static IndexedDocumentChecker prepareIndexedDocuments() throws BusinessException {
@@ -107,78 +102,6 @@ public final class DigesterUtils {
 	    return stopwordsList;
 	}
 
-	public static String stemWord(String token) {
-//		===== FORMAS NO PERSONALES =====
-//			==== Infinitivo ====
-//			-ar/-er/-ir
-//			===== INDICATIVO =====
-//			==== Presente ====
-//			-o:-/
-//			-as:-
-//			-es:-/
-//			-a:-//-e:-/
-//			-amos/-emos/-imos
-//			-ï¿½is/-ï¿½is/-ï¿½s
-//			-an/-en
-//			==== Pretï¿½rito imperfecto ====
-//			-aba/-ï¿½a
-//			-abas/-ï¿½as
-//			-aba/-ï¿½a
-//			-ï¿½bamos/-ï¿½amos
-//			-abais/-ï¿½ais
-//			-aban/-ï¿½an
-//			==== Pretï¿½rito perfecto ====
-//			-ï¿½:-//-ï¿½
-//			-aste/-iste
-//			-ï¿½:-//-iï¿½
-//			-amos/-imos
-//			-asteis/-isteis
-//			-aron/-ieron
-//			==== Futuro ====
-//			-arï¿½/-erï¿½/-irï¿½
-//			-arï¿½s/-erï¿½s/-irï¿½s
-//			-arï¿½/-erï¿½/-irï¿½
-//			-aremos/-eremos/-iremos
-//			-arï¿½is/-erï¿½is/-irï¿½is
-//			-arï¿½n/-erï¿½n/-irï¿½n
-//			==== Condicional ====
-//			-arï¿½a/-erï¿½a/-irï¿½a
-//			-arï¿½as/-erï¿½as/-irï¿½as
-//			-arï¿½a/-erï¿½a/-irï¿½a
-//			-arï¿½amos/-erï¿½amos/-irï¿½amos
-//			-arï¿½ais/-erï¿½ais/-irï¿½ais
-//			-arï¿½an/-erï¿½an/-irï¿½an
-//			===== SUBJUNTIVO =====
-//			==== Presente ====
-//			-e:-//-a:-/
-//			-es:-//-as:-/
-//			-e:-//-a:-/
-//			-emos/-amos
-//			-ï¿½is/-ï¿½is
-//			-en/-an
-//			==== Pretï¿½rito imperfecto ====
-//			-ara/-ase/-iera/-iese
-//			-aras/-ases/-ieras/-ieses
-//			-ara/-ase/-iera/-iese
-//			-ï¿½ramos/-ï¿½semos/-iï¿½ramos/-iï¿½semos
-//			-arais/-aseis/-ierais/-ieseis
-//			-aran/-asen/-ieran/-iesen
-//			==== Futuro ====
-//			-are/-iere
-//			-ares/-ieres
-//			-are/-iere
-//			-ï¿½remos/-iï¿½remos
-//			-areis/-iereis
-//			-aren/-ieren
-//			===== IMPERATIVO =====
-//			-a:-
-//			-e:-/
-//			-ï¿½:-//-e:-//-ï¿½
-//			-ad/-ed/-id
-//			-en/-an
-		return token;
-	}
-
 	public static String updateAcuteAndUmlaut(String document) {
 		return replaceUTFCharacters(document);
 	}
@@ -191,7 +114,11 @@ public final class DigesterUtils {
 		return translate(document, LETTERS_TO_TRANSLATE_FROM, LETTERS_TO_TRANSLATE_TO);
 	}
 
-	public static void moveFileToIndexed(File file) {
+	public static String applyCaseFolding(String document) {
+		return document.toLowerCase();
+	}
+	
+	public static void moveFileToIndexedFolder(File file) {
 	    // Destination directory
 	    File dir = new File(Constants.FOLDER_INDEXED);
 	    

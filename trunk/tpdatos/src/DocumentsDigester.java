@@ -40,32 +40,33 @@ public class DocumentsDigester {
 		//Inicializo las stopwords y las ordeno por cantidad de palabras y alfabeticamente
 		List<WordDto> stopWords = DigesterUtils.prepareStopwords();		
 		Collections.sort(stopWords);
-		System.out.println(stopWords.toString());
+//		log.info(stopWords.toString());
 
 		try {
 		
 			//Preparo los documentos que ya fueron indexados
 			IndexedDocumentChecker indexedDocuments = DigesterUtils.prepareIndexedDocuments();
 
-			System.out.println("<<< Inicio de indexacion de documentos >>>\n");
+			log.info("<<< Inicio de indexacion de documentos >>>\n");
 
 			//Recorro los nuevos documentos a indexar
 			for (int i=0;i<newDocuments.length;i++) {
 				document = new DocumentDto(newDocuments[i].getName());
 				log.info("---------------------------------------------------------------------");
-				log.info("Intentando indexar documento ["+document.getFileName()+"]...");
+				log.info("Intentando indexar documento ["+document.getFileName()+"]");
 
 				//Verifico que el documento a indexar, no este dentro de los ya indexados
 				if (!indexedDocuments.documentIsIndexed(document.getFileName())) {
-					log.info("Indexando documento ["+document.getFileName()+"]...");
+					log.info("Indexando documento ["+document.getFileName()+"]");
 					//Le seteo un nuevo documentId al documento a indexar
 					document.setDocumentId(indexedDocuments.getNewDocumentId() );
 					
 					//Elimino tags y caracteres que no correspondan
-					String documentText = applyHtmlFormats(document.getFileName());
+					String documentText = applyHtmlFormatings(document.getFileName());
 					
 					//Inicializo el objeto para encolar terminos 
 					PendingWordsDto pendingWordsDto = new PendingWordsDto();
+					boolean matchedStopword = false;
 					
 					//Recorro los terminos del documento a indexar
 					StringTokenizer strTok = new StringTokenizer(documentText, " \n\t");
@@ -74,24 +75,30 @@ public class DocumentsDigester {
 
 						//Verifico que exista el termino
 						if (!"".equals(token) && token!=null) {
-							token = DigesterUtils.updateAcuteAndUmlaut(token);
-							token = DigesterUtils.deleteSpecialCharacters(token);
-							
 							for(WordDto stopWord : stopWords) {
-								if(token.equals(stopWord.getWord().get(0))) {
-									for(String word : stopWord.getWord()) {
-										
+								for(String word : stopWord.getWord()) {
+									if(word.equals(token)) {
+										matchedStopword = true;
+										break;
 									}
+								}
+								if(matchedStopword) {
+									break;
 								}
 							}
 							
-							log.info(token);
+							if(matchedStopword) {
+								log.info("\t[### EXCLUIDA ###] --> "+token);
+								matchedStopword = false;
+							} else {
+								log.info("[### AGREGADA ###] --> "+token);
+							}
 						}
 					}
 					
 					//Muevo el documento indexado a la carpeta de documentos indexados
 					//DigesterUtils.moveFileToIndexed(newDocuments[i]);
-					log.info("Fin de indexacion del documento ["+document.getFileName()+"]...");
+					log.info("Fin de indexacion del documento ["+document.getFileName()+"]");
 				} else {
 					log.info("El documento ["+document.getFileName()+"] ya fue indexado anteriormente");
 				}
@@ -103,24 +110,15 @@ public class DocumentsDigester {
 		}
 	}
 
-	private static String applyHtmlFormats(String fileName)
-			throws ParserException {
-		String documentText = HtmlUtils.readHtmlFile(Constants.FOLDER_DOCUMENTS+File.separator+fileName);
+	private static String applyHtmlFormatings(String fileName) throws ParserException {
+		String documentText = HtmlUtils.readHtmlFile(Constants.FOLDER_DOCUMENTS + File.separator + fileName);
 		documentText = HtmlUtils.getHtmlBody(documentText);
-		documentText = HtmlUtils.trimScripts(documentText);
-		documentText = HtmlUtils.trimAllTags(documentText);
-		return HtmlUtils.decodeSpecialCharacters(documentText);
+		documentText = HtmlUtils.deleteScripts(documentText);
+		documentText = HtmlUtils.deleteTags(documentText);
+		documentText = HtmlUtils.decodeSpecialCharacters(documentText);
+		documentText = DigesterUtils.applyCaseFolding(documentText);
+		documentText = DigesterUtils.updateAcuteAndUmlaut(documentText);
+		return DigesterUtils.deleteSpecialCharacters(documentText);
 	}
-
-	
-//	private void processPipelinedStopwords(String document,
-//			List<WordDto> stopwords) {
-//		StringTokenizer strTok = new StringTokenizer(document," ");
-//		while (strTok.hasMoreTokens()) {
-//			String token = strTok.nextToken();
-//			token = DigesterUtils.stemWord(token);
-////			BPlusTreeFacade.storeWord(token);
-//		}
-//	}
 
 }

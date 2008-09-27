@@ -2,9 +2,8 @@
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
 	<appender name="util" class="org.apache.log4j.ConsoleAppender">
-		<param name="Append" value="true" />
 		<layout class="org.apache.log4j.PatternLayout">
-			<param name="ConversionPattern" value="%t %d{dd MMM yyyy HH:mm:ss,SSS} %-5p %c{2} - %m%n"/>
+			<param name="ConversionPattern" value="%m%n"/>
 		</layout>           
 	</appender>
 	<logger name="test.log4j.Tester">

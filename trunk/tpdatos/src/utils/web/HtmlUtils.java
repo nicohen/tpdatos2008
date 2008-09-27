@@ -47,11 +47,11 @@ public final class HtmlUtils {
 		return nuevo;
 	}
 	
-	public static String trimAllTags(String html) {
+	public static String deleteTags(String html) {
 		return html.replaceAll("<(.|\n)*?>", " ");
 	}
 	
-	public static String trimScripts(String html) {
+	public static String deleteScripts(String html) {
 		return html.replaceAll("<script(.|\n)*?>(.|\n)*?</script>", " ");
 	}
 	
@@ -62,7 +62,7 @@ public final class HtmlUtils {
 	@SuppressWarnings("deprecation")
 	public static String readHtmlFile(String fileName) {
 	    File file = new File(fileName);
-	    StringBuffer html = new StringBuffer();
+	    StringBuilder html = new StringBuilder();
 	    FileInputStream fis = null;
 	    BufferedInputStream bis = null;
 	    DataInputStream dis = null;
@@ -80,6 +80,7 @@ public final class HtmlUtils {
 	      // this statement reads the line from the file and print it to
 	        // the console.
 	        html.append(dis.readLine());
+	        html.append("\n");
 	      }
 
 	      // dispose all the resources after using them.
