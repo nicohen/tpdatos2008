@@ -9,4 +9,6 @@ public interface Persistor<E> {
 	void write(E element, DataOutputStream stream) throws PersistanceException;
 	public int getDataSize();
 	E read(DataInputStream stream) throws PersistanceException;
+	
+	public int getElementSize( E element ) throws PersistanceException;
 }

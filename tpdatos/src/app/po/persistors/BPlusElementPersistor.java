@@ -12,7 +12,7 @@ import bplus.keys.BPlusElementKey;
 import bplus.keys.BPlusNodeKey;
 import exceptions.PersistanceException;
 
-public class BPlusElementPersistor implements Persistor<BPlusElement> {
+public class BPlusElementPersistor extends AbstractPersistor<BPlusElement> {
 
 	private byte LEAF_TYPE= 0;
 	private byte INDEX_TYPE= 1;

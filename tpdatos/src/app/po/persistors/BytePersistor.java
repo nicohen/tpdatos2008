@@ -33,7 +33,7 @@ public class BytePersistor implements Persistor<Byte>{
 	}
 
 	public int getElementSize(Byte element) {
-		return getDataSize();
+		return 1;
 	}
 
 }

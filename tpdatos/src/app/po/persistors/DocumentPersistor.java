@@ -6,7 +6,7 @@ import java.io.DataOutputStream;
 import dto.DocumentDto;
 import exceptions.PersistanceException;
 
-public class DocumentPersistor extends AbstractPersistor<DocumentDto> {
+public class DocumentPersistor extends MaxSizeAbstractPersistor<DocumentDto> {
 
 	IntegerPersistor integerPersistor = new IntegerPersistor();
 	StringPersistor stringPersistor = new StringPersistor(50);

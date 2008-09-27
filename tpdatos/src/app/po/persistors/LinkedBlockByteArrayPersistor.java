@@ -3,12 +3,10 @@ package app.po.persistors;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.util.Iterator;
-
 import dto.LinkedBlock;
 import exceptions.PersistanceException;
 
-public class LinkedBlockByteArrayPersistor extends AbstractPersistor<LinkedBlock<byte[]>> {
+public class LinkedBlockByteArrayPersistor extends MaxSizeAbstractPersistor<LinkedBlock<byte[]>> {
 
 	public LinkedBlockByteArrayPersistor(int maxSize) {
 		super(maxSize+8);
