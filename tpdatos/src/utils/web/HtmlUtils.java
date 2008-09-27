@@ -10,8 +10,8 @@ import java.io.IOException;
 import org.htmlparser.NodeFilter;
 import org.htmlparser.Parser;
 import org.htmlparser.filters.AndFilter;
-import org.htmlparser.filters.HasChildFilter;
 import org.htmlparser.filters.NodeClassFilter;
+import org.htmlparser.filters.NotFilter;
 import org.htmlparser.nodes.TagNode;
 import org.htmlparser.tags.BodyTag;
 import org.htmlparser.tags.ScriptTag;
@@ -32,7 +32,7 @@ public final class HtmlUtils {
 		NodeList list = new NodeList();
 		NodeFilter filter = new AndFilter(
 				new NodeClassFilter(BodyTag.class),
-				new HasChildFilter(new NodeClassFilter(ScriptTag.class))
+				new NotFilter(new NodeClassFilter(ScriptTag.class))
 			);
 		for (NodeIterator e = parser.elements (); e.hasMoreNodes (); )
 		    e.nextNode ().collectInto (list, filter);
@@ -49,6 +49,10 @@ public final class HtmlUtils {
 	
 	public static String trimAllTags(String html) {
 		return html.replaceAll("<(.|\n)*?>", " ");
+	}
+	
+	public static String trimScripts(String html) {
+		return html.replaceAll("<script(.|\n)*?>(.|\n)*?</script>", " ");
 	}
 	
 	public static String decodeSpecialCharacters(String html) {

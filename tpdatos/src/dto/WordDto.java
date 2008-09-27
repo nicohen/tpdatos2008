@@ -1,5 +1,6 @@
 package dto;
 
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -20,26 +21,20 @@ public class WordDto implements Comparable<WordDto> {
 		for (String dto : words ) {
 			sb.append(dto.toString()+" ");
 		}
-		return sb.toString().trim();
+		return sb.toString().trim()+"\n";
 	}
 
 	@Override
 	public int compareTo(WordDto o) {
-		if (words.size()<o.getWord().size()) { 
-			return 1;
-		} else {
-			if (words.size()>o.getWord().size()) { 
-				return -1;
-			} else {
-				if (toString().compareTo(o.toString())>0) {
-					return 1;
-				} else if (toString().compareTo(o.toString())<0) {
-					return -1;
-				} else {
-					return 0;
-				}
+		Iterator<String> myWord = words.iterator();
+		Iterator<String> otherWord = o.words.iterator();
+		while(myWord.hasNext() && otherWord.hasNext()) {
+			int compare = myWord.next().compareTo(otherWord.next());
+			if(compare!=0) {
+				return compare;
 			}
 		}
+		return (new Integer(words.size()).compareTo(o.words.size()));
 	}
 
 	@Override

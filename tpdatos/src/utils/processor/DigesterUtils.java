@@ -16,7 +16,7 @@ import exceptions.BusinessException;
 
 public final class DigesterUtils {
 	
-	public static final String LETTERS_TO_STRIP = "\"_,:.#()?ï¿½/\\!$%&*'@ï¿½ï¿½=ï¿½{}[];";
+	public static final String LETTERS_TO_STRIP = "\"_,:.#()¿?/\\!¡$%&*'@={}[];|®";
 	public static final String LETTERS_TO_TRANSLATE_FROM	= "\u00E1\u00E0\u00E9\u00E8\u00ED\u00EC\u00F3\u00F2\u00FA\u00F9\u00FC";
 	public static final String LETTERS_TO_TRANSLATE_TO	= "aaeeiioouuu";
 	
@@ -206,7 +206,7 @@ public final class DigesterUtils {
 	}
 	
 	
-	public static String stripLetters(String origWord, String toEliminate) {
+	private static String stripLetters(String origWord, String toEliminate) {
 
 		int i,j;
 		char[] word  = origWord.toCharArray();
@@ -232,7 +232,7 @@ public final class DigesterUtils {
 	}
 
 
-	public static String translate(String origWord, String pFrom, String pTo){
+	private static String translate(String origWord, String pFrom, String pTo){
 
 		int i,j;
 		char[] word		= origWord.toCharArray();
