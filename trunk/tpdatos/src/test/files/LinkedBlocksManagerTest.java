@@ -1,18 +1,20 @@
 package test.files;
 import java.util.ArrayList;
 
+import utils.KeyCodificationUtils;
+
 import junit.framework.TestCase;
 import api.LinkedBlocksManager;
+import app.po.persistors.LinkedBlockByteArrayPersistor;
 import app.po.persistors.LinkedBlockIntPersistor;
 import exceptions.DataAccessException;
-
 
 public class LinkedBlocksManagerTest extends TestCase {
 
 	// FIXME: no rethrowear mejor hacer algo con el junit ?
 	public void testLinkedBlocksManager() throws DataAccessException {
 		LinkedBlockIntPersistor persistor=new LinkedBlockIntPersistor(24);
-		LinkedBlocksManager<Integer> manager=new LinkedBlocksManager<Integer>("test_relative_block.bin",5 , persistor);
+		LinkedBlocksManager<Integer> manager=new LinkedBlocksManager<Integer>("test_relative_block_int.bin",5 , persistor);
 		ArrayList<Integer> aux;
 		manager.add(1, 0);
 		manager.add(2, 0);
@@ -42,6 +44,21 @@ public class LinkedBlocksManagerTest extends TestCase {
 		aux=manager.get(5);
 		//deberia ser: 17-18-19-20-21-22-23
 		//assertEquals(aux, a);
+		
+	}
+	public void testLinkedBlocksBytePersistor() throws DataAccessException {
+		LinkedBlockByteArrayPersistor persistor=new LinkedBlockByteArrayPersistor(24);
+		LinkedBlocksManager<byte[]> manager=new LinkedBlocksManager<byte[]>("test_relative_block.bin",5 , persistor);
+		ArrayList<byte[]> aux;
+		Integer i;
+		manager.add(KeyCodificationUtils.gammaEncode(10), 0);
+		//manager.add(KeyCodificationUtils.gammaEncode(11), 0);
+		//manager.add(KeyCodificationUtils.gammaEncode(12), 0);
+		//manager.add(KeyCodificationUtils.gammaEncode(13), 0);
+		aux=manager.get(0);
+		i=KeyCodificationUtils.gammaDecode(aux.get(0));
+		
+		
 		
 	}
 	
