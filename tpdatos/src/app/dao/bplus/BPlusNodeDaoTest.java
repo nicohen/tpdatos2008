@@ -13,7 +13,7 @@ public class BPlusNodeDaoTest implements BPlusNodeDao {
 	
 	private Map<Integer, BPlusNode> map = new HashMap<Integer,BPlusNode>();
 	private BPlusNodeKey nextKey;
-	private Integer rootNode;
+	private BPlusNodeKey rootNode;
 	
 	public BPlusNodeDaoTest() {
 		nextKey = new BPlusNodeKey(0);
@@ -57,14 +57,12 @@ public class BPlusNodeDaoTest implements BPlusNodeDao {
 	@Override
 	public BPlusNode getRootNode()
 			throws DataAccessException {
-		// TODO IMPLEMENTAR!!!
-		
-		return null;
+		return this.getNode(this.rootNode);
 	}
 
 	@Override
 	public void setRootNode(BPlusNodeKey plusNodeKey) {
-		this.rootNode= plusNodeKey.getValue();
+		this.rootNode= plusNodeKey;
 	}
 
 }
