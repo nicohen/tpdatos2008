@@ -99,8 +99,8 @@ public class IndexImp implements Index {
 	
 	protected DocumentIndexKey createBlock() {
 		// TODO crear un bloque en el LinkedBlocks
-		
-		return null;
+		DocumentIndexKey newBlockId=new DocumentIndexKey(manager.addBlock());
+		return newBlockId;
 	}
 	protected BPlusTreeFacade createBTree() throws DataAccessException {
 		return new MockBPlusTreeFacade();
