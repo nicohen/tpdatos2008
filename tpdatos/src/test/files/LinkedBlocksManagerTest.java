@@ -47,17 +47,17 @@ public class LinkedBlocksManagerTest extends TestCase {
 		
 	}
 	public void testLinkedBlocksBytePersistor() throws DataAccessException {
-		LinkedBlockByteArrayPersistor persistor=new LinkedBlockByteArrayPersistor(24);
+		LinkedBlockByteArrayPersistor persistor=new LinkedBlockByteArrayPersistor(128);
 		VariableLinkedBlocksManager manager=new VariableLinkedBlocksManager("test_relative_block.bin", persistor);
 		ArrayList<byte[]> aux;
 		ArrayList<byte[]> aux2;
 		Integer i;
-		manager.add(KeyCodificationUtils.gammaEncode(10000), 0);
-		manager.add(KeyCodificationUtils.gammaEncode(11000), 0);
-		manager.add(KeyCodificationUtils.gammaEncode(12), 0);
-		manager.add(KeyCodificationUtils.gammaEncode(13), 0);//20
-		manager.add(KeyCodificationUtils.gammaEncode(14000), 0);//aca new block
-		manager.add(KeyCodificationUtils.gammaEncode(15), 0);
+		manager.add(KeyCodificationUtils.gammaEncode(1000000), 0);
+		manager.add(KeyCodificationUtils.gammaEncode(1100000), 0);
+		manager.add(KeyCodificationUtils.gammaEncode(1200000), 0);
+		manager.add(KeyCodificationUtils.gammaEncode(1300000), 0);//20
+		manager.add(KeyCodificationUtils.gammaEncode(1400000), 0);//aca new block
+		manager.add(KeyCodificationUtils.gammaEncode(1500000), 0);
 		//manager.add(KeyCodificationUtils.gammaEncode(16), 0);
 		//manager.add(KeyCodificationUtils.gammaEncode(16), 0);
 		//manager.add(KeyCodificationUtils.gammaEncode(13), 0);
