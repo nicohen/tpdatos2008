@@ -49,6 +49,7 @@ public class LinkedBlocksManager<E> {
 		int newBlockId=0,nextBlockId=0;
 		try {
 			reg=archivo.get(blockId);
+			
 			while(reg.getNextBlock()!=0){
 				nextBlockId=reg.getNextBlock();
 				reg=archivo.get(reg.getNextBlock());

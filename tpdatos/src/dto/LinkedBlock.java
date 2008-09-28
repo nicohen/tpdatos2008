@@ -6,9 +6,11 @@ public class LinkedBlock<E> {
 	private int nextBlock;
 	private int freeRegsNum;
 	private ArrayList<E> listaElem;
+
 	
 	public LinkedBlock(){
 		this.nextBlock=0;
+		this.freeRegsNum=-1;
 		listaElem=new ArrayList<E>();
 	}
 	public int getNextBlock(){
