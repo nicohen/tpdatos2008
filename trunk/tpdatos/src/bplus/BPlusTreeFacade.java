@@ -38,7 +38,7 @@ public class BPlusTreeFacade {
 		bo.insertElement( element);
 	}
 	
-	private BPlusTreeBo createBo() throws DataAccessException{
+	protected BPlusTreeBo createBo() throws DataAccessException{
 		return new BPlusTreeBoImp("bplus.dat",128);
 	}
 }
