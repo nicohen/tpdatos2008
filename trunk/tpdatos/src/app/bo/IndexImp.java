@@ -1,5 +1,6 @@
 package app.bo;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import utils.KeyCodificationUtils;
@@ -32,8 +33,18 @@ public class IndexImp implements Index {
 	
 	public Iterator<Integer> getDocuments(String word) throws BusinessException {
 		// TODO Auto-generated method stub
+		DocumentIndexKey docBlockId;
+		ArrayList<byte[]> aux;
+		ArrayList<Integer> listaRet=new ArrayList<Integer>();
+		Iterator<byte[]> it;
+		docBlockId=this.obtainDocIndex(word);
+		aux=manager.get(docBlockId.getValue());
+		it=aux.iterator();
 		
-		return null;
+		while(it.hasNext()){
+			listaRet.add(KeyCodificationUtils.gammaDecode(it.next()));
+		}
+		return listaRet.iterator();
 	}
 
 	public void insertWord(String word, Integer docId)
@@ -88,6 +99,7 @@ public class IndexImp implements Index {
 	
 	protected DocumentIndexKey createBlock() {
 		// TODO crear un bloque en el LinkedBlocks
+		
 		return null;
 	}
 	protected BPlusTreeFacade createBTree() throws DataAccessException {
