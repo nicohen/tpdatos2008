@@ -1,5 +1,6 @@
 package api;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import api.po.files.File;
 import api.po.persistors.Persistor;
@@ -19,18 +20,21 @@ public class LinkedBlocksManager<E> {
 	public ArrayList<E> get(int blockId){
 		
 		LinkedBlock<E> reg=new LinkedBlock<E>();
-		//Iterator<E> it;
+		Iterator<E> it;
 	
 		ArrayList<E> listaRet=new ArrayList<E>();
 		try {
 			reg=archivo.get(blockId);
-			for(int i=0;i<reg.getListaElem().size();i++)
-				listaRet.add(reg.getListaElem().get(i));
-			
+			it=reg.getListaElem().iterator();
+			while(it.hasNext()){
+				listaRet.add(it.next());
+			}
 			while (reg.getNextBlock()!=0){
 				reg=archivo.get(reg.getNextBlock());
-				for(int i=0;i<reg.getListaElem().size();i++)
-					listaRet.add(reg.getListaElem().get(i));
+				it=reg.getListaElem().iterator();
+				while(it.hasNext()){
+					listaRet.add(it.next());
+				}
 			}
 			
 			
