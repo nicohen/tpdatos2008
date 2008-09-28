@@ -2,9 +2,13 @@ package dto;
 
 import java.util.ArrayList;
 
+
+
 public class LinkedBlock<E> {
 	private int nextBlock;
 	private int freeRegsNum;
+	public static final int ADMIN_DATA=8;
+	public static final int REG_ADMIN_DATA=8;
 	private ArrayList<E> listaElem;
 
 	

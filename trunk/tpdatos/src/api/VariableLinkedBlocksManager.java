@@ -1,6 +1,5 @@
 package api;
 
-import java.util.ArrayList;
 
 import api.po.persistors.Persistor;
 import dto.LinkedBlock;
@@ -20,7 +19,7 @@ public class VariableLinkedBlocksManager extends LinkedBlocksManager<byte[]> {
 		LinkedBlock<byte[]> regAux=new LinkedBlock<byte[]>();
 		int newBlockId=0,nextBlockId=0,dataSize=0;
 		try {
-			dataSize=elem.length+2;//el 2 es el nro de long a leer
+			dataSize=elem.length+LinkedBlock.REG_ADMIN_DATA;//el 2 es el nro de long a leer
 			reg=archivo.get(blockId);
 			
 			while(reg.getNextBlock()!=0){

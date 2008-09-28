@@ -4,13 +4,15 @@ package app.po.persistors;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.Iterator;
+
 import dto.LinkedBlock;
 import exceptions.PersistanceException;
 
 public class LinkedBlockByteArrayPersistor extends MaxSizeAbstractPersistor<LinkedBlock<byte[]>> {
 
 	public LinkedBlockByteArrayPersistor(int maxSize) {
-		super(maxSize+8);
+		super(maxSize+LinkedBlock.ADMIN_DATA);
 	}
 
 	
@@ -29,15 +31,15 @@ public class LinkedBlockByteArrayPersistor extends MaxSizeAbstractPersistor<Link
 		try{
 			reg.setNextBlock(stream.readInt());
 			reg.setFreeRegsNum(stream.readInt()); //cantidad de bytes libres en el bloque
-			i+=8;
+			i+=LinkedBlock.ADMIN_DATA;
 			while (i<this.maxSize){
 				regsize=stream.readShort(); //antes de cada tira de bytes hay un char que indica bytes a leer
 				if ((regsize<=0)&&(i==8)) //el bloque esta vacio, esto es para evitar un flag de vacio
 				{
-					reg.setFreeRegsNum(this.maxSize-8);
+					reg.setFreeRegsNum(this.maxSize-LinkedBlock.ADMIN_DATA);
 					return reg;
 				}
-					i+=2;
+					i+=LinkedBlock.REG_ADMIN_DATA;
 				if (regsize>0){
 					byte[] aux=new byte[regsize];
 					for(int j=0;j<regsize;j++){
@@ -66,9 +68,7 @@ public class LinkedBlockByteArrayPersistor extends MaxSizeAbstractPersistor<Link
 			throws PersistanceException {
 		// TODO Auto-generated method stub
 		int dataSize=getDataSize(element);
-		element.setFreeRegsNum(maxSize-8);
-		//Iterator<byte[]> it;
-		//it=element.getListaElem().iterator();
+		element.setFreeRegsNum(maxSize-LinkedBlock.ADMIN_DATA);
 		try{
 			stream.writeInt(element.getNextBlock());
 			stream.writeInt(element.getFreeRegsNum()-dataSize);
@@ -98,7 +98,7 @@ public class LinkedBlockByteArrayPersistor extends MaxSizeAbstractPersistor<Link
 		for(int j=0;j<element.getListaElem().size();j++)
 		{
 			//stream.writeShort(element.getListaElem().size());
-			i+=2;
+			i+=LinkedBlock.REG_ADMIN_DATA;
 			for(int k=0;k<element.getListaElem().get(j).length;k++)
 			{
 				i++;
