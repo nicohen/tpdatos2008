@@ -32,7 +32,7 @@ public class IndexImp implements Index {
 	}
 	
 	public Iterator<Integer> getDocuments(String word) throws BusinessException {
-		// TODO Auto-generated method stub
+		
 		DocumentIndexKey docBlockId;
 		ArrayList<byte[]> aux;
 		ArrayList<Integer> listaRet=new ArrayList<Integer>();
@@ -64,10 +64,9 @@ public class IndexImp implements Index {
 	}
 	
 	private void insertDocument(DocumentIndexKey docBlockId, Integer docId) {
-		// TODO implementar la rutina para insertar el documento
-		// de id docId en el bloque docBlockId del LinkedBlock
 		
 		manager.add(KeyCodificationUtils.gammaEncode(docId), docBlockId.getValue());
+	
 	}
 
 	private DocumentIndexKey obtainDocIndex( String word ) throws BusinessException {
@@ -84,13 +83,11 @@ public class IndexImp implements Index {
 			try {
 				btree.insertElement(word, doc);
 			} catch (DataAccessException e1) {
-				// TODO Auto-generated catch block
 				throw new BusinessException("Error insertando elemento en el btree",e1);
 			}
 			
 			
 		} catch (DataAccessException e) {
-			// TODO Auto-generated catch block
 			throw new BusinessException("Error leyendo elemento del btree",e);		
 		}
 
@@ -98,7 +95,7 @@ public class IndexImp implements Index {
 	}
 	
 	protected DocumentIndexKey createBlock() {
-		// TODO crear un bloque en el LinkedBlocks
+		// crea un bloque en el LinkedBlocks
 		DocumentIndexKey newBlockId=new DocumentIndexKey(manager.addBlock());
 		return newBlockId;
 	}
