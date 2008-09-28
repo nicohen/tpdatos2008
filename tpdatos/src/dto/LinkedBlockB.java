@@ -6,6 +6,22 @@ public class LinkedBlockB<E> {
 //	private ArrayList<E> listaElem;
 	private E element;
 	
+	@Override
+	public
+	boolean equals(Object obj) {
+		
+		LinkedBlockB<E> element_e = (LinkedBlockB<E>)obj; 
+		
+		if (element_e.getElem().equals(element) &&
+			element_e.getNextBlock() == nextBlock	
+			) {
+			
+			return true;
+		} else {	
+			return false;
+		}
+	}
+	
 	public LinkedBlockB(){
 		this.nextBlock=0;
 	}
