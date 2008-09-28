@@ -2,6 +2,8 @@ package app.bo;
 
 import java.util.Iterator;
 
+import utils.KeyCodificationUtils;
+
 import documents.keys.DocumentIndexKey;
 
 import bplus.BPlusTreeFacade;
@@ -10,14 +12,18 @@ import bplus.exceptions.KeyNotFoundException;
 
 import exceptions.BusinessException;
 import exceptions.DataAccessException;
+import api.VariableLinkedBlocksManager;
 import api.bo.Index;
+import app.po.persistors.LinkedBlockByteArrayPersistor;
 
 public class IndexImp implements Index {
 
 	private BPlusTreeFacade btree;
-	
-	public IndexImp() throws BusinessException {
+	private VariableLinkedBlocksManager manager;
+	public IndexImp(String path) throws BusinessException {
 		try {
+			LinkedBlockByteArrayPersistor persistor=new LinkedBlockByteArrayPersistor(128);
+			manager=new VariableLinkedBlocksManager(path, persistor);
 			this.btree = this.createBTree();
 		} catch (DataAccessException e) {
 			throw new BusinessException("Error creando el btree",e);
@@ -26,6 +32,7 @@ public class IndexImp implements Index {
 	
 	public Iterator<Integer> getDocuments(String word) throws BusinessException {
 		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
@@ -49,6 +56,7 @@ public class IndexImp implements Index {
 		// TODO implementar la rutina para insertar el documento
 		// de id docId en el bloque docBlockId del LinkedBlock
 		
+		manager.add(KeyCodificationUtils.gammaEncode(docId), docBlockId.getValue());
 	}
 
 	private DocumentIndexKey obtainDocIndex( String word ) throws BusinessException {
