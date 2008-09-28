@@ -54,16 +54,17 @@ public class LinkedBlocksManagerTest extends TestCase {
 		Integer i;
 		manager.add(KeyCodificationUtils.gammaEncode(10000), 0);
 		manager.add(KeyCodificationUtils.gammaEncode(11000), 0);
-		manager.add(KeyCodificationUtils.gammaEncode(12000), 0);
-		manager.add(KeyCodificationUtils.gammaEncode(13000), 0);
-		manager.add(KeyCodificationUtils.gammaEncode(14000), 0);
-		manager.add(KeyCodificationUtils.gammaEncode(15000), 0);
-		manager.add(KeyCodificationUtils.gammaEncode(16000), 0);
+		manager.add(KeyCodificationUtils.gammaEncode(12), 0);
+		manager.add(KeyCodificationUtils.gammaEncode(13), 0);//20
+		manager.add(KeyCodificationUtils.gammaEncode(14000), 0);//aca new block
+		manager.add(KeyCodificationUtils.gammaEncode(15), 0);
+		//manager.add(KeyCodificationUtils.gammaEncode(16), 0);
+		//manager.add(KeyCodificationUtils.gammaEncode(16), 0);
 		//manager.add(KeyCodificationUtils.gammaEncode(13), 0);
 		aux=manager.get(0);
 		//aux2=manager.get(1);
-		i=KeyCodificationUtils.gammaDecode(aux.get(6));
-		i=KeyCodificationUtils.gammaDecode(aux.get(1));
+		i=KeyCodificationUtils.gammaDecode(aux.get(5));
+		i=KeyCodificationUtils.gammaDecode(aux.get(4));
 		//i=KeyCodificationUtils.gammaDecode(aux2.get(0));
 		
 	}
