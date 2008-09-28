@@ -45,15 +45,24 @@ public class LinkedBlocksManager<E> {
 		
 		return listaRet;
 	}
-	
+	public Integer addBlock(){
+		LinkedBlock<E> reg=new LinkedBlock<E>();
+		Integer newBlockId=0;
+		try {
+			newBlockId=archivo.add(reg);
+		} catch (DataAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return newBlockId;
+	}
 	public void add(E elem,int blockId){
 		
 		LinkedBlock<E> reg=new LinkedBlock<E>();
 		LinkedBlock<E> regAux=new LinkedBlock<E>();
 		int newBlockId=0,nextBlockId=0;
 		try {
-			reg=archivo.get(blockId);
-			
+			reg=archivo.get(blockId);	
 			while(reg.getNextBlock()!=0){
 				nextBlockId=reg.getNextBlock();
 				reg=archivo.get(reg.getNextBlock());

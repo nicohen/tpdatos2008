@@ -1,5 +1,6 @@
 package test.files;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import junit.framework.TestCase;
 import utils.KeyCodificationUtils;
@@ -50,6 +51,7 @@ public class LinkedBlocksManagerTest extends TestCase {
 		LinkedBlockByteArrayPersistor persistor=new LinkedBlockByteArrayPersistor(128);
 		VariableLinkedBlocksManager manager=new VariableLinkedBlocksManager("test_relative_block.bin", persistor);
 		ArrayList<byte[]> aux;
+		Iterator<byte[]> it;
 		ArrayList<byte[]> aux2;
 		Integer i;
 		manager.add(KeyCodificationUtils.gammaEncode(1000000), 0);
@@ -63,6 +65,8 @@ public class LinkedBlocksManagerTest extends TestCase {
 		//manager.add(KeyCodificationUtils.gammaEncode(13), 0);
 		aux=manager.get(0);
 		//aux2=manager.get(1);
+		it=aux.iterator();
+		
 		i=KeyCodificationUtils.gammaDecode(aux.get(5));
 		i=KeyCodificationUtils.gammaDecode(aux.get(4));
 		//i=KeyCodificationUtils.gammaDecode(aux2.get(0));
