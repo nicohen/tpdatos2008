@@ -1,5 +1,6 @@
 package app.po.persistors;
 
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -28,12 +29,12 @@ public class LinkedBlockByteArrayPersistor extends MaxSizeAbstractPersistor<Link
 		try{
 			reg.setNextBlock(stream.readInt());
 			reg.setFreeRegsNum(stream.readInt()); //cantidad de bytes libres en el bloque
-			//i+=8;
+			i+=8;
 			while (i<this.maxSize){
 				regsize=stream.readShort(); //antes de cada tira de bytes hay un char que indica bytes a leer
-				if ((regsize==0)&&(i==0)) //el bloque esta vacio, esto es para evitar un flag de vacio
+				if ((regsize<=0)&&(i==8)) //el bloque esta vacio, esto es para evitar un flag de vacio
 				{
-					reg.setFreeRegsNum(this.maxSize);
+					reg.setFreeRegsNum(this.maxSize-8);
 					return reg;
 				}
 					i+=2;
@@ -48,7 +49,7 @@ public class LinkedBlockByteArrayPersistor extends MaxSizeAbstractPersistor<Link
 				else
 				return reg;
 			}
-			
+			reg.setFreeRegsNum(0);//si salio del while es porque no hay mas lugar
 		}
 			catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -65,6 +66,7 @@ public class LinkedBlockByteArrayPersistor extends MaxSizeAbstractPersistor<Link
 			throws PersistanceException {
 		// TODO Auto-generated method stub
 		int dataSize=getDataSize(element);
+		element.setFreeRegsNum(maxSize-8);
 		//Iterator<byte[]> it;
 		//it=element.getListaElem().iterator();
 		try{
@@ -78,7 +80,6 @@ public class LinkedBlockByteArrayPersistor extends MaxSizeAbstractPersistor<Link
 					stream.writeByte(element.getListaElem().get(j)[k]);
 				}
 			}
-			
 			for(int l=0;l<element.getFreeRegsNum()-dataSize;l++){
 				stream.writeByte(0);
 			}
@@ -93,7 +94,7 @@ public class LinkedBlockByteArrayPersistor extends MaxSizeAbstractPersistor<Link
 	//devuelve cantidad de bytes que ocupa el registro
 	//tuve que hacer esto para poder meter el dato administrativo al principio del bloque
 	private int getDataSize(LinkedBlock<byte[]> element){
-		int i=8;
+		int i=0;
 		for(int j=0;j<element.getListaElem().size();j++)
 		{
 			//stream.writeShort(element.getListaElem().size());
