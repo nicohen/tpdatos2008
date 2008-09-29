@@ -12,7 +12,7 @@ import exceptions.PersistanceException;
 public class LinkedBlockByteArrayPersistor extends MaxSizeAbstractPersistor<LinkedBlock<byte[]>> {
 
 	public LinkedBlockByteArrayPersistor(int maxSize) {
-		super(maxSize+LinkedBlock.ADMIN_DATA);
+		super(maxSize+LinkedBlock.BLOCK_ADMIN_DATA);
 	}
 
 	
@@ -31,12 +31,12 @@ public class LinkedBlockByteArrayPersistor extends MaxSizeAbstractPersistor<Link
 		try{
 			reg.setNextBlock(stream.readInt());
 			reg.setFreeRegsNum(stream.readInt()); //cantidad de bytes libres en el bloque
-			i+=LinkedBlock.ADMIN_DATA;
+			i+=LinkedBlock.BLOCK_ADMIN_DATA;
 			while (i<this.maxSize){
 				regsize=stream.readShort(); //antes de cada tira de bytes hay un char que indica bytes a leer
 				if ((regsize<=0)&&(i==8)) //el bloque esta vacio, esto es para evitar un flag de vacio
 				{
-					reg.setFreeRegsNum(this.maxSize-LinkedBlock.ADMIN_DATA);
+					reg.setFreeRegsNum(this.maxSize-LinkedBlock.BLOCK_ADMIN_DATA);
 					return reg;
 				}
 					i+=LinkedBlock.REG_ADMIN_DATA;
@@ -68,7 +68,7 @@ public class LinkedBlockByteArrayPersistor extends MaxSizeAbstractPersistor<Link
 			throws PersistanceException {
 		// TODO Auto-generated method stub
 		int dataSize=getDataSize(element);
-		element.setFreeRegsNum(maxSize-LinkedBlock.ADMIN_DATA);
+		element.setFreeRegsNum(maxSize-LinkedBlock.BLOCK_ADMIN_DATA);
 		try{
 			stream.writeInt(element.getNextBlock());
 			stream.writeInt(element.getFreeRegsNum()-dataSize);
