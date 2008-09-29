@@ -53,7 +53,7 @@ public class LinkedBlockByteArrayPersistor extends MaxSizeAbstractPersistor<Link
 			reg.setFreeRegsNum(0);//si salio del while es porque no hay mas lugar
 		}
 			catch (IOException e) {
-				// TODO Auto-generated catch block
+				
 				throw new PersistanceException("Error Recuperando Elemento.",e);
 			}
 		
@@ -65,7 +65,7 @@ public class LinkedBlockByteArrayPersistor extends MaxSizeAbstractPersistor<Link
 	@Override
 	public void write(LinkedBlock<byte[]> element, DataOutputStream stream)
 			throws PersistanceException {
-		// TODO Auto-generated method stub
+		
 		int dataSize=getDataSize(element);
 		element.setFreeRegsNum(maxSize-LinkedBlock.BLOCK_ADMIN_DATA);
 		try{
@@ -96,7 +96,6 @@ public class LinkedBlockByteArrayPersistor extends MaxSizeAbstractPersistor<Link
 		int i=0;
 		for(int j=0;j<element.getListaElem().size();j++)
 		{
-			//stream.writeShort(element.getListaElem().size());
 			i+=LinkedBlock.REG_ADMIN_DATA;
 			for(int k=0;k<element.getListaElem().get(j).length;k++)
 			{

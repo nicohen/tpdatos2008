@@ -14,7 +14,7 @@ public class LinkedBlockIntPersistor extends MaxSizeAbstractPersistor<LinkedBloc
 		super(maxSize);
 	}
 
-	
+
 	
 	
 	@Override
@@ -24,7 +24,7 @@ public class LinkedBlockIntPersistor extends MaxSizeAbstractPersistor<LinkedBloc
 		int aux;
 		LinkedBlock<Integer> reg=new LinkedBlock<Integer>();
 		try{
-			while (i<this.maxSize/4 -1){
+			while (i<this.maxSize/Integer.SIZE -1){
 			aux=stream.readInt();
 			if (aux!=0)
 			reg.setElem(aux);
@@ -50,11 +50,11 @@ public class LinkedBlockIntPersistor extends MaxSizeAbstractPersistor<LinkedBloc
 		Iterator<Integer> it;
 		it=element.getListaElem().iterator();
 		try{
-			//stream.writeInt(element.getListaElem().get(0));
+			
 			for(int j=0;j<element.getListaElem().size();j++)
 				stream.writeInt(element.getListaElem().get(j));
 			
-			for(i=element.getListaElem().size();i<this.maxSize/4-1;i++){
+			for(i=element.getListaElem().size();i<this.maxSize/Integer.SIZE-1;i++){
 				stream.writeInt(0);
 			}
 			stream.writeInt(element.getNextBlock());
