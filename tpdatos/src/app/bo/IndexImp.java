@@ -21,9 +21,9 @@ public class IndexImp implements Index {
 
 	private BPlusTreeFacade btree;
 	private VariableLinkedBlocksManager manager;
-	public IndexImp(String path) throws BusinessException {
+	public IndexImp(String path,int blockSize) throws BusinessException {
 		try {
-			LinkedBlockByteArrayPersistor persistor=new LinkedBlockByteArrayPersistor(128);
+			LinkedBlockByteArrayPersistor persistor=new LinkedBlockByteArrayPersistor(blockSize);
 			manager=new VariableLinkedBlocksManager(path, persistor);
 			this.btree = this.createBTree();
 		} catch (DataAccessException e) {
