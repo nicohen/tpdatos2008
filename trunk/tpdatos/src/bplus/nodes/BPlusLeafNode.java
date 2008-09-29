@@ -22,4 +22,17 @@ public class BPlusLeafNode extends AbstractBPlusNode {
 		return true;
 	}
 	
+	@Override
+	public String toString() {
+		StringBuilder sb= new StringBuilder();
+		sb.append("[ id:");
+		sb.append(this.nodeKey.toString());
+		sb.append(" , next:");
+		sb.append(this.nextNodeKey.toString());
+		sb.append(" , elementos:");
+		sb.append(this.elements.toString());
+		sb.append("]");
+		return sb.toString();
+	}
+	
 }

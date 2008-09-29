@@ -39,5 +39,17 @@ public class BPlusIndexNode extends AbstractBPlusNode {
 		return leftChild;
 	}
 	
+	@Override
+	public String toString() {
+		StringBuilder sb= new StringBuilder();
+		sb.append("[ id:");
+		sb.append(this.nodeKey.toString());
+		sb.append(" , left:");
+		sb.append(this.leftChild.toString());
+		sb.append(" , elementos:");
+		sb.append(this.elements.toString());
+		sb.append("]");
+		return sb.toString();
+	}
 	
 }

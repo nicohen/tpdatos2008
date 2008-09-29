@@ -20,4 +20,15 @@ public class BPlusIndexElement extends BPlusAbstractElement{
 		this.relatedNode = relatedNode;
 	}
 	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("[ key:");
+		sb.append(this.elementKey.toString());
+		sb.append(" , value:");
+		sb.append(this.relatedNode.toString());
+		sb.append("]");
+		return sb.toString();
+	}
+	
 }
