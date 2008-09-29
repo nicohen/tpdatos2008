@@ -1,8 +1,8 @@
 package test.index;
 
-import exceptions.BusinessException;
 import api.bo.Index;
 import app.bo.MockIndex;
+import exceptions.BusinessException;
 
 public class TestMockIndex extends TestIndex {
 

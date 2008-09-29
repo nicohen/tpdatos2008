@@ -33,7 +33,7 @@ abstract public class TestBPlusNodeDao extends TestCase {
 		}
 	}
 
-	public BPlusNode _test_insert(BPlusNode node) throws DataAccessException{
+	public BPlusNode _test_insert(BPlusNode node) throws DataAccessException, NodeOverflowException{
 		BPlusNodeKey key = dao.insertNode(node);
 
 		BPlusNode nodoInsertado = dao.getNode(key);

@@ -4,6 +4,7 @@ package api;
 import api.po.persistors.Persistor;
 import dto.LinkedBlock;
 import exceptions.DataAccessException;
+import exceptions.PersistanceException;
 
 public class VariableLinkedBlocksManager extends LinkedBlocksManager<byte[]> {
 
@@ -48,6 +49,9 @@ public class VariableLinkedBlocksManager extends LinkedBlocksManager<byte[]> {
 			archivo.update(blockId, reg);
 			}
 		} catch (DataAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (PersistanceException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

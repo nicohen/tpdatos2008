@@ -5,10 +5,12 @@ import api.po.persistors.Persistor;
 import app.po.files.RelativeFile;
 import app.po.persistors.BPlusNodePersistor;
 import app.po.persistors.IntegerPersistor;
+import bplus.exceptions.NodeOverflowException;
 import bplus.keys.BPlusNodeKey;
 import bplus.nodes.BPlusLeafNode;
 import bplus.nodes.BPlusNode;
 import exceptions.DataAccessException;
+import exceptions.PersistanceException;
 
 public class BPlusNodeDaoImp implements BPlusNodeDao {
 	private static int NODE_SIZE_POSITION= 1;
@@ -25,10 +27,20 @@ public class BPlusNodeDaoImp implements BPlusNodeDao {
 		if(metaFile.getSize()==0){
 			persistor = new BPlusNodePersistor(nodeSize);
 			this.rootNode=new BPlusNodeKey(0);
-			metaFile.add(0);
-			metaFile.add(nodeSize);
+			try {
+				metaFile.add(0);
+				metaFile.add(nodeSize);
+			} catch (PersistanceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			file = new RelativeFile<BPlusNode>( filename, persistor );
-			this.rootNode= this.insertNode(new BPlusLeafNode());
+			try {
+				this.rootNode= this.insertNode(new BPlusLeafNode());
+			} catch (NodeOverflowException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}else{
 			persistor = new BPlusNodePersistor(metaFile.get(NODE_SIZE_POSITION));
 			file = new RelativeFile<BPlusNode>( filename, persistor );
@@ -43,17 +55,26 @@ public class BPlusNodeDaoImp implements BPlusNodeDao {
 	/* (non-Javadoc)
 	 * @see app.dao.bplus.IBPlusNodeDao#updateNode(bplus.nodes.BPlusNode)
 	 */
-	public void updateNode( BPlusNode node ) throws DataAccessException {
-		file.update( node.getNodeKey().getValue(), node );
+	public void updateNode( BPlusNode node ) throws DataAccessException,NodeOverflowException{
+		try {
+			file.update( node.getNodeKey().getValue(), node );
+		} catch (PersistanceException e) {
+			throw new NodeOverflowException(e);
+		}
 	}
 	
 	/* (non-Javadoc)
 	 * @see app.dao.bplus.IBPlusNodeDao#insertNode(bplus.nodes.BPlusNode)
 	 */
-	public BPlusNodeKey insertNode( BPlusNode node ) throws DataAccessException {
-		BPlusNodeKey index=	new BPlusNodeKey(file.add(node));
-		node.setNodeKey(index);
-		return index;
+	public BPlusNodeKey insertNode( BPlusNode node ) throws DataAccessException, NodeOverflowException {
+		try {
+			BPlusNodeKey index=	new BPlusNodeKey(file.add(node));
+			node.setNodeKey(index);
+			return index;
+		} catch (PersistanceException e) {
+			// TODO Auto-generated catch block
+			throw new NodeOverflowException(e);
+		}
 	}
 	
 	/* (non-Javadoc)
@@ -80,6 +101,11 @@ public class BPlusNodeDaoImp implements BPlusNodeDao {
 	@Override
 	public void setRootNode(BPlusNodeKey plusNodeKey) throws DataAccessException {
 		this.rootNode= plusNodeKey;
-		this.metaFile.update(TREE_ROOT_POSITION, this.rootNode.getValue());
+		try {
+			this.metaFile.update(TREE_ROOT_POSITION, this.rootNode.getValue());
+		} catch (PersistanceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

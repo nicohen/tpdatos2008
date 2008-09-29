@@ -4,13 +4,11 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import junit.framework.Assert;
+import api.bo.Index;
 import exceptions.BusinessException;
 
-import junit.framework.Assert;
-import junit.framework.TestCase;
-import api.bo.Index;
-
-abstract public class TestIndex extends TestCase {
+abstract public class TestIndex /*extends TestCase*/ {
 	private Index testObject;
 	
 	abstract protected Index createTestObject() throws BusinessException;

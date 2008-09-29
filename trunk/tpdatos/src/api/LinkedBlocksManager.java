@@ -7,6 +7,7 @@ import api.po.persistors.Persistor;
 import app.po.files.RelativeFile;
 import dto.LinkedBlock;
 import exceptions.DataAccessException;
+import exceptions.PersistanceException;
 public class LinkedBlocksManager<E> {
 
 	int blockSize;
@@ -53,6 +54,9 @@ public class LinkedBlocksManager<E> {
 		} catch (DataAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (PersistanceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return newBlockId;
 	}
@@ -86,6 +90,9 @@ public class LinkedBlocksManager<E> {
 			archivo.update(blockId, reg);
 			}
 		} catch (DataAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (PersistanceException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

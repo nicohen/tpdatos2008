@@ -44,15 +44,13 @@ public abstract class AbstractBPlusNode implements BPlusNode {
 		while(end-start>0){
 			int index=(end+start)/2;
 			auxElement= elements.get(index);
-			switch(auxElement.getKey().compareTo(elementKey)){
-				case -1:
+			int result= auxElement.getKey().compareTo(elementKey);
+			if (result<0){
 					start=index;
-					break;
-				case 0:
+			}else if(result==0){
 					return auxElement;
-				case 1:
-					end=index;
-					break;
+			}else{
+				end=index;
 			}
 		}
 		return null;

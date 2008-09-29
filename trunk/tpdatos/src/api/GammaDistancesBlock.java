@@ -4,8 +4,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import utils.KeyCodificationUtils;
-import exceptions.PersistanceException;
 import api.po.persistors.DistancesBlock;
+import exceptions.PersistanceException;
 
 public class GammaDistancesBlock implements DistancesBlock {
 

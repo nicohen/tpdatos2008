@@ -4,18 +4,15 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import utils.KeyCodificationUtils;
-
-import documents.keys.DocumentIndexKey;
-
-import bplus.BPlusTreeFacade;
-import bplus.MockBPlusTreeFacade;
-import bplus.exceptions.KeyNotFoundException;
-
-import exceptions.BusinessException;
-import exceptions.DataAccessException;
 import api.VariableLinkedBlocksManager;
 import api.bo.Index;
 import app.po.persistors.LinkedBlockByteArrayPersistor;
+import bplus.BPlusTreeFacade;
+import bplus.MockBPlusTreeFacade;
+import bplus.exceptions.KeyNotFoundException;
+import documents.keys.DocumentIndexKey;
+import exceptions.BusinessException;
+import exceptions.DataAccessException;
 
 public class IndexImp implements Index {
 

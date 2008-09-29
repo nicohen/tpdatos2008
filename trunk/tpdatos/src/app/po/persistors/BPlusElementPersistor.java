@@ -82,7 +82,7 @@ public class BPlusElementPersistor extends AbstractPersistor<BPlusElement> {
 	}
 	
 
-	/* @Override
+	@Override
 	public int getElementSize(BPlusElement element) {
 		if (element instanceof BPlusLeafElement) {
 			return getLeafElementSize((BPlusLeafElement)element) + 1;
@@ -99,6 +99,6 @@ public class BPlusElementPersistor extends AbstractPersistor<BPlusElement> {
 	private int getLeafElementSize(BPlusLeafElement element) {
 		return stringPersistor.getElementSize(element.getKey().getValue()) +
 		intePersistor.getElementSize(element.getValue());	
-	}*/
+	}
 	
 }
