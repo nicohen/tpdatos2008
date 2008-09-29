@@ -34,7 +34,7 @@ public class WordDto implements Comparable<WordDto> {
 				return compare;
 			}
 		}
-		return (new Integer(words.size()).compareTo(o.words.size()));
+		return (new Integer(words.size()).compareTo(o.words.size()))*-1;
 	}
 
 	@Override
