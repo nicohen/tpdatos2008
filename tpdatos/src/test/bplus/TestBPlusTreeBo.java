@@ -11,7 +11,7 @@ import exceptions.DataAccessException;
 
 abstract public class TestBPlusTreeBo extends TestCase {
 
-	private BPlusTreeBo bo ;
+	protected BPlusTreeBo bo ;
 
 	abstract protected BPlusTreeBo createTestObject() throws DataAccessException ;
 	

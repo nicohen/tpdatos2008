@@ -22,4 +22,15 @@ public class BPlusLeafElement extends BPlusAbstractElement {
 	public void setValue(Integer value){
 		this.value= value;
 	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("[ key:");
+		sb.append(this.elementKey.toString());
+		sb.append(" , value:");
+		sb.append(this.value.toString());
+		sb.append("]");
+		return sb.toString();
+	}
 }
