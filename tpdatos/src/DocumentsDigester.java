@@ -1,5 +1,6 @@
 import java.io.File;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -8,8 +9,8 @@ import org.apache.log4j.Logger;
 import utils.folders.Constants;
 import utils.processor.DigesterUtils;
 import utils.processor.IndexedDocumentChecker;
-import dto.CompoundStopwordDto;
 import dto.DocumentDto;
+import dto.StopwordsPipelineDto;
 import dto.WordDto;
 import exceptions.BusinessException;
 
@@ -38,7 +39,8 @@ public class DocumentsDigester {
 		//Inicializo las stopwords y las ordeno por cantidad de palabras y alfabeticamente
 		List<WordDto> stopWords = DigesterUtils.prepareStopwords();		
 		Collections.sort(stopWords);
-
+		log.info(stopWords.toString());
+		
 		try {
 		
 			//Preparo los documentos que ya fueron indexados
@@ -54,6 +56,7 @@ public class DocumentsDigester {
 
 				//Verifico que el documento a indexar, no este dentro de los ya indexados
 				if (!indexedDocuments.documentIsIndexed(document.getFileName())) {
+					
 					log.info("Indexando documento ["+document.getFileName()+"]");
 					//Le seteo un nuevo documentId al documento a indexar
 					document.setDocumentId(indexedDocuments.getNewDocumentId() );
@@ -63,42 +66,74 @@ public class DocumentsDigester {
 					String documentText = DigesterUtils.getFormatedHtmlFile(inputFile);
 					
 					//Inicializo el objeto para encolar terminos 
-					CompoundStopwordDto possibleStopwords = new CompoundStopwordDto();
-					boolean matchedCompoundStopword = false;
+					StopwordsPipelineDto stopwordsPipeline = new StopwordsPipelineDto();
 					
-					//Recorro los terminos del documento a indexar
+					//Me inicializo un tokenizer para recorrer los terminos del documento
 					StringTokenizer strTok = new StringTokenizer(documentText, " \n\t");
-					while(strTok.hasMoreTokens()) {
+
+					//Hago un preload de terminos en el pipeline
+					while(strTok.hasMoreTokens() && stopwordsPipeline.getSize()<(stopwordsPipeline.getMaxSize()-1)) {
 						String token = strTok.nextToken().trim();
+						if (!"".equals(token) && token!=null) {
+							stopwordsPipeline.addWord(token);
+						}
+					}
+					
+					while(strTok.hasMoreTokens() || !stopwordsPipeline.isEmpty()) {
+						
+						boolean hasMoreTokens = false;
+						String token = null;
+						if(strTok.hasMoreTokens()) {
+							 token = strTok.nextToken().trim();
+							 hasMoreTokens = true;
+						}
 
 						//Verifico que exista el termino
-						if (!"".equals(token) && token!=null) {
+						if ((!"".equals(token) && token!=null) || !hasMoreTokens) {
+							
+							if(hasMoreTokens) {
+								stopwordsPipeline.addWord(token);
+							}
 
-							//Recorro los stopwords y verifico si el termino es / es parte de un stopword
-							for(WordDto stopWord : stopWords) {
-								List<String> stopwordWordsList = stopWord.getWord();
-								for(String word : stopwordWordsList) {
-									if(word.equals(token)) {
-										matchedCompoundStopword = true;
+							if(stopwordsPipeline.isFull() || !hasMoreTokens) {
+								
+								int bestWordCompare = 0;
+								int wordCompare = 0;
+								//Recorro los stopwords y verifico si el/los termino/s son un stopword
+								for(WordDto stopword : stopWords) {
+	
+									wordCompare = compareWords(stopwordsPipeline.getWords(),stopword.getWord());
+									
+									if(wordCompare>bestWordCompare) {
+										bestWordCompare = wordCompare;
 									}
+									
+									if(bestWordCompare>0 && wordCompare<bestWordCompare) {
+										break;
+									}
+									
 								}
 								
-								if(matchedCompoundStopword) {
-									break;
+								if(bestWordCompare==0) {
+									//El primer termino del pipeline no es stopword
+									log.info("[### AGREGADA ###] --> "+stopwordsPipeline.getFirstWord());
+									stopwordsPipeline.removeWords(1);
+								} else {
+									String eliminar = "";
+									for(int j=0;j<bestWordCompare;j++) {
+										eliminar+=stopwordsPipeline.getWord(j)+" ";
+									}
+									log.info("\t[### EXCLUIDA ###] --> "+eliminar.trim());
+									stopwordsPipeline.removeWords(bestWordCompare);
 								}
-							}
-							
-							if(matchedCompoundStopword) {
-								log.info("\t[### EXCLUIDA ###] --> "+token);
-								matchedCompoundStopword = false;
-							} else {
-								log.info("[### AGREGADA ###] --> "+token);
+
 							}
 						}
 					}
 					
 					//Muevo el documento indexado a la carpeta de documentos indexados
 //					DigesterUtils.moveFileToIndexedFolder(newDocuments[i]);
+
 					log.info("Fin de indexacion del documento ["+document.getFileName()+"]");
 				} else {
 					log.info("El documento ["+document.getFileName()+"] ya fue indexado anteriormente");
@@ -106,9 +141,22 @@ public class DocumentsDigester {
 			}
 			
 			log.info("\n<<< Fin de indexacion de documentos >>>");
+			
 		} catch (BusinessException e) {
 			throw new Exception("Error preparando nuevos documentos pendientes a indexar",e);
 		}
+	}
+
+	private static int compareWords(List<String> list1, List<String> list2) {
+		int qtyMatch = 0;
+		Iterator<String> it1 = list1.iterator();
+		Iterator<String> it2 = list2.iterator();
+		while(it1.hasNext() && it2.hasNext()) {
+			if (it1.next().compareTo(it2.next())==0) {
+				qtyMatch++;
+			}
+		}
+		return qtyMatch;
 	}
 
 
