@@ -10,7 +10,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.htmlparser.util.ParserException;
+
 import utils.folders.Constants;
+import utils.web.HtmlUtils;
 import dto.WordDto;
 import exceptions.BusinessException;
 
@@ -186,5 +189,16 @@ public final class DigesterUtils {
 		return out.toString();
 	}
 
+
+	public static String getFormatedHtmlFile(File file) throws ParserException {
+		String documentText = HtmlUtils.readHtmlFile(file.getPath());
+		documentText = HtmlUtils.getHtmlBody(documentText);
+		documentText = HtmlUtils.deleteScripts(documentText);
+		documentText = HtmlUtils.deleteTags(documentText);
+		documentText = HtmlUtils.decodeSpecialHtmlCharacters(documentText);
+		documentText = DigesterUtils.applyCaseFolding(documentText);
+		documentText = DigesterUtils.updateAcuteAndUmlaut(documentText);
+		return DigesterUtils.deleteSpecialCharacters(documentText);
+	}
 
 }

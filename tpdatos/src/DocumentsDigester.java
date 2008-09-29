@@ -4,14 +4,12 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import org.apache.log4j.Logger;
-import org.htmlparser.util.ParserException;
 
 import utils.folders.Constants;
 import utils.processor.DigesterUtils;
 import utils.processor.IndexedDocumentChecker;
-import utils.web.HtmlUtils;
+import dto.CompoundStopwordDto;
 import dto.DocumentDto;
-import dto.PendingWordsDto;
 import dto.WordDto;
 import exceptions.BusinessException;
 
@@ -40,7 +38,6 @@ public class DocumentsDigester {
 		//Inicializo las stopwords y las ordeno por cantidad de palabras y alfabeticamente
 		List<WordDto> stopWords = DigesterUtils.prepareStopwords();		
 		Collections.sort(stopWords);
-//		log.info(stopWords.toString());
 
 		try {
 		
@@ -62,11 +59,12 @@ public class DocumentsDigester {
 					document.setDocumentId(indexedDocuments.getNewDocumentId() );
 					
 					//Elimino tags y caracteres que no correspondan
-					String documentText = applyHtmlFormatings(document.getFileName());
+					File inputFile = new File(Constants.FOLDER_DOCUMENTS + File.separator + document.getFileName());
+					String documentText = DigesterUtils.getFormatedHtmlFile(inputFile);
 					
 					//Inicializo el objeto para encolar terminos 
-					PendingWordsDto pendingWordsDto = new PendingWordsDto();
-					boolean matchedStopword = false;
+					CompoundStopwordDto possibleStopwords = new CompoundStopwordDto();
+					boolean matchedCompoundStopword = false;
 					
 					//Recorro los terminos del documento a indexar
 					StringTokenizer strTok = new StringTokenizer(documentText, " \n\t");
@@ -75,21 +73,24 @@ public class DocumentsDigester {
 
 						//Verifico que exista el termino
 						if (!"".equals(token) && token!=null) {
+
+							//Recorro los stopwords y verifico si el termino es / es parte de un stopword
 							for(WordDto stopWord : stopWords) {
-								for(String word : stopWord.getWord()) {
+								List<String> stopwordWordsList = stopWord.getWord();
+								for(String word : stopwordWordsList) {
 									if(word.equals(token)) {
-										matchedStopword = true;
-										break;
+										matchedCompoundStopword = true;
 									}
 								}
-								if(matchedStopword) {
+								
+								if(matchedCompoundStopword) {
 									break;
 								}
 							}
 							
-							if(matchedStopword) {
+							if(matchedCompoundStopword) {
 								log.info("\t[### EXCLUIDA ###] --> "+token);
-								matchedStopword = false;
+								matchedCompoundStopword = false;
 							} else {
 								log.info("[### AGREGADA ###] --> "+token);
 							}
@@ -97,7 +98,7 @@ public class DocumentsDigester {
 					}
 					
 					//Muevo el documento indexado a la carpeta de documentos indexados
-					//DigesterUtils.moveFileToIndexed(newDocuments[i]);
+//					DigesterUtils.moveFileToIndexedFolder(newDocuments[i]);
 					log.info("Fin de indexacion del documento ["+document.getFileName()+"]");
 				} else {
 					log.info("El documento ["+document.getFileName()+"] ya fue indexado anteriormente");
@@ -110,15 +111,5 @@ public class DocumentsDigester {
 		}
 	}
 
-	private static String applyHtmlFormatings(String fileName) throws ParserException {
-		String documentText = HtmlUtils.readHtmlFile(Constants.FOLDER_DOCUMENTS + File.separator + fileName);
-		documentText = HtmlUtils.getHtmlBody(documentText);
-		documentText = HtmlUtils.deleteScripts(documentText);
-		documentText = HtmlUtils.deleteTags(documentText);
-		documentText = HtmlUtils.decodeSpecialCharacters(documentText);
-		documentText = DigesterUtils.applyCaseFolding(documentText);
-		documentText = DigesterUtils.updateAcuteAndUmlaut(documentText);
-		return DigesterUtils.deleteSpecialCharacters(documentText);
-	}
 
 }
