@@ -55,7 +55,7 @@ public final class HtmlUtils {
 		return html.replaceAll("<script(.|\n)*?>(.|\n)*?</script>", " ");
 	}
 	
-	public static String decodeSpecialCharacters(String html) {
+	public static String decodeSpecialHtmlCharacters(String html) {
 		return Translate.decode(html);
 	}
 	
