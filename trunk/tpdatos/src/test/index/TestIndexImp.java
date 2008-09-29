@@ -12,7 +12,7 @@ public class TestIndexImp extends TestIndex {
 
 	@Override
 	protected Index createTestObject() throws BusinessException {
-		return new IndexImp() ;
+		return new IndexImp("distances.dat", 4096) ;
 	}
 
 }
