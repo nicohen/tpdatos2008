@@ -3,6 +3,7 @@ import api.po.files.File;
 import app.po.files.SecuencialFile;
 import app.po.persistors.BytePersistor;
 import exceptions.DataAccessException;
+import exceptions.PersistanceException;
 
 public class FileTest {
 
@@ -12,10 +13,15 @@ public class FileTest {
 		BytePersistor persistor= new BytePersistor();
 
 			File<Byte> file= new SecuencialFile<Byte>("datos.bin",persistor);
-			file.add(new Byte((byte)7));
-			file.add(new Byte((byte)8));
-			file.add(new Byte((byte)9));
-			file.add(new Byte((byte)10));
+			try {
+				file.add(new Byte((byte)7));
+				file.add(new Byte((byte)8));
+				file.add(new Byte((byte)9));
+				file.add(new Byte((byte)10));
+			} catch (PersistanceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			Byte aux= file.get(0);
 			if (aux.equals(new Byte((byte)7))){
 				System.out.println("1 comparacion correcta");
@@ -47,7 +53,12 @@ public class FileTest {
 			}else{
 				System.out.println("5 comparacion fallo");
 			}			
-			file.add(new Byte((byte)15));
+			try {
+				file.add(new Byte((byte)15));
+			} catch (PersistanceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			aux= file.get(1);
 			if (aux.equals(new Byte((byte)15))){
 				System.out.println("6 comparacion correcta");

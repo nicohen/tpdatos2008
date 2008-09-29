@@ -5,8 +5,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 import api.po.persistors.Persistor;
-
-import dto.LinkedBlock;
 import dto.LinkedBlockB;
 import exceptions.PersistanceException;
 

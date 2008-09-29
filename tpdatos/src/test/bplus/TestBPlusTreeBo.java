@@ -48,10 +48,9 @@ abstract public class TestBPlusTreeBo extends TestCase {
 		//bo.insertElement( new BPlusLeafElement( new BPlusElement) );
 		_test_insert( "bplus", 2);
 		_test_insert( "b9999", 9999);
-		_test_insert( "documentos", 254);
-		_test_insert( "laruta", 1000);
 		_test_insert( "parseaste", 34);
-		
+		_test_insert( "documentos", 254);
+		_test_insert( "laruta", 1000);		
 	}
 
 }

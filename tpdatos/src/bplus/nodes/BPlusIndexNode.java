@@ -19,11 +19,16 @@ public class BPlusIndexNode extends AbstractBPlusNode {
 
 	@Override
 	public void insertElement(BPlusElement element) {
-		if (this.leftChild.compareTo(element)<1){
-			super.insertElement(this.leftChild);
+		if (this.leftChild==null){
 			this.leftChild=(BPlusIndexElement)element;
+		}else{
+			if (this.leftChild.compareTo(element)<1){
+				super.insertElement(this.leftChild);
+				this.leftChild=(BPlusIndexElement)element;
+			}else{
+				super.insertElement(element);		
+			}
 		}
-		super.insertElement(element);
 	}
 	
 	public void setLeftChild(BPlusIndexElement leftChild) {

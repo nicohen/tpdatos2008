@@ -4,7 +4,6 @@ package app.po.persistors;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.util.Iterator;
 
 import dto.LinkedBlock;
 import exceptions.PersistanceException;

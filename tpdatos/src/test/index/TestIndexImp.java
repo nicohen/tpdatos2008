@@ -1,8 +1,8 @@
 package test.index;
 
-import exceptions.BusinessException;
 import api.bo.Index;
 import app.bo.IndexImp;
+import exceptions.BusinessException;
 
 public class TestIndexImp extends TestIndex {
 

@@ -14,12 +14,12 @@ import bplus.nodes.BPlusLeafNode;
 import bplus.nodes.BPlusNode;
 import exceptions.PersistanceException;
 
-public class BPlusNodePersistor extends AbstractPersistor<BPlusNode> {
+public class BPlusNodePersistor implements Persistor<BPlusNode> {
 	
-	private byte LEAF_TYPE= 0;
-	private byte INDEX_TYPE= 1;
+	private static byte LEAF_TYPE= 0;
+	private static byte INDEX_TYPE= 1;
 	private Persistor<BPlusElement> elementPersistor= new BPlusElementPersistor();
-	private Persistor<Integer> intePersistor= new IntegerPersistor();
+	private Persistor<Integer> intPersistor= new IntegerPersistor();
 	private int nodeSize;
 	
 	public BPlusNodePersistor(int nodeSize) {
@@ -28,7 +28,6 @@ public class BPlusNodePersistor extends AbstractPersistor<BPlusNode> {
 
 	@Override
 	public int getDataSize() {
-		// TODO Auto-generated method stub
 		return nodeSize;
 	}
 
@@ -65,7 +64,7 @@ public class BPlusNodePersistor extends AbstractPersistor<BPlusNode> {
 	private BPlusNode readLeafNode(DataInputStream stream) throws PersistanceException{
 		try {
 			BPlusLeafNode leafNode= new BPlusLeafNode();
-			BPlusNodeKey nodeKey= new BPlusNodeKey(intePersistor.read(stream));
+			BPlusNodeKey nodeKey= new BPlusNodeKey(intPersistor.read(stream));
 			leafNode.setNextNodeKey(nodeKey);
 			byte length= stream.readByte();
 			for (int i=0; i<length ;i++){
@@ -114,9 +113,9 @@ public class BPlusNodePersistor extends AbstractPersistor<BPlusNode> {
 	private void writeLeafNode(BPlusLeafNode node, DataOutputStream stream) throws PersistanceException {
 		try {
 			if (node.getNextNodeKey()==null){
-				intePersistor.write(0,stream);
+				intPersistor.write(0,stream);
 			}else{
-				intePersistor.write(node.getNextNodeKey().getValue(),stream);	
+				intPersistor.write(node.getNextNodeKey().getValue(),stream);	
 			}			
 			stream.writeByte(node.getElements().size());
 			Iterator<BPlusElement> it= node.getElements().iterator();
@@ -129,9 +128,34 @@ public class BPlusNodePersistor extends AbstractPersistor<BPlusNode> {
 		
 	}
 
-//	@Override
-/*	public int getElementSize(BPlusNode element) {
-		return getDataSize();
-	}*/
+	@Override
+	public int getElementSize(BPlusNode element) {
+		if (element instanceof BPlusLeafNode) {
+			return getLeafNodeSize((BPlusLeafNode)element)+1;
+		}else{
+			return getIndexNodeSize((BPlusIndexNode)element)+1;
+		}
+	}
 
+	private int getIndexNodeSize(BPlusIndexNode node) {
+		
+		int counter= 1;
+		if(node.getLeftChild()!=null){
+			counter= counter + elementPersistor.getElementSize(node.getLeftChild());
+		}
+		Iterator<BPlusElement> it= node.getElements().iterator();
+		while(it.hasNext()){
+			counter= counter + elementPersistor.getElementSize(it.next());
+		}
+		return counter;
+	}
+
+	private int getLeafNodeSize(BPlusLeafNode node) {
+		int counter= intPersistor.getDataSize();
+		Iterator<BPlusElement> it= node.getElements().iterator();
+		while(it.hasNext()){
+			counter= counter + elementPersistor.getElementSize(it.next());
+		}
+		return counter;
+	}
 }

@@ -28,17 +28,17 @@ public class SecuencialFile<E> extends AbstractFile<E> {
 			long length=0;
 			try {
 				index= freeSpacesStack.pop();
-				length= index*size;
 			}catch (DataAccessException e) {
-				length= this.dataFile.length();
-				index= (int) ((length/size)+1); 
+				index= this.length; 
 			}
+			length= index*size;
 			dataFile.seek(length);
 			ByteArrayOutputStream baos= new ByteArrayOutputStream();
 			DataOutputStream dos= new DataOutputStream(baos);
 			dos.writeByte(VALID_ELEMENT);
 			persistor.write(element, dos);
 			dataFile.write(baos.toByteArray());
+			this.length++;
 			return index;
 		} catch (IOException e) {
 			throw new DataAccessException("Error insertando elemento",e);

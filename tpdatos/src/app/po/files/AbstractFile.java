@@ -12,7 +12,9 @@ public abstract class AbstractFile<E> implements api.po.files.File<E> {
 	private java.io.File file;
 	protected RandomAccessFile dataFile;
 	protected Persistor<E> persistor;
-	protected int size;
+	protected int size; // Tamaño del bloque
+	protected int length; // Cantidad de bloques
+	
 	
 	public AbstractFile(String fileName, int size, Persistor<E> persistor) throws DataAccessException {
 		this.persistor = persistor;
@@ -20,6 +22,7 @@ public abstract class AbstractFile<E> implements api.po.files.File<E> {
 		try {
 			this.file= new java.io.File(fileName);
 			this.dataFile = new RandomAccessFile(this.file,"rw");
+			length=this.getLength();
 		} catch(FileNotFoundException e) {
 			throw new DataAccessException("Error construyendo archivo "+fileName,e);
 		}
@@ -40,6 +43,10 @@ public abstract class AbstractFile<E> implements api.po.files.File<E> {
 	
 	@Override
 	public int getSize() {
-		return (int) (this.file.length()/this.size);
+		return this.length;
+	}
+	
+	private int getLength(){
+		return  (int)(this.file.length()/this.size);
 	}
 }

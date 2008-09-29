@@ -46,7 +46,7 @@ public class SimpleStringPersistor implements Persistor<String> {
 	}
 
 	public int getElementSize(String element) {
-		return getDataSize();
+		return (element.length()*2)+1;
 	}
 
 }

@@ -6,7 +6,6 @@ import api.po.files.File;
 import api.po.persistors.DistancesBlock;
 import api.po.persistors.Persistor;
 import app.po.files.RelativeFile;
-import dto.LinkedBlock;
 import dto.LinkedBlockB;
 import exceptions.DataAccessException;
 import exceptions.PersistanceException;
@@ -81,16 +80,21 @@ public class LinkedBlocksManagerB<E extends DistancesBlock> {
 			} catch ( PersistanceException e ) {
 				
 				// el registro esta lleno
-				E elem = createElement();
-				
-				regAux = new LinkedBlockB<E>();
-				regAux.setElem(elem);
-				newBlockId=archivo.add(regAux);//obtengo id del siguiente bloque
-				reg.setNextBlock(newBlockId-1);//seteo el puntero a siguiente
-				if (nextBlockId!=0)
-				   archivo.update(nextBlockId,reg);
-				else
-				   archivo.update(blockId, reg);				
+				try {
+					E elem = createElement();
+					
+					regAux = new LinkedBlockB<E>();
+					regAux.setElem(elem);
+					newBlockId=archivo.add(regAux);//obtengo id del siguiente bloque
+					reg.setNextBlock(newBlockId-1);//seteo el puntero a siguiente
+					if (nextBlockId!=0)
+					   archivo.update(nextBlockId,reg);
+					else
+					   archivo.update(blockId, reg);
+				} catch (PersistanceException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}				
 			}
 			
 		} catch (DataAccessException e) {

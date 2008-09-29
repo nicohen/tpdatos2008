@@ -1,11 +1,10 @@
 package test.persistors;
 
-import dto.LinkedBlock;
-import dto.LinkedBlockB;
-import exceptions.PersistanceException;
 import api.po.persistors.Persistor;
 import app.po.persistors.IntegerPersistor;
 import app.po.persistors.LinkedBlockPersistor;
+import dto.LinkedBlockB;
+import exceptions.PersistanceException;
 
 public class TestLinkedBlockIntPersistor extends TestPersistor<LinkedBlockB<Integer>> {
 
