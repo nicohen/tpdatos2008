@@ -26,23 +26,11 @@ public class BPlusLeafNode extends AbstractBPlusNode {
 	public String toString() {
 		StringBuilder sb= new StringBuilder();
 		sb.append("[ id:");
-		if ( this.nodeKey != null) {
-			sb.append(this.nodeKey.toString());
-		} else {
-			sb.append("NULL");
-		}
+		sb.append(this.nodeKey);
 		sb.append(" , next:");
-		if ( this.nextNodeKey != null) {
-			sb.append(this.nextNodeKey.toString());
-		} else {
-			sb.append("NULL");
-		}
+		sb.append(this.nextNodeKey);
 		sb.append(" , elementos:");
-		if ( this.elements != null) {
-			sb.append(this.elements.toString());
-		} else {
-			sb.append("NULL");
-		}
+		sb.append(this.elements);
 		sb.append("]");
 		return sb.toString();
 	}
