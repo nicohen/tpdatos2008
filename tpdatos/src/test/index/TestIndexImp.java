@@ -42,7 +42,7 @@ public class TestIndexImp extends TestIndex {
 		int i=6;
 		
 		while(it.hasNext()){
-			it.next();
+			
 			//Assert.assertTrue(it.next()==i);
 			if (i==10)
 			i=6;
