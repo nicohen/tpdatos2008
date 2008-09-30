@@ -35,6 +35,7 @@ public class DocumentsIndexer {
 		
 		//Preparo los nuevos documentos a indexar
 		File[] newDocuments = DocumentsDictionaryImp.prepareNewDocuments(Constants.FOLDER_DOCUMENTS);
+		
 		DocumentDto document = null;
 		
 		//Inicializo las stopwords y las ordeno alfabeticamente y por cantidad de palabras ascendente
