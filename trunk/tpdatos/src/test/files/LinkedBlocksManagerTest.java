@@ -17,7 +17,7 @@ public class LinkedBlocksManagerTest extends TestCase {
 	public void testLinkedBlocksManager() throws DataAccessException {
 		LinkedBlockIntPersistor persistor=new LinkedBlockIntPersistor(24);
 		LinkedBlocksManager<Integer> manager=new LinkedBlocksManager<Integer>("test_relative_block_int.bin",5 , persistor);
-		ArrayList<Integer> aux;
+		Iterator<Integer> aux;
 		manager.add(1, 0);
 		manager.add(2, 0);
 		manager.add(3, 0);
@@ -51,7 +51,7 @@ public class LinkedBlocksManagerTest extends TestCase {
 	public void testLinkedBlocksBytePersistor() throws DataAccessException {
 		LinkedBlockByteArrayPersistor persistor=new LinkedBlockByteArrayPersistor(128);
 		VariableLinkedBlocksManager manager=new VariableLinkedBlocksManager("test_relative_block.bin", persistor);
-		ArrayList<byte[]> aux;
+//		Iterator<byte[]> aux;
 		Iterator<byte[]> it;
 		ArrayList<byte[]> aux2;
 		Integer i;
@@ -64,12 +64,14 @@ public class LinkedBlocksManagerTest extends TestCase {
 		//manager.add(KeyCodificationUtils.gammaEncode(16), 0);
 		//manager.add(KeyCodificationUtils.gammaEncode(16), 0);
 		//manager.add(KeyCodificationUtils.gammaEncode(13), 0);
-		aux=manager.get(0);
+		it=manager.get(0);
 		//aux2=manager.get(1);
-		it=aux.iterator();
 		
-		i=KeyCodificationUtils.gammaDecode(aux.get(5));
-		i=KeyCodificationUtils.gammaDecode(aux.get(4));
+		it.next();
+		it.next();
+		it.next();
+		i=KeyCodificationUtils.gammaDecode(it.next() );
+		i=KeyCodificationUtils.gammaDecode(it.next() );
 		//i=KeyCodificationUtils.gammaDecode(aux2.get(0));
 		
 	}
