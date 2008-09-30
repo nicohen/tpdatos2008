@@ -21,5 +21,11 @@ public class TestIterator extends TestCase {
 		Assert.assertTrue( it.next() == 2);
 		Assert.assertTrue( it.next() == 5);
 		
+		it = lista.iterator();
+		
+		while (it.hasNext() ) {
+			System.out.println( it.next() );
+		}
+		
 	}
 }
