@@ -33,6 +33,7 @@ public abstract class AbstractBPlusNode implements BPlusNode {
 	private BPlusElement findElement(List<BPlusElement> elements,BPlusElementKey elementKey) {
 		int start=0;
 		int end=elements.size()-1;
+		if (elements.size()==0) return null;
 		BPlusElement auxElement=elements.get(0);
 		if (auxElement.getKey().equals(elementKey)){
 			return auxElement;
