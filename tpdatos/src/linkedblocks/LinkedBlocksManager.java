@@ -18,7 +18,7 @@ public class LinkedBlocksManager<E> {
 		blockSize=size;
 	}
 
-	public ArrayList<E> get(int blockId){
+	public Iterator<E> get(int blockId){
 		
 		LinkedBlock<E> reg=new LinkedBlock<E>();
 		Iterator<E> it;
@@ -44,7 +44,7 @@ public class LinkedBlocksManager<E> {
 			e.printStackTrace();
 		}
 		
-		return listaRet;
+		return listaRet.iterator();
 	}
 	public Integer addBlock(){
 		LinkedBlock<E> reg=new LinkedBlock<E>();

@@ -30,11 +30,11 @@ public class IndexImp implements Index {
 	public Iterator<Integer> getDocuments(String word) throws BusinessException {
 		
 		DocumentIndexKey docBlockId;
-		ArrayList<byte[]> aux;
+//		ArrayList<byte[]> aux;
 		ArrayList<Integer> listaRet=new ArrayList<Integer>();
 		docBlockId=this.obtainDocIndex(word);
-		aux=manager.get(docBlockId.getValue());
-		Iterator<byte[]> it=aux.iterator();
+		//aux=manager.get(docBlockId.getValue());
+		Iterator<byte[]> it=manager.get(docBlockId.getValue());
 		Iterator<Integer> itRet;
 		while(it.hasNext()){
 			listaRet.add(KeyCodificationUtils.gammaDecode(it.next()));
