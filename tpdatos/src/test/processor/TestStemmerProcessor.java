@@ -30,7 +30,7 @@ public class TestStemmerProcessor extends TestCase {
 		String[] str = {"programando",	"programara","programaras",	"programemos","programemo"}; 
 		eq( str,"program");
 		
-		eq( "ando", "ando");
+		eq( "ando", "and");
 		eq( "emo", "emo");
 		eq( "remos","remos");
 		
