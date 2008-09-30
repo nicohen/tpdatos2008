@@ -6,6 +6,11 @@ import exceptions.DataAccessException;
 
 public class TestBPlusTreeBoImp extends TestBPlusTreeBo {
 
+	public TestBPlusTreeBoImp() throws DataAccessException {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	protected BPlusTreeBo createTestObject() throws DataAccessException {
 		// TODO Auto-generated method stub

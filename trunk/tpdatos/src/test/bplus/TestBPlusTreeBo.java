@@ -15,13 +15,8 @@ abstract public class TestBPlusTreeBo extends TestCase {
 
 	abstract protected BPlusTreeBo createTestObject() throws DataAccessException ;
 	
-	public TestBPlusTreeBo() {
-		try {
-			bo = createTestObject();
-		} catch (DataAccessException e) {
-			// TODO ver q hacer con el puntero nulo
-			e.printStackTrace();
-		}
+	public TestBPlusTreeBo() throws DataAccessException {
+		bo = createTestObject();
 	}
 	
 	public void _test_insert( String word, Integer value) throws KeyNotFoundException, DataAccessException {
