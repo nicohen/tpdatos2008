@@ -17,18 +17,18 @@ import exceptions.PersistanceException;
 public class DocumentsDictionaryImp implements DocumentsDictionary {
 	
 	RelativeFile<DocumentDto> relativeFile = null;
-	SecuencialFile<String> secuencialFile;
+	RelativeFile<String> dataFile;
 	public DocumentsDictionaryImp() throws DataAccessException {
 
 		relativeFile = new RelativeFile<DocumentDto>("indexed_documents.bin",new DocumentInfoPersistor());
-		secuencialFile=new SecuencialFile<String>("document_names.txt",new DocumentDataPersistor());
+		dataFile=new RelativeFile<String>("document_names.txt",new DocumentDataPersistor());
 	}
 	
 	@Override
 	public DocumentDto getDocument(Integer id) throws BusinessException {
 		try {
 			DocumentDto dDto = relativeFile.get(id);
-			dDto.setFileName(secuencialFile.get(id));
+			dDto.setFileName(dataFile.get(id));
 			return dDto; 
 		} catch(DataAccessException e) {
 			throw new BusinessException("",e);
@@ -39,7 +39,7 @@ public class DocumentsDictionaryImp implements DocumentsDictionary {
 	public Integer insertDocument(DocumentDto document) throws BusinessException {
 		try {
 			//agrego el string de nombre al archivo secuencial
-			document.setOffset(secuencialFile.add(document.getFileName()));
+			document.setOffset(dataFile.add(document.getFileName()));
 			return relativeFile.add(document);
 		} catch (DataAccessException e) {
 			throw new BusinessException("Error inicializando RelativeFile de documentos indexados",e);
@@ -56,6 +56,7 @@ public class DocumentsDictionaryImp implements DocumentsDictionary {
 			DocumentDto document = null;
 			for(int i=0;i<relativeFile.getSize();i++) {
 				document=relativeFile.get(i++);
+				document.setFileName(dataFile.get(i));
 				checker.addDocument(document.getDocumentId(), document.getFileName());
 			}
 
