@@ -18,7 +18,7 @@ public class RelativeFile<E> extends AbstractFile<E> {
 	}
 
 	@Override
-	public int add(E element) throws DataAccessException, PersistanceException {
+	public int add(E element) throws DataAccessException,PersistanceException {
 		if(this.persistor.getElementSize(element)<=this.size){
 			try {
 				

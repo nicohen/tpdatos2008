@@ -1,6 +1,6 @@
 package test.index;
 
-import api.DocumentsDictionary;
+import api.dao.documents.DocumentsDictionary;
 import app.bo.MockDocumentsDictionary;
 
 public class TestMockDocumentsDictionary extends TestDocumentsDictionary {

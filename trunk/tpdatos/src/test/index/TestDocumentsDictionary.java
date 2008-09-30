@@ -2,7 +2,7 @@ package test.index;
 
 import dto.DocumentDto;
 import exceptions.BusinessException;
-import api.DocumentsDictionary;
+import api.dao.documents.DocumentsDictionary;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
