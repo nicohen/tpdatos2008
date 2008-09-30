@@ -1,3 +1,4 @@
+package api;
 
 
 
@@ -5,8 +6,9 @@
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import dto.DocumentDto;
+
 import exceptions.BusinessException;
-import api.DocumentsDictionary;
 import app.bo.IndexImp;
 
 public class QueryEngine {
@@ -18,18 +20,18 @@ public class QueryEngine {
 		this.dictionary = dictionary;
 	}
 	
-	public Iterator<Integer> ExecuteQuery(String consulta) throws BusinessException{
-		ArrayList<String> listaRet=new ArrayList<String>();
+	public Iterator<DocumentDto> ExecuteQuery(String consulta) throws BusinessException{
+		ArrayList<DocumentDto> listaRet=new ArrayList<DocumentDto>();
 		ArrayList<Integer> listaAux=new ArrayList<Integer>();
 		Iterator<Integer> itAux;
 		
 		itAux=indice.getDocuments(consulta);
 		
-		//while (itAux.hasNext()){
-			//listaRet.add(Dictionary.GetStringFromId(itAux.next()));
-		//}
+		while (itAux.hasNext()){
+			listaRet.add(dictionary.getDocument(itAux.next()));
+		}
 		
-		return itAux;
+		return listaRet.iterator();
 	}
 	
 	
