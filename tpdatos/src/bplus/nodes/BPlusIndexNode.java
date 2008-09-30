@@ -16,13 +16,20 @@ public class BPlusIndexNode extends AbstractBPlusNode {
 	public boolean isLeafNode() {
 		return false;
 	}
+	
+	@Override
+	public BPlusIndexElement getIndexElement(){
+		BPlusIndexElement indexElement= new BPlusIndexElement(this.leftChild.getKey());
+		indexElement.setRelatedNode(this.getNodeKey());
+		return indexElement;
+	}
 
 	@Override
 	public void insertElement(BPlusElement element) {
 		if (this.leftChild==null){
 			this.leftChild=(BPlusIndexElement)element;
 		}else{
-			if (this.leftChild.compareTo(element)<1){
+			if (this.leftChild.compareTo(element)==1){
 				super.insertElement(this.leftChild);
 				this.leftChild=(BPlusIndexElement)element;
 			}else{

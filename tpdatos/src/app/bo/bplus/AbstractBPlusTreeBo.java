@@ -5,7 +5,6 @@ import java.util.List;
 
 import api.bo.BPlusTree.BPlusTreeBo;
 import api.dao.BPlusTree.BPlusNodeDao;
-import app.dao.bplus.BPlusNodeDaoTest;
 import bplus.elements.BPlusElement;
 import bplus.elements.BPlusIndexElement;
 import bplus.elements.BPlusLeafElement;
@@ -69,6 +68,8 @@ abstract public class AbstractBPlusTreeBo implements BPlusTreeBo {
 				nodeDao.insertNode(newRoot);			
 				splitNode(newRoot, root.getNodeKey());
 				insertElement(newRoot,element);
+				nodeDao.setRootNode(newRoot.getNodeKey());
+				this.root=newRoot;
 			} catch (NodeOverflowException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

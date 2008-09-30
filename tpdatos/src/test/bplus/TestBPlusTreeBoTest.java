@@ -1,8 +1,8 @@
 package test.bplus;
 
-import exceptions.DataAccessException;
 import api.bo.BPlusTree.BPlusTreeBo;
 import app.bo.bplus.BPlusTreeBoTest;
+import exceptions.DataAccessException;
 
 public class TestBPlusTreeBoTest extends TestBPlusTreeBo {
 
