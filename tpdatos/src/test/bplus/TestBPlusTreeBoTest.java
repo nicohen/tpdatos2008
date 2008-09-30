@@ -14,7 +14,13 @@ public class TestBPlusTreeBoTest extends TestBPlusTreeBo {
 	@Override
 	protected BPlusTreeBo createTestObject() {
 		// TODO Auto-generated method stub
-		return new BPlusTreeBoTest();
+		try {
+			return new BPlusTreeBoTest();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }
