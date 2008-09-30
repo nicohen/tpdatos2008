@@ -2,12 +2,13 @@ package app.dao.documents;
 
 import java.io.File;
 import java.io.FileFilter;
-
 import processor.IndexedDocumentChecker;
 import utils.Constants;
 import api.dao.documents.DocumentsDictionary;
 import app.po.files.RelativeFile;
-import app.po.persistors.DocumentPersistor;
+import app.po.files.SecuencialFile;
+import app.po.persistors.DocumentDataPersistor;
+import app.po.persistors.DocumentInfoPersistor;
 import dto.DocumentDto;
 import exceptions.BusinessException;
 import exceptions.DataAccessException;
@@ -16,16 +17,19 @@ import exceptions.PersistanceException;
 public class DocumentsDictionaryImp implements DocumentsDictionary {
 	
 	RelativeFile<DocumentDto> relativeFile = null;
-	
+	SecuencialFile<String> secuencialFile;
 	public DocumentsDictionaryImp() throws DataAccessException {
-		relativeFile = new RelativeFile<DocumentDto>("indexed_documents.bin",new DocumentPersistor(100));
+
+		relativeFile = new RelativeFile<DocumentDto>("indexed_documents.bin",new DocumentInfoPersistor());
+		secuencialFile=new SecuencialFile<String>("document_names.txt",new DocumentDataPersistor());
 	}
 	
 	@Override
 	public DocumentDto getDocument(Integer id) throws BusinessException {
 		try {
 			DocumentDto dDto = relativeFile.get(id);
-			return dDto;
+			dDto.setFileName(secuencialFile.get(id));
+			return dDto; 
 		} catch(DataAccessException e) {
 			throw new BusinessException("",e);
 		}
@@ -34,6 +38,8 @@ public class DocumentsDictionaryImp implements DocumentsDictionary {
 	@Override
 	public Integer insertDocument(DocumentDto document) throws BusinessException {
 		try {
+			//agrego el string de nombre al archivo secuencial
+			document.setOffset(secuencialFile.add(document.getFileName()));
 			return relativeFile.add(document);
 		} catch (DataAccessException e) {
 			throw new BusinessException("Error inicializando RelativeFile de documentos indexados",e);
@@ -72,7 +78,7 @@ public class DocumentsDictionaryImp implements DocumentsDictionary {
 	    }
 
 	}
-
+	
 	public static File[] prepareNewDocuments(String documentsPath) {
 	    File dir = new File(documentsPath);
 	    
@@ -91,5 +97,5 @@ public class DocumentsDictionaryImp implements DocumentsDictionary {
 	    return dir.listFiles(fileFilter);
 	}
 
-
+	
 }
