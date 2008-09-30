@@ -2,6 +2,7 @@ package api;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import dto.DocumentDto;
 
@@ -9,15 +10,16 @@ import api.dao.documents.DocumentsDictionary;
 import exceptions.BusinessException;
 
 public class QueryEngine {
+
 	private Index indice;
 	private DocumentsDictionary dicc;
+
 	public QueryEngine(Index index,DocumentsDictionary dictionary){
 		dicc=dictionary;
 		indice=index;
-		
 	}
 	
-	public Iterator<DocumentDto> ExecuteQuery(String consulta) throws BusinessException{
+	public List<DocumentDto> executeQuery(String consulta) throws BusinessException{
 		ArrayList<DocumentDto> listaRet=new ArrayList<DocumentDto>();
 		Iterator<Integer> itAux;
 		
@@ -27,7 +29,7 @@ public class QueryEngine {
 			listaRet.add(dicc.getDocument(itAux.next()));
 		}
 		
-		return listaRet.iterator();
+		return listaRet;
 	}
 	
 }

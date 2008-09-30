@@ -2,13 +2,11 @@ package test.index;
 
 import java.util.Iterator;
 
-import dto.DocumentDto;
-
-import junit.framework.Assert;
 import api.QueryEngine;
 import api.dao.documents.DocumentsDictionary;
 import app.bo.IndexImp;
 import app.dao.documents.DocumentsDictionaryImp;
+import dto.DocumentDto;
 import exceptions.BusinessException;
 import exceptions.DataAccessException;
 
@@ -44,11 +42,10 @@ public class TestIndexImp extends TestIndex {
 		index.insertWord("gato", 9);
 		index.insertWord("gato", 10);*/
 		
-		it=engine.ExecuteQuery("gato");
 		int i=6;
 		
-		while(it.hasNext()){
-			//Assert.assertTrue(it.next()==i);
+		for(DocumentDto document : engine.executeQuery("gato")){
+			//Assert.assertTrue(document.getDocumentId()==i);
 			if (i==10)
 			i=6;
 			else
