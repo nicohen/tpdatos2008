@@ -20,7 +20,7 @@ abstract public class TestIndex extends TestCase {
 	}
 	
 	private void test_entry ( String word, int[] ids ) throws BusinessException {
-		List<Integer> lista = new LinkedList<Integer>();
+		/*List<Integer> lista = new LinkedList<Integer>();
 		
 		for (int id : ids ) {
 			lista.add(new Integer(id));
@@ -43,7 +43,7 @@ abstract public class TestIndex extends TestCase {
 			
 			Assert.assertEquals( original.next(), recuperado.next() );
 		}
-		
+		*/
 		
 		
 	}

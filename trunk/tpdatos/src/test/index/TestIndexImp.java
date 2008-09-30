@@ -14,7 +14,7 @@ public class TestIndexImp extends TestIndex {
 
 	public TestIndexImp() throws BusinessException {
 		//super();
-		//testInsertRetrieve();
+		testInsertRetrieve();
 	}
 
 	@Override
@@ -22,7 +22,7 @@ public class TestIndexImp extends TestIndex {
 		return new IndexImp("index.bin", 4096) ;
 	}
 	
-	/*protected void testInsertRetrieve() throws BusinessException{
+	public void testInsertRetrieve() throws BusinessException{
 		IndexImp index = this.createTestObject();
 		QueryEngine engine=new QueryEngine(index);
 		ArrayList<Integer> list;
@@ -42,9 +42,6 @@ public class TestIndexImp extends TestIndex {
 		int i=6;
 		
 		while(it.hasNext()){
-			
-			System.out.println( it.next() );
-			//Assert.assertTrue(it.next()==i);
 			Assert.assertTrue(it.next()==i);
 			if (i==10)
 			i=6;
@@ -52,6 +49,6 @@ public class TestIndexImp extends TestIndex {
 			i++;
 		}
 		
-	}*/
+	}
 
 }
