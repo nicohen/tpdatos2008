@@ -1,5 +1,4 @@
 import java.io.File;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -8,6 +7,7 @@ import org.apache.log4j.Logger;
 
 import processor.IndexedDocumentChecker;
 import processor.stemming.StemmingProcessor;
+import processor.stopwords.StopwordsProcessor;
 import processor.utils.DigesterUtils;
 import utils.Constants;
 import app.bo.IndexImp;
@@ -18,16 +18,8 @@ import dto.WordDto;
 import exceptions.BusinessException;
 
 /**
- * Clase main del proyecto donde se llaman a todas las funcionalidades iniciales
- * 
- * 1) Obtener lista de documentos a indexar
- * 2) Verificar que no este en la lista de documentos ya indexados
- * 3) Obtener el documento en HTML
- * 4) 
- * 5)
- *  
+ * Clase main para indexar nuevos documentos
  */
-
 
 public class DocumentsDigester {
 	
@@ -45,10 +37,8 @@ public class DocumentsDigester {
 		File[] newDocuments = DocumentsDictionaryImp.prepareNewDocuments(Constants.FOLDER_DOCUMENTS);
 		DocumentDto document = null;
 		
-		//Inicializo las stopwords y las ordeno por cantidad de palabras y alfabeticamente
-		List<WordDto> stopWords = DigesterUtils.prepareStopwords();		
-		Collections.sort(stopWords);
-//		log.info(stopWords.toString());
+		//Inicializo las stopwords y las ordeno alfabeticamente y por cantidad de palabras ascendente
+		StopwordsProcessor stopwordsProcessor = new StopwordsProcessor();
 		
 		try {
 		
@@ -72,9 +62,9 @@ public class DocumentsDigester {
 					
 					//Elimino tags y caracteres que no correspondan
 					File inputFile = new File(Constants.FOLDER_DOCUMENTS + File.separator + document.getFileName());
-					String documentText = DigesterUtils.getFormatedHtmlFile(inputFile);
+					String documentText = DigesterUtils.getFormattedHtmlFile(inputFile);
 					
-					//Inicializo el objeto para encolar terminos 
+					//Inicializo el pipeline para encolar terminos 
 					StopwordsPipelineDto stopwordsPipeline = new StopwordsPipelineDto();
 					
 					//Inicializo el stemmer
@@ -112,7 +102,7 @@ public class DocumentsDigester {
 								int bestWordCompare = 0;
 								int wordCompare = 0;
 								//Recorro los stopwords y verifico si el/los termino/s son un stopword
-								for(WordDto stopword : stopWords) {
+								for(WordDto stopword : stopwordsProcessor.getStopwords()) {
 	
 									wordCompare = compareWords(stopwordsPipeline.getWords(),stopword.getWord());
 									
@@ -127,12 +117,13 @@ public class DocumentsDigester {
 								}
 								
 								if(bestWordCompare==0) {
-									//El primer termino del pipeline no es stopword
+									//El primer termino del pipeline no es stopword, por lo tanto se indexa
 									String indexWord = stemmer.stem(stopwordsPipeline.getFirstWord());
-									log.info("[### AGREGADA ###] --> "+indexWord);
-									wordIndexer.insertWord(indexWord, document.getDocumentId());
 									stopwordsPipeline.removeWords(1);
+									wordIndexer.insertWord(indexWord, document.getDocumentId());
+									log.info("[### AGREGADA ###] --> "+indexWord);
 								} else {
+									//Elimino stopword encontrado en pipeline
 									String eliminar = "";
 									for(int j=0;j<bestWordCompare;j++) {
 										eliminar+=stopwordsPipeline.getWord(j)+" ";

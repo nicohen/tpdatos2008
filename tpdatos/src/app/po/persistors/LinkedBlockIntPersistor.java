@@ -3,7 +3,6 @@ package app.po.persistors;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.util.Iterator;
 
 import dto.LinkedBlock;
 import exceptions.PersistanceException;
@@ -47,8 +46,7 @@ public class LinkedBlockIntPersistor extends MaxSizeAbstractPersistor<LinkedBloc
 			throws PersistanceException {
 		// TODO Auto-generated method stub
 		int i;
-		Iterator<Integer> it;
-		it=element.getListaElem().iterator();
+//		Iterator<Integer> it = element.getListaElem().iterator();
 		try{
 			
 			for(int j=0;j<element.getListaElem().size();j++)
