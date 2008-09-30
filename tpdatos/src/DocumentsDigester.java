@@ -154,6 +154,8 @@ public class DocumentsDigester {
 		while(it1.hasNext() && it2.hasNext()) {
 			if (it1.next().compareTo(it2.next())==0) {
 				qtyMatch++;
+			} else {
+				return qtyMatch;
 			}
 		}
 		return qtyMatch;
