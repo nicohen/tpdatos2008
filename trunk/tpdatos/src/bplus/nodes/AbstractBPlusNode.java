@@ -91,6 +91,13 @@ public abstract class AbstractBPlusNode implements BPlusNode {
 	@Override
 	public boolean equals(Object obj) {
 		BPlusNode node= (BPlusNode)obj;
+		
+		if ( this.getNodeKey() == null ) {
+			if ( this.getNodeKey() == node.getNodeKey() ) return true;
+		}
+		
+		// FIXME: comparar los elementos de los nodos
+		
 		return this.getNodeKey().equals(node.getNodeKey());
 	}
 }
