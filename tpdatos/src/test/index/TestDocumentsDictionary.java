@@ -25,7 +25,7 @@ abstract public class TestDocumentsDictionary extends TestCase {
 		
 		docrecuperado = dict.getDocument(id);
 		
-		Assert.assertEquals( docrecuperado, docdto );
+		Assert.assertEquals( docrecuperado.getFileName(), docdto.getFileName() );
 		
 	}
 	
