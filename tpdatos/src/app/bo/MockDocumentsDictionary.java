@@ -1,11 +1,10 @@
 package app.bo;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import api.DocumentsDictionary;
-
+import processor.IndexedDocumentChecker;
+import api.dao.documents.DocumentsDictionary;
 import dto.DocumentDto;
 import exceptions.BusinessException;
 
@@ -38,6 +37,12 @@ public class MockDocumentsDictionary implements DocumentsDictionary {
 		this.insertDocument( new Integer(auto_numerico), document);
 		
 		return new Integer(auto_numerico);
+	}
+
+	@Override
+	public IndexedDocumentChecker getDocuments() throws BusinessException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -3,7 +3,6 @@ package processor.utils;
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.File;
-import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -12,53 +11,14 @@ import java.util.List;
 
 import org.htmlparser.util.ParserException;
 
-import processor.IndexedDocumentChecker;
 import utils.Constants;
 import dto.WordDto;
-import exceptions.BusinessException;
 
 public final class DigesterUtils {
 	
 	private static final String LETTERS_TO_STRIP = "\"_,:.#()¿?/\\!¡$%&*'@={}[];|®";
 	private static final String LETTERS_TO_TRANSLATE_FROM	= "\u00E1\u00E0\u00E9\u00E8\u00ED\u00EC\u00F3\u00F2\u00FA\u00F9\u00FC";
 	private static final String LETTERS_TO_TRANSLATE_TO	= "aaeeiioouuu";
-	
-	public static File[] prepareNewDocuments(String documentsPath) {
-	    File dir = new File(documentsPath);
-	    
-	    String[] children = dir.list();
-	    if (children == null) {
-	    	System.out.println("Directorio inexistente ["+dir.getPath()+"]");
-	    }
-	    
-	    // Este filtro solamente retorna archivos
-	    FileFilter fileFilter = new FileFilter() {
-	        public boolean accept(File file) {
-	            return file.isFile();
-	        }
-	    };
-	    
-	    return dir.listFiles(fileFilter);
-	}
-	
-	public static IndexedDocumentChecker prepareIndexedDocuments() throws BusinessException {
-		
-		IndexedDocumentChecker checker = new IndexedDocumentChecker();
-		
-//		AbstractPersistor<DocumentDto> persistor = new DocumentPersistor(10);
-//		try {
-//			RelativeFile<DocumentDto> relativeFile = new RelativeFile<DocumentDto>("indexed_documents.bin",persistor);
-//			DocumentDto document = null;
-//			int docId = 0;
-//			while((document=relativeFile.get(docId++))!=null) {
-//				checker.addDocument(document.getDocumentId(), document.getFileName());
-//			}
-//
-//		} catch (DataAccessException e) {
-//			throw new BusinessException("Error inicializando RelativeFile de documentos indexados",e);
-//		}
-		return checker;
-	}
 	
 	@SuppressWarnings("deprecation")
 	public static List<WordDto> prepareStopwords() throws IOException {
@@ -118,21 +78,6 @@ public final class DigesterUtils {
 	public static String applyCaseFolding(String document) {
 		return document.toLowerCase();
 	}
-	
-	public static void moveFileToIndexedFolder(File file) {
-	    // Destination directory
-	    File dir = new File(Constants.FOLDER_INDEXED);
-	    
-	    // Move file to new directory
-	    boolean success = file.renameTo(new File(dir, file.getName()));
-	    if (!success) {
-	    	System.out.println("Error moviendo ["+file.getName()+"] a la carpeta de indexados");
-	    } else {
-	    	System.out.println("Se ha movido el archivo ["+file.getName()+"] a la carpeta de indexados");
-	    }
-
-	}
-	
 	
 	private static String stripLetters(String origWord, String toEliminate) {
 

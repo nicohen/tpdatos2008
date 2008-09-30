@@ -11,6 +11,7 @@ import processor.stemming.StemmingProcessor;
 import processor.utils.DigesterUtils;
 import utils.Constants;
 import app.bo.IndexImp;
+import app.dao.documents.DocumentsDictionaryImp;
 import dto.DocumentDto;
 import dto.StopwordsPipelineDto;
 import dto.WordDto;
@@ -34,11 +35,14 @@ public class DocumentsDigester {
 		
 		Logger log = Logger.getLogger(DocumentsDigester.class);
 		
+		//Me instancio un indexador de terminos para poder indexarlos
 		IndexImp wordIndexer = new IndexImp(Constants.INDEX_FILE_PATH, Constants.INDEX_FILE_SIZE) ;
-//		QueryEngine engine=new QueryEngine(index);
+
+		//Me instancio un DocumentsDictionary para manejar los documentos indexados
+		DocumentsDictionaryImp dd = new DocumentsDictionaryImp();
 		
 		//Preparo los nuevos documentos a indexar
-		File[] newDocuments = DigesterUtils.prepareNewDocuments(Constants.FOLDER_DOCUMENTS);
+		File[] newDocuments = DocumentsDictionaryImp.prepareNewDocuments(Constants.FOLDER_DOCUMENTS);
 		DocumentDto document = null;
 		
 		//Inicializo las stopwords y las ordeno por cantidad de palabras y alfabeticamente
@@ -49,7 +53,7 @@ public class DocumentsDigester {
 		try {
 		
 			//Preparo los documentos que ya fueron indexados
-			IndexedDocumentChecker indexedDocuments = DigesterUtils.prepareIndexedDocuments();
+			IndexedDocumentChecker indexedDocuments = dd.getDocuments();
 
 			log.info("<<< Inicio de indexacion de documentos >>>\n");
 
@@ -141,8 +145,11 @@ public class DocumentsDigester {
 						}
 					}
 					
+					//Seteo el documento como indexado
+					indexedDocuments.addDocument(dd.insertDocument(document), document.getFileName());
+					
 					//Muevo el documento indexado a la carpeta de documentos indexados
-//					DigesterUtils.moveFileToIndexedFolder(newDocuments[i]);
+//					DocumentsDictionaryImp.moveFileToIndexedFolder(newDocuments[i]);
 
 					log.info("Fin de indexacion del documento ["+document.getFileName()+"]");
 				} else {
