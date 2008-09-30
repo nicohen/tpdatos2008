@@ -10,9 +10,11 @@ import app.bo.IndexImp;
 
 public class QueryEngine {
 	private IndexImp indice;
+	private DocumentsDictionary dictionary;
 	
-	public QueryEngine(IndexImp index){
+	public QueryEngine(IndexImp index,DocumentsDictionary dictionary){
 		indice=index;
+		this.dictionary = dictionary;
 	}
 	
 	public Iterator<Integer> ExecuteQuery(String consulta) throws BusinessException{
@@ -28,5 +30,7 @@ public class QueryEngine {
 		
 		return itAux;
 	}
+	
+	
 	
 }
