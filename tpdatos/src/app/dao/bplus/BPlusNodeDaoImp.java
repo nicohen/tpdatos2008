@@ -1,5 +1,6 @@
 package app.dao.bplus;
 
+import utils.Constants;
 import api.dao.BPlusTree.BPlusNodeDao;
 import api.po.persistors.Persistor;
 import app.po.files.RelativeFile;
@@ -49,7 +50,7 @@ public class BPlusNodeDaoImp implements BPlusNodeDao {
 	}
 
 	public BPlusNodeDaoImp(int nodeSize) throws DataAccessException {
-		this("bplus.dat", nodeSize);
+		this(Constants.BPLUS_FILE_PATH, nodeSize);
 	}
 
 	/* (non-Javadoc)

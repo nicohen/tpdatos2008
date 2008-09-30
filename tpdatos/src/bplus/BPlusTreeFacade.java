@@ -1,5 +1,6 @@
 package bplus;
 
+import utils.Constants;
 import linkedblocks.keys.DocumentIndexKey;
 import api.bo.BPlusTree.BPlusTreeBo;
 import app.bo.bplus.BPlusTreeBoImp;
@@ -39,6 +40,6 @@ public class BPlusTreeFacade {
 	}
 	
 	protected BPlusTreeBo createBo() throws DataAccessException{
-		return new BPlusTreeBoImp("bplus.dat",128);
+		return new BPlusTreeBoImp(Constants.BPLUS_FILE_PATH,Constants.BPLUS_FILE_SIZE);
 	}
 }

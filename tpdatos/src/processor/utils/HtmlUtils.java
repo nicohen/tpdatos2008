@@ -95,4 +95,12 @@ public final class HtmlUtils {
 	    }
 	    return html.toString();
 	}
+
+	public static String formatHtmlFile(File file) throws ParserException {
+		String documentText = HtmlUtils.readHtmlFile(file.getPath());
+		documentText = HtmlUtils.getHtmlBody(documentText);
+		documentText = HtmlUtils.deleteScripts(documentText);
+		documentText = HtmlUtils.deleteTags(documentText);
+		return HtmlUtils.decodeSpecialHtmlCharacters(documentText);
+	}
 }
