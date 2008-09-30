@@ -30,7 +30,7 @@ abstract public class AbstractBPlusTreeBo implements BPlusTreeBo {
 		this.root=nodeDao.getRootNode();
 	}
 		
-	public AbstractBPlusTreeBo() throws DataAccessException{
+	public AbstractBPlusTreeBo(){
 		super();
 	}
 	
@@ -129,6 +129,7 @@ abstract public class AbstractBPlusTreeBo implements BPlusTreeBo {
 	public void dump() throws DataAccessException{
 		dump(this.root);
 	}
+	
 	private void dump(BPlusNode node) throws DataAccessException{
 		System.out.println(node);
 		if (node instanceof BPlusIndexNode) {

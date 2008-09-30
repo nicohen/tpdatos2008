@@ -12,5 +12,6 @@ public interface BPlusTreeBo {
 	public void insertElement( BPlusLeafElement element ) throws DataAccessException ;
 	//public void removeElement( BPlusElementKey elementKey ) throws KeyNotFoundException ;
 	//public void updateElement( BPlusLeafElement element ) throws KeyNotFoundException ;
-	public BPlusLeafElement getElement( BPlusElementKey elementKey) throws KeyNotFoundException, DataAccessException ; 
+	public BPlusLeafElement getElement( BPlusElementKey elementKey) throws KeyNotFoundException, DataAccessException ;
+	public void dump() throws DataAccessException;
 }

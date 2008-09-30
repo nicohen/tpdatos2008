@@ -49,6 +49,8 @@ abstract public class TestBPlusTreeBo extends TestCase {
 		_test_insert( "perro", 1000);		
 		_test_insert( "gato", 1200);		
 		_test_insert( "gatiperro", 3);
+		
+		this.bo.dump();
 	}
 
 }

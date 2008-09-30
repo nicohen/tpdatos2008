@@ -155,6 +155,7 @@ public class DocumentsDigester {
 		} catch (BusinessException e) {
 			throw new Exception("Error preparando nuevos documentos pendientes a indexar",e);
 		}
+		
 	}
 
 	private static int compareWords(List<String> list1, List<String> list2) {

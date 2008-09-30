@@ -3,14 +3,19 @@ package app.bo.bplus;
 import java.util.HashMap;
 import java.util.Map;
 
-import api.bo.BPlusTree.BPlusTreeBo;
 import bplus.elements.BPlusLeafElement;
 import bplus.exceptions.KeyNotFoundException;
 import bplus.keys.BPlusElementKey;
+import exceptions.DataAccessException;
 
-public class BPlusTreeBoTest implements BPlusTreeBo {
+public class BPlusTreeBoTest extends AbstractBPlusTreeBo {
 
 	
+	public BPlusTreeBoTest() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	private Map<String, BPlusLeafElement> map = new HashMap<String, BPlusLeafElement>();
 	
 	@Override
