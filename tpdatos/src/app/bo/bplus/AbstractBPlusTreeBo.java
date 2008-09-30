@@ -5,6 +5,7 @@ import java.util.List;
 
 import api.bo.BPlusTree.BPlusTreeBo;
 import api.dao.BPlusTree.BPlusNodeDao;
+import app.dao.bplus.BPlusNodeDaoTest;
 import bplus.elements.BPlusElement;
 import bplus.elements.BPlusIndexElement;
 import bplus.elements.BPlusLeafElement;
@@ -22,11 +23,15 @@ import exceptions.DataAccessException;
 
 abstract public class AbstractBPlusTreeBo implements BPlusTreeBo {
 
-	protected BPlusNodeDao nodeDao;
-	protected BPlusNode root;
+	private BPlusNodeDao nodeDao;
+	private BPlusNode root;
 	
+	abstract protected BPlusNodeDao createDao() throws DataAccessException;
+		
 	public AbstractBPlusTreeBo() throws DataAccessException{
 		super();
+		this.nodeDao=createDao();
+		this.root=nodeDao.getRootNode();
 	}
 	
 	@Override
@@ -117,4 +122,21 @@ abstract public class AbstractBPlusTreeBo implements BPlusTreeBo {
 		nodeDao.updateNode(childNode);
 		nodeDao.updateNode(newNode);
 	}
+
+	
+	public void dump() throws DataAccessException{
+		dump(this.root);
+	}
+	private void dump(BPlusNode node) throws DataAccessException{
+		System.out.println(node);
+		if (node instanceof BPlusIndexNode) {
+			BPlusIndexNode indexNode = (BPlusIndexNode) node;
+			dump(this.nodeDao.getNode(indexNode.getLeftChild().getRelatedNode()));
+			Iterator<BPlusElement> it= indexNode.getElements().iterator();
+			while(it.hasNext()){
+				dump(this.nodeDao.getNode(((BPlusIndexElement)it.next()).getRelatedNode()));
+			}
+		}
+	}
+
 }

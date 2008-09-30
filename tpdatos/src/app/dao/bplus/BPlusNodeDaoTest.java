@@ -5,6 +5,7 @@ import java.util.Map;
 
 import api.dao.BPlusTree.BPlusNodeDao;
 import bplus.keys.BPlusNodeKey;
+import bplus.nodes.BPlusLeafNode;
 import bplus.nodes.BPlusNode;
 import exceptions.DataAccessException;
 
@@ -15,7 +16,9 @@ public class BPlusNodeDaoTest implements BPlusNodeDao {
 	private BPlusNodeKey nextKey;
 	private BPlusNodeKey rootNode;
 	
-	public BPlusNodeDaoTest() {
+	public BPlusNodeDaoTest() throws DataAccessException {
+		
+		this.rootNode= this.insertNode(new BPlusLeafNode());
 		nextKey = new BPlusNodeKey(0);
 	}
 	
@@ -23,8 +26,6 @@ public class BPlusNodeDaoTest implements BPlusNodeDao {
 	public BPlusNode getNode(BPlusNodeKey id) throws DataAccessException {
 		// TODO Auto-generated method stub
 		BPlusNode node = map.get(id.getValue());
-		
-		// FIXME: agregarle una causa a la excepcion
 		
 		if (node == null) throw new DataAccessException();
 		return node;

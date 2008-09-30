@@ -2,6 +2,7 @@ package app.bo.bplus;
 
 import java.util.Iterator;
 
+import api.dao.BPlusTree.BPlusNodeDao;
 import app.dao.bplus.BPlusNodeDaoImp;
 import bplus.elements.BPlusElement;
 import bplus.elements.BPlusIndexElement;
@@ -17,22 +18,9 @@ public class BPlusTreeBoImp extends AbstractBPlusTreeBo {
 	public BPlusTreeBoImp( String filename, int nodeSize ) throws DataAccessException {
 		this.filename= filename;
 		this.nodeSize = nodeSize;
-		this.nodeDao = new BPlusNodeDaoImp(filename,nodeSize);
-		this.root=nodeDao.getRootNode();
 	}
 	
-	public void dump() throws DataAccessException{
-		dump(this.root);
-	}
-	private void dump(BPlusNode node) throws DataAccessException{
-		System.out.println(node);
-		if (node instanceof BPlusIndexNode) {
-			BPlusIndexNode indexNode = (BPlusIndexNode) node;
-			dump(this.nodeDao.getNode(indexNode.getLeftChild().getRelatedNode()));
-			Iterator<BPlusElement> it= indexNode.getElements().iterator();
-			while(it.hasNext()){
-				dump(this.nodeDao.getNode(((BPlusIndexElement)it.next()).getRelatedNode()));
-			}
-		}
+	protected BPlusNodeDao createDao () throws DataAccessException {
+		return new BPlusNodeDaoImp(filename,nodeSize);
 	}
 }

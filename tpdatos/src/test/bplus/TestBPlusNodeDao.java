@@ -24,13 +24,8 @@ abstract public class TestBPlusNodeDao extends TestCase {
 	
 	abstract protected BPlusNodeDao createTestObject() throws DataAccessException;
 	
-	public TestBPlusNodeDao() {
-		try {
-			dao = createTestObject();
-		} catch (DataAccessException e) {
-			// TODO evitar el null pointer y dejar un error mas claro
-			e.printStackTrace();
-		}
+	public TestBPlusNodeDao() throws DataAccessException {
+		dao = createTestObject();
 	}
 
 	public BPlusNode _test_insert(BPlusNode node) throws DataAccessException, NodeOverflowException{
