@@ -18,8 +18,8 @@ public class BPlusNodeDaoTest implements BPlusNodeDao {
 	
 	public BPlusNodeDaoTest() throws DataAccessException {
 		
+		this.nextKey = new BPlusNodeKey(0);
 		this.rootNode= this.insertNode(new BPlusLeafNode());
-		nextKey = new BPlusNodeKey(0);
 	}
 	
 	@Override
