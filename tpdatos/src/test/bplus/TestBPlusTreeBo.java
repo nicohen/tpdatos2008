@@ -46,6 +46,9 @@ abstract public class TestBPlusTreeBo extends TestCase {
 		_test_insert( "parseaste", 34);
 		_test_insert( "documentos", 254);
 		_test_insert( "laruta", 1000);		
+		_test_insert( "perro", 1000);		
+		_test_insert( "gato", 1200);		
+		_test_insert( "gatiperro", 3);
 	}
 
 }
