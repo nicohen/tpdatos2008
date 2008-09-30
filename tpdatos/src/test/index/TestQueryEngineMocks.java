@@ -10,11 +10,11 @@ import app.dao.documents.DocumentsDictionaryImp;
 import exceptions.BusinessException;
 import exceptions.DataAccessException;
 
-public class TestInsertQueryEngine extends TestQueryEngine {
+public class TestQueryEngineMocks extends TestQueryEngine {
 	
 	private Index index;
 	
-	protected TestInsertQueryEngine() {
+	protected TestQueryEngineMocks() {
 		super(
 				
 				new QueryEngine(
