@@ -28,7 +28,7 @@ public class IndexImp implements Index {
 		}
 	}
 	
-	public ArrayList<Integer> getDocuments(String word) throws BusinessException {
+	public Iterator<Integer> getDocuments(String word) throws BusinessException {
 		
 		DocumentIndexKey docBlockId;
 		ArrayList<byte[]> aux;
@@ -36,12 +36,13 @@ public class IndexImp implements Index {
 		Integer i;
 		docBlockId=this.obtainDocIndex(word);
 		aux=manager.get(docBlockId.getValue());
-		
-		for(i=0;i<aux.size();i++){
-			listaRet.add(KeyCodificationUtils.gammaDecode(aux.get(i)));
+		Iterator<byte[]> it=aux.iterator();
+		Iterator<Integer> itRet;
+		while(it.hasNext()){
+			listaRet.add(KeyCodificationUtils.gammaDecode(it.next()));
 		}
-		
-		return listaRet;
+		itRet=listaRet.iterator();
+		return itRet;
 	}
 
 	public void insertWord(String word, Integer docId)

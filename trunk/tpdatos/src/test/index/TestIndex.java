@@ -31,8 +31,8 @@ abstract public class TestIndex extends TestCase {
 			testObject.insertWord(word, id);
 		}
 		
-		ArrayList<Integer> recuperado = testObject.getDocuments(word);
-		Iterator<Integer> it=recuperado.iterator();
+		Iterator<Integer> recuperado = testObject.getDocuments(word);
+		Iterator<Integer> it=recuperado;
 		// comparar el original con el recuperado
 		
 		
@@ -41,7 +41,7 @@ abstract public class TestIndex extends TestCase {
 				Assert.assertTrue(false);
 			}
 			
-			Assert.assertEquals( original.next(), recuperado.iterator().next() );
+			Assert.assertEquals( original.next(), recuperado.next() );
 		}
 		
 		
