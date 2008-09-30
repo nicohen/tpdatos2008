@@ -10,9 +10,9 @@ import app.bo.IndexImp;
 import exceptions.BusinessException;
 
 public class QueryEngine {
-	private IndexImp indice;
+	private Index indice;
 	private DocumentsDictionary dicc;
-	public QueryEngine(IndexImp index,DocumentsDictionary dictionary){
+	public QueryEngine(Index index,DocumentsDictionary dictionary){
 		dicc=dictionary;
 		indice=index;
 		
