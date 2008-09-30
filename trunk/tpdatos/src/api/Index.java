@@ -1,5 +1,4 @@
 package api;
-import java.util.ArrayList;
 import java.util.Iterator;
 
 import exceptions.BusinessException;

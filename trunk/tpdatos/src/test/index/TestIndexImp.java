@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import junit.framework.Assert;
+import api.QueryEngine;
 import app.bo.IndexImp;
 import exceptions.BusinessException;
 
