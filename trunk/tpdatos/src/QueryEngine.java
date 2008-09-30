@@ -1,4 +1,4 @@
-package api;
+
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -10,9 +10,7 @@ public class QueryEngine {
 	private IndexImp indice;
 	
 	public QueryEngine(IndexImp index){
-		
 		indice=index;
-		
 	}
 	
 	public Iterator<Integer> ExecuteQuery(String consulta) throws BusinessException{

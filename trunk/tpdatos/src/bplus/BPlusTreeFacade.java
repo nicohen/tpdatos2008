@@ -1,11 +1,11 @@
 package bplus;
 
+import linkedblocks.keys.DocumentIndexKey;
 import api.bo.BPlusTree.BPlusTreeBo;
 import app.bo.bplus.BPlusTreeBoImp;
 import bplus.elements.BPlusLeafElement;
 import bplus.exceptions.KeyNotFoundException;
 import bplus.keys.BPlusElementKey;
-import documents.keys.DocumentIndexKey;
 import exceptions.DataAccessException;
 
 public class BPlusTreeFacade {

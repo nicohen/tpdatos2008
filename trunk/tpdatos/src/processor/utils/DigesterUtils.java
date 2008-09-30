@@ -1,4 +1,4 @@
-package utils.processor;
+package processor.utils;
 
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
@@ -12,8 +12,9 @@ import java.util.List;
 
 import org.htmlparser.util.ParserException;
 
-import utils.folders.Constants;
-import utils.web.HtmlUtils;
+import processor.IndexedDocumentChecker;
+
+import utils.Constants;
 import dto.WordDto;
 import exceptions.BusinessException;
 

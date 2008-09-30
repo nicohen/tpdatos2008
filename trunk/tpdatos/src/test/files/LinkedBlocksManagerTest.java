@@ -2,10 +2,11 @@ package test.files;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+
 import junit.framework.TestCase;
-import utils.KeyCodificationUtils;
-import api.LinkedBlocksManager;
-import api.VariableLinkedBlocksManager;
+import linkedblocks.LinkedBlocksManager;
+import linkedblocks.VariableLinkedBlocksManager;
+import linkedblocks.utils.KeyCodificationUtils;
 import app.po.persistors.LinkedBlockByteArrayPersistor;
 import app.po.persistors.LinkedBlockIntPersistor;
 import exceptions.DataAccessException;

@@ -1,6 +1,6 @@
 package test.index;
 
-import api.bo.Index;
+import api.Index;
 import app.bo.MockIndex;
 import exceptions.BusinessException;
 

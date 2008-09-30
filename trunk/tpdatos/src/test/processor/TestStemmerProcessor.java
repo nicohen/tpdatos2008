@@ -1,11 +1,11 @@
 package test.processor;
 
+import processor.stemming.StemmingProcessor;
 import junit.framework.TestCase;
-import utils.processor.StemmerProcessor;
 
 
 public class TestStemmerProcessor extends TestCase {
-	private StemmerProcessor stemmer = new StemmerProcessor();
+	private StemmingProcessor stemmer = new StemmingProcessor();
 	
 	public TestStemmerProcessor() {
 		stemmer.addSuffix("ando");

@@ -1,9 +1,10 @@
-package api;
+package linkedblocks.codification;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import utils.KeyCodificationUtils;
+import linkedblocks.utils.KeyCodificationUtils;
+
 import api.po.persistors.DistancesBlock;
 import exceptions.PersistanceException;
 

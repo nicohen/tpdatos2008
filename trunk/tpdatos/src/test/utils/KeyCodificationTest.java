@@ -1,7 +1,7 @@
 package test.utils;
 
 import junit.framework.TestCase;
-import utils.KeyCodificationUtils;
+import linkedblocks.utils.KeyCodificationUtils;
 
 public class KeyCodificationTest extends TestCase {
 
