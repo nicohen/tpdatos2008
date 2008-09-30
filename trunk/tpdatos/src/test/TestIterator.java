@@ -12,14 +12,14 @@ public class TestIterator extends TestCase {
 		List<Integer> lista = new ArrayList<Integer>();
 		
 		lista.add(1);
-	/*	lista.add(2);
-		lista.add(5);*/
+		lista.add(2);
+		lista.add(5);
 		
 		Iterator<Integer> it = lista.iterator();
 		
 		Assert.assertTrue( it.next() == 1);
-	/*	Assert.assertTrue( it.next() == 2);
-		Assert.assertTrue( it.next() == 5);*/
+		Assert.assertTrue( it.next() == 2);
+		Assert.assertTrue( it.next() == 5);
 		
 		it = lista.iterator();
 		
