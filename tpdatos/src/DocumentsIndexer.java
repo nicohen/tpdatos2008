@@ -39,7 +39,10 @@ public class DocumentsIndexer {
 		
 		//Inicializo las stopwords y las ordeno alfabeticamente y por cantidad de palabras ascendente
 		StopwordsProcessor stopwordsProcessor = new StopwordsProcessor();
-		
+
+		//Inicializo el stemmer
+		StemmingProcessor stemmingProcessor = new StemmingProcessor();
+
 		try {
 		
 			//Preparo los documentos que ya fueron indexados
@@ -67,15 +70,12 @@ public class DocumentsIndexer {
 					//Inicializo el pipeline para encolar terminos 
 					StopwordsPipelineDto stopwordsPipeline = new StopwordsPipelineDto();
 					
-					//Inicializo el stemmer
-					StemmingProcessor stemmer = new StemmingProcessor();
-					
 					//Me inicializo un tokenizer para recorrer los terminos del documento
-					StringTokenizer strTok = new StringTokenizer(documentText, " \n\t");
+					StringTokenizer strTok = new StringTokenizer(documentText, " \t\n\r\f");
 
 					//Hago un preload de terminos en el pipeline
 					while(strTok.hasMoreTokens() && stopwordsPipeline.getSize()<(stopwordsPipeline.getMaxSize()-1)) {
-						String token = strTok.nextToken().trim();
+						String token = (strTok.nextToken()).trim();
 						if (!"".equals(token) && token!=null) {
 							stopwordsPipeline.addWord(token);
 						}
@@ -86,7 +86,7 @@ public class DocumentsIndexer {
 						boolean hasMoreTokens = false;
 						String token = null;
 						if(strTok.hasMoreTokens()) {
-							 token = strTok.nextToken().trim();
+							 token = (strTok.nextToken()).trim();
 							 hasMoreTokens = true;
 						}
 
@@ -118,17 +118,17 @@ public class DocumentsIndexer {
 								
 								if(bestWordCompare==0) {
 									//El primer termino del pipeline no es stopword, por lo tanto se indexa
-									String indexWord = stemmer.stem(stopwordsPipeline.getFirstWord());
-									stopwordsPipeline.removeWords(1);
+									String indexWord = stemmingProcessor.stem(stopwordsPipeline.getFirstWord());
 									wordIndexer.insertWord(indexWord, document.getDocumentId());
-									log.info("[### AGREGADA ###] --> "+indexWord);
+									log.info("--> [INDEXED: "+indexWord+"] [RAW WORD: "+stopwordsPipeline.getFirstWord()+"]");
+									stopwordsPipeline.removeWords(1);
 								} else {
 									//Elimino stopword encontrado en pipeline
 									String eliminar = "";
 									for(int j=0;j<bestWordCompare;j++) {
 										eliminar+=stopwordsPipeline.getWord(j)+" ";
 									}
-									log.info("\t[### EXCLUIDA ###] --> "+eliminar.trim());
+									log.info("[STOPWORD: "+eliminar.trim()+"]");
 									stopwordsPipeline.removeWords(bestWordCompare);
 								}
 

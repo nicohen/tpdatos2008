@@ -18,7 +18,7 @@ public class DocumentsDictionaryImp implements DocumentsDictionary {
 	RelativeFile<DocumentDto> relativeFile = null;
 	
 	public DocumentsDictionaryImp() throws DataAccessException {
-		relativeFile = new RelativeFile<DocumentDto>("indexed_documents.bin",new DocumentPersistor(10));
+		relativeFile = new RelativeFile<DocumentDto>("indexed_documents.bin",new DocumentPersistor(100));
 	}
 	
 	@Override

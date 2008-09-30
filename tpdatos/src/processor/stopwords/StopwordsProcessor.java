@@ -19,13 +19,13 @@ public class StopwordsProcessor {
 	List<WordDto> stopwords = null;
 	
 	public StopwordsProcessor() throws IOException {
-		stopwords = this.prepareStopwords();
+		prepareStopwords();
 		Collections.sort(stopwords);
 	}
 	
 	@SuppressWarnings("deprecation")
-	public List<WordDto> prepareStopwords() throws IOException {
-		List<WordDto> stopwordsList = new ArrayList<WordDto>();
+	public void prepareStopwords() throws IOException {
+		stopwords = new ArrayList<WordDto>();
 		
 	    File file = new File(Constants.FILE_STOPWORDS);
 	    FileInputStream fis = null;
@@ -45,7 +45,7 @@ public class StopwordsProcessor {
 					words.add(DigesterUtils.formatText(dividedStopWord[i]));
 				}
 				WordDto wDto = new WordDto(words);
-				stopwordsList.add(wDto);
+				stopwords.add(wDto);
 			}
 
 			fis.close();
@@ -58,7 +58,6 @@ public class StopwordsProcessor {
 		  e.printStackTrace();
 		}		
 		
-	    return stopwordsList;
 	}
 
 	public List<WordDto> getStopwords() {

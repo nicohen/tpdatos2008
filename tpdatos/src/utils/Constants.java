@@ -10,12 +10,16 @@ public class Constants {
 	
 	// /src
 	public static final String FOLDER_SOURCE = "src";
-		// /src/utils
+		// /src/processor
 		public static final String FOLDER_PROCESSOR = FOLDER_SOURCE+File.separator+"processor";
-			// /src/utils/stopwords
+			// /src/processor/stopwords
 			public static final String FOLDER_STOPWORDS = FOLDER_PROCESSOR+File.separator+"stopwords";
-				// /src/utils/stopwords/stopwords.txt
+				// /src/processor/stopwords/stopwords.txt
 				public static final String FILE_STOPWORDS = FOLDER_STOPWORDS+File.separator+"stopwords.txt";
+			// /src/processor/stemming
+			public static final String FOLDER_STEMMING = FOLDER_PROCESSOR+File.separator+"stemming";
+				// /src/processor/stemming/stemming.txt
+				public static final String FILE_STEMMING = FOLDER_STEMMING+File.separator+"stemming.txt";
 	
 				
 	public static final String INDEX_FILE_PATH = "index.bin";
