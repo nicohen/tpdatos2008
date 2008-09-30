@@ -1,3 +1,6 @@
+import processor.stemming.StemmingProcessor;
+import processor.stopwords.StopwordsProcessor;
+import processor.utils.DigesterUtils;
 import utils.Constants;
 import api.QueryEngine;
 import api.dao.documents.DocumentsDictionary;
@@ -17,6 +20,23 @@ public class SearchEngine {
 			return;
 		}
 		
+		//Inicializo diccionario de stopwords
+		StopwordsProcessor sw = new StopwordsProcessor();
+		//Inicializo diccionario de stemming
+		StemmingProcessor sp = new StemmingProcessor();
+
+		//Normalizo el termino de busqueda (Case Folding, stopwords, stemming, etc)
+		word = DigesterUtils.formatText(word).trim();
+
+		//Chequeo que el termino ingresado no sea un stopword
+		if(!sw.isStopword(word)) {
+			//Aplico stemming al termino
+			word = sp.stem(word);
+		} else {
+			System.out.println("El termino ingresado es un stopword, ingreselo nuevamente");
+			return;
+		}
+		
 		//Realizo la consulta del termino
 		IndexImp index = new IndexImp(Constants.INDEX_FILE_PATH,Constants.INDEX_FILE_SIZE);
 		DocumentsDictionary dicc = new DocumentsDictionaryImp();
@@ -29,3 +49,4 @@ public class SearchEngine {
 
 	}
 }
+

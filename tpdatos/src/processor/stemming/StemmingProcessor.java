@@ -68,9 +68,7 @@ public class StemmingProcessor {
 				
 				String finalString = str.substring( str.length() - suffix.length() );
 				if ( finalString.equals( suffix.getSuffix() ) ) {
-//					if (str.length() - suffix.length() >= 3) {
-						return str.substring(0, str.length() - suffix.length() );
-//					}
+					return str.substring(0, str.length() - suffix.length() );
 				}
 			}
 		}

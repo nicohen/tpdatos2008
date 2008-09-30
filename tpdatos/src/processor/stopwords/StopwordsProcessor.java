@@ -18,13 +18,13 @@ public class StopwordsProcessor {
 
 	List<WordDto> stopwords = null;
 	
-	public StopwordsProcessor() throws IOException {
+	public StopwordsProcessor() {
 		prepareStopwords();
 		Collections.sort(stopwords);
 	}
 	
 	@SuppressWarnings("deprecation")
-	public void prepareStopwords() throws IOException {
+	public void prepareStopwords()  {
 		stopwords = new ArrayList<WordDto>();
 		
 	    File file = new File(Constants.FILE_STOPWORDS);
@@ -64,5 +64,8 @@ public class StopwordsProcessor {
 		return stopwords;
 	}
 
+	public boolean isStopword(String word) {
+		return stopwords.contains(word); 
+	}
 	
 }
