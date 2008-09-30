@@ -1,4 +1,4 @@
-package api;
+
 
 import app.bo.IndexImp;
 import app.bo.MockDocumentsDictionary;

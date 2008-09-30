@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import junit.framework.Assert;
-import api.QueryEngine;
 import app.bo.IndexImp;
 import exceptions.BusinessException;
 
@@ -12,14 +11,13 @@ public class TestIndexImp extends TestIndex {
 
 	public TestIndexImp() throws BusinessException {
 		//super();
-		testInsertRetrieve();
 	}
 
 	@Override
 	protected IndexImp createTestObject() throws BusinessException {
 		return new IndexImp("index.bin", 4096) ;
 	}
-	
+	/*
 	public void testInsertRetrieve() throws BusinessException{
 		IndexImp index = this.createTestObject();
 		QueryEngine engine=new QueryEngine(index);
@@ -47,6 +45,6 @@ public class TestIndexImp extends TestIndex {
 			i++;
 		}
 		
-	}
+	}*/
 
 }
