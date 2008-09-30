@@ -15,10 +15,10 @@ public class QueryEngine {
 		
 	}
 	
-	public ArrayList<Integer> ExecuteQuery(String consulta) throws BusinessException{
+	public Iterator<Integer> ExecuteQuery(String consulta) throws BusinessException{
 		ArrayList<String> listaRet=new ArrayList<String>();
 		ArrayList<Integer> listaAux=new ArrayList<Integer>();
-		ArrayList<Integer> itAux;
+		Iterator<Integer> itAux;
 		
 		itAux=indice.getDocuments(consulta);
 		

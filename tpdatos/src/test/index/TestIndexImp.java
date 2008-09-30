@@ -3,6 +3,8 @@ package test.index;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import junit.framework.Assert;
+
 import api.QueryEngine;
 import api.bo.Index;
 import app.bo.IndexImp;
@@ -24,6 +26,7 @@ public class TestIndexImp extends TestIndex {
 		IndexImp index = this.createTestObject();
 		QueryEngine engine=new QueryEngine(index);
 		ArrayList<Integer> list;
+		Iterator<Integer> it;
 		index.insertWord("perro", 1);
 		index.insertWord("perro", 2);
 		index.insertWord("perro", 3);
@@ -35,7 +38,17 @@ public class TestIndexImp extends TestIndex {
 		index.insertWord("gato", 9);
 		index.insertWord("gato", 10);
 		
-		list=engine.ExecuteQuery("gato");
+		it=engine.ExecuteQuery("gato");
+		int i=6;
+		
+		while(it.hasNext()){
+			it.next();
+			//Assert.assertTrue(it.next()==i);
+			if (i==10)
+			i=6;
+			else
+			i++;
+		}
 		
 	}
 

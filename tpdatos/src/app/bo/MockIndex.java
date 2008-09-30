@@ -15,10 +15,10 @@ public class MockIndex implements Index {
 	private Map<String,ArrayList<Integer> > map = new HashMap<String,ArrayList<Integer> >();
 	
 	@Override
-	public ArrayList<Integer> getDocuments(String word) throws BusinessException {
+	public Iterator<Integer> getDocuments(String word) throws BusinessException {
 		
 		try {
-			return map.get(word);
+			return map.get(word).iterator();
 		} catch ( NullPointerException e ) {
 			throw new BusinessException();
 		}
