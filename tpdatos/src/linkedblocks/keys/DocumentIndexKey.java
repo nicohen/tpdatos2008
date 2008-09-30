@@ -1,4 +1,4 @@
-package documents.keys;
+package linkedblocks.keys;
 
 public class DocumentIndexKey {
 

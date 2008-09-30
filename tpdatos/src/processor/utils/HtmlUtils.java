@@ -1,4 +1,4 @@
-package utils.web;
+package processor.utils;
 
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;

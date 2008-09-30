@@ -3,14 +3,15 @@ package app.bo;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import utils.KeyCodificationUtils;
-import api.VariableLinkedBlocksManager;
-import api.bo.Index;
+import linkedblocks.VariableLinkedBlocksManager;
+import linkedblocks.keys.DocumentIndexKey;
+import linkedblocks.utils.KeyCodificationUtils;
+
+import api.Index;
 import app.po.persistors.LinkedBlockByteArrayPersistor;
 import bplus.BPlusTreeFacade;
 import bplus.MockBPlusTreeFacade;
 import bplus.exceptions.KeyNotFoundException;
-import documents.keys.DocumentIndexKey;
 import exceptions.BusinessException;
 import exceptions.DataAccessException;
 

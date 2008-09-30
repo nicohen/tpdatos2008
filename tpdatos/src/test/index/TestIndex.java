@@ -7,7 +7,7 @@ import java.util.List;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;
-import api.bo.Index;
+import api.Index;
 import exceptions.BusinessException;
 
 abstract public class TestIndex extends TestCase {

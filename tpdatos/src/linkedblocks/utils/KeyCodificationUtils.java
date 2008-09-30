@@ -1,4 +1,4 @@
-package utils;
+package linkedblocks.utils;
 
 import java.util.BitSet;
 

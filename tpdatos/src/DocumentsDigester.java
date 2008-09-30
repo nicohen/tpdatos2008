@@ -6,9 +6,11 @@ import java.util.StringTokenizer;
 
 import org.apache.log4j.Logger;
 
-import utils.folders.Constants;
-import utils.processor.DigesterUtils;
-import utils.processor.IndexedDocumentChecker;
+import processor.IndexedDocumentChecker;
+import processor.stemming.StemmingProcessor;
+import processor.utils.DigesterUtils;
+
+import utils.Constants;
 import dto.DocumentDto;
 import dto.StopwordsPipelineDto;
 import dto.WordDto;
@@ -68,6 +70,9 @@ public class DocumentsDigester {
 					//Inicializo el objeto para encolar terminos 
 					StopwordsPipelineDto stopwordsPipeline = new StopwordsPipelineDto();
 					
+					//Inicializo el stemmer
+					StemmingProcessor stemmer = new StemmingProcessor();
+					
 					//Me inicializo un tokenizer para recorrer los terminos del documento
 					StringTokenizer strTok = new StringTokenizer(documentText, " \n\t");
 
@@ -116,7 +121,8 @@ public class DocumentsDigester {
 								
 								if(bestWordCompare==0) {
 									//El primer termino del pipeline no es stopword
-									log.info("[### AGREGADA ###] --> "+stopwordsPipeline.getFirstWord());
+									log.info("[### AGREGADA ###] --> "+stemmer.stem(stopwordsPipeline.getFirstWord()));
+									
 									stopwordsPipeline.removeWords(1);
 								} else {
 									String eliminar = "";

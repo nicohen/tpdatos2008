@@ -1,4 +1,4 @@
-package api.bo;
+package api;
 import dto.DocumentDto;
 import exceptions.BusinessException;
 
