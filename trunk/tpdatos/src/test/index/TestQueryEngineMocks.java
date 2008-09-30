@@ -14,7 +14,7 @@ public class TestQueryEngineMocks extends TestQueryEngine {
 	
 	private Index index;
 	
-	protected TestQueryEngineMocks() {
+	public TestQueryEngineMocks() {
 		super(
 				
 				new QueryEngine(
