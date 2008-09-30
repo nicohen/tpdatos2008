@@ -42,14 +42,27 @@ abstract public class TestBPlusTreeBo extends TestCase {
 		
 		//bo.insertElement( new BPlusLeafElement( new BPlusElement) );
 		_test_insert( "bplus", 2);
+		this.bo.dump();
+		System.out.println("--------------------------------------------------------");
 		_test_insert( "b9999", 9999);
+		this.bo.dump();
+		System.out.println("--------------------------------------------------------");
 		_test_insert( "parseaste", 34);
+		this.bo.dump();
+		System.out.println("--------------------------------------------------------");
 		_test_insert( "documentos", 254);
-		_test_insert( "laruta", 1000);		
-		_test_insert( "perro", 1000);		
-		_test_insert( "gato", 1200);		
+		this.bo.dump();
+		System.out.println("--------------------------------------------------------");
+		_test_insert( "laruta", 1000);
+		this.bo.dump();
+		System.out.println("--------------------------------------------------------");
+		_test_insert( "perro", 1000);
+		this.bo.dump();
+		System.out.println("--------------------------------------------------------");
+		_test_insert( "gato", 1200);
+		this.bo.dump();
+		System.out.println("--------------------------------------------------------");
 		_test_insert( "gatiperro", 3);
-		
 		this.bo.dump();
 	}
 
