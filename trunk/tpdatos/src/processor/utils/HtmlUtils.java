@@ -48,11 +48,11 @@ public final class HtmlUtils {
 	}
 	
 	public static String deleteTags(String html) {
-		return html.replaceAll("<(.|\n)*?>", " ");
+		return html.replaceAll("<(.|\n)*?>", "#");
 	}
 	
 	public static String deleteScripts(String html) {
-		return html.replaceAll("<script(.|\n)*?>(.|\n)*?</script>", " ");
+		return html.replaceAll("<script(.|\n)*?>(.|\n)*?</script>", "#");
 	}
 	
 	public static String decodeSpecialHtmlCharacters(String html) {

@@ -1,15 +1,31 @@
 <html>
 <head>
+
 [head sin script]
 <script>
 [head con script]
 </script>
+al fin y al cabo
 </head>
 <body>
+al FIN y al cab&oacute;
 [este es el body sin scripts version 1]
+&eacute;&nbsp;&nbsp
 <script>
 [este es el body pero con el script]
+al fin y al cabo
 </script>
+mirador
+mirando
+mirante
+almirancia
+admiracion
+programacion
+programativo
+programador
+programaste
+programa
+programadores
 [este es el body sin scripts version 2]
 </body>
 </html>
