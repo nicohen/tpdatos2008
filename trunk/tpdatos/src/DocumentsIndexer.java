@@ -36,8 +36,6 @@ public class DocumentsIndexer {
 		//Preparo los nuevos documentos a indexar
 		File[] newDocuments = DocumentsDictionaryImp.prepareNewDocuments(Constants.FOLDER_DOCUMENTS);
 		
-		DocumentDto document = null;
-		
 		//Inicializo las stopwords y las ordeno alfabeticamente y por cantidad de palabras ascendente
 		StopwordsProcessor stopwordsProcessor = new StopwordsProcessor();
 
@@ -53,7 +51,7 @@ public class DocumentsIndexer {
 
 			//Recorro los nuevos documentos a indexar
 			for (int i=0;i<newDocuments.length;i++) {
-				document = new DocumentDto(newDocuments[i].getName());
+				DocumentDto document = new DocumentDto(newDocuments[i].getName());
 				log.info("---------------------------------------------------------------------");
 				log.info("Intentando indexar documento ["+document.getFileName()+"]");
 
