@@ -15,18 +15,18 @@ public class QueryEngine {
 		
 	}
 	
-	public Iterator<String> ExecuteQuery(String consulta) throws BusinessException{
+	public ArrayList<Integer> ExecuteQuery(String consulta) throws BusinessException{
 		ArrayList<String> listaRet=new ArrayList<String>();
 		ArrayList<Integer> listaAux=new ArrayList<Integer>();
-		Iterator<Integer> itAux;
+		ArrayList<Integer> itAux;
 		
 		itAux=indice.getDocuments(consulta);
 		
-		while (itAux.hasNext()){
+		//while (itAux.hasNext()){
 			//listaRet.add(Dictionary.GetStringFromId(itAux.next()));
-		}
+		//}
 		
-		return listaRet.iterator();
+		return itAux;
 	}
 	
 }
