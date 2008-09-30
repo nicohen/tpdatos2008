@@ -1,4 +1,4 @@
-package api;
+
 
 
 
@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import exceptions.BusinessException;
+import api.DocumentsDictionary;
 import app.bo.IndexImp;
 
 public class QueryEngine {
