@@ -97,7 +97,7 @@ public class IndexImp implements Index {
 		return newBlockId;
 	}
 	protected BPlusTreeFacade createBTree() throws DataAccessException {
-		return new MockBPlusTreeFacade();
+		return new BPlusTreeFacade();
 	}
 
 }
