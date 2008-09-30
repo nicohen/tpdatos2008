@@ -30,7 +30,7 @@ public class KeyCodificationUtils {
 		boolean flag;
 		if (key==1) {
 			cjto=new BitSet(key);
-			cjto.set(0,false);
+			cjto.set(0,true);
 			return toByteArray(cjto);
 		}
 		
@@ -75,6 +75,7 @@ public class KeyCodificationUtils {
 			contUnario++;
 			i++;
 		}
+		if (contUnario==0) return 1;
 		i++;//ignoro el 1
 		for(int k=i;k<set.length()-1;k++){
 			contBinario++;

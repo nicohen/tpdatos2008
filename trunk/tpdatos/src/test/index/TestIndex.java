@@ -1,14 +1,16 @@
 package test.index;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
 import junit.framework.Assert;
+import junit.framework.TestCase;
 import api.bo.Index;
 import exceptions.BusinessException;
 
-abstract public class TestIndex /*extends TestCase*/ {
+abstract public class TestIndex extends TestCase {
 	private Index testObject;
 	
 	abstract protected Index createTestObject() throws BusinessException;
@@ -29,17 +31,17 @@ abstract public class TestIndex /*extends TestCase*/ {
 			testObject.insertWord(word, id);
 		}
 		
-		Iterator<Integer> recuperado = testObject.getDocuments(word);
-		
+		ArrayList<Integer> recuperado = testObject.getDocuments(word);
+		Iterator<Integer> it=recuperado.iterator();
 		// comparar el original con el recuperado
 		
 		
 		while ( original.hasNext() ) {
-			if (! recuperado.hasNext() ) {
+			if (! it.hasNext() ) {
 				Assert.assertTrue(false);
 			}
 			
-			Assert.assertEquals( original.next(), recuperado.next() );
+			Assert.assertEquals( original.next(), recuperado.iterator().next() );
 		}
 		
 		

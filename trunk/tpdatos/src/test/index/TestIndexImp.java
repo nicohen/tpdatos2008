@@ -1,5 +1,9 @@
 package test.index;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import api.QueryEngine;
 import api.bo.Index;
 import app.bo.IndexImp;
 import exceptions.BusinessException;
@@ -7,12 +11,33 @@ import exceptions.BusinessException;
 public class TestIndexImp extends TestIndex {
 
 	public TestIndexImp() throws BusinessException {
-		super();
+		//super();
+		testInsertRetrieve();
 	}
 
 	@Override
-	protected Index createTestObject() throws BusinessException {
-		return new IndexImp("distances.dat", 4096) ;
+	protected IndexImp createTestObject() throws BusinessException {
+		return new IndexImp("index.bin", 4096) ;
+	}
+	
+	protected void testInsertRetrieve() throws BusinessException{
+		IndexImp index = this.createTestObject();
+		QueryEngine engine=new QueryEngine(index);
+		ArrayList<Integer> list;
+		index.insertWord("perro", 1);
+		index.insertWord("perro", 2);
+		index.insertWord("perro", 3);
+		index.insertWord("perro", 4);
+		index.insertWord("perro", 5);
+		index.insertWord("gato", 6);
+		index.insertWord("gato", 7);
+		index.insertWord("gato", 8);
+		index.insertWord("gato", 9);
+		index.insertWord("gato", 10);
+		
+		list=engine.ExecuteQuery("perro");
+		
+		
 	}
 
 }
