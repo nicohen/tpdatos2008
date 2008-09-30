@@ -13,7 +13,6 @@ import java.util.List;
 import org.htmlparser.util.ParserException;
 
 import processor.IndexedDocumentChecker;
-
 import utils.Constants;
 import dto.WordDto;
 import exceptions.BusinessException;
@@ -45,7 +44,6 @@ public final class DigesterUtils {
 	public static IndexedDocumentChecker prepareIndexedDocuments() throws BusinessException {
 		
 		IndexedDocumentChecker checker = new IndexedDocumentChecker();
-		//Map<Integer,String> documentsMap = new TreeMap<Integer,String>();
 		
 //		AbstractPersistor<DocumentDto> persistor = new DocumentPersistor(10);
 //		try {
@@ -53,10 +51,9 @@ public final class DigesterUtils {
 //			DocumentDto document = null;
 //			int docId = 0;
 //			while((document=relativeFile.get(docId++))!=null) {
-//				documentsMap.put(document.getDocumentId(), document.getFileName());
+//				checker.addDocument(document.getDocumentId(), document.getFileName());
 //			}
 //
-//			return documentsMap;
 //		} catch (DataAccessException e) {
 //			throw new BusinessException("Error inicializando RelativeFile de documentos indexados",e);
 //		}
@@ -192,14 +189,15 @@ public final class DigesterUtils {
 
 
 	public static String getFormatedHtmlFile(File file) throws ParserException {
-		String documentText = HtmlUtils.readHtmlFile(file.getPath());
-		documentText = HtmlUtils.getHtmlBody(documentText);
-		documentText = HtmlUtils.deleteScripts(documentText);
-		documentText = HtmlUtils.deleteTags(documentText);
-		documentText = HtmlUtils.decodeSpecialHtmlCharacters(documentText);
+		String documentText = HtmlUtils.formatHtmlFile(file);
+		return DigesterUtils.formatText(documentText);
+	}
+
+	public static String formatText(String documentText) {
 		documentText = DigesterUtils.applyCaseFolding(documentText);
 		documentText = DigesterUtils.updateAcuteAndUmlaut(documentText);
-		return DigesterUtils.deleteSpecialCharacters(documentText);
+		return 		   DigesterUtils.deleteSpecialCharacters(documentText);
+
 	}
 
 }

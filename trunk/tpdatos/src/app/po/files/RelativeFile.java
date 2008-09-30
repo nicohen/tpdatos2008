@@ -58,7 +58,7 @@ public class RelativeFile<E> extends AbstractFile<E> {
 				throw new DataAccessException("Error obteniendo elemento.",e);
 			}
 		}else{
-			throw new DataAccessException("Id de elemento inexistente");
+			throw new DataAccessException("Elemento inexistente para el [ELEMENT_ID="+elementId+"]");
 		}
 	}
 

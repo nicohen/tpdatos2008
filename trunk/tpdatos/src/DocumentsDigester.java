@@ -9,8 +9,8 @@ import org.apache.log4j.Logger;
 import processor.IndexedDocumentChecker;
 import processor.stemming.StemmingProcessor;
 import processor.utils.DigesterUtils;
-
 import utils.Constants;
+import app.bo.IndexImp;
 import dto.DocumentDto;
 import dto.StopwordsPipelineDto;
 import dto.WordDto;
@@ -34,6 +34,9 @@ public class DocumentsDigester {
 		
 		Logger log = Logger.getLogger(DocumentsDigester.class);
 		
+		IndexImp wordIndexer = new IndexImp(Constants.INDEX_FILE_PATH, Constants.INDEX_FILE_SIZE) ;
+//		QueryEngine engine=new QueryEngine(index);
+		
 		//Preparo los nuevos documentos a indexar
 		File[] newDocuments = DigesterUtils.prepareNewDocuments(Constants.FOLDER_DOCUMENTS);
 		DocumentDto document = null;
@@ -41,7 +44,7 @@ public class DocumentsDigester {
 		//Inicializo las stopwords y las ordeno por cantidad de palabras y alfabeticamente
 		List<WordDto> stopWords = DigesterUtils.prepareStopwords();		
 		Collections.sort(stopWords);
-		log.info(stopWords.toString());
+//		log.info(stopWords.toString());
 		
 		try {
 		
@@ -121,8 +124,9 @@ public class DocumentsDigester {
 								
 								if(bestWordCompare==0) {
 									//El primer termino del pipeline no es stopword
-									log.info("[### AGREGADA ###] --> "+stemmer.stem(stopwordsPipeline.getFirstWord()));
-									
+									String indexWord = stemmer.stem(stopwordsPipeline.getFirstWord());
+									log.info("[### AGREGADA ###] --> "+indexWord);
+									wordIndexer.insertWord(indexWord, document.getDocumentId());
 									stopwordsPipeline.removeWords(1);
 								} else {
 									String eliminar = "";
