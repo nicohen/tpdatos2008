@@ -6,11 +6,9 @@ import java.util.Iterator;
 import linkedblocks.VariableLinkedBlocksManager;
 import linkedblocks.keys.DocumentIndexKey;
 import linkedblocks.utils.KeyCodificationUtils;
-
 import api.Index;
 import app.po.persistors.LinkedBlockByteArrayPersistor;
 import bplus.BPlusTreeFacade;
-import bplus.MockBPlusTreeFacade;
 import bplus.exceptions.KeyNotFoundException;
 import exceptions.BusinessException;
 import exceptions.DataAccessException;
@@ -34,7 +32,6 @@ public class IndexImp implements Index {
 		DocumentIndexKey docBlockId;
 		ArrayList<byte[]> aux;
 		ArrayList<Integer> listaRet=new ArrayList<Integer>();
-		Integer i;
 		docBlockId=this.obtainDocIndex(word);
 		aux=manager.get(docBlockId.getValue());
 		Iterator<byte[]> it=aux.iterator();

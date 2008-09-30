@@ -11,9 +11,9 @@ public class Constants {
 	// /src
 	public static final String FOLDER_SOURCE = "src";
 		// /src/utils
-		public static final String FOLDER_UTILITIES = FOLDER_SOURCE+File.separator+"utils";
+		public static final String FOLDER_PROCESSOR = FOLDER_SOURCE+File.separator+"processor";
 			// /src/utils/stopwords
-			public static final String FOLDER_STOPWORDS = FOLDER_UTILITIES+File.separator+"stopwords";
+			public static final String FOLDER_STOPWORDS = FOLDER_PROCESSOR+File.separator+"stopwords";
 				// /src/utils/stopwords/stopwords.txt
 				public static final String FILE_STOPWORDS = FOLDER_STOPWORDS+File.separator+"stopwords.txt";
 	
