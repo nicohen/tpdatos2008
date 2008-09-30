@@ -37,7 +37,6 @@ public class TestIndexImp extends TestIndex {
 		
 		list=engine.ExecuteQuery("gato");
 		
-		
 	}
 
 }
