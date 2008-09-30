@@ -35,7 +35,7 @@ public class TestIndexImp extends TestIndex {
 		index.insertWord("gato", 9);
 		index.insertWord("gato", 10);
 		
-		list=engine.ExecuteQuery("perro");
+		list=engine.ExecuteQuery("gato");
 		
 		
 	}
