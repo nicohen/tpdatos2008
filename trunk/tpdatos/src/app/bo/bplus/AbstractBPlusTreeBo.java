@@ -26,12 +26,13 @@ abstract public class AbstractBPlusTreeBo implements BPlusTreeBo {
 	private BPlusNodeDao nodeDao;
 	private BPlusNode root;
 	
-	abstract protected BPlusNodeDao createDao() throws DataAccessException;
+	protected void setDao( BPlusNodeDao dao) throws DataAccessException {
+		this.nodeDao = dao;
+		this.root=nodeDao.getRootNode();
+	}
 		
 	public AbstractBPlusTreeBo() throws DataAccessException{
 		super();
-		this.nodeDao=createDao();
-		this.root=nodeDao.getRootNode();
 	}
 	
 	@Override

@@ -18,9 +18,7 @@ public class BPlusTreeBoImp extends AbstractBPlusTreeBo {
 	public BPlusTreeBoImp( String filename, int nodeSize ) throws DataAccessException {
 		this.filename= filename;
 		this.nodeSize = nodeSize;
+		setDao(new BPlusNodeDaoImp(filename,nodeSize));
 	}
 	
-	protected BPlusNodeDao createDao () throws DataAccessException {
-		return new BPlusNodeDaoImp(filename,nodeSize);
-	}
 }
