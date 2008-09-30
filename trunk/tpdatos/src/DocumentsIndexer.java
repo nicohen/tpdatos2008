@@ -21,11 +21,11 @@ import exceptions.BusinessException;
  * Clase main para indexar nuevos documentos
  */
 
-public class DocumentsDigester {
+public class DocumentsIndexer {
 	
 	public static void main(String[] args) throws Exception {
 		
-		Logger log = Logger.getLogger(DocumentsDigester.class);
+		Logger log = Logger.getLogger(DocumentsIndexer.class);
 		
 		//Me instancio un indexador de terminos para poder indexarlos
 		IndexImp wordIndexer = new IndexImp(Constants.INDEX_FILE_PATH, Constants.INDEX_FILE_SIZE) ;
