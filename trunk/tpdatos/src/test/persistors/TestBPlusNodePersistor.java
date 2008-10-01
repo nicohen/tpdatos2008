@@ -1,5 +1,6 @@
 package test.persistors;
 
+import test.bplus.BPlusNodeTestUtils;
 import api.po.persistors.Persistor;
 import app.po.persistors.BPlusNodePersistor;
 import bplus.elements.BPlusLeafElement;
@@ -14,6 +15,11 @@ public class TestBPlusNodePersistor extends TestPersistor<BPlusNode>{
 	protected Persistor<BPlusNode> createTestObject() {
 		// TODO Auto-generated method stub
 		return new BPlusNodePersistor(4096);
+	}
+	
+	@Override
+	public void localAssertEquals(BPlusNode node1, BPlusNode node2) {
+		BPlusNodeTestUtils.assertElementsEquals(node1.getElements(), node2.getElements() );
 	}
 	
 	public void test() throws PersistanceException {

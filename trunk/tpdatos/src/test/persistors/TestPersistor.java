@@ -29,7 +29,11 @@ abstract public class TestPersistor<E> extends TestCase {
 		E elementoRecuperado = persistor.read(new DataInputStream(inputStream));
 		
 		
-		Assert.assertEquals( elementoInsertado, elementoRecuperado );
+		localAssertEquals( elementoInsertado, elementoRecuperado );
+	}
+	
+	protected void localAssertEquals( E e1, E e2) {
+		Assert.assertEquals( e1, e2 );
 	}
 	
 	public TestPersistor() {
