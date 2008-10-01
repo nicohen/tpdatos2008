@@ -7,6 +7,7 @@ import utils.Constants;
 import api.dao.documents.DocumentsDictionary;
 import app.po.files.RelativeFile;
 import app.po.files.SecuencialFile;
+import app.po.files.SecuentialFile;
 import app.po.persistors.DocumentDataPersistor;
 import app.po.persistors.DocumentInfoPersistor;
 import dto.DocumentDto;
@@ -17,18 +18,18 @@ import exceptions.PersistanceException;
 public class DocumentsDictionaryImp implements DocumentsDictionary {
 	
 	RelativeFile<DocumentDto> relativeFile = null;
-	RelativeFile<String> dataFile;
+	SecuentialFile<String> nameFile;
 	public DocumentsDictionaryImp() throws DataAccessException {
 
 		relativeFile = new RelativeFile<DocumentDto>("indexed_documents.bin",new DocumentInfoPersistor());
-		dataFile=new RelativeFile<String>("document_names.txt",new DocumentDataPersistor());
+		nameFile=new SecuentialFile<String>("document_names.txt",new DocumentDataPersistor());
 	}
 	
 	@Override
 	public DocumentDto getDocument(Integer id) throws BusinessException {
 		try {
 			DocumentDto dDto = relativeFile.get(id);
-			dDto.setFileName(dataFile.get(id));
+			dDto.setFileName(nameFile.get(id));
 			return dDto; 
 		} catch(DataAccessException e) {
 			throw new BusinessException("",e);
@@ -39,7 +40,7 @@ public class DocumentsDictionaryImp implements DocumentsDictionary {
 	public Integer insertDocument(DocumentDto document) throws BusinessException {
 		try {
 			//agrego el string de nombre al archivo secuencial
-			document.setOffset(dataFile.add(document.getFileName()));
+			document.setOffset(nameFile.add(document.getFileName()));
 			return relativeFile.add(document);
 		} catch (DataAccessException e) {
 			throw new BusinessException("Error inicializando RelativeFile de documentos indexados",e);
@@ -56,7 +57,7 @@ public class DocumentsDictionaryImp implements DocumentsDictionary {
 			DocumentDto document = null;
 			for(int i=0;i<relativeFile.getSize();i++) {
 				document=relativeFile.get(i++);
-				document.setFileName(dataFile.get(i));
+				document.setFileName(nameFile.get(i));
 				checker.addDocument(document.getDocumentId(), document.getFileName());
 			}
 
