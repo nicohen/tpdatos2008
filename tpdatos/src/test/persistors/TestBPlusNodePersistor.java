@@ -1,5 +1,6 @@
 package test.persistors;
 
+import junit.framework.Assert;
 import test.bplus.BPlusNodeTestUtils;
 import api.po.persistors.Persistor;
 import app.po.persistors.BPlusNodePersistor;
@@ -20,8 +21,9 @@ public class TestBPlusNodePersistor extends TestPersistor<BPlusNode>{
 	@Override
 	public void localAssertEquals(BPlusNode node1, BPlusNode node2) {
 		BPlusNodeTestUtils.assertElementsEquals(node1.getElements(), node2.getElements() );
+		Assert.assertEquals(node1.getNodeKey(), node2.getNodeKey() );
 	}
-	
+
 	public void test() throws PersistanceException {
 		BPlusNode node = new BPlusLeafNode();
 		
