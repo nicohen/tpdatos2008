@@ -21,7 +21,6 @@ public class StemmingProcessor {
 	public StemmingProcessor() {
 		prepareSuffixes();
 		Collections.sort(suffixList);
-		System.out.println(suffixList.toString());
 	}
 	
 	@SuppressWarnings("deprecation")
