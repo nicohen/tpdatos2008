@@ -1,11 +1,12 @@
 package test.index;
 
-import api.dao.documents.DocumentsDictionary;
+import exceptions.DataAccessException;
+import app.dao.documents.DocumentsDictionaryImp;
 
 public class TestDocumentsDictionaryImp extends TestDocumentsDictionary {
 
-	public TestDocumentsDictionaryImp(DocumentsDictionary dict) {
-		super(dict);
+	public TestDocumentsDictionaryImp() throws DataAccessException {
+		super(new DocumentsDictionaryImp() );
 		// TODO Auto-generated constructor stub
 	}
 
