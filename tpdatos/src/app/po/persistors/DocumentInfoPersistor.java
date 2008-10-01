@@ -12,6 +12,7 @@ public class DocumentInfoPersistor extends AbstractPersistor<DocumentDto> {
 	
 	public DocumentInfoPersistor() {
 		super();
+		
 	}
 	
 	@Override
@@ -29,7 +30,7 @@ public class DocumentInfoPersistor extends AbstractPersistor<DocumentDto> {
 	@Override
 	public int getDataSize() {
 		// TODO Auto-generated method stub
-		return 0;
+		return 8;
 	}
 
 /*	public int getElementSize(DocumentDto element) {
