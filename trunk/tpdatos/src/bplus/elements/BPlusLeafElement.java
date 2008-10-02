@@ -23,6 +23,34 @@ public class BPlusLeafElement extends BPlusAbstractElement {
 		this.value= value;
 	}
 	
+	private boolean equalsValue( Integer value ) {
+		if (this.value != null && value != null) {
+			return this.value.equals(value);
+		} else {
+			if (this.value == null && value == null) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		
+		try {
+			BPlusLeafElement elemento = (BPlusLeafElement)obj;
+
+			return equalsKey(elemento.getKey() ) &&
+					equalsValue(elemento.getValue());
+			
+		} catch (Exception e) {
+			return false;
+		}
+		
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
