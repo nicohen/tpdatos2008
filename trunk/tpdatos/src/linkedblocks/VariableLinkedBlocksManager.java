@@ -22,7 +22,8 @@ public class VariableLinkedBlocksManager extends LinkedBlocksManager<byte[]> {
 		try {
 			dataSize=elem.length+LinkedBlock.REG_ADMIN_DATA;//el 2 es el nro de long a leer
 			reg=archivo.get(blockId);
-			
+			if ((blockId==0)&&(archivo.getSize()==0))
+			archivo.add(reg);
 			while(reg.getNextBlock()!=0){
 				if (dataSize<=reg.getFreeRegsNum())
 					break;
@@ -34,7 +35,8 @@ public class VariableLinkedBlocksManager extends LinkedBlocksManager<byte[]> {
 			if (dataSize>reg.getFreeRegsNum()){
 				regAux.setElem(elem);
 				newBlockId=archivo.add(regAux);//obtengo id del siguiente bloque
-				reg.setNextBlock(newBlockId-1);//seteo el puntero a siguiente
+				reg.setNextBlock(newBlockId);//seteo el puntero a siguiente
+				
 				if (nextBlockId!=0)
 				   archivo.update(nextBlockId,reg);
 				else

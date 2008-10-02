@@ -10,8 +10,11 @@ import api.po.persistors.Persistor;
 import exceptions.DataAccessException;
 import exceptions.PersistanceException;
 
+
 public class SecuentialFile<E> extends AbstractFile<E> {
 
+	private static final int UTF_BYTE_SIZE=2;
+	
 	public SecuentialFile(String fileName, Persistor<E> persistor)
 			throws DataAccessException {
 		super(fileName,persistor.getDataSize(),persistor);
@@ -21,15 +24,13 @@ public class SecuentialFile<E> extends AbstractFile<E> {
 	public int add(E element) throws DataAccessException,PersistanceException {
 			try {
 				
-				int index=this.length;
-				long length=index*this.size;
+				int length=(int) dataFile.length();
 				dataFile.seek(length);
 				ByteArrayOutputStream baos= new ByteArrayOutputStream();
 				DataOutputStream dos= new DataOutputStream(baos);
 				persistor.write(element, dos);
 				dataFile.write(baos.toByteArray());
-				this.length++;
-				return index;
+				return length;
 			} catch (IOException e) {
 				throw new DataAccessException("Error insertando elemento",e);
 			} catch (PersistanceException e) {
@@ -38,12 +39,9 @@ public class SecuentialFile<E> extends AbstractFile<E> {
 		
 	}
 
-	@Override
-	public E get(int elementId) throws DataAccessException {
-		if(this.getSize()>=elementId){
+	public E getVariable(int elementId,int offset,int size) throws DataAccessException {
 			try {
-				int offset = size*elementId;
-				byte[] buffer = new byte[size];
+				byte[] buffer = new byte[size*UTF_BYTE_SIZE+1];
 				dataFile.seek(offset);
 				dataFile.read(buffer);
 				ByteArrayInputStream bais= new ByteArrayInputStream(buffer);
@@ -54,29 +52,23 @@ public class SecuentialFile<E> extends AbstractFile<E> {
 			} catch (PersistanceException e) {
 				throw new DataAccessException("Error obteniendo elemento.",e);
 			}
-		}else{
-			throw new DataAccessException("Elemento inexistente para el [ELEMENT_ID="+elementId+"]");
-		}
-	}
-
-	@Override
-	public int update(int elementId, E newElement) throws DataAccessException, PersistanceException{
-		try {
-				int offset=size*elementId;
-				dataFile.seek(offset);
-				ByteArrayOutputStream baos= new ByteArrayOutputStream();
-				DataOutputStream dos= new DataOutputStream(baos);
-				persistor.write(newElement, dos);
-				dataFile.write(baos.toByteArray());
-				return elementId;
-			} catch (IOException e) {
-				throw new DataAccessException("Error modificando elemento: "+newElement.toString(),e);
-			} catch (PersistanceException e) {
-				throw new DataAccessException("Error modificando elemento: "+newElement.toString(),e);
-			}
+		
 	}
 
 	@Override
 	public void remove(int elementId) throws DataAccessException {
+	}
+
+	@Override
+	public E get(int elementId) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int update(int elementId, E newElement) throws DataAccessException,
+			PersistanceException {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

@@ -33,5 +33,6 @@ abstract public class TestDocumentsDictionary extends TestCase {
 		_test_insert("weeqw");
 		_test_insert("twwtwetwewte");
 		_test_insert("document");
+		_test_insert("document");
 	}
 }
