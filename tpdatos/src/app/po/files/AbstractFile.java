@@ -4,6 +4,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
+import utils.statistics.StatisticsGeneratorSingleton;
+
 import api.po.persistors.Persistor;
 import exceptions.DataAccessException;
 
@@ -59,10 +61,12 @@ public abstract class AbstractFile<E> implements api.po.files.File<E> {
 	}
 
 	protected void write( byte[] bytes ) throws IOException{
+		StatisticsGeneratorSingleton.get().addWrittenBytes(bytes.length);
 		dataFile.write(bytes);
 	}
 	
 	protected int read( byte[] bytes) throws IOException {
+		StatisticsGeneratorSingleton.get().addReadedBytes(bytes.length);
 		return dataFile.read(bytes);
 	}
 }
