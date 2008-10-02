@@ -67,7 +67,9 @@ public class IndexImp implements Index {
 
 	private DocumentIndexKey obtainDocIndex( String word ) throws BusinessException {
 		DocumentIndexKey doc;
-		
+		if("da".equals(word)){
+			int i=1;
+		}
 		try {
 			doc = btree.getElement(word);
 		} catch (KeyNotFoundException e) {
@@ -79,12 +81,12 @@ public class IndexImp implements Index {
 			try {
 				btree.insertElement(word, doc);
 			} catch (DataAccessException e1) {
-				throw new BusinessException("Error insertando elemento en el btree",e1);
+				throw new BusinessException("Error insertando [WORD: "+word+"] en el btree",e1);
 			}
 			
 			
 		} catch (DataAccessException e) {
-			throw new BusinessException("Error leyendo elemento del btree",e);		
+			throw new BusinessException("Error leyendo documento para el [WORD: "+word+"] del btree",e);		
 		}
 
 		return doc;
@@ -99,4 +101,7 @@ public class IndexImp implements Index {
 		return new BPlusTreeFacade();
 	}
 
+	public void dump() throws BusinessException {
+		btree.dump();
+	}
 }

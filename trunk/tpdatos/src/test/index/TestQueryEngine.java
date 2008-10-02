@@ -1,16 +1,9 @@
 package test.index;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
-import dto.DocumentDto;
+import junit.framework.TestCase;
+import api.QueryEngine;
 import exceptions.BusinessException;
 import exceptions.DataAccessException;
-import api.QueryEngine;
-import api.dao.documents.DocumentsDictionary;
-import app.bo.IndexImp;
-import app.dao.documents.DocumentsDictionaryImp;
-import junit.framework.TestCase;
 
 public abstract class TestQueryEngine extends TestCase {
 	

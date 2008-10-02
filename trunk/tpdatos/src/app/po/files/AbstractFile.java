@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 import utils.statistics.StatisticsGeneratorSingleton;
-
 import api.po.persistors.Persistor;
 import exceptions.DataAccessException;
 

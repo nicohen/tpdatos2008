@@ -3,12 +3,11 @@ package app.po.persistors;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
-import dto.DocumentDto;
 import exceptions.PersistanceException;
 
 public class DocumentDataPersistor extends AbstractPersistor<String> {
 
-	VariableStringPersistor stringPersistor = new VariableStringPersistor();
+	SimpleStringPersistor stringPersistor = new SimpleStringPersistor();
 	
 	public DocumentDataPersistor() {
 		super();

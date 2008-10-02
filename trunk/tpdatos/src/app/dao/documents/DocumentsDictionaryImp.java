@@ -2,11 +2,11 @@ package app.dao.documents;
 
 import java.io.File;
 import java.io.FileFilter;
+
 import processor.IndexedDocumentChecker;
 import utils.Constants;
 import api.dao.documents.DocumentsDictionary;
 import app.po.files.RelativeFile;
-import app.po.files.SecuencialFile;
 import app.po.files.SecuentialFile;
 import app.po.persistors.DocumentDataPersistor;
 import app.po.persistors.DocumentInfoPersistor;
@@ -29,10 +29,11 @@ public class DocumentsDictionaryImp implements DocumentsDictionary {
 	public DocumentDto getDocument(Integer id) throws BusinessException {
 		try {
 			DocumentDto dDto = relativeFile.get(id);
+			dDto.setDocumentId(id);
 			dDto.setFileName(nameFile.getVariable(id,dDto.getOffset(),dDto.getFileNameLength()+1));
 			return dDto; 
 		} catch(DataAccessException e) {
- 			throw new BusinessException("",e);
+			throw new BusinessException("Error obteniendo documento para el [ID:"+id+"]",e);
 		}
 	}
 

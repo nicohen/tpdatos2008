@@ -26,7 +26,7 @@ public class Constants {
 	public static final int    INDEX_FILE_SIZE = 4096;
 
 	public static final String BPLUS_FILE_PATH = "bplus.dat";
-	public static final int    BPLUS_FILE_SIZE = 128;
+	public static final int    BPLUS_FILE_SIZE = 4096;
 	
 	public static final String BPLUS_TEST_FILE_PATH = "bplus-test.dat";
 }

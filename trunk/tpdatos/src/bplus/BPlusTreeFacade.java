@@ -1,12 +1,13 @@
 package bplus;
 
-import utils.Constants;
 import linkedblocks.keys.DocumentIndexKey;
+import utils.Constants;
 import api.bo.BPlusTree.BPlusTreeBo;
 import app.bo.bplus.BPlusTreeBoImp;
 import bplus.elements.BPlusLeafElement;
 import bplus.exceptions.KeyNotFoundException;
 import bplus.keys.BPlusElementKey;
+import exceptions.BusinessException;
 import exceptions.DataAccessException;
 
 public class BPlusTreeFacade {
@@ -37,6 +38,14 @@ public class BPlusTreeFacade {
 		BPlusLeafElement element= new BPlusLeafElement(new BPlusElementKey(key));
 		element.setValue(value.getValue());
 		bo.insertElement( element);
+	}
+	
+	public void dump() throws BusinessException {
+		try {
+			bo.dump();
+		} catch(DataAccessException e) {
+			throw new BusinessException("",e);
+		}
 	}
 	
 	protected BPlusTreeBo createBo() throws DataAccessException{

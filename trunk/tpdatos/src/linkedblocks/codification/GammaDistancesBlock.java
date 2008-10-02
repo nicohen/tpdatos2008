@@ -4,7 +4,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import linkedblocks.utils.KeyCodificationUtils;
-
 import api.po.persistors.DistancesBlock;
 import exceptions.PersistanceException;
 

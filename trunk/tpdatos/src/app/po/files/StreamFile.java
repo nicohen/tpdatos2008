@@ -1,6 +1,5 @@
 package app.po.files;
 
-import java.io.ByteArrayOutputStream;
 import java.util.LinkedList;
 
 import api.po.persistors.Persistor;
