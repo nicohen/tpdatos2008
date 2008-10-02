@@ -5,9 +5,10 @@ public class DocumentDto {
 	private Integer offset;
 	private Integer documentId;
 	private String fileName;
-
+	private Integer fileNameLength;
 	public DocumentDto(String fileName) {
 		this.fileName = fileName;
+		this.fileNameLength=fileName.length();
 	}
 	
 	public DocumentDto(Integer documentId, String fileName,Integer offset) {
@@ -21,13 +22,18 @@ public class DocumentDto {
 		this.fileName = fileName;
 	}
 	
-	public DocumentDto(Integer documentId, Integer off) {
-		this.documentId = documentId;
+	public DocumentDto(Integer off,Integer length) {
 		this.offset = off;
+		this.fileNameLength=length;
+		
 	}
 	
 	public void setDocumentId(Integer documentId) {
 		this.documentId = documentId;
+	}
+	
+	public void setFileNameLength(Integer length) {
+		this.fileNameLength = length;
 	}
 	
 	public void setOffset(Integer off) {
@@ -44,6 +50,10 @@ public class DocumentDto {
 	
 	public Integer getDocumentId() {
 		return documentId;
+	}
+	
+	public Integer getFileNameLength() {
+		return fileNameLength;
 	}
 	
 	public Integer getOffset() {

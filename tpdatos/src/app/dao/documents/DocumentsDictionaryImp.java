@@ -29,10 +29,10 @@ public class DocumentsDictionaryImp implements DocumentsDictionary {
 	public DocumentDto getDocument(Integer id) throws BusinessException {
 		try {
 			DocumentDto dDto = relativeFile.get(id);
-			dDto.setFileName(nameFile.get(id));
+			dDto.setFileName(nameFile.getVariable(id,dDto.getOffset(),dDto.getFileNameLength()+1));
 			return dDto; 
 		} catch(DataAccessException e) {
-			throw new BusinessException("",e);
+ 			throw new BusinessException("",e);
 		}
 	}
 

@@ -37,7 +37,7 @@ public class RelativeFile<E> extends AbstractFile<E> {
 				throw new DataAccessException("Error insertando elemento",e);
 			}
 		}else{
-			throw new PersistanceException("El tamaño del elemento supera la del bloque.");
+			throw new PersistanceException("El tamaï¿½o del elemento supera la del bloque.");
 		}
 	}
 
@@ -79,11 +79,15 @@ public class RelativeFile<E> extends AbstractFile<E> {
 				throw new DataAccessException("Error modificando elemento: "+newElement.toString(),e);
 			}
 		}else{
-			throw new PersistanceException("El tamaño del elemento supera la del bloque.");
+			throw new PersistanceException("El tamaï¿½o del elemento supera la del bloque.");
 		}
 	}
 
 	@Override
 	public void remove(int elementId) throws DataAccessException {
+	}
+	
+	public int getLength(){
+		return length;
 	}
 }

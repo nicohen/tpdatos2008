@@ -8,7 +8,7 @@ import exceptions.PersistanceException;
 
 public class DocumentDataPersistor extends AbstractPersistor<String> {
 
-	StringPersistor stringPersistor = new StringPersistor(50);
+	VariableStringPersistor stringPersistor = new VariableStringPersistor();
 	
 	public DocumentDataPersistor() {
 		super();
