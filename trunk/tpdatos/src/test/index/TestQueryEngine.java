@@ -1,5 +1,10 @@
 package test.index;
 
+import java.util.Iterator;
+import java.util.List;
+
+import dto.DocumentDto;
+
 import junit.framework.TestCase;
 import api.QueryEngine;
 import exceptions.BusinessException;
@@ -7,14 +12,14 @@ import exceptions.DataAccessException;
 
 public abstract class TestQueryEngine extends TestCase {
 	
-	private QueryEngine testObject;
+	private QueryEngine engine;
 	
 	protected TestQueryEngine ( QueryEngine object ) {
-		this.testObject = object;
+		this.engine = object;
 	}
 	
 	protected void setTestObject( QueryEngine object ) {
-		this.testObject = object;
+		this.engine = object;
 	}
 	
 
@@ -22,32 +27,27 @@ public abstract class TestQueryEngine extends TestCase {
 		
 		// FIXME: encontrar una manera de insertar en el index de QueryEngine
 		
-/*		DocumentsDictionary dicc=new DocumentsDictionaryImp();
-		QueryEngine engine=new QueryEngine(index,dicc);
-		ArrayList<Integer> list;
-		Iterator<DocumentDto> it;
-		index.insertWord("perro", 1);
-		index.insertWord("perro", 2);
-		index.insertWord("perro", 3);
-		index.insertWord("perro", 4);
-		index.insertWord("perro", 5);
-		index.insertWord("gato", 6);
-		index.insertWord("gato", 7);
-		index.insertWord("gato", 8);
-		index.insertWord("gato", 9);
-		index.insertWord("gato", 10);
+		engine.prepareDocumentInsert("documento1").insertWord("gato");
+		engine.prepareDocumentInsert("documento2").insertWord("gato");
+		engine.prepareDocumentInsert("documento3").insertWord("gato");
+		engine.prepareDocumentInsert("documento4").insertWord("gato");
+		engine.prepareDocumentInsert("documento5").insertWord("gato");
+		engine.prepareDocumentInsert("documento1").insertWord("perro");
+		engine.prepareDocumentInsert("documento2").insertWord("perro");
+		engine.prepareDocumentInsert("documento3").insertWord("perro");
+		engine.prepareDocumentInsert("documento4").insertWord("perro");
+		engine.prepareDocumentInsert("documento5").insertWord("perro");
 		
-		it=engine.ExecuteQuery("gato");
-		int i=6;
+		List<DocumentDto> list;
+
+		list=engine.executeQuery("gato");
 		
-		while(it.hasNext()){
-			//Assert.assertTrue(it.next()==i);
-			if (i==10)
-			i=6;
-			else
-			i++;
+		// FIXME: utilizar los asserts correspondientes
+		
+		for(DocumentDto doc : list ){
+			System.out.println(doc);
 		}
-*/		
+		
 	}
 
 	
