@@ -21,4 +21,17 @@ public abstract class BPlusAbstractElement implements BPlusElement {
 	public int compareTo(BPlusElement arg0) {
 		return this.elementKey.compareTo(arg0.getKey());
 	}
+	
+	protected boolean equalsKey( BPlusElementKey key ) {
+		if (this.elementKey != null && key != null) {
+			return this.elementKey.equals(key);
+		} else {
+			if (this.elementKey == null && key == null) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
+
 }
