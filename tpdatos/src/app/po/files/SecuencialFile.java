@@ -32,12 +32,12 @@ public class SecuencialFile<E> extends AbstractFile<E> {
 				index= this.length; 
 			}
 			length= index*size;
-			dataFile.seek(length);
+			/*dataFile.*/seek(length);
 			ByteArrayOutputStream baos= new ByteArrayOutputStream();
 			DataOutputStream dos= new DataOutputStream(baos);
 			dos.writeByte(VALID_ELEMENT);
 			persistor.write(element, dos);
-			dataFile.write(baos.toByteArray());
+			/*dataFile.*/write(baos.toByteArray());
 			this.length++;
 			return index;
 		} catch (IOException e) {
@@ -53,8 +53,8 @@ public class SecuencialFile<E> extends AbstractFile<E> {
 		try {
 			int offset = size*elementId;
 			byte[] buffer = new byte[size];
-			dataFile.seek(offset);
-			dataFile.read(buffer);
+			/*dataFile.*/seek(offset);
+			/*dataFile.*/read(buffer);
 			ByteArrayInputStream bais= new ByteArrayInputStream(buffer);
 			DataInputStream dis= new DataInputStream(bais);
 			byte flag=dis.readByte();
@@ -74,12 +74,12 @@ public class SecuencialFile<E> extends AbstractFile<E> {
 	public int update(int elementId, E newElement) throws DataAccessException {
 		try {
 			int offset=size*elementId;
-			dataFile.seek(offset);
+			/*dataFile.*/seek(offset);
 			ByteArrayOutputStream baos= new ByteArrayOutputStream();
 			DataOutputStream dos= new DataOutputStream(baos);
 			dos.writeByte(VALID_ELEMENT);
 			persistor.write(newElement, dos);
-			dataFile.write(baos.toByteArray());
+			/*dataFile.*/write(baos.toByteArray());
 			return elementId;
 		} catch (IOException e) {
 			throw new DataAccessException("Error modificando elemento.",e);
@@ -91,11 +91,11 @@ public class SecuencialFile<E> extends AbstractFile<E> {
 	public void remove(int elementId) throws DataAccessException {
 		try {
 			int offset=size*elementId;
-			dataFile.seek(offset);
+			/*dataFile.*/seek(offset);
 			ByteArrayOutputStream baos= new ByteArrayOutputStream();
 			DataOutputStream dos= new DataOutputStream(baos);
 			dos.writeByte(REMOVED_ELEMENT);
-			dataFile.write(baos.toByteArray());
+			/*dataFile.*/write(baos.toByteArray());
 			freeSpacesStack.push(elementId);
 		} catch (IOException e) {
 			throw new DataAccessException("Error modificando elemento.",e);

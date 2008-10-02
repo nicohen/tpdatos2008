@@ -10,9 +10,9 @@ import exceptions.DataAccessException;
 public abstract class AbstractFile<E> implements api.po.files.File<E> {
 
 	private java.io.File file;
-	protected RandomAccessFile dataFile;
+	private RandomAccessFile dataFile;
 	protected Persistor<E> persistor;
-	protected int size; // Tamaño del bloque
+	protected int size; // Tamaï¿½o del bloque
 	protected int length; // Cantidad de bloques
 	
 	
@@ -48,5 +48,21 @@ public abstract class AbstractFile<E> implements api.po.files.File<E> {
 	
 	private int getLength(){
 		return  (int)(this.file.length()/this.size);
+	}
+	
+	protected long length() throws IOException {
+		return dataFile.length();
+	}
+	
+	protected void seek( long length ) throws IOException{
+		dataFile.seek(length);
+	}
+
+	protected void write( byte[] bytes ) throws IOException{
+		dataFile.write(bytes);
+	}
+	
+	protected int read( byte[] bytes) throws IOException {
+		return dataFile.read(bytes);
 	}
 }

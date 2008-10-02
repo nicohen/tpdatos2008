@@ -24,12 +24,12 @@ public class SecuentialFile<E> extends AbstractFile<E> {
 	public int add(E element) throws DataAccessException,PersistanceException {
 			try {
 				
-				int length=(int) dataFile.length();
-				dataFile.seek(length);
+				int length=(int) /*dataFile.*/length();
+				/*dataFile.*/seek(length);
 				ByteArrayOutputStream baos= new ByteArrayOutputStream();
 				DataOutputStream dos= new DataOutputStream(baos);
 				persistor.write(element, dos);
-				dataFile.write(baos.toByteArray());
+				/*dataFile.*/write(baos.toByteArray());
 				return length;
 			} catch (IOException e) {
 				throw new DataAccessException("Error insertando elemento",e);
@@ -42,8 +42,8 @@ public class SecuentialFile<E> extends AbstractFile<E> {
 	public E getVariable(int elementId,int offset,int size) throws DataAccessException {
 			try {
 				byte[] buffer = new byte[size*UTF_BYTE_SIZE+1];
-				dataFile.seek(offset);
-				dataFile.read(buffer);
+				/*dataFile.*/seek(offset);
+				/*dataFile.*/read(buffer);
 				ByteArrayInputStream bais= new ByteArrayInputStream(buffer);
 				DataInputStream dis= new DataInputStream(bais);
 				return persistor.read(dis);
