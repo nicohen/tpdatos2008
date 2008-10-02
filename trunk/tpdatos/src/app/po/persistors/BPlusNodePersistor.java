@@ -46,26 +46,34 @@ public class BPlusNodePersistor implements Persistor<BPlusNode> {
 	}
 
 	private BPlusNode readIndexNode(DataInputStream stream) throws PersistanceException {
-		BPlusIndexNode indexNode= new BPlusIndexNode();
-		int length= intPersistor.read(stream);
-		if (length>0){
-			indexNode.setLeftChild((BPlusIndexElement) elementPersistor.read(stream));
-			for (int i=1; i<length ;i++){
-				indexNode.insertElement(elementPersistor.read(stream));
-			}
-		}			
-		return indexNode;
+		try {
+			BPlusIndexNode indexNode= new BPlusIndexNode();
+			byte length= stream.readByte();
+			if (length>0){
+				indexNode.setLeftChild((BPlusIndexElement) elementPersistor.read(stream));
+				for (int i=1; i<length ;i++){
+					indexNode.insertElement(elementPersistor.read(stream));
+				}
+			}			
+			return indexNode;
+		} catch (IOException e) {
+			throw new PersistanceException("Error recuperando elemento.",e);
+		}
 	}
 
 	private BPlusNode readLeafNode(DataInputStream stream) throws PersistanceException{
+		try {
 			BPlusLeafNode leafNode= new BPlusLeafNode();
 			BPlusNodeKey nodeKey= new BPlusNodeKey(intPersistor.read(stream));
 			leafNode.setNextNodeKey(nodeKey);
-			int length= intPersistor.read(stream);
+			byte length= stream.readByte();
 			for (int i=0; i<length ;i++){
 				leafNode.insertElement(elementPersistor.read(stream));
 			}
 			return leafNode;
+		} catch (IOException e) {
+			throw new PersistanceException("Error recuperando elemento.",e);
+		}
 	}
 
 	@Override
@@ -85,30 +93,39 @@ public class BPlusNodePersistor implements Persistor<BPlusNode> {
 	}
 
 	private void writeIndexNode(BPlusIndexNode node, DataOutputStream stream) throws PersistanceException {
-		int length=node.getElements().size();
-		if(node.getLeftChild()!=null){
-			intPersistor.write(length+1,stream);
-			elementPersistor.write(node.getLeftChild(),stream);
-		}else{
-			intPersistor.write(length,stream);
-		}
-		Iterator<BPlusElement> it= node.getElements().iterator();
-		while(it.hasNext()){
-			elementPersistor.write(it.next(), stream);
-		}
+		try {
+			int length=node.getElements().size();
+			if(node.getLeftChild()!=null){
+				stream.writeByte(length+1);
+				elementPersistor.write(node.getLeftChild(),stream);
+			}else{
+				stream.writeByte(length);
+			}
+			Iterator<BPlusElement> it= node.getElements().iterator();
+			while(it.hasNext()){
+				elementPersistor.write(it.next(), stream);
+			}
+		} catch (IOException e) {
+			throw new PersistanceException("Error persistiendo elemento: "+node,e);
+		}		
 	}
 
 	private void writeLeafNode(BPlusLeafNode node, DataOutputStream stream) throws PersistanceException {
-		if (node.getNextNodeKey()==null){
-			intPersistor.write(0,stream);
-		}else{
-			intPersistor.write(node.getNextNodeKey().getValue(),stream);	
-		}			
-		intPersistor.write(node.getElements().size(),stream);
-		Iterator<BPlusElement> it= node.getElements().iterator();
-		while(it.hasNext()){
-			elementPersistor.write(it.next(), stream);
-		}		
+		try {
+			if (node.getNextNodeKey()==null){
+				intPersistor.write(0,stream);
+			}else{
+				intPersistor.write(node.getNextNodeKey().getValue(),stream);	
+			}			
+			stream.writeByte(node.getElements().size());
+			Iterator<BPlusElement> it= node.getElements().iterator();
+			while(it.hasNext()){
+				elementPersistor.write(it.next(), stream);
+			}
+		} catch (IOException e) {
+			throw new PersistanceException("Error persistiendo elemento: "+node,e);
+		}
+		
 	}
 
 	@Override
@@ -122,7 +139,7 @@ public class BPlusNodePersistor implements Persistor<BPlusNode> {
 
 	private int getIndexNodeSize(BPlusIndexNode node) {
 		
-		int counter= intPersistor.getDataSize();
+		int counter= 1;
 		if(node.getLeftChild()!=null){
 			counter= counter + elementPersistor.getElementSize(node.getLeftChild());
 		}
