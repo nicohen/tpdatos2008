@@ -5,7 +5,7 @@ public class StatisticsGenerator {
 	private Statistics stats;
 	
 	StatisticsGenerator () {
-		
+		init();
 	}
 	
 	public void init() {
