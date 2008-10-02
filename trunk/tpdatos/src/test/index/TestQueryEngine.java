@@ -43,11 +43,23 @@ public abstract class TestQueryEngine extends TestCase {
 		list=engine.executeQuery("gato");
 		
 		// FIXME: utilizar los asserts correspondientes
+
+		assertEquals( list.get(0).getFileName() , "documento1");
+		assertEquals( list.get(1).getFileName() , "documento2");
+		assertEquals( list.get(2).getFileName() , "documento3");
+		assertEquals( list.get(3).getFileName() , "documento4");
+		assertEquals( list.get(4).getFileName() , "documento5");
+
+		list=engine.executeQuery("perro");
 		
-		for(DocumentDto doc : list ){
-			System.out.println(doc);
-		}
-		
+		// FIXME: utilizar los asserts correspondientes
+
+		assertEquals( list.get(0).getFileName() , "documento1");
+		assertEquals( list.get(1).getFileName() , "documento2");
+		assertEquals( list.get(2).getFileName() , "documento3");
+		assertEquals( list.get(3).getFileName() , "documento4");
+		assertEquals( list.get(4).getFileName() , "documento5");
+
 	}
 
 	
