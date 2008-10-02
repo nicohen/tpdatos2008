@@ -63,8 +63,7 @@ public class BPlusNodePersistor implements Persistor<BPlusNode> {
 			leafNode.setNextNodeKey(nodeKey);
 			int length= intPersistor.read(stream);
 			for (int i=0; i<length ;i++){
-				BPlusElement elem= elementPersistor.read(stream);
-				leafNode.insertElement(elem);
+				leafNode.insertElement(elementPersistor.read(stream));
 			}
 			return leafNode;
 	}
@@ -86,9 +85,6 @@ public class BPlusNodePersistor implements Persistor<BPlusNode> {
 	}
 
 	private void writeIndexNode(BPlusIndexNode node, DataOutputStream stream) throws PersistanceException {
-		if (node.getNodeKey()!=null && node.getNodeKey().getValue().equals(4)){
-			System.out.println("nodo grabado: "+node);
-		}
 		int length=node.getElements().size();
 		if(node.getLeftChild()!=null){
 			intPersistor.write(length+1,stream);
@@ -98,15 +94,11 @@ public class BPlusNodePersistor implements Persistor<BPlusNode> {
 		}
 		Iterator<BPlusElement> it= node.getElements().iterator();
 		while(it.hasNext()){
-			BPlusIndexElement elem= (BPlusIndexElement)it.next();
-			elementPersistor.write(elem, stream);
+			elementPersistor.write(it.next(), stream);
 		}
 	}
 
 	private void writeLeafNode(BPlusLeafNode node, DataOutputStream stream) throws PersistanceException {
-		if (node.getNodeKey()!=null && node.getNodeKey().getValue().equals(4)){
-			System.out.println("nodo grabado: "+node);
-		}
 		if (node.getNextNodeKey()==null){
 			intPersistor.write(0,stream);
 		}else{
