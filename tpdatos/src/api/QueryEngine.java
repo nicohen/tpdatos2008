@@ -12,6 +12,22 @@ public class QueryEngine {
 
 	private Index indice;
 	private DocumentsDictionary dicc;
+	
+	class NewDocumentInsert implements DocumentInsert {
+		private Integer docid;
+		private Index index;
+		
+		public NewDocumentInsert ( Integer docid, Index index ) {
+			this.docid = docid;
+			this.index = index;
+		}
+		
+		public void insertWord(String word) throws BusinessException {
+			index.insertWord(word, docid);
+		}
+		
+	}
+	
 
 	public QueryEngine(Index index,DocumentsDictionary dictionary){
 		dicc=dictionary;
@@ -30,5 +46,13 @@ public class QueryEngine {
 		
 		return listaRet;
 	}
+	
+	public DocumentInsert prepareDocumentInsert( String documento ) throws BusinessException{
+		// insertar el documento en el diccionario
+		
+		Integer id = dicc.insertDocument(new DocumentDto(documento) );
+		return new NewDocumentInsert(id, indice );
+	}
+	
 	
 }
