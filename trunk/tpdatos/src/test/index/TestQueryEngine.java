@@ -1,12 +1,10 @@
 package test.index;
 
-import java.util.Iterator;
 import java.util.List;
-
-import dto.DocumentDto;
 
 import junit.framework.TestCase;
 import api.QueryEngine;
+import dto.DocumentDto;
 import exceptions.BusinessException;
 import exceptions.DataAccessException;
 

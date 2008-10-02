@@ -18,8 +18,6 @@ public class TestQueryEngineMocks extends TestQueryEngine {
 					)
 		
 			);
-		
-		// TODO Auto-generated constructor stub
 	}
 
 }
