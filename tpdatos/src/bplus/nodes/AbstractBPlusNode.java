@@ -32,14 +32,7 @@ public abstract class AbstractBPlusNode implements BPlusNode {
 
 	private BPlusElement findElement(List<BPlusElement> elements,BPlusElementKey elementKey) {
 		
-		for (BPlusElement element : elements) {
-			if (element.getKey().getValue().equals( elementKey.getValue() ) ){
-				return element;
-			}
-		}
-		return null;
-		
-/*		int start=0;
+		int start=0;
 		int end=elements.size()-1;
 		if (elements.size()==0) return null;
 		BPlusElement auxElement=elements.get(0);
@@ -50,7 +43,7 @@ public abstract class AbstractBPlusNode implements BPlusNode {
 		if(auxElement.getKey().equals(elementKey)){
 			return auxElement;
 		}
-		while(end-start>0){
+		while(end-start>1){
 			int index=(end+start)/2;
 			auxElement= elements.get(index);
 			int result= auxElement.getKey().compareTo(elementKey);
@@ -62,7 +55,7 @@ public abstract class AbstractBPlusNode implements BPlusNode {
 				end=index;
 			}
 		}
-		return null;*/
+		return null;
 	}
 
 	@Override

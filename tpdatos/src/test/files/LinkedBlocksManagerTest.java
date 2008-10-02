@@ -1,7 +1,5 @@
 package test.files;
-import java.util.ArrayList;
 import java.util.Iterator;
-
 
 import junit.framework.Assert;
 import junit.framework.TestCase;

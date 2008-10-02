@@ -1,10 +1,10 @@
 package test.index;
 
-import dto.DocumentDto;
-import exceptions.BusinessException;
-import api.dao.documents.DocumentsDictionary;
 import junit.framework.Assert;
 import junit.framework.TestCase;
+import api.dao.documents.DocumentsDictionary;
+import dto.DocumentDto;
+import exceptions.BusinessException;
 
 abstract public class TestDocumentsDictionary extends TestCase {
 	

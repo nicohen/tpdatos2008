@@ -2,7 +2,6 @@ package api;
 
 
 
-import api.QueryEngine;
 import app.bo.IndexImp;
 import app.bo.MockDocumentsDictionary;
 import exceptions.BusinessException;

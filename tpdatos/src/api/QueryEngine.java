@@ -4,9 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import dto.DocumentDto;
-
 import api.dao.documents.DocumentsDictionary;
+import dto.DocumentDto;
 import exceptions.BusinessException;
 
 public class QueryEngine {

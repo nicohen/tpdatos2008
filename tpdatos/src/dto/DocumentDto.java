@@ -59,5 +59,10 @@ public class DocumentDto {
 	public Integer getOffset() {
 		return offset;
 	}
+	
+	@Override
+	public String toString() {
+		return fileName;
+	}
 
 }

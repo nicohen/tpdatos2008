@@ -1,7 +1,7 @@
 package test.processor;
 
-import processor.stemming.StemmingProcessor;
 import junit.framework.TestCase;
+import processor.stemming.StemmingProcessor;
 
 
 public class TestStemmerProcessor extends TestCase {

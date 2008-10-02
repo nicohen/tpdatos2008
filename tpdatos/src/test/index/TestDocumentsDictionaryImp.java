@@ -1,7 +1,7 @@
 package test.index;
 
-import exceptions.DataAccessException;
 import app.dao.documents.DocumentsDictionaryImp;
+import exceptions.DataAccessException;
 
 public class TestDocumentsDictionaryImp extends TestDocumentsDictionary {
 

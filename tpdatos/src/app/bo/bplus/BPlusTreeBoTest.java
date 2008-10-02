@@ -6,7 +6,6 @@ import java.util.Map;
 import bplus.elements.BPlusLeafElement;
 import bplus.exceptions.KeyNotFoundException;
 import bplus.keys.BPlusElementKey;
-import exceptions.DataAccessException;
 
 public class BPlusTreeBoTest extends AbstractBPlusTreeBo {
 

@@ -139,7 +139,7 @@ public class DocumentsIndexer {
 					indexedDocuments.addDocument(dd.insertDocument(document), document.getFileName());
 					
 					//Muevo el documento indexado a la carpeta de documentos indexados
-//					DocumentsDictionaryImp.moveFileToIndexedFolder(newDocuments[i]);
+					//DocumentsDictionaryImp.moveFileToIndexedFolder(newDocuments[i]);
 
 					log.info("Fin de indexacion del documento ["+document.getFileName()+"]");
 				} else {
@@ -149,6 +149,7 @@ public class DocumentsIndexer {
 			
 			log.info("\n<<< Fin de indexacion de documentos >>>");
 			
+			wordIndexer.dump();
 		} catch (BusinessException e) {
 			throw new Exception("Error preparando nuevos documentos pendientes a indexar",e);
 		}
