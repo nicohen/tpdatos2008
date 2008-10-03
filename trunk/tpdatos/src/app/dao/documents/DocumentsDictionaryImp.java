@@ -54,17 +54,14 @@ public class DocumentsDictionaryImp implements DocumentsDictionary {
 	public IndexedDocumentChecker getDocuments() throws BusinessException {
 		IndexedDocumentChecker checker = new IndexedDocumentChecker();
 
-		try {
 			DocumentDto document = null;
+			
 			for(int i=0;i<relativeFile.getSize();i++) {
-				document=relativeFile.get(i);
-				document.setFileName(nameFile.get(i));
+				document=this.getDocument(i);
 				checker.addDocument(document.getDocumentId(), document.getFileName());
 			}
 
-		} catch (DataAccessException e) {
-			throw new BusinessException("Error inicializando RelativeFile de documentos indexados",e);
-		}
+		
 		return checker;
 	}
 	
