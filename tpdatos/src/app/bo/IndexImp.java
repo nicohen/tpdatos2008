@@ -48,9 +48,6 @@ public class IndexImp implements Index {
 			throws BusinessException {
 
 		// buscar la palabra en el btree
-		if ((word.compareTo("mirador"))==0){
-			int i=0;
-		}
 		DocumentIndexKey docBlockId;
 
 		docBlockId = this.obtainDocIndex(word);
@@ -70,9 +67,6 @@ public class IndexImp implements Index {
 
 	private DocumentIndexKey obtainDocIndex( String word ) throws BusinessException {
 		DocumentIndexKey doc;
-		if("da".equals(word)){
-			int i=1;
-		}
 		try {
 			doc = btree.getElement(word);
 		} catch (KeyNotFoundException e) {
@@ -96,9 +90,7 @@ public class IndexImp implements Index {
 	}
 	private DocumentIndexKey searchDocIndex( String word ) throws BusinessException {
 		DocumentIndexKey doc;
-		if("da".equals(word)){
-			int i=1;
-		}
+		
 		try {
 			doc = btree.getElement(word);
 		} catch (KeyNotFoundException e) {
