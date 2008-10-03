@@ -41,7 +41,7 @@ public class QueryEngine {
 		itAux=indice.getDocuments(consulta);
 		
 		while (itAux.hasNext()){
-			listaRet.add(dicc.getDocument(itAux.next()));
+			listaRet.add(dicc.getDocument(itAux.next()-1));
 		}
 		
 		return listaRet;
