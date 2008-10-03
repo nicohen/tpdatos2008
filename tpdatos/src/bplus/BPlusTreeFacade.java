@@ -12,14 +12,6 @@ import exceptions.DataAccessException;
 
 public class BPlusTreeFacade {
 
-/*	public void insertNode(BPlusNode node) {
-		//TODO - Implementar insertNode
-	}
-	
-	public void getNode(Integer id) {
-		//TODO - Implementar getNode
-	}*/
-	
 	private BPlusTreeBo bo;
 	
 	public BPlusTreeFacade() throws DataAccessException {
@@ -27,7 +19,6 @@ public class BPlusTreeFacade {
 	}
 	
 	public DocumentIndexKey getElement( String key ) throws KeyNotFoundException, DataAccessException {
-		// TODO
 		return new DocumentIndexKey(  
 				bo.getElement(new BPlusElementKey(key) ).getValue()
 			);
