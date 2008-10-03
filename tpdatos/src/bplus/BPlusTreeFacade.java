@@ -19,9 +19,12 @@ public class BPlusTreeFacade {
 	}
 	
 	public DocumentIndexKey getElement( String key ) throws KeyNotFoundException, DataAccessException {
-		return new DocumentIndexKey(  
-				bo.getElement(new BPlusElementKey(key) ).getValue()
-			);
+		BPlusLeafElement element= bo.getElement(new BPlusElementKey(key) );	
+		if (element==null){
+			throw new KeyNotFoundException();
+		}
+		return new DocumentIndexKey(element.getValue());
+
 	}
 	
 	public void insertElement (String key , DocumentIndexKey value ) throws DataAccessException {
