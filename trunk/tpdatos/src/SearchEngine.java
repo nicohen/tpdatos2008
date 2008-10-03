@@ -1,3 +1,6 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 
 import processor.stemming.StemmingProcessor;
@@ -15,12 +18,24 @@ import exceptions.DataAccessException;
 
 public class SearchEngine {
 
-	public static void main(String[] args) throws BusinessException, DataAccessException {
-		String word = args[0];
+	public static void main(String[] args) throws BusinessException, DataAccessException, IOException {
+//		String word = args[0];
+
+		System.out.print("Ingrese un termino a buscar: ");
+		String word = null;
+		try{
+			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+			word = br.readLine();
+		}catch(Exception e) { 
+			e.printStackTrace();
+		}
+//		System.out.println(word); 
+
 		if("".equals(word) || word==null) {
-			System.out.println("Debe ingresar un termino a buscar");
+			System.out.println("El termino no puede estar vacio.");
 			return;
 		}
+		
 		
 		//Inicializo diccionario de stopwords
 		StopwordsProcessor sw = new StopwordsProcessor();
@@ -36,7 +51,7 @@ public class SearchEngine {
 			//Aplico stemming al termino
 			stemmedWord = sp.stem(word);
 		} else {
-			System.out.println("El termino ingresado es un stopword, ingreselo nuevamente");
+			System.out.println("El termino ingresado ["+word+"] es un stopword, ingreselo nuevamente");
 			return;
 		}
 		
@@ -51,9 +66,10 @@ public class SearchEngine {
 			System.out.println("El termino ["+word+"] no corresponde a ningun documento.");
 			return;
 		} else {
+			System.out.println("Se encontraron "+documentsFound.size()+" ocurrencias:");
+			System.out.println("------------------------------");
 			for(DocumentDto documents : documentsFound) {
 				System.out.println(dicc.getDocument(documents.getDocumentId()));
-//				System.out.println(documents.getDocumentId());
 			}
 		}
 

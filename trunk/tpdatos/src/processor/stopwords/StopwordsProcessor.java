@@ -65,7 +65,11 @@ public class StopwordsProcessor {
 	}
 
 	public boolean isStopword(String word) {
-		return stopwords.contains(word); 
+		List<String> words = new ArrayList<String>();
+		for(String wordSplit : word.split(" ")) {
+			words.add(wordSplit);
+		}
+		return stopwords.contains(new WordDto(words));
 	}
 	
 }
