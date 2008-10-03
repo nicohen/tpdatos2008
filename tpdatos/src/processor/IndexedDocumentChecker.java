@@ -28,7 +28,7 @@ public class IndexedDocumentChecker {
 				maxDocumentId = document;
 			}
 		}
-		return (newDocuments.size()>0) ? maxDocumentId+1 : 0 +1;
+		return (newDocuments.size()>0) ? maxDocumentId+1 : 0 ;
 	
 	}
 }

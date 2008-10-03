@@ -52,7 +52,7 @@ public class SearchEngine {
 			return;
 		} else {
 			for(DocumentDto documents : documentsFound) {
-				System.out.println(dicc.getDocument(documents.getDocumentId()-1));
+				System.out.println(dicc.getDocument(documents.getDocumentId()));
 //				System.out.println(documents.getDocumentId());
 			}
 		}
