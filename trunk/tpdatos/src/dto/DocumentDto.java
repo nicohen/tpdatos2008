@@ -1,7 +1,7 @@
 package dto;
 
 
-public class DocumentDto {
+public class DocumentDto implements Comparable<DocumentDto> {
 	private Integer offset;
 	private Integer documentId;
 	private String fileName;
@@ -63,6 +63,11 @@ public class DocumentDto {
 	@Override
 	public String toString() {
 		return fileName;
+	}
+
+	@Override
+	public int compareTo(DocumentDto arg0) {
+		return fileName.compareTo(arg0.getFileName());
 	}
 
 }

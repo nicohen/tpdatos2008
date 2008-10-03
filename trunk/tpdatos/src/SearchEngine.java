@@ -12,6 +12,7 @@ import api.dao.documents.DocumentsDictionary;
 import app.bo.IndexImp;
 import app.dao.documents.DocumentsDictionaryImp;
 import dto.DocumentDto;
+import dto.DocumentsReportDto;
 import exceptions.BusinessException;
 import exceptions.DataAccessException;
 
@@ -68,9 +69,14 @@ public class SearchEngine {
 		} else {
 			System.out.println("Se encontraron "+documentsFound.size()+" ocurrencias:");
 			System.out.println("------------------------------");
-			for(DocumentDto documents : documentsFound) {
-				System.out.println(dicc.getDocument(documents.getDocumentId()));
+			DocumentsReportDto drDto = new DocumentsReportDto();
+			for(DocumentDto documentFound : documentsFound) {
+				drDto.setOcurrence(documentFound);
 			}
+			for(DocumentDto documentResult : drDto.getOcurrences().keySet()) {
+				System.out.println(drDto.getDocumentOcurrences(documentResult)+" veces en el documento "+dicc.getDocument(documentResult.getDocumentId()));				
+			}
+//			
 		}
 
 	}

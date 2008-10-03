@@ -139,7 +139,7 @@ public class DocumentsIndexer {
 					indexedDocuments.addDocument(dd.insertDocument(document), document.getFileName());
 					
 					//Muevo el documento indexado a la carpeta de documentos indexados
-					//DocumentsDictionaryImp.moveFileToIndexedFolder(newDocuments[i]);
+					DocumentsDictionaryImp.moveFileToIndexedFolder(newDocuments[i]);
 
 					log.info("Fin de indexacion del documento ["+document.getFileName()+"]");
 				} else {

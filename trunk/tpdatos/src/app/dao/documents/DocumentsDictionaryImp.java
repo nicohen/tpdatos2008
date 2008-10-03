@@ -57,7 +57,7 @@ public class DocumentsDictionaryImp implements DocumentsDictionary {
 		try {
 			DocumentDto document = null;
 			for(int i=0;i<relativeFile.getSize();i++) {
-				document=relativeFile.get(i++);
+				document=relativeFile.get(i);
 				document.setFileName(nameFile.get(i));
 				checker.addDocument(document.getDocumentId(), document.getFileName());
 			}
