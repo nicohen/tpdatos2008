@@ -80,6 +80,7 @@ public abstract class AbstractBPlusNode implements BPlusNode {
 	@Override
 	public void setElements(List<BPlusElement> elements) {
 		this.elements=elements;
+		Collections.sort(this.elements);
 	}
 	
 	@Override
