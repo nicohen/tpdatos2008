@@ -20,7 +20,7 @@ public class KeyCodificationTest extends TestCase {
 		assertEquals(size2,num2);
 		}
 	public void testGammaEncode(){
-		Integer num1=15;
+		Integer num1=3;
 		byte[] gamma1 = KeyCodificationUtils.gammaEncode(num1);
 		Integer size1=KeyCodificationUtils.gammaDecode(gamma1);
 		assertEquals(size1,num1);

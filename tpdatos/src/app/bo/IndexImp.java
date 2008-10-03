@@ -30,14 +30,15 @@ public class IndexImp implements Index {
 	public Iterator<Integer> getDocuments(String word) throws BusinessException {
 		
 		DocumentIndexKey docBlockId;
-//		ArrayList<byte[]> aux;
 		ArrayList<Integer> listaRet=new ArrayList<Integer>();
-		docBlockId=this.obtainDocIndex(word);
-		//aux=manager.get(docBlockId.getValue());
-		Iterator<byte[]> it=manager.get(docBlockId.getValue());
 		Iterator<Integer> itRet;
-		while(it.hasNext()){
-			listaRet.add(KeyCodificationUtils.gammaDecode(it.next()));
+		docBlockId=this.searchDocIndex(word);
+		if (docBlockId.getValue()!=-1){
+			Iterator<byte[]> it=manager.get(docBlockId.getValue());
+			
+			while(it.hasNext()){
+				listaRet.add(KeyCodificationUtils.gammaDecode(it.next()));
+			}
 		}
 		itRet=listaRet.iterator();
 		return itRet;
@@ -91,7 +92,25 @@ public class IndexImp implements Index {
 
 		return doc;
 	}
-	
+	private DocumentIndexKey searchDocIndex( String word ) throws BusinessException {
+		DocumentIndexKey doc;
+		if("da".equals(word)){
+			int i=1;
+		}
+		try {
+			doc = btree.getElement(word);
+		} catch (KeyNotFoundException e) {
+			
+			// podria ser el caso de que no existise la clave
+			doc=new DocumentIndexKey(-1);
+			
+			
+		} catch (DataAccessException e) {
+			throw new BusinessException("Error leyendo documento para el [WORD: "+word+"] del btree",e);		
+		}
+
+		return doc;
+	}
 	protected DocumentIndexKey createBlock() {
 		// crea un bloque en el LinkedBlocks
 		DocumentIndexKey newBlockId=new DocumentIndexKey(manager.addBlock());
