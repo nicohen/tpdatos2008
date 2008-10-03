@@ -27,7 +27,7 @@ public abstract class AbstractBPlusNode implements BPlusNode {
 	@Override
 	public BPlusElement getElement(BPlusElementKey elementKey) throws KeyNotFoundException {
 		BPlusElement aux = this.findElement(this.elements,elementKey);
-		if ( aux == null ) throws new KeyNotFoundException();
+		if ( aux == null ) throw new KeyNotFoundException();
 		return aux;
 	}
 
