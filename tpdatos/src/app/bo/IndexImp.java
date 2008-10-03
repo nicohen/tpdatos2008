@@ -48,7 +48,9 @@ public class IndexImp implements Index {
 			throws BusinessException {
 
 		// buscar la palabra en el btree
-		
+		if (word.compareTo("programador")==0){
+		int i = 0;
+		}
 		DocumentIndexKey docBlockId;
 
 		docBlockId = this.obtainDocIndex(word);
