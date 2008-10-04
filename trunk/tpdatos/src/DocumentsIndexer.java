@@ -60,7 +60,7 @@ public class DocumentsIndexer {
 					
 					log.info("Indexando documento ["+document.getFileName()+"]");
 					//Le seteo un nuevo documentId al documento a indexar
-					document.setDocumentId(indexedDocuments.getNewDocumentId()+1 );
+					document.setDocumentId(indexedDocuments.getNewDocumentId() );
 					
 					//Elimino tags y caracteres que no correspondan
 					File inputFile = new File(Constants.FOLDER_DOCUMENTS + File.separator + document.getFileName());
