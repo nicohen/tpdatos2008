@@ -1,5 +1,8 @@
 package utils.statistics;
 
+import dto.DocumentDto;
+import dto.DocumentStatisticsDto;
+
 public class StatisticsGenerator {
 
 	private Statistics stats;
@@ -18,6 +21,13 @@ public class StatisticsGenerator {
 	
 	public void addReadedBytes(long bytes) {
 		stats.addReadedBytes(bytes);
+	}
+	
+	public void addDocumentStatistics(DocumentDto document, int wordsQuantity, long indexTime) {
+		DocumentStatisticsDto dsDto = new DocumentStatisticsDto();
+		dsDto.setWordsQuantity(wordsQuantity);
+		dsDto.setIndexTime(indexTime);
+		stats.addDocumentStatistic(document, dsDto);
 	}
 	
 	public Statistics finish() {
