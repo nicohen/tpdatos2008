@@ -34,7 +34,7 @@ public class QueryEngine {
 		indice=index;
 	}
 	
-	public List<DocumentDto> executeQuery(String consulta) throws BusinessException{
+	public Iterator<DocumentDto> executeQuery(String consulta) throws BusinessException{
 		ArrayList<DocumentDto> listaRet=new ArrayList<DocumentDto>();
 		Iterator<Integer> itAux;
 		
@@ -44,7 +44,20 @@ public class QueryEngine {
 			listaRet.add(dicc.getDocument(itAux.next()-1));
 		}
 		
-		return listaRet;
+		return listaRet.iterator();
+	}
+	
+	public int countExecuteQuery(String consulta ) throws BusinessException {
+		ArrayList<DocumentDto> listaRet=new ArrayList<DocumentDto>();
+		Iterator<Integer> itAux;
+		
+		itAux=indice.getDocuments(consulta);
+		
+		while (itAux.hasNext()){
+			listaRet.add(dicc.getDocument(itAux.next()-1));
+		}
+		
+		return listaRet.size();
 	}
 	
 	public DocumentInsert prepareDocumentInsert( String documento ) throws BusinessException{
