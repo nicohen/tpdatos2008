@@ -49,6 +49,8 @@ public class DocumentsIndexer {
 
 			log.info("<<< Inicio de indexacion de documentos >>>\n");
 
+			int totalIndexed = 0;
+			
 			//Recorro los nuevos documentos a indexar
 			for (int i=0;i<newDocuments.length;i++) {
 				DocumentDto document = new DocumentDto(newDocuments[i].getName());
@@ -119,7 +121,8 @@ public class DocumentsIndexer {
 									//El primer termino del pipeline no es stopword, por lo tanto se indexa
 									String indexWord = stemmingProcessor.stem(stopwordsPipeline.getFirstWord());
 									wordIndexer.insertWord(indexWord, document.getDocumentId());
-									log.info("["+document.getFileName()+"] --> [INDEXED: "+indexWord+"] [RAW WORD: "+stopwordsPipeline.getFirstWord()+"]");
+									log.info("["+(i+1)+"/"+newDocuments.length+" "+document.getFileName()+"] --> [INDEXED: "+indexWord+"] [RAW WORD: "+stopwordsPipeline.getFirstWord()+"]");
+									totalIndexed++;
 									stopwordsPipeline.removeWords(1);
 								} else {
 									//Elimino stopword encontrado en pipeline
@@ -127,7 +130,7 @@ public class DocumentsIndexer {
 									for(int j=0;j<bestWordCompare;j++) {
 										eliminar+=stopwordsPipeline.getWord(j)+" ";
 									}
-									log.info("["+document.getFileName()+"] [STOPWORD: "+eliminar.trim()+"]");
+									log.info("["+(i+1)+"/"+newDocuments.length+" "+document.getFileName()+"] [STOPWORD: "+eliminar.trim()+"]");
 									stopwordsPipeline.removeWords(bestWordCompare);
 								}
 
@@ -142,6 +145,7 @@ public class DocumentsIndexer {
 					DocumentsDictionaryImp.moveFileToIndexedFolder(newDocuments[i]);
 
 					log.info("Fin de indexacion del documento ["+document.getFileName()+"]");
+					log.info("Se indexaron "+totalIndexed+" terminos de "+i+" documentos");
 				} else {
 					log.info("El documento ["+document.getFileName()+"] ya fue indexado anteriormente");
 				}
@@ -149,7 +153,7 @@ public class DocumentsIndexer {
 			
 			log.info("\n<<< Fin de indexacion de documentos >>>");
 			
-			wordIndexer.dump();
+//			wordIndexer.dump();
 		} catch (BusinessException e) {
 			throw new Exception("Error preparando nuevos documentos pendientes a indexar",e);
 		}

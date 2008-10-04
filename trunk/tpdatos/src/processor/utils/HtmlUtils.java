@@ -59,7 +59,6 @@ public final class HtmlUtils {
 		return Translate.decode(html);
 	}
 	
-	@SuppressWarnings("deprecation")
 	public static String readHtmlFile(String fileName) {
 	    File file = new File(fileName);
 	    StringBuilder html = new StringBuilder();
