@@ -1,5 +1,6 @@
 package test.index;
 
+import java.util.Iterator;
 import java.util.List;
 
 import junit.framework.TestCase;
@@ -36,27 +37,27 @@ public abstract class TestQueryEngine extends TestCase {
 		engine.prepareDocumentInsert("documento4").insertWord("perro");
 		engine.prepareDocumentInsert("documento5").insertWord("perro");
 		
-		List<DocumentDto> list;
+		Iterator<DocumentDto> list;
 
 		list=engine.executeQuery("gato");
 		
 		// FIXME: utilizar los asserts correspondientes
 
-		assertEquals( list.get(0).getFileName() , "documento1");
-		assertEquals( list.get(1).getFileName() , "documento2");
-		assertEquals( list.get(2).getFileName() , "documento3");
-		assertEquals( list.get(3).getFileName() , "documento4");
-		assertEquals( list.get(4).getFileName() , "documento5");
+		assertEquals( list.next().getFileName() , "documento1");
+		assertEquals( list.next().getFileName() , "documento2");
+		assertEquals( list.next().getFileName() , "documento3");
+		assertEquals( list.next().getFileName() , "documento4");
+		assertEquals( list.next().getFileName() , "documento5");
 
 		list=engine.executeQuery("perro");
 		
 		// FIXME: utilizar los asserts correspondientes
 
-		assertEquals( list.get(0).getFileName() , "documento1");
-		assertEquals( list.get(1).getFileName() , "documento2");
-		assertEquals( list.get(2).getFileName() , "documento3");
-		assertEquals( list.get(3).getFileName() , "documento4");
-		assertEquals( list.get(4).getFileName() , "documento5");
+		assertEquals( list.next().getFileName() , "documento1");
+		assertEquals( list.next().getFileName() , "documento2");
+		assertEquals( list.next().getFileName() , "documento3");
+		assertEquals( list.next().getFileName() , "documento4");
+		assertEquals( list.next().getFileName() , "documento5");
 
 	}
 
