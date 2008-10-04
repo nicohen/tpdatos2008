@@ -1,12 +1,12 @@
 package processor.utils;
 
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
+import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 
+import org.htmlparser.Node;
 import org.htmlparser.NodeFilter;
 import org.htmlparser.Parser;
 import org.htmlparser.filters.AndFilter;
@@ -41,7 +41,7 @@ public final class HtmlUtils {
 		
 		while (it.hasMoreNodes()) {
 			TagNode node = (TagNode) it.nextNode();
-			nuevo = node.toHtml();
+			nuevo = getNodeText(node);
 		}
 
 		return nuevo;
@@ -63,30 +63,24 @@ public final class HtmlUtils {
 	public static String readHtmlFile(String fileName) {
 	    File file = new File(fileName);
 	    StringBuilder html = new StringBuilder();
-	    FileInputStream fis = null;
-	    BufferedInputStream bis = null;
-	    DataInputStream dis = null;
+	    FileReader fr = null;
+	    BufferedReader br = null;
 
 	    try {
-	      fis = new FileInputStream(file);
+	    	fr = new FileReader(file);
 
 	      // Here BufferedInputStream is added for fast reading.
-	      bis = new BufferedInputStream(fis);
-	      dis = new DataInputStream(bis);
+	    	br = new BufferedReader(fr);
 
-	      // dis.available() returns 0 if the file does not have more lines.
-	      while (dis.available() != 0) {
-
-	      // this statement reads the line from the file and print it to
-	        // the console.
-	        html.append(dis.readLine());
-	        html.append("\n");
-	      }
-
+			
+			int letra= br.read();
+			while (letra>-1){
+				html.append((char)letra);
+				letra= br.read();
+			}
 	      // dispose all the resources after using them.
-	      fis.close();
-	      bis.close();
-	      dis.close();
+	      br.close();
+	      fr.close();
 
 	    } catch (FileNotFoundException e) {
 	      e.printStackTrace();
@@ -99,8 +93,24 @@ public final class HtmlUtils {
 	public static String formatHtmlFile(File file) throws ParserException {
 		String documentText = HtmlUtils.readHtmlFile(file.getPath());
 		documentText = HtmlUtils.getHtmlBody(documentText);
-		documentText = HtmlUtils.deleteScripts(documentText);
+		//documentText = HtmlUtils.deleteScripts(documentText);
 		documentText = HtmlUtils.deleteTags(documentText);
 		return HtmlUtils.decodeSpecialHtmlCharacters(documentText);
+	}
+	
+	private static String getNodeText(Node node) throws ParserException {
+		StringBuilder sb = new StringBuilder();
+		if(!node.getClass().equals(ScriptTag.class)){
+			if (node.getChildren()==null || node.getChildren().size()==0){
+				sb.append(node.getText());
+			}else{
+				NodeIterator it= node.getChildren().elements();
+				while (it.hasMoreNodes()){
+					sb.append(getNodeText(it.nextNode()));
+				}
+			}
+		}
+		return sb.toString();
+		
 	}
 }
