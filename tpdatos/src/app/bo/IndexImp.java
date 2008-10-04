@@ -37,7 +37,7 @@ public class IndexImp implements Index {
 			Iterator<byte[]> it=manager.get(docBlockId.getValue());
 			
 			while(it.hasNext()){
-				listaRet.add(KeyCodificationUtils.gammaDecode(it.next()));
+				listaRet.add(KeyCodificationUtils.gammaDecode(it.next()) - 1);
 			}
 		}
 		itRet=listaRet.iterator();
@@ -61,7 +61,7 @@ public class IndexImp implements Index {
 	
 	private void insertDocument(DocumentIndexKey docBlockId, Integer docId) {
 		
-		manager.add(KeyCodificationUtils.gammaEncode(docId), docBlockId.getValue());
+		manager.add(KeyCodificationUtils.gammaEncode(docId+1), docBlockId.getValue());
 	
 	}
 
