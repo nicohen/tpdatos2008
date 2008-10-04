@@ -119,7 +119,7 @@ public class DocumentsIndexer {
 									//El primer termino del pipeline no es stopword, por lo tanto se indexa
 									String indexWord = stemmingProcessor.stem(stopwordsPipeline.getFirstWord());
 									wordIndexer.insertWord(indexWord, document.getDocumentId());
-									log.info("--> [INDEXED: "+indexWord+"] [RAW WORD: "+stopwordsPipeline.getFirstWord()+"]");
+									log.info("["+newDocuments[i]+"] --> [INDEXED: "+indexWord+"] [RAW WORD: "+stopwordsPipeline.getFirstWord()+"]");
 									stopwordsPipeline.removeWords(1);
 								} else {
 									//Elimino stopword encontrado en pipeline
@@ -127,7 +127,7 @@ public class DocumentsIndexer {
 									for(int j=0;j<bestWordCompare;j++) {
 										eliminar+=stopwordsPipeline.getWord(j)+" ";
 									}
-									log.info("[STOPWORD: "+eliminar.trim()+"]");
+									log.info("["+newDocuments[i]+"] [STOPWORD: "+eliminar.trim()+"]");
 									stopwordsPipeline.removeWords(bestWordCompare);
 								}
 
