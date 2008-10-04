@@ -1,0 +1,27 @@
+Deshardcodear todos los RES
+Validar que los tipos de TODOS en todos los statements tengan sentido.
+Validar que en los insertar la clave no se repita.  OK
+Validar que en al crear el archivo no se repita.	OK
+MemoryLeaks
+Corregir esto: Falta el nombre del archivo-->[2008-04-16 12:45:29] 'Se creo correctamente el archivo' Res=1 OK
+Corregir el constructor de DataFile RESIGNADO
+Nico!->StatsStatement: Escribir en el archivo OK
+Poner debug en todos los executes para avisar que empezo/terminó
+
+CreateStatement			OK
+InsertionStatement		OK
+QueryStatement			OK
+DeleteStatement			OK
+RemoveStatement			OK
+UpdateStatement			OK
+
+Poner debug en todos los executes para avisar que empezo/terminó
+Cambiar throw BlockStructuredFileException  por throw block not found
+BlockStructuredFile: en cada update de bloques verificar si quedó vacío el bloque, para luego eliminarlo
+Matar el DataFile
+
+Las claves son numericas
+
+ARCHIVO DE CONSIDERACIONES
+Las claves son numericas
+Los numeros empiezan en cero
