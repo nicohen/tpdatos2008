@@ -1,0 +1,69 @@
+package app.po.persistors;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+
+import dto.LinkedBlock;
+import exceptions.PersistanceException;
+
+public class LinkedBlockIntPersistor extends MaxSizeAbstractPersistor<LinkedBlock<Integer>> {
+
+	public LinkedBlockIntPersistor(int maxSize) {
+		super(maxSize);
+	}
+
+
+	
+	
+	@Override
+	public LinkedBlock<Integer> read(DataInputStream stream) throws PersistanceException {
+		// TODO Auto-generated method stub
+		int i=0;
+		int aux;
+		LinkedBlock<Integer> reg=new LinkedBlock<Integer>();
+		try{
+			while (i<this.maxSize/Integer.SIZE -1){
+			aux=stream.readInt();
+			if (aux!=0)
+			reg.setElem(aux);
+			i++;
+			}
+			reg.setNextBlock(stream.readInt());
+		}
+			catch (IOException e) {
+				// TODO Auto-generated catch block
+				throw new PersistanceException("Error Recuperando Elemento.",e);
+			}
+		
+		return reg;
+	}
+
+
+
+	@Override
+	public void write(LinkedBlock<Integer> element, DataOutputStream stream)
+			throws PersistanceException {
+		// TODO Auto-generated method stub
+		int i;
+//		Iterator<Integer> it = element.getListaElem().iterator();
+		try{
+			
+			for(int j=0;j<element.getListaElem().size();j++)
+				stream.writeInt(element.getListaElem().get(j));
+			
+			for(i=element.getListaElem().size();i<this.maxSize/Integer.SIZE-1;i++){
+				stream.writeInt(0);
+			}
+			stream.writeInt(element.getNextBlock());
+		}
+		catch (IOException e){
+			throw new PersistanceException("Error persistiendo Elemento.",e);
+		}
+		
+	}
+
+
+
+
+}
