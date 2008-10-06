@@ -12,14 +12,10 @@ public class LinkedBlockByteArrayPersistor extends MaxSizeAbstractPersistor<Link
 
 	public LinkedBlockByteArrayPersistor(int maxSize) {
 		super(maxSize+LinkedBlock.BLOCK_ADMIN_DATA);
-	}
-
-	
-	
+	}	
 	
 	@Override
 	public LinkedBlock<byte[]> read(DataInputStream stream) throws PersistanceException {
-		// TODO Auto-generated method stub
 		int i=0;
 		short regsize=0;
 		//Registro:
@@ -59,8 +55,6 @@ public class LinkedBlockByteArrayPersistor extends MaxSizeAbstractPersistor<Link
 		
 		return reg;
 	}
-
-
 
 	@Override
 	public void write(LinkedBlock<byte[]> element, DataOutputStream stream)

@@ -7,10 +7,8 @@ import api.po.persistors.Persistor;
 
 public abstract class AbstractPersistor<E> implements Persistor<E> {
 
-	
 	@Override
 	public int getElementSize(E element ){
-		
 		try {
 			byte[] byteArray;
 			ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();

@@ -11,7 +11,7 @@ import app.po.persistors.IntegerPersistor;
 import exceptions.DataAccessException;
 import exceptions.PersistanceException;
 
-public class SecuencialFile<E> extends AbstractFile<E> {
+public class SecuencialFile<E> extends AbstractBloquedFile<E> {
 	
 	private StackFile<Integer> freeSpacesStack;
 	private static final byte REMOVED_ELEMENT= (byte) 0xFF;

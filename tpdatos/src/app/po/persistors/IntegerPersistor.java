@@ -5,9 +5,10 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
+import api.po.persistors.Persistor;
 import exceptions.PersistanceException;
 
-public class IntegerPersistor extends AbstractPersistor<Integer>{
+public class IntegerPersistor implements Persistor<Integer>{
 	
 	private int size;
 	
@@ -22,6 +23,7 @@ public class IntegerPersistor extends AbstractPersistor<Integer>{
 		}
 	}
 
+	@Override
 	public Integer read(DataInputStream stream) throws PersistanceException {
 		try {
 			return stream.readInt();
@@ -30,6 +32,7 @@ public class IntegerPersistor extends AbstractPersistor<Integer>{
 		}
 	}
 
+	@Override
 	public void write(Integer element, DataOutputStream stream) throws PersistanceException {
 		try {
 			stream.writeInt(element);
@@ -38,11 +41,13 @@ public class IntegerPersistor extends AbstractPersistor<Integer>{
 		}
 		
 	}
-
+	
+	@Override
 	public int getDataSize() {
 		return size;
 	}
-
+	
+	@Override
 	public int getElementSize(Integer element) {
 		return getDataSize();
 	}

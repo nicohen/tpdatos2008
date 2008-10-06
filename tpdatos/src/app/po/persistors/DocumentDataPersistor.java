@@ -3,9 +3,10 @@ package app.po.persistors;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
+import api.po.persistors.SimplePersistor;
 import exceptions.PersistanceException;
 
-public class DocumentDataPersistor extends AbstractPersistor<String> {
+public class DocumentDataPersistor implements SimplePersistor<String> {
 
 	SimpleStringPersistor stringPersistor = new SimpleStringPersistor();
 	
@@ -23,16 +24,10 @@ public class DocumentDataPersistor extends AbstractPersistor<String> {
 			throws PersistanceException {
 		stringPersistor.write(element, stream);//filename o titulo
 	}
-
+	
 	@Override
-	public int getDataSize() {
-		// TODO Auto-generated method stub
-		return 1;
+	public int getElementSize(String element) {
+		return stringPersistor.getElementSize(element);
 	}
-
-/*	public int getElementSize(DocumentDto element) {
-		return integerPersistor.getElementSize(element.getDocumentId()) +
-				stringPersistor.getElementSize(element.getFileName());
-	}*/
 
 }

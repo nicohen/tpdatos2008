@@ -12,6 +12,7 @@ public class VariableStringPersistor extends MaxSizeAbstractPersistor<java.lang.
 		super(0);
 	}
 
+	@Override
 	public String read(DataInputStream stream) throws PersistanceException {
 		try {//el string viene size+cadena
 			int i=0;
@@ -25,7 +26,8 @@ public class VariableStringPersistor extends MaxSizeAbstractPersistor<java.lang.
 			throw new PersistanceException("Error recuperando elemento.",e);
 		}
 	}
-
+	
+	@Override
 	public void write(String element, DataOutputStream stream) throws PersistanceException {
 		try {
 			int i=0; //va acumulando la cantidad de bytes escritos
@@ -41,6 +43,7 @@ public class VariableStringPersistor extends MaxSizeAbstractPersistor<java.lang.
 		}
 	}
 
+	@Override
 	public int getElementSize(String element) {
 		return (element.length()*2)+1;
 	}
