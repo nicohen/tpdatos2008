@@ -10,7 +10,7 @@ import api.po.persistors.Persistor;
 import exceptions.DataAccessException;
 import exceptions.PersistanceException;
 
-public class RelativeFile<E> extends AbstractFile<E> {
+public class RelativeFile<E> extends AbstractBloquedFile<E> {
 
 	public RelativeFile(String fileName, Persistor<E> persistor)
 			throws DataAccessException {

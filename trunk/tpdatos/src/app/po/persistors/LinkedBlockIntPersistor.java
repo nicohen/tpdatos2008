@@ -13,9 +13,6 @@ public class LinkedBlockIntPersistor extends MaxSizeAbstractPersistor<LinkedBloc
 		super(maxSize);
 	}
 
-
-	
-	
 	@Override
 	public LinkedBlock<Integer> read(DataInputStream stream) throws PersistanceException {
 		// TODO Auto-generated method stub
@@ -39,8 +36,6 @@ public class LinkedBlockIntPersistor extends MaxSizeAbstractPersistor<LinkedBloc
 		return reg;
 	}
 
-
-
 	@Override
 	public void write(LinkedBlock<Integer> element, DataOutputStream stream)
 			throws PersistanceException {
@@ -62,8 +57,4 @@ public class LinkedBlockIntPersistor extends MaxSizeAbstractPersistor<LinkedBloc
 		}
 		
 	}
-
-
-
-
 }

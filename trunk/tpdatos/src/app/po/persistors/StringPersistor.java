@@ -12,6 +12,7 @@ public class StringPersistor extends MaxSizeAbstractPersistor<java.lang.String> 
 		super(maxSize);
 	}
 
+	@Override
 	public String read(DataInputStream stream) throws PersistanceException {
 		try {
 			int i=0;
@@ -27,6 +28,7 @@ public class StringPersistor extends MaxSizeAbstractPersistor<java.lang.String> 
 		}
 	}
 
+	@Override
 	public void write(String element, DataOutputStream stream) throws PersistanceException {
 		if (this.maxSize<=(element.length()+1)*2){
 			throw new PersistanceException("Texto demasiado largo como para persistir con este Persistor.");
@@ -49,6 +51,7 @@ public class StringPersistor extends MaxSizeAbstractPersistor<java.lang.String> 
 		}
 	}
 
+	@Override
 	public int getElementSize(String element) {
 		return (element.length()*2)+1;
 	}

@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 import api.po.persistors.Persistor;
+import api.po.persistors.SimplePersistor;
 import bplus.elements.BPlusElement;
 import bplus.elements.BPlusIndexElement;
 import bplus.elements.BPlusLeafElement;
@@ -12,18 +13,13 @@ import bplus.keys.BPlusElementKey;
 import bplus.keys.BPlusNodeKey;
 import exceptions.PersistanceException;
 
-public class BPlusElementPersistor extends AbstractPersistor<BPlusElement> {
+public class BPlusElementPersistor implements SimplePersistor<BPlusElement> {
 
 	private byte LEAF_TYPE= 0;
 	private byte INDEX_TYPE= 1;
 	private Persistor<Integer> intePersistor= new IntegerPersistor();
 	private SimpleStringPersistor stringPersistor= new SimpleStringPersistor();
 	
-	@Override
-	public int getDataSize() {
-		return 0;
-	}
-
 	@Override
 	public BPlusElement read(DataInputStream stream)
 			throws PersistanceException {

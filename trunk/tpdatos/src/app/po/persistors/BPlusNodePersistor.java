@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.Iterator;
 
 import api.po.persistors.Persistor;
+import api.po.persistors.SimplePersistor;
 import bplus.elements.BPlusElement;
 import bplus.elements.BPlusIndexElement;
 import bplus.keys.BPlusNodeKey;
@@ -18,7 +19,7 @@ public class BPlusNodePersistor implements Persistor<BPlusNode> {
 	
 	private static byte LEAF_TYPE= 0;
 	private static byte INDEX_TYPE= 1;
-	private Persistor<BPlusElement> elementPersistor= new BPlusElementPersistor();
+	private SimplePersistor<BPlusElement> elementPersistor= new BPlusElementPersistor();
 	private Persistor<Integer> intPersistor= new IntegerPersistor();
 	private int nodeSize;
 	

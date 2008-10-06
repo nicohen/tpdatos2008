@@ -6,7 +6,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import api.po.persistors.Persistor;
+import api.po.persistors.SimplePersistor;
 import exceptions.DataAccessException;
 import exceptions.PersistanceException;
 
@@ -14,10 +14,13 @@ import exceptions.PersistanceException;
 public class SecuentialFile<E> extends AbstractFile<E> {
 
 	private static final int UTF_BYTE_SIZE=2;
+	private SimplePersistor<E> persistor;
 	
-	public SecuentialFile(String fileName, Persistor<E> persistor)
+	
+	public SecuentialFile(String fileName, SimplePersistor<E> persistor)
 			throws DataAccessException {
-		super(fileName,persistor.getDataSize(),persistor);
+		super(fileName);
+		this.persistor=persistor;
 	}
 
 	@Override
@@ -60,6 +63,7 @@ public class SecuentialFile<E> extends AbstractFile<E> {
 
 	@Override
 	public void remove(int elementId) throws DataAccessException {
+		// TODO Auto-generated method stub
 	}
 
 	@Override
@@ -71,6 +75,12 @@ public class SecuentialFile<E> extends AbstractFile<E> {
 	@Override
 	public int update(int elementId, E newElement) throws DataAccessException,
 			PersistanceException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getSize() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
