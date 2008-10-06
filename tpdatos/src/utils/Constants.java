@@ -8,18 +8,12 @@ public class Constants {
 		// /documents/indexed
 		public static final String FOLDER_INDEXED = FOLDER_DOCUMENTS+File.separator+"indexed";
 	
-	// /src
-	public static final String FOLDER_SOURCE = "src";
-		// /src/processor
-		public static final String FOLDER_PROCESSOR = FOLDER_SOURCE+File.separator+"processor";
-			// /src/processor/stopwords
-			public static final String FOLDER_STOPWORDS = FOLDER_PROCESSOR+File.separator+"stopwords";
-				// /src/processor/stopwords/stopwords.txt
-				public static final String FILE_STOPWORDS = FOLDER_STOPWORDS+File.separator+"stopwords.txt";
-			// /src/processor/stemming
-			public static final String FOLDER_STEMMING = FOLDER_PROCESSOR+File.separator+"stemming";
-				// /src/processor/stemming/stemming.txt
-				public static final String FILE_STEMMING = FOLDER_STEMMING+File.separator+"stemming.txt";
+	// /words
+	public static final String FOLDER_WORDS = "words";
+		// /words/stopwords.txt
+		public static final String FILE_STOPWORDS = FOLDER_WORDS+File.separator+"stopwords.txt";
+		// /words/stemming.txt
+		public static final String FILE_STEMMING = FOLDER_WORDS+File.separator+"stemming.txt";
 	
 				
 	public static final String INDEX_FILE_PATH = "index.bin";
