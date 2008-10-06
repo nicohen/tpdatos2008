@@ -63,4 +63,13 @@ public class StackFile<E> implements Stack<E>{
 			throw new DataAccessException("Error obteniendo elemento.",e);
 		}
 	}
+	
+	public void close(){
+		try {
+			this.dataFile.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

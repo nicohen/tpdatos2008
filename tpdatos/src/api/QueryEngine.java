@@ -2,7 +2,6 @@ package api;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import api.dao.documents.DocumentsDictionary;
 import dto.DocumentDto;

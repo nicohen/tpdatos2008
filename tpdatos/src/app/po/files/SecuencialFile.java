@@ -102,4 +102,8 @@ public class SecuencialFile<E> extends AbstractFile<E> {
 		}
 	}
 
+	public void close(){
+		this.freeSpacesStack.close();
+		super.close();
+	}
 }

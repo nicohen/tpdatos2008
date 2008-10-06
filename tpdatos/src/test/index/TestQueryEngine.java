@@ -1,7 +1,6 @@
 package test.index;
 
 import java.util.Iterator;
-import java.util.List;
 
 import junit.framework.TestCase;
 import api.QueryEngine;

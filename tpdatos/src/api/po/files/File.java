@@ -11,4 +11,5 @@ public interface File<E>{
 	public void remove(int elementId) throws DataAccessException;
 	public void delete();
 	public int getSize();
+	public void close();
 }
