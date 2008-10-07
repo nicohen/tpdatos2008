@@ -30,7 +30,7 @@ public class DocumentInfoPersistor implements Persistor<DocumentDto> {
 
 	@Override
 	public int getDataSize() {
-		return 2+integerPersistor.getDataSize();
+		return integerPersistor.getDataSize()*2;
 	}
 
 	@Override
