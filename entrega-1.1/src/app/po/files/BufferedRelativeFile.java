@@ -10,7 +10,7 @@ import api.po.persistors.Persistor;
 import exceptions.DataAccessException;
 import exceptions.PersistanceException;
 
-class BufferedRelativeFile<E> implements File<E> {
+public class BufferedRelativeFile<E> implements File<E> {
 
 	private RelativeFile<E> file;
 	private ArrayList<BufferBlock<E>> buffer;
@@ -18,15 +18,16 @@ class BufferedRelativeFile<E> implements File<E> {
 	private int bufferLength;
 	private int bufferMark;
 	
-	public BufferedRelativeFile(String fileName,Persistor<E> persistor,int bufferSize) throws DataAccessException, PersistanceException {
+	public BufferedRelativeFile(String fileName,Persistor<E> persistor,int bufferSize) throws DataAccessException {
 		super();
 		this.file= new RelativeFile<E>(fileName,persistor);
 		this.bufferSize=bufferSize;
 		this.bufferLength=bufferSize/persistor.getDataSize();
 		if (this.bufferSize<1){
-			throw new PersistanceException("El tamano del buffer es mas chico que el de los elementos ("+bufferSize+"|"+persistor.getDataSize()+")");
+			throw new DataAccessException("El tamano del buffer es mas chico que el de los elementos ("+bufferSize+"|"+persistor.getDataSize()+")");
 		}
 		this.bufferMark=Integer.MIN_VALUE;
+		this.buffer= new ArrayList<BufferBlock<E>>();
 	}
 
 	@Override
@@ -116,6 +117,9 @@ class BufferedRelativeFile<E> implements File<E> {
 
 	@Override
 	public int update(int elementId, E newElement) throws DataAccessException,PersistanceException {
+		if (this.file.persistor.getDataSize()<this.file.persistor.getElementSize(newElement)){
+			throw new PersistanceException("Error modificando elemento: "+newElement.toString());
+		}
 		boolean found= false;
 		Iterator<BufferBlock<E>> it= this.buffer.iterator();
 		while (it.hasNext()){
