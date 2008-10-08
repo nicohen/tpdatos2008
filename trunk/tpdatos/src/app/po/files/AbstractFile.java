@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 import utils.statistics.StatisticsGenerator;
-import utils.statistics.StatisticsGeneratorSingleton;
 import exceptions.DataAccessException;
 
 public abstract class AbstractFile<E> implements api.po.files.File<E> {
@@ -15,7 +14,7 @@ public abstract class AbstractFile<E> implements api.po.files.File<E> {
 	private RandomAccessFile dataFile;
 	
 	public AbstractFile(String fileName) throws DataAccessException {
-		this.statistics= StatisticsGeneratorSingleton.get();
+		this.statistics= StatisticsGenerator.getInstance();
 		try {
 			this.file= new java.io.File(fileName);
 			this.dataFile = new RandomAccessFile(this.file,"rw");
