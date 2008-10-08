@@ -29,7 +29,7 @@ echo "classes: "$CLASSES >> makefile
 echo 'clean:
 	   rm $(CLASSES:.java=.class)'  >> makefile
 echo 'jar:
-	jar cvf bombita.jar -C bin/ .' >> makefile
+	jar cvfe bombita.jar Main -C bin/ .' >> makefile
 
 echo 'dist:
 	tar -c '$( find -name "*.java" )' words/stemming.txt words/stopwords.txt makefile '$(find lib/ -name '*.jar')' > bombita-src.tar 
