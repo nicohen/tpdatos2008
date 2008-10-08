@@ -18,13 +18,18 @@ echo 'JC = javac' >> makefile
 echo >> makefile
 echo >> makefile
 
+CLASSES=$(find -name '*.java'  | sed -e 's/\.\/src/\.\/bin/' -e 's/\.java$/\.class/')
+CLASSESBIN=$(find -name '*.java'  | sed -e 's/\.\/src\///' -e 's/\.java$/\.class/')
+
+
 echo "CLASSES = "$( find -name '*.java' ) >> makefile
 echo  >> makefile
 echo "default: classes"  >> makefile
-#echo 'classes:   $(CLASSES:.java=.class)'  >> makefile
-echo "classes: "$(find -name '*.java'  | sed -e 's/\.\/src/\.\/bin/' -e 's/\.java$/\.class/') >> makefile
+echo "classes: "$CLASSES >> makefile
 echo 'clean:
 	   rm $(CLASSES:.java=.class)'  >> makefile
+echo 'jar:
+	jar cvf bombita.jar -C bin/ .' >> makefile
 
 echo >> makefile
 
