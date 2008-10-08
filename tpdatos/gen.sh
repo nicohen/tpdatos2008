@@ -31,6 +31,13 @@ echo 'clean:
 echo 'jar:
 	jar cvf bombita.jar -C bin/ .' >> makefile
 
+echo 'dist:
+	tar -c '$( find -name "*.java" )' words/stemming.txt words/stopwords.txt makefile '$(find lib/ -name '*.jar')' > bombita-src.tar 
+	gzip --force bombita-src.tar 
+	@echo "*************************************************"
+	@echo "* 	bombita-src.tar.gz generated	       *"
+	@echo "*************************************************" ' >> makefile 
+
 echo >> makefile
 
 cd src
