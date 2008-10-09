@@ -1,6 +1,6 @@
 package utils.statistics;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import dto.DocumentDto;
@@ -13,7 +13,8 @@ public class Statistics {
 	private Map<DocumentDto,DocumentStatisticsDto> documentsStatistics = null;
 	
 	public Statistics() {
-		documentsStatistics = new HashMap<DocumentDto,DocumentStatisticsDto>();
+		writtenBytes = readedBytes = 0;
+		documentsStatistics = new LinkedHashMap<DocumentDto,DocumentStatisticsDto>();
 	}
 	
 	public long getReadedBytes() {
