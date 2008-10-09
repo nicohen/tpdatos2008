@@ -10,6 +10,7 @@ import processor.stemming.StemmingProcessor;
 import processor.stopwords.StopwordsProcessor;
 import processor.utils.DigesterUtils;
 import utils.Constants;
+import utils.statistics.StatisticsGenerator;
 import app.bo.IndexImp;
 import app.dao.documents.DocumentsDictionaryImp;
 import dto.DocumentDto;
@@ -26,6 +27,9 @@ public class DocumentsIndexer {
 	public static void main(String[] args) throws Exception {
 		
 		Logger log = Logger.getLogger(DocumentsIndexer.class);
+		
+		//Inicializo las estadisticas
+		StatisticsGenerator statistics = StatisticsGenerator.getInstance();
 		
 		//Me instancio un indexador de terminos para poder indexarlos
 		IndexImp wordIndexer = new IndexImp(Constants.INDEX_FILE_PATH, Constants.INDEX_FILE_SIZE) ;
@@ -49,10 +53,14 @@ public class DocumentsIndexer {
 
 			log.info("<<< Inicio de indexacion de documentos >>>\n");
 
-			int totalIndexed = 0;
-			
 			//Recorro los nuevos documentos a indexar
 			for (int i=0;i<newDocuments.length;i++) {
+
+				//Cantidad total de palabras indexadas por documento
+				int totalIndexed = 0;
+				
+				long c1 = System.currentTimeMillis();
+				
 				DocumentDto document = new DocumentDto(newDocuments[i].getName());
 				log.info("---------------------------------------------------------------------");
 				log.info("Intentando indexar documento ["+document.getFileName()+"]");
@@ -144,8 +152,11 @@ public class DocumentsIndexer {
 					//Muevo el documento indexado a la carpeta de documentos indexados
 					DocumentsDictionaryImp.moveFileToIndexedFolder(newDocuments[i]);
 
+					long c2 = System.currentTimeMillis();
+					
+					statistics.addDocumentStatistics(document, totalIndexed, c2-c1);
+					
 					log.info("Fin de indexacion del documento ["+document.getFileName()+"]");
-					log.info("Se indexaron "+totalIndexed+" terminos de "+i+" documentos");
 				} else {
 					log.info("El documento ["+document.getFileName()+"] ya fue indexado anteriormente");
 				}
@@ -153,7 +164,8 @@ public class DocumentsIndexer {
 			
 			log.info("\n<<< Fin de indexacion de documentos >>>");
 			
-//			wordIndexer.dump();
+			System.out.println(statistics.toString());
+			
 		} catch (BusinessException e) {
 			throw new Exception("Error preparando nuevos documentos pendientes a indexar",e);
 		}
