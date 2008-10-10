@@ -3,6 +3,8 @@ package app.bo;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.apache.log4j.Logger;
+
 import linkedblocks.VariableLinkedBlocksManager;
 import linkedblocks.keys.DocumentIndexKey;
 import linkedblocks.utils.KeyCodificationUtils;
@@ -17,6 +19,7 @@ public class IndexImp implements Index {
 
 	private BPlusTreeFacade btree;
 	private VariableLinkedBlocksManager manager;
+	private Logger log = Logger.getLogger(IndexImp.class);
 	public IndexImp(String path,int blockSize) throws BusinessException {
 		try {
 			LinkedBlockByteArrayPersistor persistor=new LinkedBlockByteArrayPersistor(blockSize);
@@ -32,9 +35,12 @@ public class IndexImp implements Index {
 		Iterator<Integer> itRet;
 
 		Iterator<byte[]> it=manager.get(docBlockId.getValue());
+		
+		Integer lastdocid = 0;
 			
 		while(it.hasNext()){
-			listaRet.add(KeyCodificationUtils.gammaDecode(it.next())-1);
+			lastdocid += KeyCodificationUtils.gammaDecode(it.next());
+			listaRet.add(lastdocid);
 		}
 
 		itRet=listaRet.iterator();
@@ -68,8 +74,27 @@ public class IndexImp implements Index {
 
 	}
 	
-	private void insertDocument(DocumentIndexKey docBlockId, Integer docId) {
-		manager.add(KeyCodificationUtils.gammaEncode(docId+1), docBlockId.getValue());
+	private void insertDocument(DocumentIndexKey docBlockId, Integer docId) throws BusinessException {
+		
+		// Para evitar el problema de leer dos veces el linked block, podria implemenarse
+		// un buffer para el linked block
+		
+		Iterator<Integer> it = this.getDocuments(docBlockId);
+		
+		Integer lastDocument = 0;
+		while (it.hasNext() ) {
+			lastDocument = it.next();
+		}
+
+		Integer diferencia = docId - lastDocument;
+
+		if ( diferencia <= 0) {
+			throw new BusinessException("docid - lastDocument <= 0");
+		}
+		
+		//log.info("insertando " + diferencia + " en la entrada " + docBlockId);
+		
+		manager.add(KeyCodificationUtils.gammaEncode(diferencia), docBlockId.getValue());
 	
 	}
 
