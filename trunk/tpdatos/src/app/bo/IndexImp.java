@@ -26,20 +26,29 @@ public class IndexImp implements Index {
 			throw new BusinessException("Error creando el btree",e);
 		}
 	}
-	
+
+	private Iterator<Integer> getDocuments(DocumentIndexKey docBlockId) throws BusinessException {
+		ArrayList<Integer> listaRet=new ArrayList<Integer>();
+		Iterator<Integer> itRet;
+
+		Iterator<byte[]> it=manager.get(docBlockId.getValue());
+			
+		while(it.hasNext()){
+			listaRet.add(KeyCodificationUtils.gammaDecode(it.next())-1);
+		}
+
+		itRet=listaRet.iterator();
+		return itRet;
+	}
 	public Iterator<Integer> getDocuments(String word) throws BusinessException {
 		
 		DocumentIndexKey docBlockId;
-		ArrayList<Integer> listaRet=new ArrayList<Integer>();
-		Iterator<Integer> itRet;
 		docBlockId=this.searchDocIndex(word);
 		if (docBlockId.getValue()!=-1){
-			Iterator<byte[]> it=manager.get(docBlockId.getValue());
-			
-			while(it.hasNext()){
-				listaRet.add(KeyCodificationUtils.gammaDecode(it.next()) - 1);
-			}
+			return getDocuments(docBlockId);
 		}
+		Iterator<Integer> itRet;
+		ArrayList<Integer> listaRet=new ArrayList<Integer>();
 		itRet=listaRet.iterator();
 		return itRet;
 	}
@@ -60,7 +69,6 @@ public class IndexImp implements Index {
 	}
 	
 	private void insertDocument(DocumentIndexKey docBlockId, Integer docId) {
-		
 		manager.add(KeyCodificationUtils.gammaEncode(docId+1), docBlockId.getValue());
 	
 	}
