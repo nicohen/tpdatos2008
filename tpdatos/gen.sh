@@ -30,7 +30,7 @@ echo "classes: "$CLASSES >> makefile
 echo 'clean:
 	   rm $(CLASSES:.java=.class)'  >> makefile
 echo 'jar:
-	cd src && jar cvfm bombita.jar ../manifesto.txt '$CLASSESSRC' && mv bombita.jar .. ' >> makefile
+	cd src && jar cvfm ../bombita.jar ../manifesto.txt *'>> makefile
 
 echo 'dist:
 	tar -c '$( find -name "*.java" )' words/stemming.txt words/stopwords.txt makefile '$(find lib/ -name '*.jar')' > bombita-src.tar 
