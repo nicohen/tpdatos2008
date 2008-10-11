@@ -88,13 +88,15 @@ public class IndexImp implements Index {
 
 		Integer diferencia = docId - lastDocument;
 
-		if ( diferencia <= 0) {
-			throw new BusinessException("docid - lastDocument <= 0");
+		// si la diferencia es cero, es por que ese documento ya esta,
+		// entonces debe ignorarse
+		
+		if ( diferencia == 0) {
+		} else if ( diferencia < 0) {
+			throw new BusinessException("docid - lastDocument < 0");
+		} else {
+			manager.add(KeyCodificationUtils.gammaEncode(diferencia), docBlockId.getValue());
 		}
-		
-		//log.info("insertando " + diferencia + " en la entrada " + docBlockId);
-		
-		manager.add(KeyCodificationUtils.gammaEncode(diferencia), docBlockId.getValue());
 	
 	}
 
