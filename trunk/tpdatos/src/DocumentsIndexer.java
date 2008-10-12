@@ -11,6 +11,9 @@ import processor.stopwords.StopwordsProcessor;
 import processor.utils.DigesterUtils;
 import utils.Constants;
 import utils.statistics.StatisticsGenerator;
+import api.DefaultQueryEngine;
+import api.DocumentInsert;
+import api.QueryEngine;
 import app.bo.IndexImp;
 import app.dao.documents.DocumentsDictionaryImp;
 import dto.DocumentDto;
@@ -32,10 +35,12 @@ public class DocumentsIndexer {
 		StatisticsGenerator statistics = StatisticsGenerator.getInstance();
 		
 		//Me instancio un indexador de terminos para poder indexarlos
-		IndexImp wordIndexer = new IndexImp(Constants.INDEX_FILE_PATH, Constants.INDEX_FILE_SIZE) ;
+		/*IndexImp wordIndexer = new IndexImp(Constants.INDEX_FI/*LE_PATH, Constants.INDEX_FILE_SIZE) ;
 
 		//Me instancio un DocumentsDictionary para manejar los documentos indexados
-		DocumentsDictionaryImp dd = new DocumentsDictionaryImp();
+		DocumentsDictionaryImp dd = new DocumentsDictionaryImp()*/;
+		
+		QueryEngine queryEngine = new DefaultQueryEngine();
 		
 		//Preparo los nuevos documentos a indexar
 		File[] newDocuments = DocumentsDictionaryImp.prepareNewDocuments(Constants.FOLDER_DOCUMENTS);
@@ -49,7 +54,7 @@ public class DocumentsIndexer {
 		try {
 		
 			//Preparo los documentos que ya fueron indexados
-			IndexedDocumentChecker indexedDocuments = dd.getDocuments();
+			IndexedDocumentChecker indexedDocuments = queryEngine.getDocuments();
 
 			log.info("<<< Inicio de indexacion de documentos >>>\n");
 
@@ -61,7 +66,9 @@ public class DocumentsIndexer {
 				
 				long c1 = System.currentTimeMillis();
 				
+				DocumentInsert docInsert = queryEngine.prepareDocumentInsert(newDocuments[i].getName() ); 
 				DocumentDto document = new DocumentDto(newDocuments[i].getName());
+				
 				log.info("---------------------------------------------------------------------");
 				log.info("Intentando indexar documento ["+document.getFileName()+"]");
 
@@ -128,7 +135,9 @@ public class DocumentsIndexer {
 								if(bestWordCompare==0) {
 									//El primer termino del pipeline no es stopword, por lo tanto se indexa
 									String indexWord = stemmingProcessor.stem(stopwordsPipeline.getFirstWord());
-									wordIndexer.insertWord(indexWord, document.getDocumentId());
+//									wordIndexer.insertWord(indexWord, document.getDocumentId());
+									docInsert.insertWord(indexWord);
+									
 									log.info("["+(i+1)+"/"+newDocuments.length+" "+document.getFileName()+"] --> [INDEXED: "+indexWord+"] [RAW WORD: "+stopwordsPipeline.getFirstWord()+"]");
 									totalIndexed++;
 									stopwordsPipeline.removeWords(1);
@@ -147,7 +156,7 @@ public class DocumentsIndexer {
 					}
 					
 					//Seteo el documento como indexado
-					indexedDocuments.addDocument(dd.insertDocument(document), document.getFileName());
+					//indexedDocuments.addDocument(dd.insertDocument(document), document.getFileName());
 					
 					//Muevo el documento indexado a la carpeta de documentos indexados
 					DocumentsDictionaryImp.moveFileToIndexedFolder(newDocuments[i]);
