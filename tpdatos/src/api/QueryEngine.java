@@ -61,7 +61,6 @@ public class QueryEngine {
 		// insertar el documento en el diccionario
 		
 		Integer id = dicc.insertDocument(new DocumentDto(documento) );
-		id+=1;
 		return new NewDocumentInsert(id, indice );
 	}
 	
