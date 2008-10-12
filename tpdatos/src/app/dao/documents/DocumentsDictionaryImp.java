@@ -3,6 +3,8 @@ package app.dao.documents;
 import java.io.File;
 import java.io.FileFilter;
 
+import org.apache.log4j.Logger;
+
 import processor.IndexedDocumentChecker;
 import utils.Constants;
 import api.dao.documents.DocumentsDictionary;
@@ -66,15 +68,18 @@ public class DocumentsDictionaryImp implements DocumentsDictionary {
 	}
 	
 	public static void moveFileToIndexedFolder(File file) {
-	    // Destination directory
+
+		Logger log = Logger.getLogger(DocumentsDictionaryImp.class);
+		
+			// Destination directory
 	    File dir = new File(Constants.FOLDER_INDEXED);
 	    
 	    // Move file to new directory
 	    boolean success = file.renameTo(new File(dir, file.getName()));
 	    if (!success) {
-	    	System.out.println("Error moviendo ["+file.getName()+"] a la carpeta de indexados");
+	    	log.error("Error moviendo ["+file.getName()+"] a la carpeta de indexados");
 	    } else {
-	    	System.out.println("Se ha movido el archivo ["+file.getName()+"] a la carpeta de indexados");
+	    	log.debug("Se ha movido el archivo ["+file.getName()+"] a la carpeta de indexados");
 	    }
 
 	}

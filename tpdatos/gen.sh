@@ -25,12 +25,12 @@ CLASSESBIN=$(find -name '*.java'  | sed -e 's/\.\/src\///' -e 's/\.java$/\.class
 
 echo "CLASSES = "$( find -name '*.java' ) >> makefile
 echo  >> makefile
-echo "default: classes"  >> makefile
+echo "default: classes jar"  >> makefile
 echo "classes: "$CLASSES >> makefile
 echo 'clean:
 	   rm $(CLASSES:.java=.class)'  >> makefile
 echo 'jar:
-	cd src && jar cvfm ../bombita.jar ../manifesto.txt *'>> makefile
+	cd src && jar cfm ../bombita.jar ../manifesto.txt *'>> makefile
 
 echo 'dist:
 	tar -c '$( find -name "*.java" )' words/stemming.txt words/stopwords.txt makefile '$(find lib/ -name '*.jar')' > bombita-src.tar 
