@@ -76,9 +76,10 @@ public class KeyCodificationUtils {
 			i++;
 		}
 		if (contUnario==0) return 1;
+		
+		contBinario = contUnario;
 		i++;//ignoro el 1
-		for(int k=i;k<set.length()-1;k++){
-			contBinario++;
+		for(int k=i;k<i+contBinario;k++){
 			if(set.get(k))
 			parteBinaria+="1";
 			else
