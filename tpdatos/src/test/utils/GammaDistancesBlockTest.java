@@ -59,6 +59,9 @@ public class GammaDistancesBlockTest extends TestCase {
 		int[] distances7 = { 16 };
 		_testEncode(distances7);
 
+		int[] distances8 = { 16000,1,1,1,2 };
+		_testEncode(distances8);
+
 		for (int i = 1; i< 100;i++) {
 			int[] distance_d = { i, 1 };
 			_testEncode(distance_d);
