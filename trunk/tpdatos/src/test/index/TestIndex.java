@@ -53,6 +53,9 @@ abstract public class TestIndex extends TestCase {
 
 		int[] ids2 = {1,44,45,576,11566};
 		test_entry("prueba2", ids2 );
-	}
+
+		int[] ids3 = {1,9,9,9,9,9};
+		test_entry("prueba3", ids3 );
+}
 	
 }
