@@ -77,7 +77,7 @@ public class DocumentsIndexer {
 					
 					log.info("Indexando documento ["+document.getFileName()+"]");
 					//Le seteo un nuevo documentId al documento a indexar
-					document.setDocumentId(indexedDocuments.getNewDocumentId()+1 );
+					document.setDocumentId(indexedDocuments.getNewDocumentId() );
 					
 					//Elimino tags y caracteres que no correspondan
 					File inputFile = new File(Constants.FOLDER_DOCUMENTS + File.separator + document.getFileName());
@@ -134,7 +134,9 @@ public class DocumentsIndexer {
 								
 								if(bestWordCompare==0) {
 									//El primer termino del pipeline no es stopword, por lo tanto se indexa
-									String indexWord = stemmingProcessor.stem(stopwordsPipeline.getFirstWord());
+									if (stopwordsPipeline.getFirstWord().compareTo("perros")==0)
+										bestWordCompare=0;
+										String indexWord = stemmingProcessor.stem(stopwordsPipeline.getFirstWord());
 //									wordIndexer.insertWord(indexWord, document.getDocumentId());
 									docInsert.insertWord(indexWord);
 									

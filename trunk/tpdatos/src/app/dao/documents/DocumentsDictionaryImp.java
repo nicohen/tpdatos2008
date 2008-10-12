@@ -30,7 +30,6 @@ public class DocumentsDictionaryImp implements DocumentsDictionary {
 	@Override
 	public DocumentDto getDocument(Integer id) throws BusinessException {
 		try {
-			id-=1;
 			DocumentDto dDto = relativeFile.get(id);
 			dDto.setDocumentId(id);
 			dDto.setFileName(nameFile.getVariable(id,dDto.getOffset(),dDto.getFileNameLength()+1));
@@ -45,7 +44,7 @@ public class DocumentsDictionaryImp implements DocumentsDictionary {
 		try {
 			//agrego el string de nombre al archivo secuencial
 			document.setOffset(nameFile.add(document.getFileName()));
-			return relativeFile.add(document)+1;
+			return relativeFile.add(document);
 		} catch (DataAccessException e) {
 			throw new BusinessException("Error inicializando RelativeFile de documentos indexados",e);
 		} catch (PersistanceException e) {
