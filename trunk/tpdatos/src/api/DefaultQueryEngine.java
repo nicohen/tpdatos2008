@@ -4,7 +4,6 @@ package api;
 
 import utils.Constants;
 import app.bo.IndexImp;
-import app.bo.MockDocumentsDictionary;
 import app.dao.documents.DocumentsDictionaryImp;
 import exceptions.BusinessException;
 import exceptions.DataAccessException;
