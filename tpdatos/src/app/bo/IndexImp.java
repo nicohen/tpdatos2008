@@ -56,15 +56,10 @@ public class IndexImp implements Index {
 
 	public void insertWord(String word, Integer docId)
 			throws BusinessException {
-			
-		int i=0;
+
 		// buscar la palabra en el btree
 		DocumentIndexKey docBlockId;
-		if (word.compareTo("perros")==0)
-		{
-			i=3;
-		}
-		
+
 		docBlockId = this.obtainDocIndex(word);
 		
 		// en este punto, se pudo obtener el indice del documento
