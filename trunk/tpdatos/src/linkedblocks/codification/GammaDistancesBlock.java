@@ -71,7 +71,7 @@ public class GammaDistancesBlock implements DistancesBlock {
 		if (key==1) {
 			cjto=new BitSet(key);
 			cjto.set(0,true);
-			return bitsetToByteArray(cjto);
+			return bitsetToByteArray(cjto,1);
 		}
 		
 		Integer logaritmoEnBase2DeN = Integer.valueOf((int)Math.floor(Math.log(key)/Math.log(2)));
@@ -83,26 +83,27 @@ public class GammaDistancesBlock implements DistancesBlock {
 		i++;
 		Integer parteBinaria = Integer.valueOf((key-((int)Math.pow(2,logaritmoEnBase2DeN))));
 		String binario= Integer.toBinaryString(parteBinaria);
-		String aux = new String();
 		if (binario.length()<logaritmoEnBase2DeN){
 			
-			for(int k=0;k<logaritmoEnBase2DeN-binario.length();k++)
-			aux+="0";
-			aux+=binario;
+			int zeros_length = logaritmoEnBase2DeN-binario.length();
+			for(int k=0;k<zeros_length;k++) {
+				binario="0"+binario;
+			}
 		}
-		else
-		aux+=binario;
-		for (;i<logaritmoEnBase2DeN+logaritmoEnBase2DeN+1;i++) {
 		
-			if (aux.charAt(j)=='1')
+		for (j=0;j<binario.length();j++) {
+		
+			if (binario.charAt(j)=='1') {
 			flag=true;
-			else
+			} else {
 			flag=false;
+			}
+			
 			cjto.set(i,flag);
-			j++;
+			i++;
 		}
-		cjto.set(i,true);//se cierra con un 1
-		return bitsetToByteArray(cjto);
+		// poner un uno al final
+		return bitsetToByteArray(cjto, (i+8)/8);
 	}
 	
 	
@@ -141,8 +142,8 @@ public class GammaDistancesBlock implements DistancesBlock {
         return bits;
     }
 	
-	private byte[] bitsetToByteArray(BitSet bits) {
-        byte[] bytes = new byte[bits.length()/8+1];
+	private byte[] bitsetToByteArray(BitSet bits, int len) {
+        byte[] bytes = new byte[len];
         for (int i=0; i<bits.length(); i++) {
             if (bits.get(i)) {
                 bytes[i/8] |= 1<<(i%8);

@@ -10,6 +10,18 @@ public class KeyCodificationTest extends TestCase {
 //		assertEquals(48,(char)gamma1[0].intValue());	
 //	}
 	
+	public void _testNumber(Integer num1) {
+		byte[] gamma1 = KeyCodificationUtils.gammaEncode(num1);
+		Integer size1=KeyCodificationUtils.gammaDecode(gamma1);
+		assertEquals(size1,num1);
+	}
+	
+	public void test() {
+		for (Integer i = 1; i < 1000; i++) {
+			_testNumber(i);
+		}
+	}
+	
 	public void testUnaryEncode() {
 		Integer num1=8,num2=5;
 		byte[] gamma1 = KeyCodificationUtils.unarioEncode(num1);
