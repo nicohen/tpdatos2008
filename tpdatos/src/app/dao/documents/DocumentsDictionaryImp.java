@@ -30,6 +30,7 @@ public class DocumentsDictionaryImp implements DocumentsDictionary {
 	@Override
 	public DocumentDto getDocument(Integer id) throws BusinessException {
 		try {
+			id-=1;
 			DocumentDto dDto = relativeFile.get(id);
 			dDto.setDocumentId(id);
 			dDto.setFileName(nameFile.getVariable(id,dDto.getOffset(),dDto.getFileNameLength()+1));

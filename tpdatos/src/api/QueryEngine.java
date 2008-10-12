@@ -39,7 +39,9 @@ public class QueryEngine {
 		List<DocumentDto> listaRet=new ArrayList<DocumentDto>();
 		
 		for (Integer docId : indice.getDocuments(consulta)){
-			listaRet.add(dicc.getDocument(docId));
+			DocumentDto dtoAux=dicc.getDocument(docId);
+			dtoAux.setDocumentId(docId);
+			listaRet.add(dtoAux);
 		}
 		
 		return listaRet;
@@ -59,6 +61,7 @@ public class QueryEngine {
 		// insertar el documento en el diccionario
 		
 		Integer id = dicc.insertDocument(new DocumentDto(documento) );
+		id+=1;
 		return new NewDocumentInsert(id, indice );
 	}
 	
