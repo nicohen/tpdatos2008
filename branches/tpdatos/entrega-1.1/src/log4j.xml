@@ -6,8 +6,8 @@
 			<param name="ConversionPattern" value="%m%n"/>
 		</layout>           
 	</appender>
-	<logger name="test.log4j.Tester">
-		<level value="info"/> 
+	<logger name="DocumentsIndexer">
+		<level value="warn"/> 
 	</logger>
 	<root> 
 		<priority value ="trace" /> 
