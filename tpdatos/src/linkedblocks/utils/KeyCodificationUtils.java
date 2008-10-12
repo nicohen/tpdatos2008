@@ -33,6 +33,12 @@ public class KeyCodificationUtils {
 			cjto.set(0,true);
 			return toByteArray(cjto);
 		}
+		if (key==0) {
+			cjto=new BitSet(key);
+			cjto.set(0,true);
+			cjto.set(1,true);
+			return toByteArray(cjto);
+		}
 		
 		Integer logaritmoEnBase2DeN = Integer.valueOf((int)Math.floor(Math.log(key)/Math.log(2)));
 		for (i=0;i<logaritmoEnBase2DeN;i++) {
@@ -71,6 +77,8 @@ public class KeyCodificationUtils {
 		int i=0,contUnario=0,contBinario=0;
 		String parteBinaria=new String();
 		Integer valorEnBinario;
+		if (set.length()==2)
+			return 0;
 		while(!set.get(i)){ //leo hasta el primer 1
 			contUnario++;
 			i++;
