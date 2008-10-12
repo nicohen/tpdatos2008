@@ -30,7 +30,7 @@ abstract public class TestIndex extends TestCase {
 			testObject.insertWord(word, id);
 		}
 		
-		Iterator<Integer> recuperado = testObject.getDocuments(word);
+		Iterator<Integer> recuperado = testObject.getDocuments(word).iterator();
 		Iterator<Integer> it=recuperado;
 		// comparar el original con el recuperado
 		

@@ -1,7 +1,7 @@
 package api;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.List;
 
 import processor.IndexedDocumentChecker;
 
@@ -35,29 +35,23 @@ public class QueryEngine {
 		indice=index;
 	}
 	
-	public Iterator<DocumentDto> executeQuery(String consulta) throws BusinessException{
-		ArrayList<DocumentDto> listaRet=new ArrayList<DocumentDto>();
-		Iterator<Integer> itAux;
+	public List<DocumentDto> executeQuery(String consulta) throws BusinessException{
+		List<DocumentDto> listaRet=new ArrayList<DocumentDto>();
 		
-		itAux=indice.getDocuments(consulta);
-		
-		while (itAux.hasNext()){
-			listaRet.add(dicc.getDocument(itAux.next()));
+		for (Integer docId : indice.getDocuments(consulta)){
+			listaRet.add(dicc.getDocument(docId));
 		}
 		
-		return listaRet.iterator();
+		return listaRet;
 	}
 	
 	public int countExecuteQuery(String consulta ) throws BusinessException {
-		ArrayList<DocumentDto> listaRet=new ArrayList<DocumentDto>();
-		Iterator<Integer> itAux;
+		List<DocumentDto> listaRet=new ArrayList<DocumentDto>();
 		
-		itAux=indice.getDocuments(consulta);
-		
-		while (itAux.hasNext()){
-			listaRet.add(dicc.getDocument(itAux.next()));
+		for(Integer docId : indice.getDocuments(consulta)) {
+			listaRet.add(dicc.getDocument(docId));
 		}
-		
+
 		return listaRet.size();
 	}
 	

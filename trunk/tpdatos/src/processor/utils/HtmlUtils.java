@@ -97,7 +97,7 @@ public final class HtmlUtils {
 		StringBuilder sb = new StringBuilder();
 		if(!node.getClass().equals(ScriptTag.class)) {
 			if (node.getClass().equals(TextNode.class)) {
-				sb.append(node.getText());
+				sb.append(node.getText()).append('\n');
 			} else {
 				if (node.getChildren()!=null) {
 					NodeIterator it = node.getChildren().elements();

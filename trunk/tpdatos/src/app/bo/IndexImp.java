@@ -2,8 +2,7 @@ package app.bo;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-
-import org.apache.log4j.Logger;
+import java.util.List;
 
 import linkedblocks.VariableLinkedBlocksManager;
 import linkedblocks.keys.DocumentIndexKey;
@@ -19,7 +18,7 @@ public class IndexImp implements Index {
 
 	private BPlusTreeFacade btree;
 	private VariableLinkedBlocksManager manager;
-	private Logger log = Logger.getLogger(IndexImp.class);
+
 	public IndexImp(String path,int blockSize) throws BusinessException {
 		try {
 			LinkedBlockByteArrayPersistor persistor=new LinkedBlockByteArrayPersistor(blockSize);
@@ -30,9 +29,8 @@ public class IndexImp implements Index {
 		}
 	}
 
-	private Iterator<Integer> getDocuments(DocumentIndexKey docBlockId) throws BusinessException {
+	private List<Integer> getDocuments(DocumentIndexKey docBlockId) throws BusinessException {
 		ArrayList<Integer> listaRet=new ArrayList<Integer>();
-		Iterator<Integer> itRet;
 
 		Iterator<byte[]> it=manager.get(docBlockId.getValue());
 		
@@ -43,20 +41,17 @@ public class IndexImp implements Index {
 			listaRet.add(lastdocid);
 		}
 
-		itRet=listaRet.iterator();
-		return itRet;
+		return listaRet;
 	}
-	public Iterator<Integer> getDocuments(String word) throws BusinessException {
+	public List<Integer> getDocuments(String word) throws BusinessException {
 		
 		DocumentIndexKey docBlockId;
 		docBlockId=this.searchDocIndex(word);
 		if (docBlockId.getValue()!=-1){
 			return getDocuments(docBlockId);
 		}
-		Iterator<Integer> itRet;
-		ArrayList<Integer> listaRet=new ArrayList<Integer>();
-		itRet=listaRet.iterator();
-		return itRet;
+
+		return new ArrayList<Integer>();
 	}
 
 	public void insertWord(String word, Integer docId)
@@ -79,7 +74,7 @@ public class IndexImp implements Index {
 		// Para evitar el problema de leer dos veces el linked block, podria implemenarse
 		// un buffer para el linked block
 		
-		Iterator<Integer> it = this.getDocuments(docBlockId);
+		Iterator<Integer> it = this.getDocuments(docBlockId).iterator();
 		
 		Integer lastDocument = 0;
 		while (it.hasNext() ) {
