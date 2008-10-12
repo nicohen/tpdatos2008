@@ -3,6 +3,8 @@ package api;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import processor.IndexedDocumentChecker;
+
 import api.dao.documents.DocumentsDictionary;
 import dto.DocumentDto;
 import exceptions.BusinessException;
@@ -66,5 +68,8 @@ public class QueryEngine {
 		return new NewDocumentInsert(id, indice );
 	}
 	
+	public IndexedDocumentChecker getDocuments() throws BusinessException {
+		return dicc.getDocuments();
+	}
 	
 }
