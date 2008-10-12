@@ -1,7 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Iterator;
+import java.util.List;
 
 import processor.stemming.StemmingProcessor;
 import processor.stopwords.StopwordsProcessor;
@@ -62,7 +62,7 @@ public class SearchEngine {
 		QueryEngine engine = new QueryEngine(index,dicc);
 
 		//Muestro los documentos en los que aparece
-		Iterator<DocumentDto> documentsFound = engine.executeQuery(stemmedWord);
+		List<DocumentDto> documentsFound = engine.executeQuery(stemmedWord);
 		int size = engine.countExecuteQuery(stemmedWord);
 		if(size==0) {
 			System.out.println("El termino ["+word+"] no corresponde a ningun documento.");
@@ -72,8 +72,8 @@ public class SearchEngine {
 			System.out.println("------------------------------");
 			DocumentsReportDto drDto = new DocumentsReportDto();
 			
-			while (documentsFound.hasNext() ) {
-				drDto.setOcurrence(documentsFound.next() );
+			for (DocumentDto document : documentsFound) {
+				drDto.setOcurrence(document);
 			}
 			for(DocumentDto documentResult : drDto.getOcurrences().keySet()) {
 				System.out.println(drDto.getDocumentOcurrences(documentResult)+" veces en el documento "+dicc.getDocument(documentResult.getDocumentId()));				

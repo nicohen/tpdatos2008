@@ -38,7 +38,7 @@ public abstract class TestQueryEngine extends TestCase {
 		
 		Iterator<DocumentDto> list;
 
-		list=engine.executeQuery("gato");
+		list=engine.executeQuery("gato").iterator();
 		
 		// FIXME: utilizar los asserts correspondientes
 
@@ -48,7 +48,7 @@ public abstract class TestQueryEngine extends TestCase {
 		assertEquals( list.next().getFileName() , "documento4");
 		assertEquals( list.next().getFileName() , "documento5");
 
-		list=engine.executeQuery("perro");
+		list=engine.executeQuery("perro").iterator();
 		
 		// FIXME: utilizar los asserts correspondientes
 

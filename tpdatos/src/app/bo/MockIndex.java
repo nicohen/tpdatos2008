@@ -2,7 +2,7 @@ package app.bo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import api.Index;
@@ -13,10 +13,10 @@ public class MockIndex implements Index {
 	private Map<String,ArrayList<Integer> > map = new HashMap<String,ArrayList<Integer> >();
 	
 	@Override
-	public Iterator<Integer> getDocuments(String word) throws BusinessException {
+	public List<Integer> getDocuments(String word) throws BusinessException {
 		
 		try {
-			return map.get(word).iterator();
+			return map.get(word);
 		} catch ( NullPointerException e ) {
 			throw new BusinessException();
 		}
