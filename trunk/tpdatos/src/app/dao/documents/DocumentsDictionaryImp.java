@@ -45,7 +45,7 @@ public class DocumentsDictionaryImp implements DocumentsDictionary {
 		try {
 			//agrego el string de nombre al archivo secuencial
 			document.setOffset(nameFile.add(document.getFileName()));
-			return relativeFile.add(document);
+			return relativeFile.add(document)+1;
 		} catch (DataAccessException e) {
 			throw new BusinessException("Error inicializando RelativeFile de documentos indexados",e);
 		} catch (PersistanceException e) {
