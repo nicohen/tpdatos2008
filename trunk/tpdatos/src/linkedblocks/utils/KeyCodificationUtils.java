@@ -65,9 +65,13 @@ public class KeyCodificationUtils {
 		return toByteArray(cjto);
 	}
 	
-	public static Integer gammaDecode(byte[] key) { 
+	public static Integer gammaDecode(byte[] key) {
+		return gammaDecode(key,0);
+	}
+
+	public static Integer gammaDecode(byte[] key, int init) { 
 		//TODO - Implementar gammaDecode
-		BitSet set=fromByteArray(key);
+		BitSet set=fromByteArray(key,init);
 		int i=0,contUnario=0,contBinario=0;
 		String parteBinaria=new String();
 		Integer valorEnBinario;
@@ -89,6 +93,20 @@ public class KeyCodificationUtils {
 		valorEnBinario=Integer.parseInt(parteBinaria, 2);
 		return valorEnBinario+(int)Math.pow(2, contBinario); 
 	}
+
+	// devuelve la longitud en bits de un codigo gamma
+	public static Integer gammaDecodeLength( byte key[], int init) {
+		
+		BitSet set=fromByteArray(key, init);
+		int i=0,contUnario=0,contBinario=0;
+		while(!set.get(i)){ //leo hasta el primer 1
+			contUnario++;
+			i++;
+		}
+		if (contUnario==0) return 1;
+		contBinario = contUnario;
+		return contBinario + contUnario + 1;
+	}
 	
 	public static byte[] toByteArray(BitSet bits) {
         byte[] bytes = new byte[bits.length()/8+1];
@@ -100,14 +118,18 @@ public class KeyCodificationUtils {
         return bytes;
     }
 	
-	public static BitSet fromByteArray(byte[] bytes) {
+	public static BitSet fromByteArray(byte[] bytes, int init) {
         BitSet bits = new BitSet();
-        for (int i=0; i<bytes.length*8; i++) {
+        for (int i=0; i<bytes.length*8-init; i++) {
             if ((bytes[bytes.length-i/8-1]&(1<<(i%8))) > 0) {
                 bits.set(i);
             }
         }
         return bits;
+    }
+
+	public static BitSet fromByteArray(byte[] bytes) {
+		return fromByteArray(bytes,0);
     }
 
 

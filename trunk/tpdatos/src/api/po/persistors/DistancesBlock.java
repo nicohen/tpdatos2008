@@ -1,5 +1,7 @@
 package api.po.persistors;
 
+import java.util.Iterator;
+
 import exceptions.PersistanceException;
 
 public interface DistancesBlock {
@@ -15,6 +17,6 @@ public interface DistancesBlock {
 	
 
 	// obtiene las distancias decodificadas
-	public int[] decodeDistances();
+	public Iterator<Integer> decodeDistances();
 
 }
