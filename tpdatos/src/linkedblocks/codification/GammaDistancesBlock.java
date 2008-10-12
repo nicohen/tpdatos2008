@@ -2,6 +2,9 @@ package linkedblocks.codification;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 import linkedblocks.utils.KeyCodificationUtils;
 import api.po.persistors.DistancesBlock;
@@ -11,19 +14,31 @@ public class GammaDistancesBlock implements DistancesBlock {
 
 //	private byte[] byteArray;
 	private int maxSize;
-	private ByteArrayOutputStream stream;
+	private ByteArrayOutputStream stream = new ByteArrayOutputStream();
 	
 	// el modificador de acceso del constructor es package
 	// para que solo las clases de este paquete puedan
 	// instanciarla
 	
-	GammaDistancesBlock( int maxsize ) {
+	public GammaDistancesBlock( int maxsize ) {
 		this.maxSize = maxsize;
 	}
 	
-	public int[] decodeDistances() {
-		// TODO Auto-generated method stub
-		return null;
+	public Iterator<Integer> decodeDistances() {
+		List<Integer> lista = new LinkedList<Integer>();
+		
+		byte[] arry = this.toByteArray();
+		
+		int k = 0;
+		while ( k < arry.length*8) {
+			Integer distance = KeyCodificationUtils.gammaDecode(arry, k);
+			int nextByteOffset = KeyCodificationUtils.gammaDecodeLength(arry, k);
+			nextByteOffset = ((nextByteOffset + 8) / 8) * 8;
+			lista.add(distance);
+			k += nextByteOffset;
+		}
+		
+		return lista.iterator();
 	}
 
 	public void encodeDistance(int distance) throws PersistanceException {
