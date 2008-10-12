@@ -37,7 +37,7 @@ public class IndexImp implements Index {
 		Integer lastdocid = 0;
 			
 		while(it.hasNext()){
-			lastdocid += KeyCodificationUtils.gammaDecode(it.next());
+			lastdocid += ( KeyCodificationUtils.gammaDecode(it.next()) - 1);
 			listaRet.add(lastdocid);
 		}
 
@@ -83,14 +83,12 @@ public class IndexImp implements Index {
 
 		Integer diferencia = docId - lastDocument;
 
-		// si la diferencia es cero, es por que ese documento ya esta,
-		// entonces debe ignorarse
-		
-		if ( diferencia == 0) {
-		} else if ( diferencia < 0) {
+		if ( diferencia < 0) {
 			throw new BusinessException("docid - lastDocument < 0");
 		} else {
-			manager.add(KeyCodificationUtils.gammaEncode(diferencia), docBlockId.getValue());
+			
+			// no importa si la diferencia es cero, se puede almacenar, haciendo una pequeña correccion
+			manager.add(KeyCodificationUtils.gammaEncode(diferencia+1), docBlockId.getValue());
 		}
 	
 	}
