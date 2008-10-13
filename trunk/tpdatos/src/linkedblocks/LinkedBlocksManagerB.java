@@ -66,6 +66,21 @@ public class LinkedBlocksManagerB<E> {
 			throw new PersistanceException( "",e);
 		}
 	}
+	public void update( E element, int blockId) throws PersistanceException {
+		LinkedBlockB<E> reg;
+		try {
+			
+			// no se puede hacer un update directamente al archivo
+			// ya que solo hay que modificar el elemento en ese bloque
+			
+			reg=archivo.get(blockId);
+			reg.setElem(element);
+			archivo.update(blockId, reg);
+			
+		} catch (DataAccessException e) {
+			throw new PersistanceException();
+		}
+	}
 	
 	public void add( E element, int blockId) throws PersistanceException{
 		
