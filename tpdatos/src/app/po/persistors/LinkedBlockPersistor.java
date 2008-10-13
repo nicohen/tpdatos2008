@@ -12,7 +12,7 @@ import exceptions.PersistanceException;
 public class LinkedBlockPersistor<E> extends MaxSizeAbstractPersistor<LinkedBlockB<E> >{
 
 	private Persistor<E> subPersistor;
-	private final static int INFORMACION_CONTROL = 8;
+	private final static int INFORMACION_CONTROL = 4;
 	
 	public LinkedBlockPersistor( Persistor<E> subPersistor) {
 		super( subPersistor.getDataSize() + INFORMACION_CONTROL);
