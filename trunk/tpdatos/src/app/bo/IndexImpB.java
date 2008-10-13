@@ -114,6 +114,7 @@ public class IndexImpB implements Index {
 			if (lastGammaBlock != null ) {
 				try {
 					lastGammaBlock.encodeDistance(diferencia);
+					manager.updateLast(lastGammaBlock, docBlockId.getValue());
 				} catch (PersistanceException e) {
 					lastGammaBlock = new GammaDistancesBlock(blockSize-4);
 					try {

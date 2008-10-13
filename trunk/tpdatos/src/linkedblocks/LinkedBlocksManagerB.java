@@ -37,16 +37,6 @@ public class LinkedBlocksManagerB<E> {
 				reg=archivo.get(reg.getNextBlock());
 				listaRet.add(reg.getElem());
 			}
-
-			/*Iterator<Integer> distances;
-			
-			distances = reg.getElem().decodeDistances();
-			while (distances.hasNext() ) {
-				listaRet.add(distances.next() );
-			}
-			*/
-			
-			
 		} catch (DataAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -66,16 +56,26 @@ public class LinkedBlocksManagerB<E> {
 			throw new PersistanceException( "",e);
 		}
 	}
-	public void update( E element, int blockId) throws PersistanceException {
+	
+	// updatea el ultimo de la cadena partiendo de blockId
+	
+	public void updateLast( E element, int blockId) throws PersistanceException {
 		LinkedBlockB<E> reg;
 		try {
 			
 			// no se puede hacer un update directamente al archivo
 			// ya que solo hay que modificar el elemento en ese bloque
 			
+			int lastBlockId=blockId;
+		
 			reg=archivo.get(blockId);
+			while(reg.getNextBlock()!=0){
+				lastBlockId=reg.getNextBlock();
+				reg=archivo.get(lastBlockId);
+			}
+
 			reg.setElem(element);
-			archivo.update(blockId, reg);
+			archivo.update(lastBlockId, reg);
 			
 		} catch (DataAccessException e) {
 			throw new PersistanceException();
