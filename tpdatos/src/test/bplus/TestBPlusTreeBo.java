@@ -27,6 +27,11 @@ abstract public class TestBPlusTreeBo extends TestCase {
 		BPlusElementKey key_ = new BPlusElementKey(word);
 		Assert.assertEquals(value , bo.getElement( key_ ).getValue() );
 	}
+	
+	public void _assert_key_value( String word, Integer value ) throws KeyNotFoundException, DataAccessException {
+		BPlusElementKey key = new BPlusElementKey(word);
+		 Assert.assertEquals(value, bo.getElement( key ).getValue() );
+	}
 
 /*	public void _test_update( String word, Integer value) throws KeyNotFoundException {
 		
@@ -64,6 +69,27 @@ abstract public class TestBPlusTreeBo extends TestCase {
 		System.out.println("--------------------------------------------------------");
 		_test_insert( "gatiperro", 3);
 		this.bo.dump();
+		
+		for (int i=0; i < 1200;i++){
+			BPlusElementKey key;
+			
+			key = new BPlusElementKey( String.valueOf(i) );
+			bo.insertElement(new BPlusLeafElement( key, i));
+			
+			key = new BPlusElementKey( "z" + String.valueOf(i) );
+			bo.insertElement(new BPlusLeafElement( key, i));
+
+			key = new BPlusElementKey( "_" + String.valueOf(i) );
+			bo.insertElement(new BPlusLeafElement( key, i));
+
+			key = new BPlusElementKey( "p" + String.valueOf(i) );
+			bo.insertElement(new BPlusLeafElement( key, i));
+			
+		}
+		
+		_assert_key_value("gato", 1200);
+		_assert_key_value("gatiperro", 3);		
+		_assert_key_value("perro", 1000);		
 	}
 
 }
