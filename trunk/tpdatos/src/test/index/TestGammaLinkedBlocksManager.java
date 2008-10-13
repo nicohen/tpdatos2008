@@ -42,7 +42,7 @@ public class TestGammaLinkedBlocksManager extends
 		gamma2.encodeDistance(6);
 
 		linked.add(gamma2,firstblock);
-/*		
+		
 		Iterator<GammaDistancesBlock> it = linked.get(firstblock);
 		
 	
@@ -57,13 +57,11 @@ public class TestGammaLinkedBlocksManager extends
 		GammaDistancesBlock gamma2_rec = it.next();
 		Iterator<Integer> it_gamma2_rec = gamma2_rec.decodeDistances();
 
-		Assert.assertEquals( 9, it_gamma1_rec.next().intValue() );
-		Assert.assertEquals( 8, it_gamma1_rec.next().intValue() );
-		Assert.assertEquals( 7, it_gamma1_rec.next().intValue() );
-		Assert.assertEquals( 6, it_gamma1_rec.next().intValue() );
+		Assert.assertEquals( 9, it_gamma2_rec.next().intValue() );
+		Assert.assertEquals( 8, it_gamma2_rec.next().intValue() );
+		Assert.assertEquals( 7, it_gamma2_rec.next().intValue() );
+		Assert.assertEquals( 6, it_gamma2_rec.next().intValue() );
 
-		*/
-		
 	}
 	
 }
