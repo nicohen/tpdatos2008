@@ -13,11 +13,11 @@ abstract public class TestLinkedBlocksManager<E> extends TestCase {
 	
 	private LinkedBlocksManagerB<E> linked;
 	
-	public TestLinkedBlocksManager( Persistor<E> subpersistor) throws DataAccessException {
+	public TestLinkedBlocksManager( Persistor<E> subpersistor, String filename) throws DataAccessException {
 		
 		
 		LinkedBlockPersistor<E> persistor =	new LinkedBlockPersistor<E>(subpersistor);
-		linked = new LinkedBlocksManagerB<E>("linkedblock-test.bin", persistor );
+		linked = new LinkedBlocksManagerB<E>(filename, persistor );
 		
 	}
 	

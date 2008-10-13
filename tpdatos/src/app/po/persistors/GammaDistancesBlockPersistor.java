@@ -1,5 +1,6 @@
 package app.po.persistors;
 
+import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -39,7 +40,16 @@ public class GammaDistancesBlockPersistor implements
 
 	public void write(GammaDistancesBlock element, DataOutputStream stream) throws PersistanceException {
 		try {
-			stream.write(element.toByteArray());
+			// completar con ceros e insertar la longitud
+			// TODO: insertar la longitud para poder leerlo
+			byte[] arry = new byte[dataSize];
+			
+			ByteArrayInputStream inputStream = 
+				new ByteArrayInputStream( element.toByteArray() );
+			
+			inputStream.read(arry);
+			stream.write(arry);
+			
 		} catch (IOException e) {
 			throw new PersistanceException();
 		}
