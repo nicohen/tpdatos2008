@@ -48,9 +48,6 @@ abstract public class TestIndex extends TestCase {
 	}
 	
 	public void test() throws BusinessException {
-/*		int[] ids_ = {1};
-		test_entry("aceite", ids_ );*/
-
 		int[] ids = {1,4,5,76,566};
 		test_entry("prueba", ids );
 

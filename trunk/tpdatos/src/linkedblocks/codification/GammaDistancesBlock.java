@@ -24,11 +24,6 @@ public class GammaDistancesBlock implements DistancesBlock {
 		this.maxSize = maxsize;
 	}
 	
-	public GammaDistancesBlock(int maxsize, byte[] arry) throws IOException {
-		this.maxSize = maxsize;
-		stream.write(arry);
-	}
-
 	public Iterator<Integer> decodeDistances() {
 		List<Integer> lista = new LinkedList<Integer>();
 		
@@ -38,7 +33,7 @@ public class GammaDistancesBlock implements DistancesBlock {
 		while ( k < arry.length*8) {
 			
 			
-			Integer distance = gammaDecode(arry, k)-1;
+			Integer distance = gammaDecode(arry, k);
 			
 			int nextByteOffset = gammaDecodeLength(arry, k);
 			nextByteOffset = ((nextByteOffset + 8) / 8) * 8;
@@ -50,7 +45,7 @@ public class GammaDistancesBlock implements DistancesBlock {
 	}
 
 	public void encodeDistance(int distance) throws PersistanceException {
-		byte[] gamma1 = gammaEncode(distance+1);
+		byte[] gamma1 = gammaEncode(distance);
 		
 		if (stream.toByteArray().length + gamma1.length > this.maxSize ) {
 			throw new PersistanceException("Encode Overflow");

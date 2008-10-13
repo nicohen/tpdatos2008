@@ -11,7 +11,7 @@ public class TestIndexImp extends TestIndex {
 
 	@Override
 	protected IndexImp createTestObject() throws BusinessException {
-		return new IndexImp("test-index.bin", 4096) ;
+		return new IndexImp("index.bin", 4096) ;
 	}
 
 
