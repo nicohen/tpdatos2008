@@ -134,8 +134,6 @@ public class DocumentsIndexer {
 								
 								if(bestWordCompare==0) {
 									//El primer termino del pipeline no es stopword, por lo tanto se indexa
-									if (stopwordsPipeline.getFirstWord().compareTo("perros")==0)
-										bestWordCompare=0;
 										String indexWord = stemmingProcessor.stem(stopwordsPipeline.getFirstWord());
 //									wordIndexer.insertWord(indexWord, document.getDocumentId());
 									docInsert.insertWord(indexWord);
