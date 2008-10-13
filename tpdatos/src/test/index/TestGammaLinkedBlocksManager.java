@@ -14,11 +14,37 @@ public class TestGammaLinkedBlocksManager extends
 
 	
 	final static int BLOCK_LENGTH = 512;
-	final static int GAMMA_DISTANCES_LENGTH = 508;
-	final static int GAMMA_LENGTH = 504;
+	final static int GAMMA_DISTANCES_LENGTH = BLOCK_LENGTH-4;
+	final static int GAMMA_LENGTH = BLOCK_LENGTH-8;
 	
 	public TestGammaLinkedBlocksManager() throws DataAccessException {
 		super(new GammaDistancesBlockPersistor(GAMMA_DISTANCES_LENGTH), "linkedblock-gamma-test.bin" );
+	}
+	
+	public void test_uno() throws PersistanceException {
+		LinkedBlocksManagerB<GammaDistancesBlock> linked = this.getObject();
+		
+		boolean primeroagregado = false;
+		int primero = 0;
+		GammaDistancesBlock gamma1 = new GammaDistancesBlock(GAMMA_LENGTH);
+		
+		for (int i=0; i<8192;i++){
+			try {
+				gamma1.encodeDistance(1);
+			} catch (PersistanceException e) {
+
+				if (primeroagregado) {
+					linked.add(gamma1,primero);
+					gamma1 = new GammaDistancesBlock(GAMMA_LENGTH);
+				} else {
+					primero = linked.add(gamma1);
+					primeroagregado = true;
+					gamma1 = new GammaDistancesBlock(GAMMA_LENGTH);
+				}
+				
+			}
+			
+		}
 	}
 
 	public void test() throws PersistanceException {
