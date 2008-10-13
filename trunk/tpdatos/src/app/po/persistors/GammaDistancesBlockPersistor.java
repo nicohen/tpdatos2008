@@ -28,10 +28,11 @@ public class GammaDistancesBlockPersistor implements
 	}
 
 	public GammaDistancesBlock read(DataInputStream stream) throws PersistanceException {
-		byte[] arry = new byte[dataSize];
 		try {
+			int size = stream.readInt();
+			byte[] arry = new byte[size];
 			stream.read(arry);
-			return new GammaDistancesBlock(dataSize,arry);
+			return new GammaDistancesBlock(dataSize-4,arry);
 		} catch (IOException e) {
 			throw new PersistanceException("i/o error",e);
 		}
@@ -41,13 +42,15 @@ public class GammaDistancesBlockPersistor implements
 	public void write(GammaDistancesBlock element, DataOutputStream stream) throws PersistanceException {
 		try {
 			// completar con ceros e insertar la longitud
-			// TODO: insertar la longitud para poder leerlo
-			byte[] arry = new byte[dataSize];
-			
+			byte[] arry = new byte[dataSize-4];
+
+			// rellenar con ceros el array
+			byte[] byteArray = element.toByteArray();
 			ByteArrayInputStream inputStream = 
-				new ByteArrayInputStream( element.toByteArray() );
-			
+				new ByteArrayInputStream( byteArray );
 			inputStream.read(arry);
+			
+			stream.writeInt(byteArray.length);
 			stream.write(arry);
 			
 		} catch (IOException e) {
