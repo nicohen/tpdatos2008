@@ -2,7 +2,9 @@ package app.dao.bplus;
 
 import utils.Constants;
 import api.dao.BPlusTree.BPlusNodeDao;
+import api.po.files.File;
 import api.po.persistors.Persistor;
+import app.po.files.ReadingBufferedFile;
 import app.po.files.RelativeFile;
 import app.po.persistors.BPlusNodePersistor;
 import app.po.persistors.IntegerPersistor;
@@ -17,14 +19,17 @@ public class BPlusNodeDaoImp implements BPlusNodeDao {
 	private static int NODE_SIZE_POSITION= 1;
 	private static int TREE_ROOT_POSITION= 0;
 	
-	private RelativeFile<BPlusNode> file;
-	private RelativeFile<Integer> metaFile;
+	private File<BPlusNode> file;
+	private File<Integer> metaFile;
 	private BPlusNodeKey rootNode;
 	
 	public BPlusNodeDaoImp( String filename,int nodeSize ) throws DataAccessException {		
 		Persistor<BPlusNode> persistor;
 		Persistor<Integer> integerPersistor = new IntegerPersistor();
-		metaFile= new RelativeFile<Integer>(filename+".meta",integerPersistor);
+		metaFile= 
+			new ReadingBufferedFile<Integer> (
+			new RelativeFile<Integer>(filename+".meta",integerPersistor)
+			);
 		if(metaFile.getSize()==0){
 			persistor = new BPlusNodePersistor(nodeSize);
 			this.rootNode=new BPlusNodeKey(0);
@@ -35,7 +40,10 @@ public class BPlusNodeDaoImp implements BPlusNodeDao {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			file = new RelativeFile<BPlusNode>( filename, persistor );
+			file = 
+				new ReadingBufferedFile<BPlusNode>( 
+				new RelativeFile<BPlusNode>( filename, persistor )
+				);
 			try {
 				this.rootNode= this.insertNode(new BPlusLeafNode());
 			} catch (NodeOverflowException e) {
@@ -44,7 +52,11 @@ public class BPlusNodeDaoImp implements BPlusNodeDao {
 			}
 		}else{
 			persistor = new BPlusNodePersistor(metaFile.get(NODE_SIZE_POSITION));
-			file = new RelativeFile<BPlusNode>( filename, persistor );
+			file =
+				new ReadingBufferedFile<BPlusNode>( 
+				new RelativeFile<BPlusNode>( filename, persistor )
+				);
+			
 			this.rootNode= new BPlusNodeKey(this.metaFile.get(TREE_ROOT_POSITION));
 		}		
 	}

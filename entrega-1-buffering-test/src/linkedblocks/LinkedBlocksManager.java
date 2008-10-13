@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import api.po.files.File;
 import api.po.persistors.Persistor;
+import app.po.files.ReadingBufferedFile;
 import app.po.files.RelativeFile;
 import dto.LinkedBlock;
 import exceptions.DataAccessException;
@@ -14,7 +15,11 @@ public class LinkedBlocksManager<E> {
 	File<LinkedBlock<E>> archivo;
 	
 	public LinkedBlocksManager(String path,int size,Persistor<LinkedBlock<E>> persistor) throws DataAccessException{
-		archivo=new RelativeFile<LinkedBlock<E>>(path, persistor );
+		archivo=
+			new ReadingBufferedFile<LinkedBlock<E>>(
+			new RelativeFile<LinkedBlock<E>>(path, persistor) 
+					);
+		
 		blockSize=size;
 	}
 
