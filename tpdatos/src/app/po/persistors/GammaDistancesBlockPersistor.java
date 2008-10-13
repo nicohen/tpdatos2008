@@ -30,8 +30,14 @@ public class GammaDistancesBlockPersistor implements
 	public GammaDistancesBlock read(DataInputStream stream) throws PersistanceException {
 		try {
 			int size = stream.readInt();
+			byte[] arry_ = new byte[dataSize-4];
+			stream.read(arry_);
+
 			byte[] arry = new byte[size];
-			stream.read(arry);
+			for (int i=0;i<size;i++){
+				arry[i]=arry_[i];
+			}
+			
 			return new GammaDistancesBlock(dataSize-4,arry);
 		} catch (IOException e) {
 			throw new PersistanceException("i/o error",e);
