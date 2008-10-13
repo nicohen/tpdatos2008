@@ -28,6 +28,6 @@ public abstract class AbstractBloquedFile<E> extends AbstractFile<E>{
 	}
 	
 	private int getLength() throws IOException{
-		return  (int)(this.length()/this.size);
+		return (int)Math.ceil((double)this.length()/this.size);
 	}
 }
