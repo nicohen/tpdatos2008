@@ -1,6 +1,8 @@
 package app.po.files;
 
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Queue;
 
 import bplus.exceptions.KeyNotFoundException;
@@ -8,41 +10,33 @@ import api.po.files.Buffer;
 
 public class QueueBuffer<KEY,VALUE> implements Buffer<KEY,VALUE> {
 
-	private class Pair<KEY,VALUE> {
-		public KEY key;
-		public VALUE value;
-		public Pair(KEY key, VALUE value) {
-			this.key = key;
-			this.value = value;
-		}
-	}
 	
-	private LinkedList<Pair<KEY,VALUE>> list;
+	private Map<KEY,VALUE> map = new HashMap<KEY,VALUE>(); 
+	private LinkedList<KEY> list = new LinkedList<KEY>();
 	private int maxSize;
 
 	public QueueBuffer(int maxSize) {
 		this.maxSize = maxSize;
-		this.list = new LinkedList<Pair<KEY,VALUE>>();
 	}
 	
 	public VALUE get(KEY key) throws KeyNotFoundException {
+		VALUE value = map.get(key);
 		
-		for (Pair<KEY,VALUE> pair : list ) {
-			if ( pair.key.equals(key) ) {
-				return pair.value;
-			}
-		}
-		
-		throw new KeyNotFoundException();
+		if (value == null) 
+			throw new KeyNotFoundException();
+		else
+			return value;
 	}
 
 	public void put(KEY key, VALUE value) {
 		if (list.size() >= this.maxSize ) {
 			// desalojar un elemento de la lista
-			this.list.removeFirst();
+			KEY removedKey = this.list.removeFirst();
+			map.remove(removedKey);
 		}
 
-		list.add( new Pair<KEY,VALUE>(key,value));
+		list.add(key);
+		map.put(key, value);
 
 	}
 
