@@ -48,6 +48,31 @@ public class QueueBuffer<KEY,VALUE> implements Buffer<KEY,VALUE> {
 		
 		return value;
 	}
+	
+	public void compare(KEY key, VALUE value) {
+		byte[] array_interno = map.get(key);
+
+		if (array_interno == null ) return;
+		
+		ByteArrayOutputStream output = new ByteArrayOutputStream();
+		DataOutputStream stream = new DataOutputStream(output);
+		
+		try {
+			persistor.write(value, stream);
+		} catch (PersistanceException e) {
+			System.out.println("Elemento imposible de persistir");
+			
+		}
+		
+		
+		
+		byte[] array_externo = output.toByteArray();
+		
+		if ( ! array_externo.equals(array_interno) ) {
+			System.out.println("ERROR: serializacion diferente");
+		}
+		
+	}
 
 	public void put(KEY key, VALUE value) {
 		if (list.size() >= this.maxSize ) {

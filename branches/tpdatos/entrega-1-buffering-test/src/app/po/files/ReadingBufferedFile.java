@@ -43,13 +43,8 @@ public class ReadingBufferedFile<E> implements File<E> {
 	public E get(int elementId) throws DataAccessException {
 		try {
 			E aux = buffer.get(elementId);
-			/* testing */ 
-			/*E retorno = file.get(elementId);
-			if (!aux.equals(retorno)) {
-				System.out.println("Error no son iguales");
-			}*/
-			
-			/* testing */
+/*			E retorno = file.get(elementId);
+			buffer.compare(elementId,retorno);*/
 			return aux;
 		} catch (KeyNotFoundException e) {
 		}
