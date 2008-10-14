@@ -1,44 +1,42 @@
 package linkedblocks;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import linkedblocks.codification.GammaDistancesBlock;
+
 import api.po.files.File;
+import api.po.persistors.DistancesBlock;
 import api.po.persistors.Persistor;
 import app.po.files.RelativeFile;
 import dto.LinkedBlock;
 import exceptions.DataAccessException;
 import exceptions.PersistanceException;
+
 public class LinkedBlocksManager<E> {
 
-	int blockSize;
-	File<LinkedBlock<E>> archivo;
+	private File<LinkedBlock<E>> archivo;
 	
-	public LinkedBlocksManager(String path,int size,Persistor<LinkedBlock<E>> persistor) throws DataAccessException{
+	
+	public LinkedBlocksManager(String path,Persistor<LinkedBlock<E>> persistor) throws DataAccessException{
 		archivo=new RelativeFile<LinkedBlock<E>>(path, persistor );
-		blockSize=size;
 	}
-
+	
+	// obtiene toda la lista de linked blocks
 	public Iterator<E> get(int blockId){
 		
-		LinkedBlock<E> reg=new LinkedBlock<E>();
-		Iterator<E> it;
+		LinkedBlock<E> reg;
+		//Iterator<E> it;
 	
 		ArrayList<E> listaRet=new ArrayList<E>();
 		try {
 			reg=archivo.get(blockId);
-			it=reg.getListaElem().iterator();
-			while(it.hasNext()){
-				listaRet.add(it.next());
-			}
+			listaRet.add(reg.getElem());
+
 			while (reg.getNextBlock()!=0){
 				reg=archivo.get(reg.getNextBlock());
-				it=reg.getListaElem().iterator();
-				while(it.hasNext()){
-					listaRet.add(it.next());
-				}
+				listaRet.add(reg.getElem());
 			}
-			
-			
 		} catch (DataAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -46,56 +44,74 @@ public class LinkedBlocksManager<E> {
 		
 		return listaRet.iterator();
 	}
-	public Integer addBlock(){
-		LinkedBlock<E> reg=new LinkedBlock<E>();
-		Integer newBlockId=0;
+	
+	public int add( E element ) throws PersistanceException {
+		LinkedBlock<E> regAux;
+		regAux = new LinkedBlock<E>();
+		regAux.setElem(element);
 		try {
-			newBlockId=archivo.add(reg);
+			return archivo.add(regAux);
 		} catch (DataAccessException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (PersistanceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new PersistanceException( "",e);
 		}
-		return newBlockId;
 	}
-	public void add(E elem,int blockId){
+	
+	// updatea el ultimo de la cadena partiendo de blockId
+	
+	public void updateLast( E element, int blockId) throws PersistanceException {
+		LinkedBlock<E> reg;
+		try {
+			
+			// no se puede hacer un update directamente al archivo
+			// ya que solo hay que modificar el elemento en ese bloque
+			
+			int lastBlockId=blockId;
 		
-		LinkedBlock<E> reg=new LinkedBlock<E>();
-		LinkedBlock<E> regAux=new LinkedBlock<E>();
+			reg=archivo.get(blockId);
+			while(reg.getNextBlock()!=0){
+				lastBlockId=reg.getNextBlock();
+				reg=archivo.get(lastBlockId);
+			}
+
+			reg.setElem(element);
+			archivo.update(lastBlockId, reg);
+			
+		} catch (DataAccessException e) {
+			throw new PersistanceException();
+		}
+	}
+	
+	public void add( E element, int blockId) throws PersistanceException{
+		
+		LinkedBlock<E> reg;
+		LinkedBlock<E> regAux;
 		int newBlockId=0,nextBlockId=0;
 		try {
-			reg=archivo.get(blockId);	
+			reg=archivo.get(blockId);
 			while(reg.getNextBlock()!=0){
 				nextBlockId=reg.getNextBlock();
 				reg=archivo.get(reg.getNextBlock());
+
 			}
-			//si no hay puntero a siguiente pero el bloque esta lleno
-			if (reg.getListaElem().size()==blockSize){
-				regAux.setElem(elem);
-				newBlockId=archivo.add(regAux);//obtengo id del siguiente bloque
-				reg.setNextBlock(newBlockId-1);//seteo el puntero a siguiente
-				if (nextBlockId!=0)
+			
+			regAux = new LinkedBlock<E>();
+			regAux.setElem(element);
+			newBlockId=archivo.add(regAux);//obtengo id del siguiente bloque
+			reg.setNextBlock(newBlockId);//seteo el puntero a siguiente
+			
+			if (nextBlockId!=0) {
 				   archivo.update(nextBlockId,reg);
-				else
+			} else {
 				   archivo.update(blockId, reg);
 			}
 			
-			else{//hay lugar en el bloque
-			reg.setElem(elem);
-			if (nextBlockId!=0)
-			archivo.update(nextBlockId,reg);
-			else
-			archivo.update(blockId, reg);
-			}
+			
 		} catch (DataAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (PersistanceException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 	}
+
 }

@@ -23,7 +23,12 @@ public class GammaDistancesBlock implements DistancesBlock {
 	public GammaDistancesBlock( int maxsize ) {
 		this.maxSize = maxsize;
 	}
-	
+
+	public GammaDistancesBlock( int maxsize, byte[] arry ) throws IOException {
+		this.maxSize = maxsize;
+		stream.write(arry);
+	}
+
 	public Iterator<Integer> decodeDistances() {
 		List<Integer> lista = new LinkedList<Integer>();
 		
