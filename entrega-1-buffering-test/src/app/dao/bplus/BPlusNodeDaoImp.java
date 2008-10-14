@@ -29,7 +29,7 @@ public class BPlusNodeDaoImp implements BPlusNodeDao {
 		metaFile= 
 			new ReadingBufferedFile<Integer> (
 			new RelativeFile<Integer>(filename+".meta",integerPersistor)
-			);
+			,integerPersistor);
 		if(metaFile.getSize()==0){
 			persistor = new BPlusNodePersistor(nodeSize);
 			this.rootNode=new BPlusNodeKey(0);
@@ -42,7 +42,9 @@ public class BPlusNodeDaoImp implements BPlusNodeDao {
 			}
 			file = 
 				new ReadingBufferedFile<BPlusNode>( 
-				new RelativeFile<BPlusNode>( filename, persistor )
+				new RelativeFile<BPlusNode>( filename, persistor ),
+				persistor
+				
 				);
 			try {
 				this.rootNode= this.insertNode(new BPlusLeafNode());
@@ -54,8 +56,8 @@ public class BPlusNodeDaoImp implements BPlusNodeDao {
 			persistor = new BPlusNodePersistor(metaFile.get(NODE_SIZE_POSITION));
 			file =
 				new ReadingBufferedFile<BPlusNode>( 
-				new RelativeFile<BPlusNode>( filename, persistor )
-				);
+				new RelativeFile<BPlusNode>( filename, persistor ),
+				persistor );
 			
 			this.rootNode= new BPlusNodeKey(this.metaFile.get(TREE_ROOT_POSITION));
 		}		
