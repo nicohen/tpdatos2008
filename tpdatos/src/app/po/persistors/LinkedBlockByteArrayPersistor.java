@@ -12,6 +12,10 @@ public class LinkedBlockByteArrayPersistor extends MaxSizeAbstractPersistor<Link
 
 	public LinkedBlockByteArrayPersistor(int maxSize) {
 		super(maxSize+LinkedBlock.BLOCK_ADMIN_DATA);
+		if ((maxSize-LinkedBlock.BLOCK_ADMIN_DATA)%4==0)
+			this.maxSize+=2;
+		
+		
 	}	
 	
 	@Override

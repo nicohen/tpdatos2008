@@ -15,8 +15,12 @@ public class TestLinkedBlocksManager extends TestCase {
 		Iterator<byte[]> it;
 		int j=0;
 		VariableLinkedBlocksManager manager=new VariableLinkedBlocksManager("index1.bin", persistor);
-		for(int i=0;i<40000;i++)
-		manager.add(KeyCodificationUtils.gammaEncode(i), 0);
+		for(int i=0;i<4000;i++){
+			if (i>1664)
+				j=0;
+			manager.add(KeyCodificationUtils.gammaEncode(i), 0);
+				
+		}
 		//for(int i=0;i<400;i++)
 		it=manager.get(0);
 		while (it.hasNext()){
