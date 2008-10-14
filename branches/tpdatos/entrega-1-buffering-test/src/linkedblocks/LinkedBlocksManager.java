@@ -11,14 +11,14 @@ import exceptions.DataAccessException;
 import exceptions.PersistanceException;
 public class LinkedBlocksManager<E> {
 
-	int blockSize;
-	File<LinkedBlock<E>> archivo;
+	protected int blockSize;
+	protected File<LinkedBlock<E>> archivo;
 	
 	public LinkedBlocksManager(String path,int size,Persistor<LinkedBlock<E>> persistor) throws DataAccessException{
 		archivo=
-			new ReadingBufferedFile<LinkedBlock<E>>(
+			/*new ReadingBufferedFile<LinkedBlock<E>>(*/
 			new RelativeFile<LinkedBlock<E>>(path, persistor) 
-					);
+					/*)*/;
 		
 		blockSize=size;
 	}
