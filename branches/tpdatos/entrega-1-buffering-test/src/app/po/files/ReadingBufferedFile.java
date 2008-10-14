@@ -19,6 +19,9 @@ public class ReadingBufferedFile<E> implements File<E> {
 	public int add(E element) throws DataAccessException,
 			PersistanceException {
 		
+		// NOTE: si add tira alguna excepcion,
+		// es mejor que no se inserte el elemento en el buffer
+		// tampoco
 		int index = this.file.add(element); 
 		buffer.put(index, element);
 		return index;
@@ -41,7 +44,9 @@ public class ReadingBufferedFile<E> implements File<E> {
 			return buffer.get(elementId);
 		} catch (KeyNotFoundException e) {
 		}
-		return file.get(elementId);
+		E element = file.get(elementId);
+		buffer.put(elementId, element);
+		return element;
 	}
 
 	public int getSize() {
@@ -57,8 +62,12 @@ public class ReadingBufferedFile<E> implements File<E> {
 	public int update(int elementId, E newElement)
 			throws DataAccessException, PersistanceException {
 
+		// NOTE: si update tira alguna excepcion,
+		// es mejor que no se inserte el elemento en el buffer
+		// tampoco
+		int index = file.update(elementId, newElement);
 		buffer.put(elementId, newElement);
-		return file.update(elementId, newElement);
+		return index;
 	}
 
 }
