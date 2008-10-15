@@ -16,14 +16,14 @@ public class GammaDistancesBlockTest extends TestCase {
 	public void _benchMarkIteration() throws PersistanceException {
 		GammaDistancesBlock block = new GammaDistancesBlock(16384);
 
-		for (int j=6;j<500;j++) {
+		for (int j=0;j<500;j++) {
 			block.encodeDistance(j);
 		}
 	
 		Iterator<Integer> it = block.decodeDistances();
 		
 		
-		for (int j=6;j<500;j++){
+		for (int j=0;j<500;j++){
 			if ( it.hasNext() ) {
 				Integer value = it.next();
 				System.out.println(value);
