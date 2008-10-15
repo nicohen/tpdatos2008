@@ -1,5 +1,6 @@
 package test.index;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,15 +19,13 @@ abstract public class TestIndex extends TestCase {
 		testObject = createTestObject();
 	}
 	
-	private void test_entry ( String word, int[] ids ) throws BusinessException {
-		List<Integer> lista = new LinkedList<Integer>();
-		
-		for (int id : ids ) {
-			lista.add(new Integer(id));
-		}
+	private void test_entry( String word, List<Integer> lista) throws BusinessException {
+
 		Iterator<Integer> original = lista.iterator();
 		
+		int j=0;
 		for ( Integer id : lista ) {
+			j++;
 			testObject.insertWord(word, id);
 		}
 		
@@ -44,6 +43,16 @@ abstract public class TestIndex extends TestCase {
 		}
 		
 		
+	}
+	
+	private void test_entry ( String word, int[] ids ) throws BusinessException {
+		List<Integer> lista = new LinkedList<Integer>();
+		
+		for (int id : ids ) {
+			lista.add(new Integer(id));
+		}
+		
+		test_entry(word,lista);
 		
 	}
 	
@@ -56,6 +65,22 @@ abstract public class TestIndex extends TestCase {
 
 		int[] ids3 = {1,9,9,9,9,9};
 		test_entry("prueba3", ids3 );
-}
+		
+		List<Integer> lista = new ArrayList<Integer>() ;
+		
+		for (int i=0; i<500; i++) {
+			lista.add(i);
+		}
+		
+		test_entry("prueba4", lista);
+
+		lista.clear();
+		for (int i=0; i<400; i++) {
+			lista.add(i/6);
+		}
+
+		test_entry("prueba5", lista);
+		
+	}
 	
 }

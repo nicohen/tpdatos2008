@@ -13,6 +13,34 @@ public class GammaDistancesBlockTest extends TestCase {
 		
 	}
 	
+	public void _benchMarkIteration() throws PersistanceException {
+		GammaDistancesBlock block = new GammaDistancesBlock(16384);
+
+		for (int j=0;j<500;j++) {
+			block.encodeDistance(j);
+		}
+	
+		Iterator<Integer> it = block.decodeDistances();
+		
+		
+		for (int j=0;j<500;j++){
+			if ( it.hasNext() ) {
+				Integer value = it.next();
+				System.out.println(value);
+				Assert.assertEquals(j , value.intValue());
+			} else {
+				Assert.assertTrue(false);
+			}
+		}
+		
+	}
+	
+	public void testBenchMark() throws PersistanceException {
+		for (int i=0;i<10;i++){
+			_benchMarkIteration();
+		}
+	}
+	
 	public void _testEncode( int[] distances ) throws PersistanceException {
 		GammaDistancesBlock block = new GammaDistancesBlock(16384);
 
@@ -35,7 +63,7 @@ public class GammaDistancesBlockTest extends TestCase {
 	}
 	
 	public void test() throws PersistanceException {
-		int[] distances = { 1,1,1,1 };
+		/*int[] distances = { 1,1,1,1 };
 		_testEncode(distances);
 
 		int[] distances2 = { 1,2 };
@@ -65,7 +93,7 @@ public class GammaDistancesBlockTest extends TestCase {
 		for (int i = 1; i< 100;i++) {
 			int[] distance_d = { i, 1 };
 			_testEncode(distance_d);
-		}
+		}*/
 /*		
 		int[] distances6 = { 7,7,7,7,9000,3,4 };
 		_testEncode(distances6);*/
