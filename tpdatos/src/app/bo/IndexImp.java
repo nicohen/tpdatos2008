@@ -4,25 +4,31 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import linkedblocks.VariableLinkedBlocksManager;
+import linkedblocks.LinkedBlocksManager;
+import linkedblocks.codification.GammaDistancesBlock;
 import linkedblocks.keys.DocumentIndexKey;
-import linkedblocks.utils.KeyCodificationUtils;
 import api.Index;
-import app.po.persistors.LinkedBlockByteArrayPersistor;
+import app.po.persistors.GammaDistancesBlockPersistor;
+import app.po.persistors.LinkedBlockPersistor;
 import bplus.BPlusTreeFacade;
 import bplus.exceptions.KeyNotFoundException;
 import exceptions.BusinessException;
 import exceptions.DataAccessException;
+import exceptions.PersistanceException;
 
 public class IndexImp implements Index {
 
 	private BPlusTreeFacade btree;
-	private VariableLinkedBlocksManager manager;
+	private LinkedBlocksManager<GammaDistancesBlock> manager;
+	private int blockSize;
 
 	public IndexImp(String path,int blockSize) throws BusinessException {
 		try {
-			LinkedBlockByteArrayPersistor persistor=new LinkedBlockByteArrayPersistor(blockSize);
-			manager=new VariableLinkedBlocksManager(path, persistor);
+			
+			GammaDistancesBlockPersistor subpersistor = new GammaDistancesBlockPersistor(blockSize-4);
+			LinkedBlockPersistor<GammaDistancesBlock> persistor=new LinkedBlockPersistor<GammaDistancesBlock>(subpersistor);
+			manager=new LinkedBlocksManager<GammaDistancesBlock>(path, persistor);
+			this.blockSize = blockSize;
 			this.btree = this.createBTree();
 		} catch (DataAccessException e) {
 			throw new BusinessException("Error creando el btree",e);
@@ -32,13 +38,20 @@ public class IndexImp implements Index {
 	private List<Integer> getDocuments(DocumentIndexKey docBlockId) throws BusinessException {
 		ArrayList<Integer> listaRet=new ArrayList<Integer>();
 
-		Iterator<byte[]> it=manager.get(docBlockId.getValue());
+		Iterator<GammaDistancesBlock> it=manager.get(docBlockId.getValue());
 		
 		Integer lastdocid = 0;
 			
 		while(it.hasNext()){
-			lastdocid += ( KeyCodificationUtils.gammaDecode(it.next()));
-			listaRet.add(lastdocid);
+			
+			GammaDistancesBlock gammaBlock = it.next();
+			
+			Iterator<Integer> gammaBlockIt = gammaBlock.decodeDistances();
+
+			while (gammaBlockIt.hasNext() ) {
+				lastdocid +=gammaBlockIt.next();
+				listaRet.add(lastdocid);
+			}
 		}
 
 		return listaRet;
@@ -73,20 +86,47 @@ public class IndexImp implements Index {
 		// Para evitar el problema de leer dos veces el linked block, podria implemenarse
 		// un buffer para el linked block
 		
-		Iterator<Integer> it = this.getDocuments(docBlockId).iterator();
+		Iterator<GammaDistancesBlock> it=manager.get(docBlockId.getValue());
 		
-		Integer lastDocument = 0;
-		while (it.hasNext() ) {
-			lastDocument = it.next();
+		Integer lastdocid = 0;
+		
+		GammaDistancesBlock lastGammaBlock = null;
+			
+		while(it.hasNext()){
+			
+			GammaDistancesBlock gammaBlock = it.next();
+			lastGammaBlock = gammaBlock;
+			
+			Iterator<Integer> gammaBlockIt = gammaBlock.decodeDistances();
+
+			while (gammaBlockIt.hasNext() ) {
+				lastdocid +=gammaBlockIt.next();
+			}
 		}
 
-		Integer diferencia = docId - lastDocument;
+		Integer diferencia = docId - lastdocid;
 
 		if ( diferencia < 0) {
 			throw new BusinessException("docid - lastDocument < 0");
 		} else {
 			// no importa si la diferencia es cero, se puede almacenar, haciendo una pequeña correccion
-			manager.add(KeyCodificationUtils.gammaEncode(diferencia), docBlockId.getValue());
+			//manager.add(KeyCodificationUtils.gammaEncode(diferencia), docBlockId.getValue());
+			if (lastGammaBlock != null ) {
+				try {
+					lastGammaBlock.encodeDistance(diferencia);
+					manager.updateLast(lastGammaBlock, docBlockId.getValue());
+				} catch (PersistanceException e) {
+					lastGammaBlock = new GammaDistancesBlock(blockSize-4);
+					try {
+						lastGammaBlock.encodeDistance(diferencia);
+						manager.add(lastGammaBlock,docBlockId.getValue());
+					} catch (PersistanceException e1) {
+						
+						throw new BusinessException("Codigo gamma demasiado grande",e1);
+					}
+				}
+			}
+			
 		}
 	
 	}
@@ -99,9 +139,8 @@ public class IndexImp implements Index {
 			
 			// podria ser el caso de que no existise la clave
 			// en ese caso debe insertarse en el arbol
-			doc = createBlock();
-			
 			try {
+				doc = createBlock();
 				btree.insertElement(word, doc);
 			} catch (DataAccessException e1) {
 				throw new BusinessException("Error insertando [WORD: "+word+"] en el btree",e1);
@@ -131,9 +170,16 @@ public class IndexImp implements Index {
 
 		return doc;
 	}
-	protected DocumentIndexKey createBlock() {
+	protected DocumentIndexKey createBlock() throws DataAccessException {
 		// crea un bloque en el LinkedBlocks
-		DocumentIndexKey newBlockId=new DocumentIndexKey(manager.addBlock());
+		int index;
+		try {
+			index = manager.add(new GammaDistancesBlock(blockSize-4));
+		} catch (PersistanceException e) {
+			// TODO Auto-generated catch block
+			throw new DataAccessException("Error al instanciar GammaDistancesBlock",e);
+		}
+		DocumentIndexKey newBlockId=new DocumentIndexKey(index);
 		return newBlockId;
 	}
 	protected BPlusTreeFacade createBTree() throws DataAccessException {

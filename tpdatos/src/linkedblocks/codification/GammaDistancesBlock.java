@@ -20,32 +20,62 @@ public class GammaDistancesBlock implements DistancesBlock {
 	// para que solo las clases de este paquete puedan
 	// instanciarla
 	
+	private class GammaIterator implements Iterator<Integer>{
+
+		private Integer lastDecoded = 0;
+		private boolean isLastDecoded = false;
+		private int k = 0;
+		private byte[] arry = GammaDistancesBlock.this.toByteArray();
+		
+		public boolean hasNext() {
+			if (isLastDecoded) return true;
+			decodeNext();
+			return isLastDecoded;
+		}
+
+		public Integer next() {
+			Integer aux = lastDecoded;
+			isLastDecoded = false;
+			return aux;
+		}
+
+		public void remove() {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		private void decodeNext() {
+			if ( k < arry.length*8) {
+				lastDecoded = gammaDecode(arry, k)-1;
+				int nextByteOffset = gammaDecodeLength(arry, k);
+				nextByteOffset = ((nextByteOffset + 8) / 8) * 8;
+				k += nextByteOffset;
+
+				isLastDecoded = true;
+				
+			} else {
+				isLastDecoded = false;
+			}
+			
+		}
+		
+	}
+	
 	public GammaDistancesBlock( int maxsize ) {
 		this.maxSize = maxsize;
 	}
-	
+
+	public GammaDistancesBlock( int maxsize, byte[] arry ) throws IOException {
+		this.maxSize = maxsize;
+		stream.write(arry);
+	}
+
 	public Iterator<Integer> decodeDistances() {
-		List<Integer> lista = new LinkedList<Integer>();
-		
-		byte[] arry = this.toByteArray();
-		
-		int k = 0;
-		while ( k < arry.length*8) {
-			
-			
-			Integer distance = gammaDecode(arry, k);
-			
-			int nextByteOffset = gammaDecodeLength(arry, k);
-			nextByteOffset = ((nextByteOffset + 8) / 8) * 8;
-			lista.add(distance);
-			k += nextByteOffset;
-		}
-		
-		return lista.iterator();
+		return new GammaIterator();
 	}
 
 	public void encodeDistance(int distance) throws PersistanceException {
-		byte[] gamma1 = gammaEncode(distance);
+		byte[] gamma1 = gammaEncode(distance+1);
 		
 		if (stream.toByteArray().length + gamma1.length > this.maxSize ) {
 			throw new PersistanceException("Encode Overflow");
@@ -105,31 +135,48 @@ public class GammaDistancesBlock implements DistancesBlock {
 		// poner un uno al final
 		return bitsetToByteArray(cjto, (i+8)/8);
 	}
+
 	
-	
-	private Integer gammaDecode(byte[] key, int init) { 
-		BitSet set=bitsetFromByteArray(key,init);
-		int i=0,contUnario=0,contBinario=0;
-		String parteBinaria=new String();
-		Integer valorEnBinario;
-		while(!set.get(i)){ //leo hasta el primer 1
-			contUnario++;
-			i++;
-		}
-		if (contUnario==0) return 1;
+	private Integer gammaDecode(byte[] key, int init) {
 		
+		byte[] bytes = key;
+	
+		int contUnario = 0;
+		int contBinario = 0; 
+		int parteUnaria = 1;
+	
+		int i = init;
+		for (; ; ) {
+	        if ((bytes[i/8]&(1<<(i%8))) > 0) {
+	        	break;
+	        } else {
+				contUnario++;
+	        	parteUnaria*=2;
+				i++;
+	        }
+	    }
+		
+		if (contUnario==0) return 1;
+
 		contBinario = contUnario;
 		i++;//ignoro el 1
+		
+		int parteBinaria = (int)Math.pow(2, contBinario)-1;
+		int deduccion = (int)Math.pow(2, contBinario)/2;
+
 		for(int k=i;k<i+contBinario;k++){
-			if(set.get(k))
-			parteBinaria+="1";
-			else
-			parteBinaria+="0";
-			
+	        if ((bytes[k/8]&(1<<(k%8))) > 0) {
+	        } else {
+	        	parteBinaria -= deduccion;
+	        }
+	        deduccion = deduccion/2;
 		}
-		valorEnBinario=Integer.parseInt(parteBinaria, 2);
-		return valorEnBinario+(int)Math.pow(2, contBinario); 
+		
+		
+		return parteBinaria + parteUnaria;
+
 	}
+	
 	
 
 	private BitSet bitsetFromByteArray(byte[] bytes, int init) {
@@ -153,12 +200,20 @@ public class GammaDistancesBlock implements DistancesBlock {
     }
 	private Integer gammaDecodeLength( byte key[], int init) {
 		
-		BitSet set=bitsetFromByteArray(key, init);
-		int i=0,contUnario=0,contBinario=0;
-		while(!set.get(i)){ //leo hasta el primer 1
-			contUnario++;
-			i++;
-		}
+
+		int contUnario = 0;
+		int contBinario = 0; 
+	
+		int i = init;
+		for (; ; ) {
+	        if ((key[i/8]&(1<<(i%8))) > 0) {
+	        	break;
+	        } else {
+				contUnario++;
+				i++;
+	        }
+	    }
+		
 		if (contUnario==0) return 1;
 		contBinario = contUnario;
 		return contBinario + contUnario + 1;
