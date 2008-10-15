@@ -200,12 +200,20 @@ public class GammaDistancesBlock implements DistancesBlock {
     }
 	private Integer gammaDecodeLength( byte key[], int init) {
 		
-		BitSet set=bitsetFromByteArray(key, init);
-		int i=0,contUnario=0,contBinario=0;
-		while(!set.get(i)){ //leo hasta el primer 1
-			contUnario++;
-			i++;
-		}
+
+		int contUnario = 0;
+		int contBinario = 0; 
+	
+		int i = init;
+		for (; ; ) {
+	        if ((key[i/8]&(1<<(i%8))) > 0) {
+	        	break;
+	        } else {
+				contUnario++;
+				i++;
+	        }
+	    }
+		
 		if (contUnario==0) return 1;
 		contBinario = contUnario;
 		return contBinario + contUnario + 1;
