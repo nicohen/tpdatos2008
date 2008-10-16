@@ -66,7 +66,7 @@ abstract public class AbstractBPlusTreeBo implements BPlusTreeBo {
 			try {
 				BPlusIndexNode newRoot= new BPlusIndexNode();
 				nodeDao.insertNode(newRoot);		
-				newRoot.insertElement(root.getIndexElement());
+				newRoot.setLeftChild(root.getIndexElement());
 				splitNode(newRoot, root.getNodeKey());
 				insertElement(newRoot,element);
 				nodeDao.setRootNode(newRoot.getNodeKey());
@@ -118,6 +118,7 @@ abstract public class AbstractBPlusTreeBo implements BPlusTreeBo {
 			elements.remove(index);
 		}
 		if(childNode.isLeafNode()){
+			((BPlusLeafNode)newNode).setNextNodeKey(((BPlusLeafNode)childNode).getNextNodeKey());
 			((BPlusLeafNode)childNode).setNextNodeKey(newNode.getNodeKey());
 		}
 		node.insertElement(newNode.getIndexElement());
