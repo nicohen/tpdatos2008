@@ -49,7 +49,7 @@ abstract public class AbstractBPlusTreeBo implements BPlusTreeBo {
 			Iterator<BPlusElement> it= node.getElements().iterator();
 			while (it.hasNext()){
 				BPlusIndexElement auxElement= (BPlusIndexElement) it.next();
-				if (auxElement.getKey().compareTo(elementKey)<=1){
+				if (auxElement.getKey().compareTo(elementKey)<1){
 					nextNode= auxElement.getRelatedNode();
 				}
 			}
