@@ -1,8 +1,12 @@
 package test.bplus;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import junit.framework.Assert;
 import junit.framework.TestCase;
 import api.bo.BPlusTree.BPlusTreeBo;
+import app.bo.bplus.BPlusTreeBoTest;
 import bplus.elements.BPlusLeafElement;
 import bplus.exceptions.KeyNotFoundException;
 import bplus.keys.BPlusElementKey;
@@ -45,8 +49,42 @@ abstract public class TestBPlusTreeBo extends TestCase {
 	
 	public void test() throws KeyNotFoundException, DataAccessException {
 		
+		// arbol b+ que funciona seguro
+		BPlusTreeBoTest bplustest = new BPlusTreeBoTest();
+		
+		// lista de claves que fueron insertadas en ambos b+
+		List<String> lista_claves = new LinkedList<String>();
+		
+		for (int i=0; i<10; i++) {
+			String clave = String.valueOf(i);
+			
+			BPlusLeafElement element = new BPlusLeafElement(new BPlusElementKey(clave),i);
+			BPlusLeafElement element_test = new BPlusLeafElement(new BPlusElementKey(clave),i);
+			
+			// inserto el elemento en ambos bplus
+			bo.insertElement(element);
+			bplustest.insertElement(element_test);
+			
+			// y en la lista, la calve
+			lista_claves.add(clave);
+		}
+		
+		
+		for (String clave : lista_claves ) {
+			
+			BPlusElementKey elementKey = new BPlusElementKey(clave);
+			BPlusLeafElement element = bo.getElement(elementKey);
+			BPlusLeafElement element_test = bplustest.getElement(elementKey);
+
+			Assert.assertEquals(element_test.getValue(), element.getValue() );
+			
+		}
+		
+		
+		
+		
 		//bo.insertElement( new BPlusLeafElement( new BPlusElement) );
-		_test_insert( "bplus", 2);
+/*		_test_insert( "bplus", 2);
 		this.bo.dump();
 		System.out.println("--------------------------------------------------------");
 		_test_insert( "b9999", 9999);
@@ -89,7 +127,7 @@ abstract public class TestBPlusTreeBo extends TestCase {
 		
 		_assert_key_value("gato", 1200);
 		_assert_key_value("gatiperro", 3);		
-		_assert_key_value("perro", 1000);		
+		_assert_key_value("perro", 1000);*/		
 	}
 
 }
