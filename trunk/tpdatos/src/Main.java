@@ -10,18 +10,20 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 		
 		String option = "--indexer";
-		if ( args.length < 0) {
+		if ( args.length > 0) {
 			option = args[0];
-		}
-
-		if (option.equals("--indexer" ) ) {
-			DocumentsIndexer.main(args);
-		} else if (option.equals("--tree-dumper")) {
-			TreeDumper.main(args);
-		} else if ( option.equals("--search")) {
-			SearchEngine.main(args);
+	
+			if (option.equals("--indexer" ) ) {
+				DocumentsIndexer.main(args);
+			} else if (option.equals("--tree-dumper")) {
+				TreeDumper.main(args);
+			} else if ( option.equals("--search")) {
+				SearchEngine.main(args);
+			} else {
+				System.out.println("Opcion invalida (" + option+ ")");
+			}
 		} else {
-			System.out.println("Opcion invalida");
+			System.out.println("Debe elegir una opcion ( --indexer o --search)");
 		}
 		
 	}
