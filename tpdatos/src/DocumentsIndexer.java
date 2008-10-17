@@ -14,7 +14,6 @@ import utils.statistics.StatisticsGenerator;
 import api.DefaultQueryEngine;
 import api.DocumentInsert;
 import api.QueryEngine;
-import app.bo.IndexImp;
 import app.dao.documents.DocumentsDictionaryImp;
 import dto.DocumentDto;
 import dto.StopwordsPipelineDto;
