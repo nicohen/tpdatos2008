@@ -30,10 +30,10 @@ echo "classes: "$CLASSES >> makefile
 echo 'clean:
 	   rm $(CLASSES:.java=.class)'  >> makefile
 echo 'jar:
-	cd src && jar cfm ../bombita.jar ../manifesto.txt *'>> makefile
+	cd src && jar cfm ../bombita.jar ../manifesto.txt log4j.xml *'>> makefile
 
 echo 'dist:
-	tar -c '$( find -name "*.java" )' manifesto.txt words/stemming.txt words/stopwords.txt makefile '$(find lib/ -name '*.jar')' > bombita-src.tar 
+	tar -c '$( find -name "*.java" )' manifesto.txt src/log4j.xml words/stemming.txt words/stopwords.txt makefile '$(find lib/ -name '*.jar')' > bombita-src.tar 
 	gzip --force bombita-src.tar 
 	@echo "*************************************************"
 	@echo "* 	bombita-src.tar.gz generated	       *"
