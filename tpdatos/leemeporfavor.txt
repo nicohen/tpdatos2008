@@ -1,0 +1,34 @@
+INSTRUCCIONES DE COMPILACION
+
+	Desde la linea de comandos, situandose en el directorio princpal (donde se encentra este documento), ejecutar la orden:
+
+
+	make
+
+
+	Eso generara el archivo bombita.jar
+
+INSTRUCCIONES DE USO
+
+
+	Ejecutar el programa mediante la orden
+
+	java -jar bombita.jar
+
+	Eso inicialize al proceso de indexacion, para ejecutar una busqueda en el indice, utilize el siguiente comando
+
+	java -jar bombita.jar --search
+
+	NOTA: para la correcta ejecucion del programa, son necesarios los siguientes archivos en la ruta de trabajo en la que se ejecute la aplicacion (vienen con el paquete de codigo fuente) :
+
+	* lib/htmlparser.jar	(libreria auxiliar)
+	* lib/junit-4.5.jar	(libreria auxiliar)
+	* lib/log4j-1.2.15.jar	(libreria auxiliar)
+	* lib/servlet-api.jar	(libreria auxiliar)
+
+	* words/stopword.txt	(archivo con lista de stopwords)
+	* words/stemming.txt	(diccionario de stemming, que utiliza el indexador)
+
+	* documents		(directorio de documentos, repleto con todos los documentos que se desean indexar)
+
+
