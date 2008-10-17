@@ -56,7 +56,7 @@ abstract public class TestBPlusTreeBo extends TestCase {
 		List<String> lista_claves = new LinkedList<String>();
 		
 		for (int i=0; i<1000; i++) {
-			String clave = String.valueOf(i);
+			String clave = "eeeeeeeeee"+String.valueOf(i);
 			
 			BPlusLeafElement element = new BPlusLeafElement(new BPlusElementKey(clave),i);
 			BPlusLeafElement element_test = new BPlusLeafElement(new BPlusElementKey(clave),i);
