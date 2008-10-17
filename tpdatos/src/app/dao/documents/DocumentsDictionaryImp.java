@@ -71,11 +71,17 @@ public class DocumentsDictionaryImp implements DocumentsDictionary {
 
 		Logger log = Logger.getLogger(DocumentsDictionaryImp.class);
 		
-			// Destination directory
+		// Destination directory
 	    File dir = new File(Constants.FOLDER_INDEXED);
+	    
+	    // Crea el directorio en caso de que no exista
+	    if (!dir.isDirectory()) {
+	    	dir.mkdir();
+	    }
 	    
 	    // Move file to new directory
 	    boolean success = file.renameTo(new File(dir, file.getName()));
+	    
 	    if (!success) {
 	    	log.error("Error moviendo ["+file.getName()+"] a la carpeta de indexados");
 	    } else {
