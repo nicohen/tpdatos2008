@@ -49,7 +49,7 @@ public final class HtmlUtils {
 	}
 
 	public static String deleteTags(String html) {
-		return html.replaceAll("<[\/a-zA-Z0-9 ]*>", "#");
+		return html.replaceAll("<[\\/a-zA-Z0-9 ]*>", "#");
 	}
 	
 	public static String decodeSpecialHtmlCharacters(String html) {
