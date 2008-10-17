@@ -1,13 +1,17 @@
 package test.index;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
+import java.util.Set;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;
 import api.Index;
+import app.bo.MockIndex;
 import exceptions.BusinessException;
 
 abstract public class TestIndex extends TestCase {
@@ -56,8 +60,65 @@ abstract public class TestIndex extends TestCase {
 		
 	}
 	
+	static String[] words = { "static", "String", "words", "random" ,"java", "util" }; 
+	
+	private String randomWord(Random random) {
+		return words[random.nextInt(6)];
+	}
+	
+	public void test_completo() throws BusinessException {
+		
+		
+		Set<String> word_set = new HashSet<String>();
+		
+		Index ideal_index = new MockIndex();
+		
+		// se le especifica la semilla para poder debuggear situaciones iguales
+		// de maneras repetidas
+		
+		Random random = new Random(0);
+		
+		for (int documentid=1;documentid<10;documentid++) {
+			// agregar entradas
+			
+			int numwords = random.nextInt(100)+59;
+			
+			for (int j=0; j<numwords; j++) {
+			
+				String word = randomWord(random) + String.valueOf( random.nextInt(100) );
+			
+				word_set.add(word);
+			
+				// realizar el mismo insert en ambos indices
+				testObject.insertWord(word, documentid);
+				ideal_index.insertWord(word, documentid);
+				
+				// registrar el word en el set
+				word_set.add(word);
+			
+			}
+		}
+		
+		
+		// para cada palabra en el set
+		
+		for (String word : word_set ) {
+			// verificar si ambos indices mantienen los mismos
+			// documentos, y en el mismo orden
+			List<Integer> docs = testObject.getDocuments(word);
+			List<Integer> docs_ideal = ideal_index.getDocuments(word);
+			
+			Assert.assertEquals(docs_ideal.size(), docs.size() );
+			
+			for (int i=0; i<docs.size(); i++) {
+				Assert.assertEquals( docs_ideal.get(i), docs.get(i) );
+			}
+			
+		}
+	}
+	
 	public void test() throws BusinessException {
-		int[] ids = {1,4,5,76,566};
+	/*	int[] ids = {1,4,5,76,566};
 		test_entry("prueba", ids );
 
 		int[] ids2 = {1,44,45,576,11566};
@@ -80,7 +141,7 @@ abstract public class TestIndex extends TestCase {
 		}
 
 		test_entry("prueba5", lista);
-		
+*/		
 	}
 	
 }
