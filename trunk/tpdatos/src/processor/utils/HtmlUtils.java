@@ -47,9 +47,9 @@ public final class HtmlUtils {
 
 		return nuevo;
 	}
-	
+
 	public static String deleteTags(String html) {
-		return html.replaceAll("<(.|\n)*?>", "#");
+		return html.replaceAll("<[\/a-zA-Z0-9 ]*>", "#");
 	}
 	
 	public static String decodeSpecialHtmlCharacters(String html) {
