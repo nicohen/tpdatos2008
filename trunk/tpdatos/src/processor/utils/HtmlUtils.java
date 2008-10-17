@@ -16,6 +16,7 @@ import org.htmlparser.nodes.TagNode;
 import org.htmlparser.nodes.TextNode;
 import org.htmlparser.tags.BodyTag;
 import org.htmlparser.tags.ScriptTag;
+import org.htmlparser.tags.StyleTag;
 import org.htmlparser.util.NodeIterator;
 import org.htmlparser.util.NodeList;
 import org.htmlparser.util.ParserException;
@@ -46,10 +47,6 @@ public final class HtmlUtils {
 		}
 
 		return nuevo;
-	}
-
-	public static String deleteTags(String html) {
-		return html.replaceAll("<[\\/a-zA-Z0-9 ]*>", "#");
 	}
 	
 	public static String decodeSpecialHtmlCharacters(String html) {
@@ -89,13 +86,12 @@ public final class HtmlUtils {
 	public static String formatHtmlFile(File file) throws ParserException {
 		String documentText = HtmlUtils.readHtmlFile(file.getPath());
 		documentText = HtmlUtils.getHtmlBody(documentText);
-		documentText = HtmlUtils.deleteTags(documentText);
 		return HtmlUtils.decodeSpecialHtmlCharacters(documentText);
 	}
 	
 	private static String getNodeText(Node node) throws ParserException {
 		StringBuilder sb = new StringBuilder();
-		if(!node.getClass().equals(ScriptTag.class)) {
+		if(!node.getClass().equals(ScriptTag.class) && !node.getClass().equals(StyleTag.class)) {
 			if (node.getClass().equals(TextNode.class)) {
 				sb.append(node.getText()).append('\n');
 			} else {
