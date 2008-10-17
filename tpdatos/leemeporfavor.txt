@@ -13,7 +13,7 @@ INSTRUCCIONES DE USO
 
 	Ejecutar el programa mediante la orden
 
-	java -jar bombita.jar
+	java -jar bombita.jar --indexer
 
 	Eso inicialize al proceso de indexacion, para ejecutar una busqueda en el indice, utilize el siguiente comando
 
