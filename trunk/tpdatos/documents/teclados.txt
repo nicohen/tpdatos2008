@@ -3,7 +3,7 @@
 	<head> 
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
 		<meta name="generator" content="MediaWiki 1.14alpha" /> 
-		<meta name="keywords" content="Teclado (inform·tica),1981,1984,1987,ANSI,AZERTY,Apple Computer,Apple II,Atari ST,Bluetooth,CD-ROM" /> 
+		<meta name="keywords" content="Teclado (inform√°tica),1981,1984,1987,ANSI,AZERTY,Apple Computer,Apple II,Atari ST,Bluetooth,CD-ROM" /> 
 		<link rel="alternate" type="application/x-wiki" title="Editar" href="http://es.wikipedia.org/w/index.php?title=Teclado_(inform%C3%A1tica)&amp;action=edit" /> 
 		<link rel="shortcut icon" href="/favicon.ico" /> 
 		<link rel="apple-touch-icon" href="http://es.wikipedia.org/apple-touch-icon.png" /> 
@@ -11,7 +11,7 @@
 		<link rel="copyright" href="http://www.gnu.org/copyleft/fdl.html" /> 
 		<link rel="alternate" type="application/rss+xml" title="Wikipedia RSS feed" href="http://es.wikipedia.org/w/index.php?title=Especial:RecentChanges&amp;feed=rss" /> 
 		<link rel="alternate" type="application/atom+xml" title="Wikipedia Atom feed" href="http://es.wikipedia.org/w/index.php?title=Especial:RecentChanges&amp;feed=atom" /> 
-		<title>Teclado (inform·tica) - Wikipedia, la enciclopedia libre</title> 
+		<title>Teclado (inform√°tica) - Wikipedia, la enciclopedia libre</title> 
 		<link rel="stylesheet" href="/skins-1.5/common/shared.css?169" type="text/css" media="screen" /> 
 		<link rel="stylesheet" href="/skins-1.5/common/commonPrint.css?169" type="text/css" media="print" /> 
 		<link rel="stylesheet" href="/skins-1.5/monobook/main.css?169" type="text/css" media="screen" /> 
@@ -38,8 +38,8 @@
 		var wgCanonicalNamespace = ""; 
 		var wgCanonicalSpecialPageName = false; 
 		var wgNamespaceNumber = 0; 
-		var wgPageName = "Teclado_(inform·tica)"; 
-		var wgTitle = "Teclado (inform·tica)"; 
+		var wgPageName = "Teclado_(inform√°tica)"; 
+		var wgTitle = "Teclado (inform√°tica)"; 
 		var wgAction = "view"; 
 		var wgArticleId = "510471"; 
 		var wgIsArticle = true; 
@@ -66,23 +66,23 @@
 		<script type="text/javascript" src="/skins-1.5/common/mwsuggest.js?169"></script> 
 		<script type="text/javascript" src="/w/index.php?title=-&amp;action=raw&amp;gen=js&amp;useskin=monobook"><!-- site js --></script> 
 	</head> 
-<body class="mediawiki ltr ns-0 ns-subject page-Teclado_inform·tica skin-monobook"> 
+<body class="mediawiki ltr ns-0 ns-subject page-Teclado_inform√°tica skin-monobook"> 
 	<div id="globalWrapper"> 
 		<div id="column-content"> 
 	<div id="content"> 
 		<a name="top" id="top"></a> 
-				<h1 class="firstHeading">Teclado (inform·tica)</h1> 
+				<h1 class="firstHeading">Teclado (inform√°tica)</h1> 
 		<div id="bodyContent"> 
 			<h3 id="siteSub">De Wikipedia, la enciclopedia libre</h3> 
 			<div id="contentSub"></div> 
-									<div id="jump-to-nav">Saltar a <a href="#column-one">navegaciÛn</a>, <a href="#searchInput">b˙squeda</a></div>			<!-- start content --> 
-			<p>Un <b>teclado</b> es un <a href="/wiki/Perif%C3%A9rico" title="PerifÈrico">perifÈrico</a> que consiste en un sistema de teclas, como las de una m·quina de escribir, que permite introducir datos a un ordenador o dispositivo digital.</p> 
-<p>Cuando se presiona un caracter, envÌa una entrada cifrada al ordenador, que entonces muestra el caracter en la pantalla. El tÈrmino teclado numÈrico se refiere al conjunto de teclas con n˙meros que hay en el lado derecho de algunos teclados (no a los n˙meros en la fila superior, sobre las letras). Los teclados numÈricos tambiÈn se refieren a los n˙meros (y a las letras correspondientes) en los telÈfonos mÛviles.</p> 
+									<div id="jump-to-nav">Saltar a <a href="#column-one">navegaci√≥n</a>, <a href="#searchInput">b√∫squeda</a></div>			<!-- start content --> 
+			<p>Un <b>teclado</b> es un <a href="/wiki/Perif%C3%A9rico" title="Perif√©rico">perif√©rico</a> que consiste en un sistema de teclas, como las de una m√°quina de escribir, que permite introducir datos a un ordenador o dispositivo digital.</p> 
+<p>Cuando se presiona un caracter, env√≠a una entrada cifrada al ordenador, que entonces muestra el caracter en la pantalla. El t√©rmino teclado num√©rico se refiere al conjunto de teclas con n√∫meros que hay en el lado derecho de algunos teclados (no a los n√∫meros en la fila superior, sobre las letras). Los teclados num√©ricos tambi√©n se refieren a los n√∫meros (y a las letras correspondientes) en los tel√©fonos m√≥viles.</p> 
 <p>Las teclas en los teclados de ordenador se clasifican normalmente como sigue:</p> 
 <ul> 
-<li>Teclas alfanumÈricas: letras y n˙meros.</li> 
-<li>Teclas de puntuaciÛn: coma, punto, punto y coma, entre otras.</li> 
-<li>Teclas especiales: teclas de funciones, teclas de control, teclas de flecha, tecla de may˙sculas, entre otras.</li> 
+<li>Teclas alfanum√©ricas: letras y n√∫meros.</li> 
+<li>Teclas de puntuaci√≥n: coma, punto, punto y coma, entre otras.</li> 
+<li>Teclas especiales: teclas de funciones, teclas de control, teclas de flecha, tecla de may√∫sculas, entre otras.</li> 
 </ul> 
 <p><br /></p> 
 <div class="thumb tright"> 
@@ -96,7 +96,7 @@ Teclado de un terminal CT-1024</div>
 <div class="thumbinner" style="width:202px;"><a href="/wiki/Imagen:Apple_IIc_Plus_(front).jpg" class="image" title="Teclado integrado de un Apple IIc Plus"><img alt="Teclado integrado de un Apple IIc Plus" src="http://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Apple_IIc_Plus_%28front%29.jpg/200px-Apple_IIc_Plus_%28front%29.jpg" width="200" height="151" border="0" class="thumbimage" /></a> 
 <div class="thumbcaption"> 
 <div class="magnify"><a href="/wiki/Imagen:Apple_IIc_Plus_(front).jpg" class="internal" title="Aumentar"><img src="/skins-1.5/common/images/magnify-clip.png" width="15" height="11" alt="" /></a></div> 
-Teclado integrado de un <a href="/w/index.php?title=Apple_IIc&amp;action=edit&amp;redlink=1" class="new" title="Apple IIc (a˙n no redactado)">Apple IIc</a> Plus</div> 
+Teclado integrado de un <a href="/w/index.php?title=Apple_IIc&amp;action=edit&amp;redlink=1" class="new" title="Apple IIc (a√∫n no redactado)">Apple IIc</a> Plus</div> 
 </div> 
 </div> 
 <div class="thumb tright"> 
@@ -121,10 +121,10 @@ Teclado ajustable de <a href="/wiki/Apple_Computer" title="Apple Computer" class
 </div> 
 </div> 
 <div class="thumb tright"> 
-<div class="thumbinner" style="width:202px;"><a href="/wiki/Imagen:Chicony_Wireless_Keyboard_KBR0108.jpg" class="image" title="Teclado PC inal·mbrico"><img alt="Teclado PC inal·mbrico" src="http://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Chicony_Wireless_Keyboard_KBR0108.jpg/200px-Chicony_Wireless_Keyboard_KBR0108.jpg" width="200" height="108" border="0" class="thumbimage" /></a> 
+<div class="thumbinner" style="width:202px;"><a href="/wiki/Imagen:Chicony_Wireless_Keyboard_KBR0108.jpg" class="image" title="Teclado PC inal√°mbrico"><img alt="Teclado PC inal√°mbrico" src="http://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Chicony_Wireless_Keyboard_KBR0108.jpg/200px-Chicony_Wireless_Keyboard_KBR0108.jpg" width="200" height="108" border="0" class="thumbimage" /></a> 
 <div class="thumbcaption"> 
 <div class="magnify"><a href="/wiki/Imagen:Chicony_Wireless_Keyboard_KBR0108.jpg" class="internal" title="Aumentar"><img src="/skins-1.5/common/images/magnify-clip.png" width="15" height="11" alt="" /></a></div> 
-Teclado PC inal·mbrico</div> 
+Teclado PC inal√°mbrico</div> 
 </div> 
 </div> 
 <div class="thumb tright"> 
@@ -144,18 +144,18 @@ Teclado SUN tipo 5</div>
 <ul> 
 <li class="toclevel-1"><a href="#Historia"><span class="tocnumber">1</span> <span class="toctext">Historia</span></a> 
 <ul> 
-<li class="toclevel-2"><a href="#Disposici.C3.B3n_de_las_teclas"><span class="tocnumber">1.1</span> <span class="toctext">DisposiciÛn de las teclas</span></a></li> 
+<li class="toclevel-2"><a href="#Disposici.C3.B3n_de_las_teclas"><span class="tocnumber">1.1</span> <span class="toctext">Disposici√≥n de las teclas</span></a></li> 
 <li class="toclevel-2"><a href="#Primeros_teclados"><span class="tocnumber">1.2</span> <span class="toctext">Primeros teclados</span></a></li> 
-<li class="toclevel-2"><a href="#Generaci.C3.B3n_16_bits"><span class="tocnumber">1.3</span> <span class="toctext">GeneraciÛn 16 bits</span></a></li> 
+<li class="toclevel-2"><a href="#Generaci.C3.B3n_16_bits"><span class="tocnumber">1.3</span> <span class="toctext">Generaci√≥n 16 bits</span></a></li> 
 <li class="toclevel-2"><a href="#Llega_USB"><span class="tocnumber">1.4</span> <span class="toctext">Llega USB</span></a></li> 
 </ul> 
 </li> 
 <li class="toclevel-1"><a href="#Teclas_inertes"><span class="tocnumber">2</span> <span class="toctext">Teclas inertes</span></a></li> 
 <li class="toclevel-1"><a href="#Tipos_de_teclado"><span class="tocnumber">3</span> <span class="toctext">Tipos de teclado</span></a></li> 
 <li class="toclevel-1"><a href="#Estructura"><span class="tocnumber">4</span> <span class="toctext">Estructura</span></a></li> 
-<li class="toclevel-1"><a href="#Disposici.C3.B3n_del_teclado"><span class="tocnumber">5</span> <span class="toctext">DisposiciÛn del teclado</span></a></li> 
-<li class="toclevel-1"><a href="#Clasificaci.C3.B3n_de_teclados_de_computadoras"><span class="tocnumber">6</span> <span class="toctext">ClasificaciÛn de teclados de computadoras</span></a></li> 
-<li class="toclevel-1"><a href="#V.C3.A9ase_tambi.C3.A9n"><span class="tocnumber">7</span> <span class="toctext">VÈase tambiÈn</span></a></li> 
+<li class="toclevel-1"><a href="#Disposici.C3.B3n_del_teclado"><span class="tocnumber">5</span> <span class="toctext">Disposici√≥n del teclado</span></a></li> 
+<li class="toclevel-1"><a href="#Clasificaci.C3.B3n_de_teclados_de_computadoras"><span class="tocnumber">6</span> <span class="toctext">Clasificaci√≥n de teclados de computadoras</span></a></li> 
+<li class="toclevel-1"><a href="#V.C3.A9ase_tambi.C3.A9n"><span class="tocnumber">7</span> <span class="toctext">V√©ase tambi√©n</span></a></li> 
 <li class="toclevel-1"><a href="#Enlaces_externos"><span class="tocnumber">8</span> <span class="toctext">Enlaces externos</span></a></li> 
 </ul> 
 </td> 
@@ -167,88 +167,88 @@ Teclado SUN tipo 5</div>
 //]]> 
 </script> 
 <p><a name="Historia" id="Historia"></a></p> 
-<h2><span class="editsection">[<a href="/w/index.php?title=Teclado_(inform%C3%A1tica)&amp;action=edit&amp;section=1" title="Editar secciÛn: Historia">editar</a>]</span> <span class="mw-headline">Historia</span></h2> 
+<h2><span class="editsection">[<a href="/w/index.php?title=Teclado_(inform%C3%A1tica)&amp;action=edit&amp;section=1" title="Editar secci√≥n: Historia">editar</a>]</span> <span class="mw-headline">Historia</span></h2> 
 <p><a name="Disposici.C3.B3n_de_las_teclas" id="Disposici.C3.B3n_de_las_teclas"></a></p> 
-<h3><span class="editsection">[<a href="/w/index.php?title=Teclado_(inform%C3%A1tica)&amp;action=edit&amp;section=2" title="Editar secciÛn: DisposiciÛn de las teclas">editar</a>]</span> <span class="mw-headline">DisposiciÛn de las teclas</span></h3> 
-<p>La disposiciÛn de las teclas se remonta a las primeras <a href="/wiki/M%C3%A1quina_de_escribir" title="M·quina de escribir">m·quinas de escribir</a>. Aquellas m·quinas eran enteramente mec·nicas. Al pulsar una letra en el teclado, se movÌa un pequeÒo martillo mec·nico, que golpeaba el papel a travÈs de una cinta impregnada en tinta. Al escribir con varios dedos de forma r·pida, los martillos no tenÌan tiempo de volver a su posiciÛn por la frecuencia con la que cada letra aparecÌa en un texto. De esta manera la pulsaciÛn era m·s lenta y los martillos se encallaban menos veces.</p> 
-<p>Sobre esta distribuciÛn de teclado surgieron dos variantes principales: la francesa <a href="/wiki/AZERTY" title="AZERTY" class="mw-redirect">AZERTY</a> y la alemana <a href="/wiki/QWERTY" title="QWERTY" class="mw-redirect">QWERTY</a>. Ambas se basaban en cambios en las teclas m·s frecuentemente usadas en cada idioma. Los teclados en espaÒol no pasan de aÒadir la <b>—</b>, bien como tecla propia, bien mediante tilde + n.</p> 
-<p>Cuando aparecieron las m·quinas de escribir elÈctricas, y despuÈs los ordenadores, con sus teclados tambiÈn elÈctricos, se considerÛ seriamente modificar la distribuciÛn de las letras en los teclados, colocando las letras m·s corrientes en la zona central; es el conocido <a href="/wiki/Teclado_Dvorak" title="Teclado Dvorak">Teclado Simplificado Dvorak</a>. El nuevo teclado ya estaba diseÒado y los fabricantes preparados para iniciar la fabricaciÛn. Sin embargo, el proyecto se cancelÛ debido al temor de que los usuarios tuvieran excesivas incomodidades para habituarse al nuevo teclado, y que ello perjudicara la introducciÛn de las computadoras personales, que por aquel entonces se encontraban en pleno auge.</p> 
+<h3><span class="editsection">[<a href="/w/index.php?title=Teclado_(inform%C3%A1tica)&amp;action=edit&amp;section=2" title="Editar secci√≥n: Disposici√≥n de las teclas">editar</a>]</span> <span class="mw-headline">Disposici√≥n de las teclas</span></h3> 
+<p>La disposici√≥n de las teclas se remonta a las primeras <a href="/wiki/M%C3%A1quina_de_escribir" title="M√°quina de escribir">m√°quinas de escribir</a>. Aquellas m√°quinas eran enteramente mec√°nicas. Al pulsar una letra en el teclado, se mov√≠a un peque√±o martillo mec√°nico, que golpeaba el papel a trav√©s de una cinta impregnada en tinta. Al escribir con varios dedos de forma r√°pida, los martillos no ten√≠an tiempo de volver a su posici√≥n por la frecuencia con la que cada letra aparec√≠a en un texto. De esta manera la pulsaci√≥n era m√°s lenta y los martillos se encallaban menos veces.</p> 
+<p>Sobre esta distribuci√≥n de teclado surgieron dos variantes principales: la francesa <a href="/wiki/AZERTY" title="AZERTY" class="mw-redirect">AZERTY</a> y la alemana <a href="/wiki/QWERTY" title="QWERTY" class="mw-redirect">QWERTY</a>. Ambas se basaban en cambios en las teclas m√°s frecuentemente usadas en cada idioma. Los teclados en espa√±ol no pasan de a√±adir la <b>√ë</b>, bien como tecla propia, bien mediante tilde + n.</p> 
+<p>Cuando aparecieron las m√°quinas de escribir el√©ctricas, y despu√©s los ordenadores, con sus teclados tambi√©n el√©ctricos, se consider√≥ seriamente modificar la distribuci√≥n de las letras en los teclados, colocando las letras m√°s corrientes en la zona central; es el conocido <a href="/wiki/Teclado_Dvorak" title="Teclado Dvorak">Teclado Simplificado Dvorak</a>. El nuevo teclado ya estaba dise√±ado y los fabricantes preparados para iniciar la fabricaci√≥n. Sin embargo, el proyecto se cancel√≥ debido al temor de que los usuarios tuvieran excesivas incomodidades para habituarse al nuevo teclado, y que ello perjudicara la introducci√≥n de las computadoras personales, que por aquel entonces se encontraban en pleno auge.</p> 
 <table align="center"> 
 <tr> 
 <td> 
 <div class="center"> 
 <div class="thumb tnone"> 
-<div class="thumbinner" style="width:402px;"><a href="/wiki/Imagen:Qwerty.svg" class="image" title="Teclado QWERTY de 102 teclas con distribuciÛn InglÈs de Estados Unidos"><img alt="Teclado QWERTY de 102 teclas con distribuciÛn InglÈs de Estados Unidos" src="http://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Qwerty.svg/400px-Qwerty.svg.png" width="400" height="193" border="0" class="thumbimage" /></a> 
+<div class="thumbinner" style="width:402px;"><a href="/wiki/Imagen:Qwerty.svg" class="image" title="Teclado QWERTY de 102 teclas con distribuci√≥n Ingl√©s de Estados Unidos"><img alt="Teclado QWERTY de 102 teclas con distribuci√≥n Ingl√©s de Estados Unidos" src="http://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Qwerty.svg/400px-Qwerty.svg.png" width="400" height="193" border="0" class="thumbimage" /></a> 
 <div class="thumbcaption"> 
 <div class="magnify"><a href="/wiki/Imagen:Qwerty.svg" class="internal" title="Aumentar"><img src="/skins-1.5/common/images/magnify-clip.png" width="15" height="11" alt="" /></a></div> 
-<a href="/wiki/Teclado_QWERTY" title="Teclado QWERTY">Teclado QWERTY</a> de 102 teclas con distribuciÛn <a href="/wiki/Idioma_ingl%C3%A9s" title="Idioma inglÈs">InglÈs</a> de <a href="/wiki/Estados_Unidos" title="Estados Unidos">Estados Unidos</a></div> 
+<a href="/wiki/Teclado_QWERTY" title="Teclado QWERTY">Teclado QWERTY</a> de 102 teclas con distribuci√≥n <a href="/wiki/Idioma_ingl%C3%A9s" title="Idioma ingl√©s">Ingl√©s</a> de <a href="/wiki/Estados_Unidos" title="Estados Unidos">Estados Unidos</a></div> 
 </div> 
 </div> 
 </div> 
 </td> 
 </tr> 
 </table> 
-<p>La distribuciÛn es, como ocurre normalmente en nuestra historia, un "lastre cultural" como el de la puntuaciÛn del <a href="/wiki/Tenis" title="Tenis">tenis</a>.</p> 
+<p>La distribuci√≥n es, como ocurre normalmente en nuestra historia, un "lastre cultural" como el de la puntuaci√≥n del <a href="/wiki/Tenis" title="Tenis">tenis</a>.</p> 
 <p><a name="Primeros_teclados" id="Primeros_teclados"></a></p> 
-<h3><span class="editsection">[<a href="/w/index.php?title=Teclado_(inform%C3%A1tica)&amp;action=edit&amp;section=3" title="Editar secciÛn: Primeros teclados">editar</a>]</span> <span class="mw-headline">Primeros teclados</span></h3> 
-<p>Aparte de teletipos y m·quinas de escribir elÈctricas como la <a href="/w/index.php?title=IBM_Selectric&amp;action=edit&amp;redlink=1" class="new" title="IBM Selectric (a˙n no redactado)">IBM Selectric</a>, los primeros teclados solÌan ser un <a href="/wiki/Terminal_de_computadora" title="Terminal de computadora">terminal de computadora</a> que se comunicaba por <a href="/wiki/Puerto_serial" title="Puerto serial" class="mw-redirect">puerto serial</a> con la computadora. Adem·s de las normas de teletipo, se designÛ un est·ndar de comunicaciÛn serie, basado en el juego de caracteres <a href="/wiki/ANSI" title="ANSI" class="mw-redirect">ANSI</a>, que hoy sigue presente en las comunicaciones por modem y con impresora (las primeras computadoras carecÌan de <a href="/w/index.php?title=Pantalla_de_computadora&amp;action=edit&amp;redlink=1" class="new" title="Pantalla de computadora (a˙n no redactado)">monitor</a>, por lo que solÌan comunicarse, bien por luces en su panel de control, bien enviando la respuesta a un dispositivo de impresiÛn). Se usaba para ellos las secuencias de escape, que se generaban bien por teclas dedicadas, bien por combinaciones de teclas, siendo una de las m·s usadas la tecla Control.</p> 
-<p>La llegada de la <a href="/wiki/Computadora_dom%C3%A9stica" title="Computadora domÈstica">computadora domÈstica</a> trae una inmensa variedad de teclados y de tecnologÌas y calidades (desde los muy reputados por duraderos del <a href="/w/index.php?title=Dragon_32&amp;action=edit&amp;redlink=1" class="new" title="Dragon 32 (a˙n no redactado)">Dragon 32</a> a la fragilidad de las membranas de los equipos Sinclair), aunque la mayorÌa de equipos incorporan la <a href="/wiki/Placa_madre" title="Placa madre" class="mw-redirect">placa madre</a> bajo el teclado, y es la <a href="/wiki/CPU" title="CPU">CPU</a> o un circuito auxiliar (como el chip de sonido <a href="/wiki/General_Instrument_AY-3-8910" title="General Instrument AY-3-8910">General Instrument AY-3-8910</a> en los <a href="/wiki/MSX" title="MSX">MSX</a>) el encargado de leerlo. Son casos contados los que recurren o soportan comunicaciÛn serial (curiosamente es la tecnologÌa utilizada en el <a href="/w/index.php?title=Sinclair_Spectrum_128&amp;action=edit&amp;redlink=1" class="new" title="Sinclair Spectrum 128 (a˙n no redactado)">Sinclair Spectrum 128</a> para el keypad numÈrico). SÛlo los MSX establecer·n una norma sobre el teclado, y los diferentes clones del <a href="/wiki/Apple_II" title="Apple II">Apple II</a> y el <a href="/wiki/TRS-80" title="TRS-80">TRS-80</a> seguir·n el diseÒo del clonado.</p> 
+<h3><span class="editsection">[<a href="/w/index.php?title=Teclado_(inform%C3%A1tica)&amp;action=edit&amp;section=3" title="Editar secci√≥n: Primeros teclados">editar</a>]</span> <span class="mw-headline">Primeros teclados</span></h3> 
+<p>Aparte de teletipos y m√°quinas de escribir el√©ctricas como la <a href="/w/index.php?title=IBM_Selectric&amp;action=edit&amp;redlink=1" class="new" title="IBM Selectric (a√∫n no redactado)">IBM Selectric</a>, los primeros teclados sol√≠an ser un <a href="/wiki/Terminal_de_computadora" title="Terminal de computadora">terminal de computadora</a> que se comunicaba por <a href="/wiki/Puerto_serial" title="Puerto serial" class="mw-redirect">puerto serial</a> con la computadora. Adem√°s de las normas de teletipo, se design√≥ un est√°ndar de comunicaci√≥n serie, basado en el juego de caracteres <a href="/wiki/ANSI" title="ANSI" class="mw-redirect">ANSI</a>, que hoy sigue presente en las comunicaciones por modem y con impresora (las primeras computadoras carec√≠an de <a href="/w/index.php?title=Pantalla_de_computadora&amp;action=edit&amp;redlink=1" class="new" title="Pantalla de computadora (a√∫n no redactado)">monitor</a>, por lo que sol√≠an comunicarse, bien por luces en su panel de control, bien enviando la respuesta a un dispositivo de impresi√≥n). Se usaba para ellos las secuencias de escape, que se generaban bien por teclas dedicadas, bien por combinaciones de teclas, siendo una de las m√°s usadas la tecla Control.</p> 
+<p>La llegada de la <a href="/wiki/Computadora_dom%C3%A9stica" title="Computadora dom√©stica">computadora dom√©stica</a> trae una inmensa variedad de teclados y de tecnolog√≠as y calidades (desde los muy reputados por duraderos del <a href="/w/index.php?title=Dragon_32&amp;action=edit&amp;redlink=1" class="new" title="Dragon 32 (a√∫n no redactado)">Dragon 32</a> a la fragilidad de las membranas de los equipos Sinclair), aunque la mayor√≠a de equipos incorporan la <a href="/wiki/Placa_madre" title="Placa madre" class="mw-redirect">placa madre</a> bajo el teclado, y es la <a href="/wiki/CPU" title="CPU">CPU</a> o un circuito auxiliar (como el chip de sonido <a href="/wiki/General_Instrument_AY-3-8910" title="General Instrument AY-3-8910">General Instrument AY-3-8910</a> en los <a href="/wiki/MSX" title="MSX">MSX</a>) el encargado de leerlo. Son casos contados los que recurren o soportan comunicaci√≥n serial (curiosamente es la tecnolog√≠a utilizada en el <a href="/w/index.php?title=Sinclair_Spectrum_128&amp;action=edit&amp;redlink=1" class="new" title="Sinclair Spectrum 128 (a√∫n no redactado)">Sinclair Spectrum 128</a> para el keypad num√©rico). S√≥lo los MSX establecer√°n una norma sobre el teclado, y los diferentes clones del <a href="/wiki/Apple_II" title="Apple II">Apple II</a> y el <a href="/wiki/TRS-80" title="TRS-80">TRS-80</a> seguir√°n el dise√±o del clonado.</p> 
 <p><a name="Generaci.C3.B3n_16_bits" id="Generaci.C3.B3n_16_bits"></a></p> 
-<h3><span class="editsection">[<a href="/w/index.php?title=Teclado_(inform%C3%A1tica)&amp;action=edit&amp;section=4" title="Editar secciÛn: GeneraciÛn 16 bits">editar</a>]</span> <span class="mw-headline">GeneraciÛn 16 bits</span></h3> 
-<p>Mientras que el teclado del <a href="/wiki/IBM_PC" title="IBM PC">IBM PC</a> y la primera versiÛn del <a href="/wiki/IBM_AT" title="IBM AT" class="mw-redirect">IBM AT</a> no tuvo influencia m·s all· de los clÛnicos PC, el MultifunciÛn II (o teclado extendido AT de 101/102 teclas) aparecido en <a href="/wiki/1987" title="1987">1987</a> refleja y estandariza <i>de facto</i> el teclado moderno con cuatro bloques diferenciados&#160;: un bloque alfanumÈrico con al menos una tecla a cada lado de la barra espaciadora para acceder a sÌmbolos adicionales; sobre Èl una hilera de 10 o 12 teclas de funciÛn; a la derecha un teclado numÈrico, y entre ambos grandes bloques, las teclas de cursor y sobre ellas varias teclas de ediciÛn. Con algunas variantes este ser· el esquema usado por los <a href="/wiki/Atari_ST" title="Atari ST">Atari ST</a>, los Commodore Amiga (desde el <a href="/wiki/Commodore_Amiga_500" title="Commodore Amiga 500">Commodore Amiga 500</a>), los <a href="/wiki/Sharp_X68000" title="Sharp X68000">Sharp X68000</a>, las estaciones de trabajo SUN y <a href="/wiki/Silicon_Graphics" title="Silicon Graphics">Silicon Graphics</a> y los <a href="/w/index.php?title=Acorn_Archimedes&amp;action=edit&amp;redlink=1" class="new" title="Acorn Archimedes (a˙n no redactado)">Acorn Archimedes</a>/<a href="/w/index.php?title=Acorn_RISC_PC&amp;action=edit&amp;redlink=1" class="new" title="Acorn RISC PC (a˙n no redactado)">Acorn RISC PC</a>. SÛlo los Mac siguen con el esquema bloque alfanumÈrico + bloque numÈrico, peor tambiÈn producen teclados extendidos AT, sobre todo para los modelos con emulaciÛn PC por hardware.</p> 
-<p>MenciÛn especial merece la serie 55 de teclados IBM, que ganaron a pulso la fama de <i>indestructibles</i>, pues tras m·s de 10 aÒos de uso continuo en entornos como las aseguradoras o la administraciÛn p˙blica seguÌan funcionando como el primer dÌa.</p> 
-<p>Con la apariciÛn del <a href="/wiki/PS/2_(puerto)" title="PS/2 (puerto)">conector PS/2</a>, varios fabricantes de equipos no PC proceden a incorporarlo en sus equipos. Microsoft, adem·s de hacerse un hueco en la gama de calidad alta, y de presentar avances ergonÛmicos como el <a href="/w/index.php?title=Microsoft_Natural_Keyboard&amp;action=edit&amp;redlink=1" class="new" title="Microsoft Natural Keyboard (a˙n no redactado)">Microsoft Natural Keyboard</a>, aÒade 3 nuevas teclas tras del lanzamiento de <a href="/wiki/Windows_95" title="Windows 95">Windows 95</a>. A la vez se generalizan los teclados <i>multimedia</i> que aÒaden teclas para controlar en el PC el volumen, el lector de <a href="/wiki/CD-ROM" title="CD-ROM">CD-ROM</a> o el navegador, incorporan en el teclado altavoces, calculadora, almohadilla sensible al tacto o bola trazadora.</p> 
+<h3><span class="editsection">[<a href="/w/index.php?title=Teclado_(inform%C3%A1tica)&amp;action=edit&amp;section=4" title="Editar secci√≥n: Generaci√≥n 16 bits">editar</a>]</span> <span class="mw-headline">Generaci√≥n 16 bits</span></h3> 
+<p>Mientras que el teclado del <a href="/wiki/IBM_PC" title="IBM PC">IBM PC</a> y la primera versi√≥n del <a href="/wiki/IBM_AT" title="IBM AT" class="mw-redirect">IBM AT</a> no tuvo influencia m√°s all√° de los cl√≥nicos PC, el Multifunci√≥n II (o teclado extendido AT de 101/102 teclas) aparecido en <a href="/wiki/1987" title="1987">1987</a> refleja y estandariza <i>de facto</i> el teclado moderno con cuatro bloques diferenciados&#160;: un bloque alfanum√©rico con al menos una tecla a cada lado de la barra espaciadora para acceder a s√≠mbolos adicionales; sobre √©l una hilera de 10 o 12 teclas de funci√≥n; a la derecha un teclado num√©rico, y entre ambos grandes bloques, las teclas de cursor y sobre ellas varias teclas de edici√≥n. Con algunas variantes este ser√° el esquema usado por los <a href="/wiki/Atari_ST" title="Atari ST">Atari ST</a>, los Commodore Amiga (desde el <a href="/wiki/Commodore_Amiga_500" title="Commodore Amiga 500">Commodore Amiga 500</a>), los <a href="/wiki/Sharp_X68000" title="Sharp X68000">Sharp X68000</a>, las estaciones de trabajo SUN y <a href="/wiki/Silicon_Graphics" title="Silicon Graphics">Silicon Graphics</a> y los <a href="/w/index.php?title=Acorn_Archimedes&amp;action=edit&amp;redlink=1" class="new" title="Acorn Archimedes (a√∫n no redactado)">Acorn Archimedes</a>/<a href="/w/index.php?title=Acorn_RISC_PC&amp;action=edit&amp;redlink=1" class="new" title="Acorn RISC PC (a√∫n no redactado)">Acorn RISC PC</a>. S√≥lo los Mac siguen con el esquema bloque alfanum√©rico + bloque num√©rico, peor tambi√©n producen teclados extendidos AT, sobre todo para los modelos con emulaci√≥n PC por hardware.</p> 
+<p>Menci√≥n especial merece la serie 55 de teclados IBM, que ganaron a pulso la fama de <i>indestructibles</i>, pues tras m√°s de 10 a√±os de uso continuo en entornos como las aseguradoras o la administraci√≥n p√∫blica segu√≠an funcionando como el primer d√≠a.</p> 
+<p>Con la aparici√≥n del <a href="/wiki/PS/2_(puerto)" title="PS/2 (puerto)">conector PS/2</a>, varios fabricantes de equipos no PC proceden a incorporarlo en sus equipos. Microsoft, adem√°s de hacerse un hueco en la gama de calidad alta, y de presentar avances ergon√≥micos como el <a href="/w/index.php?title=Microsoft_Natural_Keyboard&amp;action=edit&amp;redlink=1" class="new" title="Microsoft Natural Keyboard (a√∫n no redactado)">Microsoft Natural Keyboard</a>, a√±ade 3 nuevas teclas tras del lanzamiento de <a href="/wiki/Windows_95" title="Windows 95">Windows 95</a>. A la vez se generalizan los teclados <i>multimedia</i> que a√±aden teclas para controlar en el PC el volumen, el lector de <a href="/wiki/CD-ROM" title="CD-ROM">CD-ROM</a> o el navegador, incorporan en el teclado altavoces, calculadora, almohadilla sensible al tacto o bola trazadora.</p> 
 <p><a name="Llega_USB" id="Llega_USB"></a></p> 
-<h3><span class="editsection">[<a href="/w/index.php?title=Teclado_(inform%C3%A1tica)&amp;action=edit&amp;section=5" title="Editar secciÛn: Llega USB">editar</a>]</span> <span class="mw-headline">Llega USB</span></h3> 
-<p>Aunque los teclados <a href="/wiki/USB" title="USB">USB</a> comienzan a verse al poco de definirse el est·ndar USB, es con la apariciÛn del <a href="/w/index.php?title=Apple_iMac&amp;action=edit&amp;redlink=1" class="new" title="Apple iMac (a˙n no redactado)">Apple iMac</a>, que trae tanto teclado como mouse USB de serie cuando se estandariza el soporte de este tipo de teclado. Adem·s tiene la ventaja de hacerlo independiente del hardware al que se conecta. El est·ndar define scancodes de 16 bits que se transmiten por la interfaz. Del 0 al 3 son cÛdigos de error del protocolo, llamados NoEvent, ErrorRollOver, POSTFail, ErrorUndefined, respectivamente. Del 224 al 231 se reservan para las teclas modificadoras (LCtrl, LShift, LAlt, LGUI, RCtrl, RShift, RAlt, RGUI)</p> 
+<h3><span class="editsection">[<a href="/w/index.php?title=Teclado_(inform%C3%A1tica)&amp;action=edit&amp;section=5" title="Editar secci√≥n: Llega USB">editar</a>]</span> <span class="mw-headline">Llega USB</span></h3> 
+<p>Aunque los teclados <a href="/wiki/USB" title="USB">USB</a> comienzan a verse al poco de definirse el est√°ndar USB, es con la aparici√≥n del <a href="/w/index.php?title=Apple_iMac&amp;action=edit&amp;redlink=1" class="new" title="Apple iMac (a√∫n no redactado)">Apple iMac</a>, que trae tanto teclado como mouse USB de serie cuando se estandariza el soporte de este tipo de teclado. Adem√°s tiene la ventaja de hacerlo independiente del hardware al que se conecta. El est√°ndar define scancodes de 16 bits que se transmiten por la interfaz. Del 0 al 3 son c√≥digos de error del protocolo, llamados NoEvent, ErrorRollOver, POSTFail, ErrorUndefined, respectivamente. Del 224 al 231 se reservan para las teclas modificadoras (LCtrl, LShift, LAlt, LGUI, RCtrl, RShift, RAlt, RGUI)</p> 
 <p><br /></p> 
 <p><a name="Teclas_inertes" id="Teclas_inertes"></a></p> 
-<h2><span class="editsection">[<a href="/w/index.php?title=Teclado_(inform%C3%A1tica)&amp;action=edit&amp;section=6" title="Editar secciÛn: Teclas inertes">editar</a>]</span> <span class="mw-headline">Teclas inertes</span></h2> 
-<p>Algunas lenguas incluyen caracteres adicionales al teclado inglÈs, como los caracteres acentuados. Teclear los caracteres acentuados resulta m·s sencillo usando las teclas inertes. Cuando se utiliza una de estas teclas, si se presiona la tecla correspondiente al acento deseado nada ocurre en la pantalla, por lo que, a continuaciÛn se debe presionar la tecla del car·cter a acentuar. Esta combinaciÛn de teclas requiere que se teclee una secuencia aceptable. Por ejemplo, si se presiona la tecla inerte del acento (ej. <small><span style="border: 0.2em solid; border-color: #DDDDDD #BBBBBB #BBBBBB #DDDDDD; padding: 0 0.4em; background: #EEEEEE;">¥</span></small>) seguido de la letra <small><span style="border: 0.2em solid; border-color: #DDDDDD #BBBBBB #BBBBBB #DDDDDD; padding: 0 0.4em; background: #EEEEEE;">A</span></small>, obtendr· una "a" acentuada (·). Sin embargo, si se presiona una tecla inerte y a continuaciÛn la tecla <small><span style="border: 0.2em solid; border-color: #DDDDDD #BBBBBB #BBBBBB #DDDDDD; padding: 0 0.4em; background: #EEEEEE;">T</span></small>, no aparecer· nada en la pantalla o aparecer·n los dos caracteres por separado (¥t), a menos que la fuente particular para su idioma incluya la "t" acentuada.</p> 
-<p>Para teclear una marca de acento <a href="/wiki/Diacr%C3%ADtico" title="DiacrÌtico" class="mw-redirect">diacrÌtico</a>, simplemente se presiona la tecla inerte del acento, seguida de la barra de espacio.</p> 
+<h2><span class="editsection">[<a href="/w/index.php?title=Teclado_(inform%C3%A1tica)&amp;action=edit&amp;section=6" title="Editar secci√≥n: Teclas inertes">editar</a>]</span> <span class="mw-headline">Teclas inertes</span></h2> 
+<p>Algunas lenguas incluyen caracteres adicionales al teclado ingl√©s, como los caracteres acentuados. Teclear los caracteres acentuados resulta m√°s sencillo usando las teclas inertes. Cuando se utiliza una de estas teclas, si se presiona la tecla correspondiente al acento deseado nada ocurre en la pantalla, por lo que, a continuaci√≥n se debe presionar la tecla del car√°cter a acentuar. Esta combinaci√≥n de teclas requiere que se teclee una secuencia aceptable. Por ejemplo, si se presiona la tecla inerte del acento (ej. <small><span style="border: 0.2em solid; border-color: #DDDDDD #BBBBBB #BBBBBB #DDDDDD; padding: 0 0.4em; background: #EEEEEE;">¬¥</span></small>) seguido de la letra <small><span style="border: 0.2em solid; border-color: #DDDDDD #BBBBBB #BBBBBB #DDDDDD; padding: 0 0.4em; background: #EEEEEE;">A</span></small>, obtendr√° una "a" acentuada (√°). Sin embargo, si se presiona una tecla inerte y a continuaci√≥n la tecla <small><span style="border: 0.2em solid; border-color: #DDDDDD #BBBBBB #BBBBBB #DDDDDD; padding: 0 0.4em; background: #EEEEEE;">T</span></small>, no aparecer√° nada en la pantalla o aparecer√°n los dos caracteres por separado (¬¥t), a menos que la fuente particular para su idioma incluya la "t" acentuada.</p> 
+<p>Para teclear una marca de acento <a href="/wiki/Diacr%C3%ADtico" title="Diacr√≠tico" class="mw-redirect">diacr√≠tico</a>, simplemente se presiona la tecla inerte del acento, seguida de la barra de espacio.</p> 
 <p><a name="Tipos_de_teclado" id="Tipos_de_teclado"></a></p> 
-<h2><span class="editsection">[<a href="/w/index.php?title=Teclado_(inform%C3%A1tica)&amp;action=edit&amp;section=7" title="Editar secciÛn: Tipos de teclado">editar</a>]</span> <span class="mw-headline">Tipos de teclado</span></h2> 
-<p>Hubo y hay muchos teclados diferentes, dependiendo del idioma, fabricanteÖ <a href="/wiki/IBM" title="IBM">IBM</a> ha soportado tres tipos de teclado: el <b>XT</b>, el <b>AT</b> y el <b>MF-II</b>.</p> 
-<p>El primero (<a href="/wiki/1981" title="1981">1981</a>) de Èstos tenÌa 83 teclas, usaban es <a href="/wiki/Scan_Code" title="Scan Code" class="mw-redirect">Scan Code</a> set1, unidireccionales y no eran muy ergonÛmicos, ahora est· obsoleto.</p> 
-<p>M·s tarde (<a href="/wiki/1984" title="1984">1984</a>) apareciÛ el teclado <b>PC/AT</b> con 84 teclas (una m·s al lado de SHIFT IZQ), ya es bidireccional, usa el Scan Code set 2 y al igual que el anterior cuenta con un <a href="/wiki/Conector_DIN" title="Conector DIN">conector DIN</a> de 5 pines.</p> 
-<p>En <a href="/wiki/1987" title="1987">1987</a> IBM desarrollÛ el <b>MF-II</b> (MultifunciÛn II o teclado extendido) a partir del AT. Sus caracterÌsticas son que usa el mismo interfaz que el AT, aÒade muchas teclas m·s, se ponen leds y soporta el Scan Code set 3, aunque usa por defecto el 2. De este tipo hay dos versiones, la americana con 101 teclas y la europea con 102.</p> 
-<p>Los teclados PS/2 son b·sicamente iguales a los MF-II. Las ˙nicas diferencias son el <a href="/wiki/Conector_mini-DIN" title="Conector mini-DIN" class="mw-redirect">conector mini-DIN</a> de 6 pines (m·s pequeÒo que el AT) y m·s comandos, pero la comunicaciÛn es la misma, usan el protocolo AT. Incluso los <a href="/wiki/Mouse" title="Mouse">ratones PS/2</a> usan el mismo protocolo.</p> 
-<p>Hoy en dia existen tambiÈn los teclados en pantalla, tambiÈn llamados teclados virtuales, que son (como su mismo nombre indica) teclados representados en la pantalla, que se utilizan con el <a href="/wiki/Mouse" title="Mouse">raton</a> o con un dispositivo especial (podria ser un <a href="/wiki/Joystick" title="Joystick" class="mw-redirect">joystick</a>). Estos teclados lo utilizan personas con discapacidades que les impiden utilizar adecuadamente un teclado fisico.</p> 
-<p>Actualmente la denominaciÛn AT Û PS/2 sÛlo se refiere al conector porque hay una gran diversidad de ellos.</p> 
+<h2><span class="editsection">[<a href="/w/index.php?title=Teclado_(inform%C3%A1tica)&amp;action=edit&amp;section=7" title="Editar secci√≥n: Tipos de teclado">editar</a>]</span> <span class="mw-headline">Tipos de teclado</span></h2> 
+<p>Hubo y hay muchos teclados diferentes, dependiendo del idioma, fabricante‚Ä¶ <a href="/wiki/IBM" title="IBM">IBM</a> ha soportado tres tipos de teclado: el <b>XT</b>, el <b>AT</b> y el <b>MF-II</b>.</p> 
+<p>El primero (<a href="/wiki/1981" title="1981">1981</a>) de √©stos ten√≠a 83 teclas, usaban es <a href="/wiki/Scan_Code" title="Scan Code" class="mw-redirect">Scan Code</a> set1, unidireccionales y no eran muy ergon√≥micos, ahora est√° obsoleto.</p> 
+<p>M√°s tarde (<a href="/wiki/1984" title="1984">1984</a>) apareci√≥ el teclado <b>PC/AT</b> con 84 teclas (una m√°s al lado de SHIFT IZQ), ya es bidireccional, usa el Scan Code set 2 y al igual que el anterior cuenta con un <a href="/wiki/Conector_DIN" title="Conector DIN">conector DIN</a> de 5 pines.</p> 
+<p>En <a href="/wiki/1987" title="1987">1987</a> IBM desarroll√≥ el <b>MF-II</b> (Multifunci√≥n II o teclado extendido) a partir del AT. Sus caracter√≠sticas son que usa el mismo interfaz que el AT, a√±ade muchas teclas m√°s, se ponen leds y soporta el Scan Code set 3, aunque usa por defecto el 2. De este tipo hay dos versiones, la americana con 101 teclas y la europea con 102.</p> 
+<p>Los teclados PS/2 son b√°sicamente iguales a los MF-II. Las √∫nicas diferencias son el <a href="/wiki/Conector_mini-DIN" title="Conector mini-DIN" class="mw-redirect">conector mini-DIN</a> de 6 pines (m√°s peque√±o que el AT) y m√°s comandos, pero la comunicaci√≥n es la misma, usan el protocolo AT. Incluso los <a href="/wiki/Mouse" title="Mouse">ratones PS/2</a> usan el mismo protocolo.</p> 
+<p>Hoy en dia existen tambi√©n los teclados en pantalla, tambi√©n llamados teclados virtuales, que son (como su mismo nombre indica) teclados representados en la pantalla, que se utilizan con el <a href="/wiki/Mouse" title="Mouse">raton</a> o con un dispositivo especial (podria ser un <a href="/wiki/Joystick" title="Joystick" class="mw-redirect">joystick</a>). Estos teclados lo utilizan personas con discapacidades que les impiden utilizar adecuadamente un teclado fisico.</p> 
+<p>Actualmente la denominaci√≥n AT √≥ PS/2 s√≥lo se refiere al conector porque hay una gran diversidad de ellos.</p> 
 <p><a name="Estructura" id="Estructura"></a></p> 
-<h2><span class="editsection">[<a href="/w/index.php?title=Teclado_(inform%C3%A1tica)&amp;action=edit&amp;section=8" title="Editar secciÛn: Estructura">editar</a>]</span> <span class="mw-headline">Estructura</span></h2> 
-<p>Un teclado est· realizado mediante un <a href="/wiki/Microcontrolador" title="Microcontrolador">microcontrolador</a>.Estos microcontroladores ejecutan sus propios programas que est·n grabados en sus respectivas <a href="/wiki/ROM" title="ROM">ROMs</a> internas. Estos programas realizan la exploraciÛn matricial de las teclas para determinar cuales est·n pulsadas.</p> 
-<p>Para lograr un sistema flexible los microcontroladores no identifican cada tecla con su car·cter serigrafiado en la misma sino que se adjudica un valor numÈrico a cada una de ellas que sÛlo tiene que ver con su posiciÛn fisica.El teclado latinoamericano sÛlo da soporte con teclas directas a los caracteres especÌficos del castellano, que incluyen dos tipos de acento, la letra eÒe y los signos de exclamaciÛn e interrogaciÛn. El resto de combinaciones de acentos se obtienen usando una tecla de extensiÛn de grafismos.Por lo dem·s el teclado latinoamericano est· orientado hacia la programaciÛn, con f·cil acceso al juego de sÌmbolos de la norma ASCII.</p> 
-<p>Por cada pulsaciÛn o liberaciÛn de una tecla el microcontrolador envÌa un cÛdigo identificativo que se llama <b>Scan Code</b>. Para permitir que varias teclas sean pulsadas simult·neamente, el teclado genera un cÛdigo diferente cuando una tecla se pulsa y cuando dicha tecla se libera. Si el microcontrolador nota que ha cesado la pulsaciÛn de la tecla, el nuevo cÛdigo generado (<b>Break Code</b>) tendr· un valor de pulsaciÛn incrementado en 128. Estos cÛdigos son enviados al circuito microcontrolador donde ser·n tratados gracias al administrador de teclado, que no es m·s que un programa de la BIOS y que determina quÈ car·cter le corresponde a la tecla pulsada compar·ndolo con una tabla de caracteres que hay en el kernel, generando una interrupciÛn por hardware y enviando los datos al procesador. El microcontrolador tambiÈn posee cierto espacio de <a href="/wiki/Memoria_RAM" title="Memoria RAM" class="mw-redirect">memoria RAM</a> que hace que sea capaz de almacenar las ˙ltimas pulsaciones en caso de que no se puedan leer a causa de la velocidad de tecleo del usuario. Hay que tener en cuenta, que cuando realizamos una pulsaciÛn se pueden producir rebotes que duplican la seÒal. Con el fin de eliminarlos, el teclado tambiÈn dispone de un circuito que limpia la seÒal.</p> 
-<p>En los teclados AT los cÛdigos generados son diferentes, por lo que por razones de compatibilidad es necesario traducirlos. De esta funciÛn se encarga el controlador de teclado que es otro microcontrolador (normalmente el 8042), Èste ya situado en el PC. Este controlador recibe el CÛdigo de B˙squeda del Teclado (<b>Kscan Code</b>) y genera el propiamente dicho CÛdigo de B˙squeda.La comunicaciÛn del teclado es vÌa serie. El protocolo de comunicaciÛn es bidireccional, por lo que el servidor puede enviarle comandos al teclado para configurarlo, reiniciarlo, diagnÛsticos, etc.</p> 
+<h2><span class="editsection">[<a href="/w/index.php?title=Teclado_(inform%C3%A1tica)&amp;action=edit&amp;section=8" title="Editar secci√≥n: Estructura">editar</a>]</span> <span class="mw-headline">Estructura</span></h2> 
+<p>Un teclado est√° realizado mediante un <a href="/wiki/Microcontrolador" title="Microcontrolador">microcontrolador</a>.Estos microcontroladores ejecutan sus propios programas que est√°n grabados en sus respectivas <a href="/wiki/ROM" title="ROM">ROMs</a> internas. Estos programas realizan la exploraci√≥n matricial de las teclas para determinar cuales est√°n pulsadas.</p> 
+<p>Para lograr un sistema flexible los microcontroladores no identifican cada tecla con su car√°cter serigrafiado en la misma sino que se adjudica un valor num√©rico a cada una de ellas que s√≥lo tiene que ver con su posici√≥n fisica.El teclado latinoamericano s√≥lo da soporte con teclas directas a los caracteres espec√≠ficos del castellano, que incluyen dos tipos de acento, la letra e√±e y los signos de exclamaci√≥n e interrogaci√≥n. El resto de combinaciones de acentos se obtienen usando una tecla de extensi√≥n de grafismos.Por lo dem√°s el teclado latinoamericano est√° orientado hacia la programaci√≥n, con f√°cil acceso al juego de s√≠mbolos de la norma ASCII.</p> 
+<p>Por cada pulsaci√≥n o liberaci√≥n de una tecla el microcontrolador env√≠a un c√≥digo identificativo que se llama <b>Scan Code</b>. Para permitir que varias teclas sean pulsadas simult√°neamente, el teclado genera un c√≥digo diferente cuando una tecla se pulsa y cuando dicha tecla se libera. Si el microcontrolador nota que ha cesado la pulsaci√≥n de la tecla, el nuevo c√≥digo generado (<b>Break Code</b>) tendr√° un valor de pulsaci√≥n incrementado en 128. Estos c√≥digos son enviados al circuito microcontrolador donde ser√°n tratados gracias al administrador de teclado, que no es m√°s que un programa de la BIOS y que determina qu√© car√°cter le corresponde a la tecla pulsada compar√°ndolo con una tabla de caracteres que hay en el kernel, generando una interrupci√≥n por hardware y enviando los datos al procesador. El microcontrolador tambi√©n posee cierto espacio de <a href="/wiki/Memoria_RAM" title="Memoria RAM" class="mw-redirect">memoria RAM</a> que hace que sea capaz de almacenar las √∫ltimas pulsaciones en caso de que no se puedan leer a causa de la velocidad de tecleo del usuario. Hay que tener en cuenta, que cuando realizamos una pulsaci√≥n se pueden producir rebotes que duplican la se√±al. Con el fin de eliminarlos, el teclado tambi√©n dispone de un circuito que limpia la se√±al.</p> 
+<p>En los teclados AT los c√≥digos generados son diferentes, por lo que por razones de compatibilidad es necesario traducirlos. De esta funci√≥n se encarga el controlador de teclado que es otro microcontrolador (normalmente el 8042), √©ste ya situado en el PC. Este controlador recibe el C√≥digo de B√∫squeda del Teclado (<b>Kscan Code</b>) y genera el propiamente dicho C√≥digo de B√∫squeda.La comunicaci√≥n del teclado es v√≠a serie. El protocolo de comunicaci√≥n es bidireccional, por lo que el servidor puede enviarle comandos al teclado para configurarlo, reiniciarlo, diagn√≥sticos, etc.</p> 
 <p><a name="Disposici.C3.B3n_del_teclado" id="Disposici.C3.B3n_del_teclado"></a></p> 
-<h2><span class="editsection">[<a href="/w/index.php?title=Teclado_(inform%C3%A1tica)&amp;action=edit&amp;section=9" title="Editar secciÛn: DisposiciÛn del teclado">editar</a>]</span> <span class="mw-headline">DisposiciÛn del teclado</span></h2> 
-<p>La <b>disposiciÛn del teclado</b> es la distribuciÛn de las teclas del <a href="/wiki/Teclado_de_ordenador" title="Teclado de ordenador" class="mw-redirect">teclado de una computadora</a>, una m·quina de escribir u otro dispositivo similar.</p> 
-<p>Existen distintas distribuciones de teclado, creadas para usuarios de <a href="/wiki/Idiomas" title="Idiomas" class="mw-redirect">idiomas</a> diferentes. El teclado est·ndar en espaÒol corresponde al diseÒo llamado <a href="/wiki/Teclado_QWERTY" title="Teclado QWERTY">QWERTY</a>. Una variaciÛn de este mismo es utilizado por los usuarios de lengua inglesa. Para algunos idiomas se han desarrollado teclados que pretenden ser m·s cÛmodos que el QWERTY, como por ejemplo el <a href="/wiki/Teclado_Dvorak" title="Teclado Dvorak">Teclado Dvorak</a>.</p> 
-<p>Las computadoras modernas permiten utilizar las distribuciones de teclado de varios idiomas distintos en un teclado que fÌsicamente corresponde a un solo idioma. En el sistema operativo <a href="/wiki/Windows" title="Windows" class="mw-redirect">Windows</a>, por ejemplo, pueden instalarse distribuciones adicionales desde el Panel de Control.</p> 
-<p>A primera vista en un teclado podemos notar una divisiÛn de teclas, tanto por la diferenciaciÛn de sus colores, como por su distribuciÛn. Las teclas gris·ceas sirven para distinguirse de las dem·s por ser teclas especiales (borrado, teclas de funciÛn, tabulaciÛn, tecla del sistemaÖ). Si nos fijamos en su distribuciÛn vemos que est·n agrupadas en cuatro grupos:</p> 
+<h2><span class="editsection">[<a href="/w/index.php?title=Teclado_(inform%C3%A1tica)&amp;action=edit&amp;section=9" title="Editar secci√≥n: Disposici√≥n del teclado">editar</a>]</span> <span class="mw-headline">Disposici√≥n del teclado</span></h2> 
+<p>La <b>disposici√≥n del teclado</b> es la distribuci√≥n de las teclas del <a href="/wiki/Teclado_de_ordenador" title="Teclado de ordenador" class="mw-redirect">teclado de una computadora</a>, una m√°quina de escribir u otro dispositivo similar.</p> 
+<p>Existen distintas distribuciones de teclado, creadas para usuarios de <a href="/wiki/Idiomas" title="Idiomas" class="mw-redirect">idiomas</a> diferentes. El teclado est√°ndar en espa√±ol corresponde al dise√±o llamado <a href="/wiki/Teclado_QWERTY" title="Teclado QWERTY">QWERTY</a>. Una variaci√≥n de este mismo es utilizado por los usuarios de lengua inglesa. Para algunos idiomas se han desarrollado teclados que pretenden ser m√°s c√≥modos que el QWERTY, como por ejemplo el <a href="/wiki/Teclado_Dvorak" title="Teclado Dvorak">Teclado Dvorak</a>.</p> 
+<p>Las computadoras modernas permiten utilizar las distribuciones de teclado de varios idiomas distintos en un teclado que f√≠sicamente corresponde a un solo idioma. En el sistema operativo <a href="/wiki/Windows" title="Windows" class="mw-redirect">Windows</a>, por ejemplo, pueden instalarse distribuciones adicionales desde el Panel de Control.</p> 
+<p>A primera vista en un teclado podemos notar una divisi√≥n de teclas, tanto por la diferenciaci√≥n de sus colores, como por su distribuci√≥n. Las teclas gris√°ceas sirven para distinguirse de las dem√°s por ser teclas especiales (borrado, teclas de funci√≥n, tabulaci√≥n, tecla del sistema‚Ä¶). Si nos fijamos en su distribuci√≥n vemos que est√°n agrupadas en cuatro grupos:</p> 
 <ul> 
-<li><i>Teclas de funciÛn</i>: situadas en la primera fila de los teclados. Combinadas con otras teclas, nos proporcionan acceso directo a algunas funciones del programa en ejecuciÛn.</li> 
-<li><i>Teclas de ediciÛn</i>: sirven para mover el cursor por la pantalla.</li> 
-<li><i>Teclas alfanumÈricas</i>: son las m·s usadas. Su distribuciÛn suele ser la de los <a href="/wiki/Teclado_QWERTY" title="Teclado QWERTY">teclados QWERTY</a>, por herencia de la distribuciÛn de las m·quinas de escribir. Reciben este nombre por ser la primera fila de teclas, y su orden es debido a que cuando estaban organizadas alfabÈticamente la m·quina tendÌa a engancharse, y a base de probar combinaciones llegaron a la conclusiÛn de que asÌ es como menos problemas daban. A pesar de todo esto, se ha comprobado que hay una distribuciÛn mucho m·s cÛmoda y sencilla, llamada <a href="/wiki/Teclado_Dvorak" title="Teclado Dvorak">Dvorak</a>, pero en desuso debido sobre todo a la incompatibilidad con la mayorÌa de los programas que usamos.</li> 
-<li><i>Bloque numÈrico</i>: situado a la derecha del teclado. Comprende los dÌgitos del sistema decimal y los sÌmbolos de algunas operaciones aritmÈticas. AÒade tambiÈn la tecla especial Bloq Num, que sirve para cambiar el valor de algunas teclas para pasar de valor numÈrico a desplazamiento de cursor en la pantalla. el teclado numÈrico tambiÈn es similar al de un calculadora cuenta con las 4 operaciones b·sicas que son + (suma), - (resta), * (multiplicaciÛn) y / (divisiÛn).</li> 
+<li><i>Teclas de funci√≥n</i>: situadas en la primera fila de los teclados. Combinadas con otras teclas, nos proporcionan acceso directo a algunas funciones del programa en ejecuci√≥n.</li> 
+<li><i>Teclas de edici√≥n</i>: sirven para mover el cursor por la pantalla.</li> 
+<li><i>Teclas alfanum√©ricas</i>: son las m√°s usadas. Su distribuci√≥n suele ser la de los <a href="/wiki/Teclado_QWERTY" title="Teclado QWERTY">teclados QWERTY</a>, por herencia de la distribuci√≥n de las m√°quinas de escribir. Reciben este nombre por ser la primera fila de teclas, y su orden es debido a que cuando estaban organizadas alfab√©ticamente la m√°quina tend√≠a a engancharse, y a base de probar combinaciones llegaron a la conclusi√≥n de que as√≠ es como menos problemas daban. A pesar de todo esto, se ha comprobado que hay una distribuci√≥n mucho m√°s c√≥moda y sencilla, llamada <a href="/wiki/Teclado_Dvorak" title="Teclado Dvorak">Dvorak</a>, pero en desuso debido sobre todo a la incompatibilidad con la mayor√≠a de los programas que usamos.</li> 
+<li><i>Bloque num√©rico</i>: situado a la derecha del teclado. Comprende los d√≠gitos del sistema decimal y los s√≠mbolos de algunas operaciones aritm√©ticas. A√±ade tambi√©n la tecla especial Bloq Num, que sirve para cambiar el valor de algunas teclas para pasar de valor num√©rico a desplazamiento de cursor en la pantalla. el teclado num√©rico tambi√©n es similar al de un calculadora cuenta con las 4 operaciones b√°sicas que son + (suma), - (resta), * (multiplicaci√≥n) y / (divisi√≥n).</li> 
 </ul> 
 <p><a name="Clasificaci.C3.B3n_de_teclados_de_computadoras" id="Clasificaci.C3.B3n_de_teclados_de_computadoras"></a></p> 
-<h2><span class="editsection">[<a href="/w/index.php?title=Teclado_(inform%C3%A1tica)&amp;action=edit&amp;section=10" title="Editar secciÛn: ClasificaciÛn de teclados de computadoras">editar</a>]</span> <span class="mw-headline">ClasificaciÛn de teclados de computadoras</span></h2> 
+<h2><span class="editsection">[<a href="/w/index.php?title=Teclado_(inform%C3%A1tica)&amp;action=edit&amp;section=10" title="Editar secci√≥n: Clasificaci√≥n de teclados de computadoras">editar</a>]</span> <span class="mw-headline">Clasificaci√≥n de teclados de computadoras</span></h2> 
 <p>En el mercado hay una gran variedad de teclados. A la hora de estudiarlos podemos clasificarlos en dos grupos:</p> 
-<p>Seg˙n su forma fÌsica:</p> 
+<p>Seg√∫n su forma f√≠sica:</p> 
 <ul> 
 <li><i>Teclado XT de 83 teclas</i>: se usaba en el PC XT (8086/88).</li> 
 <li><i>Teclado AT de 83 teclas</i>: usado con los PC AT (286/386).</li> 
-<li><i>Teclado expandido de 101/102 teclas</i>: es el teclado actual, con un mayor n˙mero de teclas.</li> 
+<li><i>Teclado expandido de 101/102 teclas</i>: es el teclado actual, con un mayor n√∫mero de teclas.</li> 
 <li><i>Teclado Windows de 103/104 teclas</i>: el teclado anterior con 3 teclas adicionales para uso en Windows.</li> 
-<li><i><b>Teclado ergonÛmico</b></i>: diseÒados para dar una mayor comodidad para el usuario, ayud·ndole a tener una posiciÛn m·s relajada de los brazos.</li> 
-<li><i>Teclado multimedia</i>: aÒade teclas especiales que llaman a algunos programas en el computador, a modo de acceso directo, como pueden ser el programa de correo electrÛnico, la calculadora, el reproductor multimediaÖ</li> 
-<li><i>Teclado inal·mbrico</i>: suelen ser teclados comunes donde la comunicaciÛn entre el computador y el perifÈrico se realiza a travÈs de rayos <a href="/wiki/Infrarrojo" title="Infrarrojo" class="mw-redirect">infrarrojos</a>, ondas de radio o mediante <a href="/wiki/Bluetooth" title="Bluetooth">bluetooth</a>.</li> 
+<li><i><b>Teclado ergon√≥mico</b></i>: dise√±ados para dar una mayor comodidad para el usuario, ayud√°ndole a tener una posici√≥n m√°s relajada de los brazos.</li> 
+<li><i>Teclado multimedia</i>: a√±ade teclas especiales que llaman a algunos programas en el computador, a modo de acceso directo, como pueden ser el programa de correo electr√≥nico, la calculadora, el reproductor multimedia‚Ä¶</li> 
+<li><i>Teclado inal√°mbrico</i>: suelen ser teclados comunes donde la comunicaci√≥n entre el computador y el perif√©rico se realiza a trav√©s de rayos <a href="/wiki/Infrarrojo" title="Infrarrojo" class="mw-redirect">infrarrojos</a>, ondas de radio o mediante <a href="/wiki/Bluetooth" title="Bluetooth">bluetooth</a>.</li> 
 </ul> 
-<p>Seg˙n la tecnologÌa de sus teclas se pueden clasificar como teclados de c˙pula de goma, teclados de membrana: teclados capacitativos y teclados de contacto met·lico.</p> 
+<p>Seg√∫n la tecnolog√≠a de sus teclas se pueden clasificar como teclados de c√∫pula de goma, teclados de membrana: teclados capacitativos y teclados de contacto met√°lico.</p> 
 <p><a name="V.C3.A9ase_tambi.C3.A9n" id="V.C3.A9ase_tambi.C3.A9n"></a></p> 
-<h2><span class="editsection">[<a href="/w/index.php?title=Teclado_(inform%C3%A1tica)&amp;action=edit&amp;section=11" title="Editar secciÛn: VÈase tambiÈn">editar</a>]</span> <span class="mw-headline">VÈase tambiÈn</span></h2> 
+<h2><span class="editsection">[<a href="/w/index.php?title=Teclado_(inform%C3%A1tica)&amp;action=edit&amp;section=11" title="Editar secci√≥n: V√©ase tambi√©n">editar</a>]</span> <span class="mw-headline">V√©ase tambi√©n</span></h2> 
 <ul> 
 <li><a href="/wiki/Teclado_QWERTY" title="Teclado QWERTY">Teclado QWERTY</a></li> 
 <li><a href="/wiki/Teclado_Dvorak" title="Teclado Dvorak">Teclado Dvorak</a></li> 
@@ -259,17 +259,17 @@ Teclado SUN tipo 5</div>
 <li><a href="/wiki/PC_99" title="PC 99">PC 99</a></li> 
 </ul> 
 <p><a name="Enlaces_externos" id="Enlaces_externos"></a></p> 
-<h2><span class="editsection">[<a href="/w/index.php?title=Teclado_(inform%C3%A1tica)&amp;action=edit&amp;section=12" title="Editar secciÛn: Enlaces externos">editar</a>]</span> <span class="mw-headline">Enlaces externos</span></h2> 
+<h2><span class="editsection">[<a href="/w/index.php?title=Teclado_(inform%C3%A1tica)&amp;action=edit&amp;section=12" title="Editar secci√≥n: Enlaces externos">editar</a>]</span> <span class="mw-headline">Enlaces externos</span></h2> 
 <ul> 
 <li><a href="/wiki/Imagen:Commons-logo.svg" class="image" title="Colabora en Commons."><img alt="Colabora en Commons." src="http://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Commons-logo.svg/15px-Commons-logo.svg.png" width="15" height="20" border="0" /></a> <a href="/wiki/Wikimedia_Commons" title="Wikimedia Commons">Wikimedia Commons</a> alberga contenido multimedia sobre <b><a href="http://commons.wikimedia.org/wiki/Keyboard" class="extiw" title="commons:Keyboard">teclado</a></b>.<span class="interProject"><a href="http://commons.wikimedia.org/wiki/Keyboard" class="extiw" title="commons:Keyboard">Commons</a></span></li> 
-<li><a href="http://www2.ku.edu/~egarc/software/keyboards/spanish.html" class="external text" title="http://www2.ku.edu/~egarc/software/keyboards/spanish.html" rel="nofollow">Teclado espaÒol</a>.</li> 
-<li><a href="http://www.oberon.ethz.ch/keyboard.html" class="external text" title="http://www.oberon.ethz.ch/keyboard.html" rel="nofollow">Teclado inglÈs</a>.</li> 
+<li><a href="http://www2.ku.edu/~egarc/software/keyboards/spanish.html" class="external text" title="http://www2.ku.edu/~egarc/software/keyboards/spanish.html" rel="nofollow">Teclado espa√±ol</a>.</li> 
+<li><a href="http://www.oberon.ethz.ch/keyboard.html" class="external text" title="http://www.oberon.ethz.ch/keyboard.html" rel="nofollow">Teclado ingl√©s</a>.</li> 
 <li><a href="http://www.win.tue.nl/~aeb/linux/kbd/scancodes-1.html" class="external text" title="http://www.win.tue.nl/~aeb/linux/kbd/scancodes-1.html" rel="nofollow">ScanCodes de los teclados</a></li> 
 <li><a href="http://tecnologia.universia.es/guias/manuales/teclado_index.htm" class="external text" title="http://tecnologia.universia.es/guias/manuales/teclado_index.htm" rel="nofollow">El teclado y sus funciones</a>.</li> 
-<li><a href="http://www.pfu.fujitsu.com/hhkeyboard/kb_collection" class="external text" title="http://www.pfu.fujitsu.com/hhkeyboard/kb_collection" rel="nofollow">ColecciÛn de teclados de Fujitsu</a> con esquemas de muchos teclados</li> 
-<li><a href="http://www.zoooz.com/keyboard/collect/list.asp?page=1&amp;startPage=1" class="external text" title="http://www.zoooz.com/keyboard/collect/list.asp?page=1&amp;startPage=1" rel="nofollow">ColecciÛn de teclados</a></li> 
-<li><a href="http://www5f.biglobe.ne.jp/~silencium/keyboard/" class="external text" title="http://www5f.biglobe.ne.jp/~silencium/keyboard/" rel="nofollow">InformaciÛn y comparativa de teclados</a> (japonÈs)</li> 
-<li><a href="http://alt-tab.com.ar/configurando-un-teclado-usb/" class="external text" title="http://alt-tab.com.ar/configurando-un-teclado-usb/" rel="nofollow">InformaciÛn para configurar teclados USB en equipos antiguos</a></li> 
+<li><a href="http://www.pfu.fujitsu.com/hhkeyboard/kb_collection" class="external text" title="http://www.pfu.fujitsu.com/hhkeyboard/kb_collection" rel="nofollow">Colecci√≥n de teclados de Fujitsu</a> con esquemas de muchos teclados</li> 
+<li><a href="http://www.zoooz.com/keyboard/collect/list.asp?page=1&amp;startPage=1" class="external text" title="http://www.zoooz.com/keyboard/collect/list.asp?page=1&amp;startPage=1" rel="nofollow">Colecci√≥n de teclados</a></li> 
+<li><a href="http://www5f.biglobe.ne.jp/~silencium/keyboard/" class="external text" title="http://www5f.biglobe.ne.jp/~silencium/keyboard/" rel="nofollow">Informaci√≥n y comparativa de teclados</a> (japon√©s)</li> 
+<li><a href="http://alt-tab.com.ar/configurando-un-teclado-usb/" class="external text" title="http://alt-tab.com.ar/configurando-un-teclado-usb/" rel="nofollow">Informaci√≥n para configurar teclados USB en equipos antiguos</a></li> 
 </ul> 
  
  
@@ -284,7 +284,7 @@ Expensive parser function count: 0/500
 <!-- Saved in parser cache with key eswiki:pcache:idhash:510471-0!1!0!!es!2 and timestamp 20080829160433 --> 
 <div class="printfooter"> 
 Obtenido de "<a href="http://es.wikipedia.org/wiki/Teclado_(inform%C3%A1tica)">http://es.wikipedia.org/wiki/Teclado_(inform%C3%A1tica)</a>"</div> 
-			<div id='catlinks' class='catlinks'><div id="mw-normal-catlinks"><a href="/wiki/Especial:Categories" title="Especial:Categories">CategorÌa</a>:&#32;<span dir='ltr'><a href="/wiki/Categor%C3%ADa:Teclado_(Computaci%C3%B3n)" title="CategorÌa:Teclado (ComputaciÛn)">Teclado (ComputaciÛn)</a></span></div></div>			<!-- end content --> 
+			<div id='catlinks' class='catlinks'><div id="mw-normal-catlinks"><a href="/wiki/Especial:Categories" title="Especial:Categories">Categor√≠a</a>:&#32;<span dir='ltr'><a href="/wiki/Categor%C3%ADa:Teclado_(Computaci%C3%B3n)" title="Categor√≠a:Teclado (Computaci√≥n)">Teclado (Computaci√≥n)</a></span></div></div>			<!-- end content --> 
 						<div class="visualClear"></div> 
 		</div> 
 	</div> 
@@ -295,10 +295,10 @@ Obtenido de "<a href="http://es.wikipedia.org/wiki/Teclado_(inform%C3%A1tica)">h
 		<div class="pBody"> 
 			<ul> 
 	
-				 <li id="ca-nstab-main" class="selected"><a href="/wiki/Teclado_(inform%C3%A1tica)" title="Ver el artÌculo [c]" accesskey="c">ArtÌculo</a></li> 
-				 <li id="ca-talk"><a href="/wiki/Discusi%C3%B3n:Teclado_(inform%C3%A1tica)" title="DiscusiÛn acerca del artÌculo [t]" accesskey="t">DiscusiÛn</a></li> 
-				 <li id="ca-edit"><a href="/w/index.php?title=Teclado_(inform%C3%A1tica)&amp;action=edit" title="Puede editar esta p·gina. Por favor, use el botÛn de previsualizaciÛn antes de grabar. [e]" accesskey="e">Editar</a></li> 
-				 <li id="ca-history"><a href="/w/index.php?title=Teclado_(inform%C3%A1tica)&amp;action=history" title="Versiones anteriores de esta p·gina y sus autores [h]" accesskey="h">Historial</a></li>			</ul> 
+				 <li id="ca-nstab-main" class="selected"><a href="/wiki/Teclado_(inform%C3%A1tica)" title="Ver el art√≠culo [c]" accesskey="c">Art√≠culo</a></li> 
+				 <li id="ca-talk"><a href="/wiki/Discusi%C3%B3n:Teclado_(inform%C3%A1tica)" title="Discusi√≥n acerca del art√≠culo [t]" accesskey="t">Discusi√≥n</a></li> 
+				 <li id="ca-edit"><a href="/w/index.php?title=Teclado_(inform%C3%A1tica)&amp;action=edit" title="Puede editar esta p√°gina. Por favor, use el bot√≥n de previsualizaci√≥n antes de grabar. [e]" accesskey="e">Editar</a></li> 
+				 <li id="ca-history"><a href="/w/index.php?title=Teclado_(inform%C3%A1tica)&amp;action=history" title="Versiones anteriores de esta p√°gina y sus autores [h]" accesskey="h">Historial</a></li>			</ul> 
 		</div> 
 	</div> 
 	<div class="portlet" id="p-personal"> 
@@ -314,16 +314,16 @@ Obtenido de "<a href="http://es.wikipedia.org/wiki/Teclado_(inform%C3%A1tica)">h
 	</div> 
 	<script type="text/javascript"> if (window.isMSIE55) fixalpha(); </script> 
 	<div class='generated-sidebar portlet' id='p-navigation'> 
-		<h5>NavegaciÛn</h5> 
+		<h5>Navegaci√≥n</h5> 
 		<div class='pBody'> 
 			<ul> 
 				<li id="n-mainpage"><a href="/wiki/Portada" title="Visitar la Portada [z]" accesskey="z">Portada</a></li> 
-				<li id="n-portal"><a href="/wiki/Portal:Comunidad" title="Acerca del proyecto, quÈ puede hacer, dÛnde encontrar informaciÛn">Portal de la comunidad</a></li> 
-				<li id="n-currentevents"><a href="/wiki/Portal:Actualidad" title="InformaciÛn de contexto sobre acontecimientos actuales">Actualidad</a></li> 
+				<li id="n-portal"><a href="/wiki/Portal:Comunidad" title="Acerca del proyecto, qu√© puede hacer, d√≥nde encontrar informaci√≥n">Portal de la comunidad</a></li> 
+				<li id="n-currentevents"><a href="/wiki/Portal:Actualidad" title="Informaci√≥n de contexto sobre acontecimientos actuales">Actualidad</a></li> 
 				<li id="n-recentchanges"><a href="/wiki/Especial:RecentChanges" title="La lista de cambios recientes en el wiki [r]" accesskey="r">Cambios recientes</a></li> 
-				<li id="n-randompage"><a href="/wiki/Especial:Random" title="Cargar una p·gina aleatoriamente [x]" accesskey="x">P·gina aleatoria</a></li> 
+				<li id="n-randompage"><a href="/wiki/Especial:Random" title="Cargar una p√°gina aleatoriamente [x]" accesskey="x">P√°gina aleatoria</a></li> 
 				<li id="n-help"><a href="/wiki/Ayuda:Contenidos" title="El lugar para aprender">Ayuda</a></li> 
-				<li id="n-sitesupport"><a href="http://wikimediafoundation.org/wiki/Donaciones" title="ApÛyenos">Donativos</a></li> 
+				<li id="n-sitesupport"><a href="http://wikimediafoundation.org/wiki/Donaciones" title="Ap√≥yenos">Donativos</a></li> 
 			</ul> 
 		</div> 
 	</div> 
@@ -332,8 +332,8 @@ Obtenido de "<a href="http://es.wikipedia.org/wiki/Teclado_(inform%C3%A1tica)">h
 		<div id="searchBody" class="pBody"> 
 			<form action="/wiki/Especial:Search" id="searchform"><div> 
 				<input id="searchInput" name="search" type="text" title="Buscar en este wiki [f]" accesskey="f" value="" /> 
-				<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Ir" title="Ir al artÌculo con este nombre exacto si existe" />&nbsp;
-				<input type='submit' name="fulltext" class="searchButton" id="mw-searchButton" value="Buscar" title="Busca p·ginas con este texto." /> 
+				<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Ir" title="Ir al art√≠culo con este nombre exacto si existe" />&nbsp;
+				<input type='submit' name="fulltext" class="searchButton" id="mw-searchButton" value="Buscar" title="Busca p√°ginas con este texto." /> 
 			</div></form> 
 		</div> 
 	</div> 
@@ -341,11 +341,11 @@ Obtenido de "<a href="http://es.wikipedia.org/wiki/Teclado_(inform%C3%A1tica)">h
 		<h5>Herramientas</h5> 
 		<div class="pBody"> 
 			<ul> 
-				<li id="t-whatlinkshere"><a href="/wiki/Especial:WhatLinksHere/Teclado_(inform%C3%A1tica)" title="Lista de todas las p·ginas del wiki que enlazan con Èsta [j]" accesskey="j">Lo que enlaza aquÌ</a></li> 
-				<li id="t-recentchangeslinked"><a href="/wiki/Especial:RecentChangesLinked/Teclado_(inform%C3%A1tica)" title="Cambios recientes en las p·ginas que enlazan con Èsta [k]" accesskey="k">Cambios en enlazadas</a></li> 
-<li id="t-upload"><a href="http://commons.wikimedia.org/wiki/Commons:Upload/es" title="Subir im·genes o archivos multimedia [u]" accesskey="u">Subir archivo</a></li> 
-<li id="t-specialpages"><a href="/wiki/Especial:SpecialPages" title="Lista de todas las p·ginas especiales [q]" accesskey="q">P·ginas especiales</a></li> 
-				<li id="t-print"><a href="/w/index.php?title=Teclado_(inform%C3%A1tica)&amp;printable=yes" title="VersiÛn imprimible de la p·gina [p]" accesskey="p">VersiÛn para imprimir</a></li>				<li id="t-permalink"><a href="/w/index.php?title=Teclado_(inform%C3%A1tica)&amp;oldid=19791016" title="Enlace permanente a esta versiÛn de la p·gina">Enlace permanente</a></li><li id="t-cite"><a href="/w/index.php?title=Especial:Cite&amp;page=Teclado_(inform%C3%A1tica)&amp;id=19791016">Citar este artÌculo</a></li>			</ul> 
+				<li id="t-whatlinkshere"><a href="/wiki/Especial:WhatLinksHere/Teclado_(inform%C3%A1tica)" title="Lista de todas las p√°ginas del wiki que enlazan con √©sta [j]" accesskey="j">Lo que enlaza aqu√≠</a></li> 
+				<li id="t-recentchangeslinked"><a href="/wiki/Especial:RecentChangesLinked/Teclado_(inform%C3%A1tica)" title="Cambios recientes en las p√°ginas que enlazan con √©sta [k]" accesskey="k">Cambios en enlazadas</a></li> 
+<li id="t-upload"><a href="http://commons.wikimedia.org/wiki/Commons:Upload/es" title="Subir im√°genes o archivos multimedia [u]" accesskey="u">Subir archivo</a></li> 
+<li id="t-specialpages"><a href="/wiki/Especial:SpecialPages" title="Lista de todas las p√°ginas especiales [q]" accesskey="q">P√°ginas especiales</a></li> 
+				<li id="t-print"><a href="/w/index.php?title=Teclado_(inform%C3%A1tica)&amp;printable=yes" title="Versi√≥n imprimible de la p√°gina [p]" accesskey="p">Versi√≥n para imprimir</a></li>				<li id="t-permalink"><a href="/w/index.php?title=Teclado_(inform%C3%A1tica)&amp;oldid=19791016" title="Enlace permanente a esta versi√≥n de la p√°gina">Enlace permanente</a></li><li id="t-cite"><a href="/w/index.php?title=Especial:Cite&amp;page=Teclado_(inform%C3%A1tica)&amp;id=19791016">Citar este art√≠culo</a></li>			</ul> 
 		</div> 
 	</div> 
 	<div id="p-lang" class="portlet"> 
@@ -362,12 +362,12 @@ Obtenido de "<a href="http://es.wikipedia.org/wiki/Teclado_(inform%C3%A1tica)">h
 				<div id="f-poweredbyico"><a href="http://www.mediawiki.org/"><img src="/skins-1.5/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" /></a></div> 
 				<div id="f-copyrightico"><a href="http://wikimediafoundation.org/"><img src="/images/wikimedia-button.png" border="0" alt="Wikimedia Foundation"/></a></div> 
 			<ul id="f-list"> 
-				<li id="lastmod"> Esta p·gina fue modificada por ˙ltima vez el 16:04, 29 ago 2008.</li> 
-				<li id="copyright">Contenido disponible bajo los tÈrminos de la <a class="internal" href="/wiki/Wikipedia:Texto_de_la_Licencia_de_documentaciÛn_libre_de_GNU">Licencia de documentaciÛn libre de GNU</a> (vÈase <b><a class="internal" href="/wiki/Wikipedia:Derechos_de_autor">Derechos de autor</a></b>).<br /> 
-WikipediaÆ es una marca registrada de la organizaciÛn sin ·nimo de lucro <a class="internal" href="http://wikimediafoundation.org/wiki/Portada">Wikimedia Foundation, Inc.</a><br /></li> 
-				<li id="privacy"><a href="http://wikimediafoundation.org/wiki/Pol%C3%ADtica_de_privacidad" title="wikimedia:PolÌtica de privacidad">PolÌtica de privacidad</a></li> 
+				<li id="lastmod"> Esta p√°gina fue modificada por √∫ltima vez el 16:04, 29 ago 2008.</li> 
+				<li id="copyright">Contenido disponible bajo los t√©rminos de la <a class="internal" href="/wiki/Wikipedia:Texto_de_la_Licencia_de_documentaci√≥n_libre_de_GNU">Licencia de documentaci√≥n libre de GNU</a> (v√©ase <b><a class="internal" href="/wiki/Wikipedia:Derechos_de_autor">Derechos de autor</a></b>).<br /> 
+Wikipedia¬Æ es una marca registrada de la organizaci√≥n sin √°nimo de lucro <a class="internal" href="http://wikimediafoundation.org/wiki/Portada">Wikimedia Foundation, Inc.</a><br /></li> 
+				<li id="privacy"><a href="http://wikimediafoundation.org/wiki/Pol%C3%ADtica_de_privacidad" title="wikimedia:Pol√≠tica de privacidad">Pol√≠tica de privacidad</a></li> 
 				<li id="about"><a href="/wiki/Wikipedia:Acerca_de" title="Wikipedia:Acerca de">Acerca de Wikipedia</a></li> 
-				<li id="disclaimer"><a href="/wiki/Wikipedia:Limitaci%C3%B3n_general_de_responsabilidad" title="Wikipedia:LimitaciÛn general de responsabilidad">LimitaciÛn de responsabilidad</a></li> 
+				<li id="disclaimer"><a href="/wiki/Wikipedia:Limitaci%C3%B3n_general_de_responsabilidad" title="Wikipedia:Limitaci√≥n general de responsabilidad">Limitaci√≥n de responsabilidad</a></li> 
 			</ul> 
 		</div> 
 </div> 
