@@ -33,12 +33,7 @@ public class DocumentsIndexer {
 		//Inicializo las estadisticas
 		StatisticsGenerator statistics = StatisticsGenerator.getInstance();
 		
-		//Me instancio un indexador de terminos para poder indexarlos
-		/*IndexImp wordIndexer = new IndexImp(Constants.INDEX_FI/*LE_PATH, Constants.INDEX_FILE_SIZE) ;
-
-		//Me instancio un DocumentsDictionary para manejar los documentos indexados
-		DocumentsDictionaryImp dd = new DocumentsDictionaryImp()*/;
-		
+		//Me instancio la QueryEngine para consultar los documentos existentes y nuevos
 		QueryEngine queryEngine = new DefaultQueryEngine();
 		
 		//Preparo los nuevos documentos a indexar
@@ -133,8 +128,7 @@ public class DocumentsIndexer {
 								
 								if(bestWordCompare==0) {
 									//El primer termino del pipeline no es stopword, por lo tanto se indexa
-										String indexWord = stemmingProcessor.stem(stopwordsPipeline.getFirstWord());
-//									wordIndexer.insertWord(indexWord, document.getDocumentId());
+									String indexWord = stemmingProcessor.stem(stopwordsPipeline.getFirstWord());
 									docInsert.insertWord(indexWord);
 									
 									log.info("["+(i+1)+"/"+newDocuments.length+" "+document.getFileName()+"] --> [INDEXED: "+indexWord+"] [RAW WORD: "+stopwordsPipeline.getFirstWord()+"]");
@@ -154,14 +148,12 @@ public class DocumentsIndexer {
 						}
 					}
 					
-					//Seteo el documento como indexado
-					//indexedDocuments.addDocument(dd.insertDocument(document), document.getFileName());
-					
 					//Muevo el documento indexado a la carpeta de documentos indexados
 					DocumentsDictionaryImp.moveFileToIndexedFolder(newDocuments[i]);
 
 					long c2 = System.currentTimeMillis();
 					
+					//Manejo de estadisticas por documento, seteo total de terminos y tiempos de indexacion
 					statistics.addDocumentStatistics(document, totalIndexed, c2-c1);
 					
 					log.info("Fin de indexacion del documento ["+document.getFileName()+"]");
