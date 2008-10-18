@@ -20,7 +20,7 @@ public class StopwordsPipelineDto {
 		if(getSize() < getMaxSize()) {
 			this.wordsPipeline.add(word);
 		} else {
-			throw new PipelineOverflowException("Error insertando elemento en pipeline por exceso de tamaño");
+			throw new PipelineOverflowException("Overflow en pipeline al intentar insertar un elemento");
 		}
 	}
 		
