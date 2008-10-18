@@ -20,8 +20,6 @@ import exceptions.DataAccessException;
 public class SearchEngine {
 
 	public static void main(String[] args) throws BusinessException, DataAccessException, IOException {
-//		String word = args[0];
-
 		System.out.print("Ingrese un termino a buscar: ");
 		String word = null;
 		try{
@@ -30,7 +28,6 @@ public class SearchEngine {
 		}catch(Exception e) { 
 			e.printStackTrace();
 		}
-//		System.out.println(word); 
 
 		if("".equals(word) || word==null) {
 			System.out.println("El termino no puede estar vacio.");
@@ -78,7 +75,6 @@ public class SearchEngine {
 			for(DocumentDto documentResult : drDto.getOcurrences().keySet()) {
 				System.out.println(drDto.getDocumentOcurrences(documentResult)+" veces en el documento "+dicc.getDocument(documentResult.getDocumentId()));				
 			}
-//			
 		}
 
 	}

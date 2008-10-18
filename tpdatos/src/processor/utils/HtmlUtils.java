@@ -9,9 +9,7 @@ import java.io.IOException;
 import org.htmlparser.Node;
 import org.htmlparser.NodeFilter;
 import org.htmlparser.Parser;
-import org.htmlparser.filters.AndFilter;
 import org.htmlparser.filters.NodeClassFilter;
-import org.htmlparser.filters.NotFilter;
 import org.htmlparser.nodes.TagNode;
 import org.htmlparser.nodes.TextNode;
 import org.htmlparser.tags.BodyTag;
@@ -29,24 +27,20 @@ public final class HtmlUtils {
 		Parser parser = new Parser();
 		parser.setInputHTML(html);
 		
-		String nuevo = "";
-		
 		NodeList list = new NodeList();
-		NodeFilter filter = new AndFilter(
-				new NodeClassFilter(BodyTag.class),
-				new NotFilter(new NodeClassFilter(ScriptTag.class))
-			);
+		NodeFilter filter = new NodeClassFilter(BodyTag.class);
 		for (NodeIterator e = parser.elements (); e.hasMoreNodes (); )
 		    e.nextNode ().collectInto (list, filter);
 
 		SimpleNodeIterator it = list.elements();
 		
+		StringBuffer strBuf = new StringBuffer();
 		while (it.hasMoreNodes()) {
 			TagNode node = (TagNode) it.nextNode();
-			nuevo = getNodeText(node);
+			strBuf.append(getNodeText(node)).append('\n');
 		}
 
-		return nuevo;
+		return strBuf.toString();
 	}
 	
 	public static String decodeSpecialHtmlCharacters(String html) {
@@ -85,7 +79,11 @@ public final class HtmlUtils {
 
 	public static String formatHtmlFile(File file) throws ParserException {
 		String documentText = HtmlUtils.readHtmlFile(file.getPath());
+		//Elimino scripts javascript
+		documentText = documentText.replaceAll("<script[^>]*?>[\\s\\S]*?<\\/script>", "\n");
+		//Obtengo el body con los tags trimeeados
 		documentText = HtmlUtils.getHtmlBody(documentText);
+		//Decodifico caracteres especiales de html
 		return HtmlUtils.decodeSpecialHtmlCharacters(documentText);
 	}
 	
