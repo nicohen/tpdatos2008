@@ -30,7 +30,7 @@ public class QueryEngine {
 	}
 	
 
-	public QueryEngine(Index index,DocumentsDictionary dictionary){
+	protected QueryEngine(Index index,DocumentsDictionary dictionary){
 		dicc=dictionary;
 		indice=index;
 	}
@@ -66,6 +66,10 @@ public class QueryEngine {
 	
 	public IndexedDocumentChecker getDocuments() throws BusinessException {
 		return dicc.getDocuments();
+	}
+	
+	public DocumentDto getDocumentFromId( Integer id ) throws BusinessException {
+		return dicc.getDocument(id);
 	}
 	
 }

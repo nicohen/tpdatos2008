@@ -7,6 +7,7 @@ import processor.stemming.StemmingProcessor;
 import processor.stopwords.StopwordsProcessor;
 import processor.utils.DigesterUtils;
 import utils.Constants;
+import api.DefaultQueryEngine;
 import api.QueryEngine;
 import api.dao.documents.DocumentsDictionary;
 import app.bo.IndexImp;
@@ -54,9 +55,9 @@ public class SearchEngine {
 		}
 		
 		//Realizo la consulta del termino
-		IndexImp index = new IndexImp(Constants.INDEX_FILE_PATH,Constants.INDEX_FILE_SIZE);
-		DocumentsDictionary dicc = new DocumentsDictionaryImp();
-		QueryEngine engine = new QueryEngine(index,dicc);
+/*		IndexImp index = new IndexImp(Constants.INDEX_FILE_PATH,Constants.INDEX_FILE_SIZE);
+		DocumentsDictionary dicc = new DocumentsDictionaryImp();*/
+		QueryEngine engine = new DefaultQueryEngine();
 
 		//Muestro los documentos en los que aparece
 		List<DocumentDto> documentsFound = engine.executeQuery(stemmedWord);
@@ -73,7 +74,7 @@ public class SearchEngine {
 				drDto.setOcurrence(document);
 			}
 			for(DocumentDto documentResult : drDto.getOcurrences().keySet()) {
-				System.out.println(drDto.getDocumentOcurrences(documentResult)+" veces en el documento "+dicc.getDocument(documentResult.getDocumentId()));				
+				System.out.println(drDto.getDocumentOcurrences(documentResult)+" veces en el documento "+engine.getDocumentFromId(documentResult.getDocumentId()));				
 			}
 		}
 
