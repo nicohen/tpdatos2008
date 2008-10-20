@@ -20,7 +20,7 @@ public class IndexedDocumentChecker {
 		return documentsMap.containsValue(str);
 	}
 	
-	public Integer getNewDocumentId(){ 
+/*	public Integer getNewDocumentId(){ 
 		Set<Integer> newDocuments = documentsMap.keySet();
 		Integer maxDocumentId = 0;
 		for(Integer document : newDocuments) {
@@ -30,5 +30,5 @@ public class IndexedDocumentChecker {
 		}
 		return (newDocuments.size()>0) ? maxDocumentId+1 : 0 ;
 	
-	}
+	}*/
 }

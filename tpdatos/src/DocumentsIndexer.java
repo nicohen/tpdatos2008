@@ -71,7 +71,12 @@ public class DocumentsIndexer {
 					
 					log.info("Indexando documento ["+document.getFileName()+"]");
 					//Le seteo un nuevo documentId al documento a indexar
-					document.setDocumentId(indexedDocuments.getNewDocumentId() );
+					
+					// NOTE: da lo mismo qye ud tenga el documento, query engine lo
+					// define internamente dependiendo de cual id nuevo define el diccionario
+					// de documentos
+					
+					//document.setDocumentId(indexedDocuments.getNewDocumentId() );
 					
 					//Elimino tags y caracteres que no correspondan
 					File inputFile = new File(Constants.FOLDER_DOCUMENTS + File.separator + document.getFileName());
