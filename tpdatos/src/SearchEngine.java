@@ -6,28 +6,22 @@ import java.util.List;
 import processor.stemming.StemmingProcessor;
 import processor.stopwords.StopwordsProcessor;
 import processor.utils.DigesterUtils;
-import utils.Constants;
 import api.DefaultQueryEngine;
 import api.QueryEngine;
-import api.dao.documents.DocumentsDictionary;
-import app.bo.IndexImp;
-import app.dao.documents.DocumentsDictionaryImp;
 import dto.DocumentDto;
 import dto.DocumentsReportDto;
-import exceptions.BusinessException;
-import exceptions.DataAccessException;
 
 
 public class SearchEngine {
 
-	public static void main(String[] args) throws BusinessException, DataAccessException, IOException {
+	public static void main(String[] args) throws Exception {
 		System.out.print("Ingrese un termino a buscar: ");
 		String word = null;
 		try{
 			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 			word = br.readLine();
-		}catch(Exception e) { 
-			e.printStackTrace();
+		}catch(IOException e) { 
+			throw new Exception("Error leyendo caracteres ingresados por teclado",e);
 		}
 
 		if("".equals(word) || word==null) {
@@ -55,8 +49,6 @@ public class SearchEngine {
 		}
 		
 		//Realizo la consulta del termino
-/*		IndexImp index = new IndexImp(Constants.INDEX_FILE_PATH,Constants.INDEX_FILE_SIZE);
-		DocumentsDictionary dicc = new DocumentsDictionaryImp();*/
 		QueryEngine engine = new DefaultQueryEngine();
 
 		//Muestro los documentos en los que aparece
