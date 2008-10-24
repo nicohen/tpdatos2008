@@ -47,10 +47,11 @@ public class SignatureFileDto {
 	
 	@Override
 	public String toString() {
-		return  String.valueOf(signatureHash1)+
-				String.valueOf(signatureHash2)+
-				String.valueOf(signatureHash3)+
-				String.valueOf(signatureHash4);
+		
+		return  Long.toHexString(signatureHash1)+
+		Long.toHexString(signatureHash2)+
+		Long.toHexString(signatureHash3)+
+		Long.toHexString(signatureHash4);
 	}
 	
 }
