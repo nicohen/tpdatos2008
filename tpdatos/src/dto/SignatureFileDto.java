@@ -45,5 +45,12 @@ public class SignatureFileDto {
 		this.signatureHash4 = signatureHash4;
 	}
 	
+	@Override
+	public String toString() {
+		return  String.valueOf(signatureHash1)+
+				String.valueOf(signatureHash2)+
+				String.valueOf(signatureHash3)+
+				String.valueOf(signatureHash4);
+	}
 	
 }
