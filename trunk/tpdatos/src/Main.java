@@ -1,3 +1,5 @@
+import utils.Constants;
+
 
 
 
@@ -14,7 +16,8 @@ public class Main {
 			option = args[0];
 	
 			if (option.equals("--indexer" ) ) {
-				DocumentsIndexer.main(args);
+				DocumentsIndexer indexer = new DocumentsIndexer();
+				indexer.indexPath( Constants.FOLDER_DOCUMENTS );
 			} else if (option.equals("--tree-dumper")) {
 				TreeDumper.main(args);
 			} else if ( option.equals("--search")) {
