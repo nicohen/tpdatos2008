@@ -42,8 +42,9 @@ public class DocumentsIndexer {
 	}
 	
 	
-	public void indexDocument( DocumentDto document, String logtag ) throws ParserException, BusinessException, PipelineOverflowException {
+	public int indexDocument( DocumentDto document, String logtag ) throws ParserException, BusinessException, PipelineOverflowException {
 		
+		int totalIndexed = 0;
 		
 		//Inicializo las stopwords y las ordeno alfabeticamente y por cantidad de palabras ascendente
 		StopwordsProcessor stopwordsProcessor = new StopwordsProcessor();
@@ -123,7 +124,7 @@ public class DocumentsIndexer {
 
 						log.info(logtag+" "+document.getFileName()+"] --> [INDEXED: "+indexWord+"] [RAW WORD: "+stopwordsPipeline.getFirstWord()+"]");
 //						log.info("["+(i+1)+"/"+newDocuments.length+" "+document.getFileName()+"] --> [INDEXED: "+indexWord+"] [RAW WORD: "+stopwordsPipeline.getFirstWord()+"]");
-//						totalIndexed++;
+						totalIndexed++;
 						stopwordsPipeline.removeWords(1);
 					} else {
 						//Elimino stopword encontrado en pipeline
@@ -138,6 +139,8 @@ public class DocumentsIndexer {
 				}
 			}
 		}
+		
+		return totalIndexed;
 	
 	}
 
@@ -158,8 +161,6 @@ public class DocumentsIndexer {
 			//Recorro los nuevos documentos a indexar
 			for (int i=0;i<newDocuments.length;i++) {
 
-				//Cantidad total de palabras indexadas por documento
-				int totalIndexed = 0;
 				
 				long c1 = System.currentTimeMillis();
 				
@@ -171,9 +172,7 @@ public class DocumentsIndexer {
 				//Verifico que el documento a indexar, no este dentro de los ya indexados
 				if (!indexedDocuments.documentIsIndexed(document.getFileName())) {
 					
-					this.indexDocument(document,"["+(i+1)+"/"+newDocuments.length);
-					
-					totalIndexed++;
+					int totalIndexed = this.indexDocument(document,"["+(i+1)+"/"+newDocuments.length);
 					//Muevo el documento indexado a la carpeta de documentos indexados
 					DocumentsDictionaryImp.moveFileToIndexedFolder(newDocuments[i]);
 
