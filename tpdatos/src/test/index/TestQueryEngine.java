@@ -3,20 +3,20 @@ package test.index;
 import java.util.Iterator;
 
 import junit.framework.TestCase;
-import api.QueryEngine;
+import api.IQueryEngine;
 import dto.DocumentDto;
 import exceptions.BusinessException;
 import exceptions.DataAccessException;
 
 public abstract class TestQueryEngine extends TestCase {
 	
-	private QueryEngine engine;
+	private IQueryEngine engine;
 	
-	protected TestQueryEngine ( QueryEngine object ) {
+	protected TestQueryEngine ( IQueryEngine object ) {
 		this.engine = object;
 	}
 	
-	protected void setTestObject( QueryEngine object ) {
+	protected void setTestObject( IQueryEngine object ) {
 		this.engine = object;
 	}
 	
