@@ -7,7 +7,7 @@ import processor.stemming.StemmingProcessor;
 import processor.stopwords.StopwordsProcessor;
 import processor.utils.DigesterUtils;
 import api.DefaultQueryEngine;
-import api.QueryEngine;
+import api.IQueryEngine;
 import dto.DocumentDto;
 import dto.DocumentsReportDto;
 
@@ -49,11 +49,11 @@ public class SearchEngine {
 		}
 		
 		//Realizo la consulta del termino
-		QueryEngine engine = new DefaultQueryEngine();
+		IQueryEngine engine = new DefaultQueryEngine();
 
 		//Muestro los documentos en los que aparece
 		List<DocumentDto> documentsFound = engine.executeQuery(stemmedWord);
-		int size = engine.countExecuteQuery(stemmedWord);
+		int size = documentsFound.size();
 		if(size==0) {
 			System.out.println("El termino ["+word+"] no corresponde a ningun documento.");
 			return;

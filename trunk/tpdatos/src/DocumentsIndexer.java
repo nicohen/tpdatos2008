@@ -14,7 +14,7 @@ import utils.Constants;
 import utils.statistics.StatisticsGenerator;
 import api.DefaultQueryEngine;
 import api.DocumentInsert;
-import api.QueryEngine;
+import api.IQueryEngine;
 import app.dao.documents.DocumentsDictionaryImp;
 import dto.DocumentDto;
 import dto.StopwordsPipelineDto;
@@ -35,23 +35,24 @@ public class DocumentsIndexer {
 	private StatisticsGenerator statistics = StatisticsGenerator.getInstance();
 	
 	//Me instancio la QueryEngine para consultar los documentos existentes y nuevos
-	private QueryEngine queryEngine;
+	private IQueryEngine queryEngine;
+	
+	private StopwordsProcessor stopwordsProcessor;
+	private StemmingProcessor stemmingProcessor;
 
 	public DocumentsIndexer() throws BusinessException, DataAccessException {
 		queryEngine = new DefaultQueryEngine();
+		//Inicializo las stopwords y las ordeno alfabeticamente y por cantidad de palabras ascendente
+		stopwordsProcessor = new StopwordsProcessor();
+
+		//Inicializo el stemmer
+		stemmingProcessor = new StemmingProcessor();
 	}
 	
 	
 	public int indexDocument( DocumentDto document, String logtag ) throws ParserException, BusinessException, PipelineOverflowException {
 		
 		int totalIndexed = 0;
-		
-		//Inicializo las stopwords y las ordeno alfabeticamente y por cantidad de palabras ascendente
-		StopwordsProcessor stopwordsProcessor = new StopwordsProcessor();
-
-		//Inicializo el stemmer
-		StemmingProcessor stemmingProcessor = new StemmingProcessor();
-
 
 		DocumentInsert docInsert = queryEngine.prepareDocumentInsert(document.getFileName() ); 
 		
@@ -139,7 +140,7 @@ public class DocumentsIndexer {
 				}
 			}
 		}
-		
+		docInsert.flush();
 		return totalIndexed;
 	
 	}

@@ -75,7 +75,21 @@ public class SignatureUtils {
 	public static void main(String[] args) {
 		System.out.println(getSignature("nicolas"));
 	}
+
+	public static SignatureFileDto OR(SignatureFileDto sfDTO1, SignatureFileDto sfDTO2) {
+		return new SignatureFileDto(sfDTO1.getSignatureHash1()|sfDTO2.getSignatureHash1(),
+				sfDTO1.getSignatureHash2()|sfDTO2.getSignatureHash2(),
+				sfDTO1.getSignatureHash3()|sfDTO2.getSignatureHash3(),
+				sfDTO1.getSignatureHash4()|sfDTO2.getSignatureHash4());
+	}
 	
+	public static SignatureFileDto AND(SignatureFileDto sfDTO1, SignatureFileDto sfDTO2) {
+		return new SignatureFileDto(sfDTO1.getSignatureHash1()&sfDTO2.getSignatureHash1(),
+				sfDTO1.getSignatureHash2()&sfDTO2.getSignatureHash2(),
+				sfDTO1.getSignatureHash3()&sfDTO2.getSignatureHash3(),
+				sfDTO1.getSignatureHash4()&sfDTO2.getSignatureHash4());
+	}
+
 
 /*
    	private static long BKDRHash(String str) {

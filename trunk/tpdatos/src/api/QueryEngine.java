@@ -9,7 +9,7 @@ import api.dao.documents.DocumentsDictionary;
 import dto.DocumentDto;
 import exceptions.BusinessException;
 
-public class QueryEngine {
+public class QueryEngine implements IQueryEngine {
 
 	private Index indice;
 	private DocumentsDictionary dicc;
@@ -25,6 +25,10 @@ public class QueryEngine {
 		
 		public void insertWord(String word) throws BusinessException {
 			index.insertWord(word, docid);
+		}
+
+		public void flush() {
+			// Nada por hacer.			
 		}
 		
 	}
@@ -47,15 +51,16 @@ public class QueryEngine {
 		return listaRet;
 	}
 	
-	public int countExecuteQuery(String consulta ) throws BusinessException {
-		List<DocumentDto> listaRet=new ArrayList<DocumentDto>();
-		
-		for(Integer docId : indice.getDocuments(consulta)) {
-			listaRet.add(dicc.getDocument(docId));
-		}
 
-		return listaRet.size();
-	}
+//	public int countExecuteQuery(String consulta ) throws BusinessException {
+//		List<DocumentDto> listaRet=new ArrayList<DocumentDto>();
+//		
+//		for(Integer docId : indice.getDocuments(consulta)) {
+//			listaRet.add(dicc.getDocument(docId));
+//		}
+//
+//		return listaRet.size();
+//	}
 	
 	public DocumentInsert prepareDocumentInsert( String documento ) throws BusinessException{
 		// insertar el documento en el diccionario

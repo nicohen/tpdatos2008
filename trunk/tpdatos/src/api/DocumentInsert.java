@@ -6,5 +6,5 @@ import exceptions.BusinessException;
 public interface DocumentInsert {
 	
 	public void insertWord(String word) throws BusinessException;
-	
+	public void flush() throws BusinessException;
 }
