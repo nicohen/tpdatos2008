@@ -12,9 +12,9 @@ import processor.stopwords.StopwordsProcessor;
 import processor.utils.DigesterUtils;
 import utils.Constants;
 import utils.statistics.StatisticsGenerator;
-import api.DefaultQueryEngine;
 import api.DocumentInsert;
 import api.IQueryEngine;
+import api.SignatureFileQueryEngine;
 import app.dao.documents.DocumentsDictionaryImp;
 import dto.DocumentDto;
 import dto.StopwordsPipelineDto;
@@ -41,7 +41,8 @@ public class DocumentsIndexer {
 	private StemmingProcessor stemmingProcessor;
 
 	public DocumentsIndexer() throws BusinessException, DataAccessException {
-		queryEngine = new DefaultQueryEngine();
+		//queryEngine = new DefaultQueryEngine();
+		queryEngine = new SignatureFileQueryEngine();
 		//Inicializo las stopwords y las ordeno alfabeticamente y por cantidad de palabras ascendente
 		stopwordsProcessor = new StopwordsProcessor();
 

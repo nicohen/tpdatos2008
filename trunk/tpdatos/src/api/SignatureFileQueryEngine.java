@@ -37,7 +37,7 @@ public class SignatureFileQueryEngine implements IQueryEngine{
 		try {
 			for(int i=0;i<size;i++){
 				SignatureFileDto documentSignature= this.signatureFiles.get(i);
-				if (documentSignature.equals(wordSignature)){
+				if (wordSignature.equals(SignatureUtils.AND(wordSignature, documentSignature))){
 					DocumentDto dto= this.dicc.getDocument(i);
 					java.io.File input= new java.io.File(Constants.FOLDER_INDEXED,dto.getFileName());
 					String texto= DigesterUtils.getFormattedHtmlFile(input);
