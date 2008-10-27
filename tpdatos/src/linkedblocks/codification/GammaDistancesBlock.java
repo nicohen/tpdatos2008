@@ -4,8 +4,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.BitSet;
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 
 import api.po.persistors.DistancesBlock;
 import exceptions.PersistanceException;

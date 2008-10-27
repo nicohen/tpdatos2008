@@ -3,17 +3,15 @@ package test.index;
 import java.util.Iterator;
 
 import junit.framework.TestCase;
+import linkedblocks.LinkedBlocksManager;
+import linkedblocks.codification.GammaDistancesBlock;
 
 import org.junit.Assert;
 
 import app.po.persistors.GammaDistancesBlockPersistor;
 import app.po.persistors.LinkedBlockPersistor;
-
 import exceptions.DataAccessException;
 import exceptions.PersistanceException;
-import linkedblocks.LinkedBlocksManager;
-import linkedblocks.codification.GammaDistancesBlock;
-import linkedblocks.utils.KeyCodificationUtils;
 
 public class TestLinkedBlocksManager extends TestCase {
 	public void test() throws DataAccessException, PersistanceException {

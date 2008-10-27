@@ -46,6 +46,16 @@ public class SignatureFileDto {
 	}
 	
 	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof SignatureFileDto) {
+			SignatureFileDto sf = (SignatureFileDto) obj;
+			return(sf.signatureHash1==this.signatureHash1 && sf.signatureHash2==this.signatureHash2
+					&& sf.signatureHash3==this.signatureHash3 && sf.signatureHash4==this.signatureHash4);
+		}
+		return super.equals(obj);
+	}
+	
+	@Override
 	public String toString() {
 		
 		return  Long.toHexString(signatureHash1)+

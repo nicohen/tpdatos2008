@@ -3,10 +3,7 @@ package linkedblocks;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import linkedblocks.codification.GammaDistancesBlock;
-
 import api.po.files.File;
-import api.po.persistors.DistancesBlock;
 import api.po.persistors.Persistor;
 import app.po.files.RelativeFile;
 import dto.LinkedBlock;
