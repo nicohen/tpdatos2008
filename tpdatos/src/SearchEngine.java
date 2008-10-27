@@ -6,8 +6,8 @@ import java.util.List;
 import processor.stemming.StemmingProcessor;
 import processor.stopwords.StopwordsProcessor;
 import processor.utils.DigesterUtils;
-import api.DefaultQueryEngine;
 import api.IQueryEngine;
+import api.SignatureFileQueryEngine;
 import dto.DocumentDto;
 import dto.DocumentsReportDto;
 
@@ -49,7 +49,8 @@ public class SearchEngine {
 		}
 		
 		//Realizo la consulta del termino
-		IQueryEngine engine = new DefaultQueryEngine();
+		//IQueryEngine engine = new DefaultQueryEngine();
+		IQueryEngine engine = new SignatureFileQueryEngine();
 
 		//Muestro los documentos en los que aparece
 		List<DocumentDto> documentsFound = engine.executeQuery(stemmedWord);
