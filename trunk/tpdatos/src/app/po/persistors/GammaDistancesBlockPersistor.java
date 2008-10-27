@@ -5,9 +5,9 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import exceptions.PersistanceException;
 import linkedblocks.codification.GammaDistancesBlock;
 import api.po.persistors.Persistor;
+import exceptions.PersistanceException;
 
 public class GammaDistancesBlockPersistor implements
 		Persistor<GammaDistancesBlock> {

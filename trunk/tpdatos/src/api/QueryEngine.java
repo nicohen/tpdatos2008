@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import processor.IndexedDocumentChecker;
-
 import api.dao.documents.DocumentsDictionary;
 import dto.DocumentDto;
 import exceptions.BusinessException;

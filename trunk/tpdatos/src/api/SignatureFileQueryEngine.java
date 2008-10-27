@@ -1,8 +1,10 @@
 package api;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import processor.IndexedDocumentChecker;
+import processor.utils.DigesterUtils;
 import signaturefiles.utils.SignatureUtils;
 import utils.Constants;
 import api.dao.documents.DocumentsDictionary;
@@ -29,8 +31,25 @@ public class SignatureFileQueryEngine implements IQueryEngine{
 	}
 	
 	public List<DocumentDto> executeQuery(String consulta) throws BusinessException {
-		// TODO Auto-generated method stub
-		return null;
+		List<DocumentDto> candidatos= new ArrayList<DocumentDto>();
+		SignatureFileDto wordSignature= SignatureUtils.getSignature(consulta);
+		int size= this.signatureFiles.getSize();
+		try {
+			for(int i=0;i<size;i++){
+				SignatureFileDto documentSignature= this.signatureFiles.get(i);
+				if (documentSignature.equals(wordSignature)){
+					DocumentDto dto= this.dicc.getDocument(i);
+					java.io.File input= new java.io.File(Constants.FOLDER_INDEXED,dto.getFileName());
+					String texto= DigesterUtils.getFormattedHtmlFile(input);
+					if (texto.contains(consulta)){
+						candidatos.add(dto);
+					}
+				}
+			}
+		} catch (Exception e) {
+			throw new BusinessException("Error consultando por termino: "+consulta,e);
+		}
+		return candidatos;
 	}
 
 	public IndexedDocumentChecker getDocuments() throws BusinessException {

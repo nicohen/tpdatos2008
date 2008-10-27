@@ -2,10 +2,10 @@ package test.utils;
 
 import java.util.Iterator;
 
-import exceptions.PersistanceException;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 import linkedblocks.codification.GammaDistancesBlock;
+import exceptions.PersistanceException;
 
 public class GammaDistancesBlockTest extends TestCase {
 
