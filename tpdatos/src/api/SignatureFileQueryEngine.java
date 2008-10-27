@@ -41,7 +41,8 @@ public class SignatureFileQueryEngine implements IQueryEngine{
 					DocumentDto dto= this.dicc.getDocument(i);
 					java.io.File input= new java.io.File(Constants.FOLDER_INDEXED,dto.getFileName());
 					String texto= DigesterUtils.getFormattedHtmlFile(input);
-					if (texto.contains(consulta)){
+					int ocurrencias= countMatches(texto,consulta);
+					for (int j=0;j<ocurrencias;j++){
 						candidatos.add(dto);
 					}
 				}
@@ -90,5 +91,22 @@ public class SignatureFileQueryEngine implements IQueryEngine{
 			}
 		}
 		
+	}
+	
+	private static boolean isEmpty(String str) {
+		return str == null || str.length() == 0;
+	}
+
+	private static int countMatches(String str, String sub) {
+		if (isEmpty(str) || isEmpty(sub)) {
+			return 0;
+		}
+		int count = 0;
+		int idx = 0;
+		while ((idx = str.indexOf(sub, idx)) != -1) {
+			count++;
+			idx += sub.length();
+		}
+		return count;
 	}
 }
