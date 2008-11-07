@@ -76,4 +76,8 @@ public class QueryEngine implements IQueryEngine {
 		return dicc.getDocument(id);
 	}
 	
+	protected Index getIndex() {
+		return indice;
+	}
+	
 }
