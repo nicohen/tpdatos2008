@@ -40,9 +40,9 @@ public class DocumentsIndexer {
 	private StopwordsProcessor stopwordsProcessor;
 	private StemmingProcessor stemmingProcessor;
 
-	public DocumentsIndexer() throws BusinessException, DataAccessException {
+	public DocumentsIndexer(IQueryEngine pqueryEngine) throws BusinessException, DataAccessException {
 		//queryEngine = new DefaultQueryEngine();
-		queryEngine = new SignatureFileQueryEngine();
+		this.queryEngine = pqueryEngine;
 		//Inicializo las stopwords y las ordeno alfabeticamente y por cantidad de palabras ascendente
 		stopwordsProcessor = new StopwordsProcessor();
 
@@ -200,7 +200,7 @@ public class DocumentsIndexer {
 	}
 
 	public static void main(String[] args) throws Exception {
-			DocumentsIndexer indexer = new DocumentsIndexer();
+			DocumentsIndexer indexer = new DocumentsIndexer(new SignatureFileQueryEngine() );
 			indexer.indexPath( Constants.FOLDER_DOCUMENTS );
 	}
 

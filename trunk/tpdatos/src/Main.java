@@ -1,3 +1,4 @@
+import api.SignatureFileQueryEngine;
 import utils.Constants;
 
 
@@ -16,7 +17,8 @@ public class Main {
 			option = args[0];
 	
 			if (option.equals("--indexer" ) ) {
-				DocumentsIndexer indexer = new DocumentsIndexer();
+				DocumentsIndexer indexer = 
+					new DocumentsIndexer(new SignatureFileQueryEngine());
 				indexer.indexPath( Constants.FOLDER_DOCUMENTS );
 			} else if (option.equals("--tree-dumper")) {
 				TreeDumper.main(args);
