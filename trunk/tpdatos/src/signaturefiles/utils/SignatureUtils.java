@@ -1,5 +1,6 @@
 package signaturefiles.utils;
 
+import utils.Constants;
 import dto.SignatureFileDto;
 
 public class SignatureUtils {
@@ -64,34 +65,43 @@ public class SignatureUtils {
 
 	//Devuelve el signature del termino ingresado
 	public static SignatureFileDto getSignature(String word) {
-		return new SignatureFileDto(
-				RSHash(word),
-				JSHash(word),
-				PJWHash(word),
-				ELFHash(word));
-	}
-
-	
-	public static void main(String[] args) {
-		System.out.println(getSignature("nicolas"));
+		long[] firma= new long[Constants.SIGNATURE_SIZE];
+		firma[0]=RSHash(word);
+		firma[1]=JSHash(word);
+		firma[2]=PJWHash(word);
+		firma[3]=ELFHash(word);
+		firma[4]=BKDRHash(word);
+		firma[5]=SDBMHash(word);
+		firma[6]=DJBHash(word);
+		firma[7]=DEKHash(word);
+		firma[8]=BPHash(word);
+		firma[9]=FNVHash(word);
+		firma[10]=APHash(word);
+		
+		return new SignatureFileDto(firma);
 	}
 
 	public static SignatureFileDto OR(SignatureFileDto sfDTO1, SignatureFileDto sfDTO2) {
-		return new SignatureFileDto(sfDTO1.getSignatureHash1()|sfDTO2.getSignatureHash1(),
-				sfDTO1.getSignatureHash2()|sfDTO2.getSignatureHash2(),
-				sfDTO1.getSignatureHash3()|sfDTO2.getSignatureHash3(),
-				sfDTO1.getSignatureHash4()|sfDTO2.getSignatureHash4());
+		long[] firma= new long[11];
+		long[] signature1=sfDTO1.getSignature();
+		long[] signature2=sfDTO2.getSignature();    
+		for (int i=0;i<Constants.SIGNATURE_SIZE;i++){
+			firma[i]=signature1[i]|signature2[i];
+		}
+		return new SignatureFileDto(firma);
 	}
 	
 	public static SignatureFileDto AND(SignatureFileDto sfDTO1, SignatureFileDto sfDTO2) {
-		return new SignatureFileDto(sfDTO1.getSignatureHash1()&sfDTO2.getSignatureHash1(),
-				sfDTO1.getSignatureHash2()&sfDTO2.getSignatureHash2(),
-				sfDTO1.getSignatureHash3()&sfDTO2.getSignatureHash3(),
-				sfDTO1.getSignatureHash4()&sfDTO2.getSignatureHash4());
+		long[] firma= new long[11];
+		long[] signature1=sfDTO1.getSignature();
+		long[] signature2=sfDTO2.getSignature();    
+		for (int i=0;i<Constants.SIGNATURE_SIZE;i++){
+			firma[i]=signature1[i]&signature2[i];
+		}
+		return new SignatureFileDto(firma);
 	}
 
 
-/*
    	private static long BKDRHash(String str) {
 		long seed = 131; // 31 131 1313 13131 131313 etc..
 		long hash = 0;
@@ -103,7 +113,7 @@ public class SignatureUtils {
 		return hash;
 	}
    
-	public long SDBMHash(String str) {
+   	private static long SDBMHash(String str) {
 		long hash = 0;
 
 		for(int i = 0; i < str.length(); i++) {
@@ -113,7 +123,7 @@ public class SignatureUtils {
 		return hash;
 	}
 
-   public long DJBHash(String str)
+   	private static long DJBHash(String str)
    {
       long hash = 5381;
 
@@ -125,8 +135,7 @@ public class SignatureUtils {
       return hash;
    }
 
-
-   public long DEKHash(String str)
+   	private static long DEKHash(String str)
    {
       long hash = str.length();
 
@@ -138,8 +147,7 @@ public class SignatureUtils {
       return hash;
    }
 
-
-   public long BPHash(String str)
+   	private static long BPHash(String str)
    {
       long hash = 0;
 
@@ -151,8 +159,7 @@ public class SignatureUtils {
       return hash;
    }
 
-
-   public long FNVHash(String str)
+   	private static long FNVHash(String str)
    {
       long fnv_prime = 0x811C9DC5;
       long hash = 0;
@@ -166,7 +173,7 @@ public class SignatureUtils {
       return hash;
    }
 
-   public long APHash(String str)
+   	private static long APHash(String str)
    {
       long hash = 0xAAAAAAAA;
 
@@ -184,12 +191,22 @@ public class SignatureUtils {
 
       return hash;
    }
-*/	
+
 	
-	
-	
-	
-	
-	
-	
+   	public static SignatureFileDto getEmptySignature() {
+		long[] firma= new long[Constants.SIGNATURE_SIZE];
+		firma[0]=0;
+		firma[1]=0;
+		firma[2]=0;
+		firma[3]=0;
+		firma[4]=0;
+		firma[5]=0;
+		firma[6]=0;
+		firma[7]=0;
+		firma[8]=0;
+		firma[9]=0;
+		firma[10]=0;
+		
+		return new SignatureFileDto(firma);
+	}
 }

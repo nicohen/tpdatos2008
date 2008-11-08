@@ -3,6 +3,7 @@ package app.po.persistors;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
+import utils.Constants;
 import api.po.persistors.Persistor;
 import dto.SignatureFileDto;
 import exceptions.PersistanceException;
@@ -17,7 +18,7 @@ public class SignatureFilePersistor implements Persistor<SignatureFileDto> {
 	
 	@Override
 	public int getDataSize() {
-		return longPersistor.getDataSize()*4;
+		return longPersistor.getDataSize()*Constants.SIGNATURE_SIZE;
 	}
 
 	@Override
@@ -28,20 +29,19 @@ public class SignatureFilePersistor implements Persistor<SignatureFileDto> {
 	@Override
 	public SignatureFileDto read(DataInputStream stream)
 			throws PersistanceException {
-		return new SignatureFileDto(
-				longPersistor.read(stream),
-				longPersistor.read(stream),
-				longPersistor.read(stream),
-				longPersistor.read(stream));	
+		long[] firma= new long[Constants.SIGNATURE_SIZE];
+		for(int i=0;i<Constants.SIGNATURE_SIZE;i++){
+			firma[i]=longPersistor.read(stream);	
+		}
+		return new SignatureFileDto(firma);	
 	}
 
 	@Override
 	public void write(SignatureFileDto element, DataOutputStream stream)
 			throws PersistanceException {
-		longPersistor.write(element.getSignatureHash1(), stream);
-		longPersistor.write(element.getSignatureHash2(), stream);
-		longPersistor.write(element.getSignatureHash3(), stream);
-		longPersistor.write(element.getSignatureHash4(), stream);
+		for(int i=0;i<Constants.SIGNATURE_SIZE;i++){
+			longPersistor.write(element.getSignature()[i], stream);	
+		}
 	}
 
 

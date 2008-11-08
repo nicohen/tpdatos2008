@@ -75,7 +75,7 @@ public class SignatureFileQueryEngine implements IQueryEngine{
 		public SignatureFileDocumentInsert (Integer docid,File<SignatureFileDto> signatureFiles ) {
 			this.docid = docid;
 			this.signatureFiles= signatureFiles;
-			this.documentSignature= new SignatureFileDto(0,0,0,0);
+			this.documentSignature= SignatureUtils.getEmptySignature();
 		}
 		
 		public void insertWord(String word) {
