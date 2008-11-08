@@ -1,67 +1,43 @@
 package dto;
 
 public class SignatureFileDto {
-	long signatureHash1;
-	long signatureHash2;
-	long signatureHash3;
-	long signatureHash4;
+	long[] signature;
 	
-	public SignatureFileDto(long signatureHash1,long signatureHash2,long signatureHash3,long signatureHash4) {
-		this.signatureHash1=signatureHash1;
-		this.signatureHash2=signatureHash2;
-		this.signatureHash3=signatureHash3;
-		this.signatureHash4=signatureHash4;
+	public SignatureFileDto(long[] signatureHash) {
+		signature=signatureHash;
 	}
 
-	public long getSignatureHash1() {
-		return signatureHash1;
+	public long[] getSignature() {
+		return signature;
 	}
 
-	public void setSignatureHash1(long signatureHash1) {
-		this.signatureHash1 = signatureHash1;
-	}
-
-	public long getSignatureHash2() {
-		return signatureHash2;
-	}
-
-	public void setSignatureHash2(long signatureHash2) {
-		this.signatureHash2 = signatureHash2;
-	}
-
-	public long getSignatureHash3() {
-		return signatureHash3;
-	}
-
-	public void setSignatureHash3(long signatureHash3) {
-		this.signatureHash3 = signatureHash3;
-	}
-
-	public long getSignatureHash4() {
-		return signatureHash4;
-	}
-
-	public void setSignatureHash4(long signatureHash4) {
-		this.signatureHash4 = signatureHash4;
+	public void setSignature(long[] signatures) {
+		this.signature = signatures;
 	}
 	
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof SignatureFileDto) {
 			SignatureFileDto sf = (SignatureFileDto) obj;
-			return(sf.signatureHash1==this.signatureHash1 && sf.signatureHash2==this.signatureHash2
-					&& sf.signatureHash3==this.signatureHash3 && sf.signatureHash4==this.signatureHash4);
+			int length= this.signature.length;
+			int i=1;
+			boolean equal=this.signature[0]==sf.signature[0];
+			while(equal&&i<length){
+				equal=this.signature[i]==sf.signature[i];
+				i++;
+			}
+			return equal;
 		}
 		return super.equals(obj);
 	}
 	
 	@Override
 	public String toString() {
-		
-		return  Long.toHexString(signatureHash1)+
-		Long.toHexString(signatureHash2)+
-		Long.toHexString(signatureHash3)+
-		Long.toHexString(signatureHash4);
+		StringBuilder sb= new StringBuilder();
+		for(int i=0;i<this.signature.length;i++){
+			sb.append(Long.toHexString(this.signature[i]));
+		}
+		return sb.toString();
 	}
 	
 }

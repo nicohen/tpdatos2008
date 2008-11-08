@@ -24,6 +24,7 @@ public class Constants {
 	
 	public static final String SIGNATURE_FILE_PATH = "signatures.dat";
 	public static final int    SIGNATURE_FILE_SIZE = 4096;
+	public static final int    SIGNATURE_SIZE = 11;
 	
 	public static final String BPLUS_TEST_FILE_PATH = "bplus-test.dat";
 }
