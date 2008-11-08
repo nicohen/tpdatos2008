@@ -77,7 +77,7 @@ abstract public class TestIndex extends TestCase {
 		
 		Random random = new Random(0);
 		
-		for (int documentid=1;documentid<10;documentid++) {
+		for (int documentid=1;documentid<2000;documentid++) {
 			// agregar entradas
 			
 			int numwords = random.nextInt(100)+59;
@@ -85,7 +85,7 @@ abstract public class TestIndex extends TestCase {
 			for (int j=0; j<numwords; j++) {
 			
 				String word = randomWord(random) + String.valueOf( random.nextInt(100) );
-			
+				//String word=wordAux.substring(0, 3);
 				word_set.add(word);
 			
 				// realizar el mismo insert en ambos indices
