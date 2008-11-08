@@ -1,0 +1,30 @@
+<html>
+<head>
+<title>Untitled Document</title>
+</head>
+<body>
+<table width="760" border="0" cellpadding="0" cellspacing="0">
+	<tr align="center">
+		<td>
+			<table border="0" cellpadding="0" cellspacing="0">
+				<tr>
+					<td>Busqueda:</td>
+					<td><input type="text" name="search_word" value="##SEARCH_WORD##"></td>
+					<td><input type="submit" name="search_button" value="Buscar"></td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<table>
+				<tr>
+					<td>Documentos</td>
+					<td>Cuerpo</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+</body>
+</html>

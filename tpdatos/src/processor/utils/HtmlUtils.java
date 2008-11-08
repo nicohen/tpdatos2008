@@ -2,7 +2,6 @@ package processor.utils;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -47,38 +46,35 @@ public final class HtmlUtils {
 		return Translate.decode(html);
 	}
 	
-	public static String readHtmlFile(String fileName) {
+	public static String readHtmlFile(String fileName) throws IOException {
 	    File file = new File(fileName);
+	    System.out.println(file.getAbsolutePath());
 	    StringBuilder html = new StringBuilder();
 	    FileReader fr = null;
 	    BufferedReader br = null;
 
-	    try {
-	    	fr = new FileReader(file);
+    	fr = new FileReader(file);
 
-	      // Here BufferedInputStream is added for fast reading.
-	    	br = new BufferedReader(fr);
+    	br = new BufferedReader(fr);
 
-			
-			int letra= br.read();
-			while (letra>-1){
-				html.append((char)letra);
-				letra= br.read();
-			}
-	      // dispose all the resources after using them.
-	      br.close();
-	      fr.close();
+    	int letra= br.read();
+		while (letra>-1){
+			html.append((char)letra);
+			letra= br.read();
+		}
+        br.close();
+	    fr.close();
 
-	    } catch (FileNotFoundException e) {
-	      e.printStackTrace();
-	    } catch (IOException e) {
-	      e.printStackTrace();
-	    }
 	    return html.toString();
 	}
 
 	public static String formatHtmlFile(File file) throws ParserException {
-		String documentText = HtmlUtils.readHtmlFile(file.getPath());
+		String documentText = "";
+		try {
+			documentText = HtmlUtils.readHtmlFile(file.getPath());
+		} catch(IOException e) {
+			throw new ParserException("Error obteniendo html del archivo "+file.getPath(),e);
+		}
 		//Elimino scripts javascript
 		documentText = documentText.replaceAll("<script[^>]*?>[\\s\\S]*?<\\/script>", "\n");
 		//Obtengo el body con los tags trimeeados
