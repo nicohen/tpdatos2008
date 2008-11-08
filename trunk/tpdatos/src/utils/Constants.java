@@ -14,7 +14,12 @@ public class Constants {
 		public static final String FILE_STOPWORDS = FOLDER_WORDS+File.separator+"stopwords.txt";
 		// /words/stemming.txt
 		public static final String FILE_STEMMING = FOLDER_WORDS+File.separator+"stemming.txt";
-	
+
+	// /html
+	public static final String FOLDER_HTML = "html";
+		// /html/search.txt
+		public static final String FILE_SEARCH_CONTENT = FOLDER_HTML+File.separator+"search.txt";
+
 				
 	public static final String INDEX_FILE_PATH = "index.bin";
 	public static final int    INDEX_FILE_SIZE = 512;
