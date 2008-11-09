@@ -33,7 +33,7 @@ public class QueryEngine implements IQueryEngine {
 	}
 	
 
-	public QueryEngine(Index index,DocumentsDictionary dictionary){
+	protected QueryEngine(Index index,DocumentsDictionary dictionary){
 		dicc=dictionary;
 		indice=index;
 	}

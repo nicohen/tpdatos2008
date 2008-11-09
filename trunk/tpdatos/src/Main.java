@@ -1,3 +1,4 @@
+import api.DefaultQueryEngine;
 import api.Index;
 import api.QueryEngine;
 import api.SignatureFileQueryEngine;
@@ -24,15 +25,15 @@ public class Main {
 			indexType=args[1];
 			if (option.equals("--indexer" ) ) {
 				if (indexType.equals("signaturefile" ) ) {
-				DocumentsIndexer indexer = 
-					new DocumentsIndexer(new SignatureFileQueryEngine());
-				indexer.indexPath( Constants.FOLDER_DOCUMENTS );
+					DocumentsIndexer indexer = 
+						new DocumentsIndexer(new SignatureFileQueryEngine());
+					indexer.indexPath( Constants.FOLDER_DOCUMENTS );
 				}
 				else if (indexType.equals("indiceinvertido" ) ) {
-				IndexImp index=new IndexImp(Constants.INDEX_FILE_PATH,Constants.INDEX_FILE_SIZE);
-				DocumentsDictionaryImp dicc=new DocumentsDictionaryImp();
-				DocumentsIndexer indexer=new DocumentsIndexer(new QueryEngine(index,dicc));
-				indexer.indexPath( Constants.FOLDER_DOCUMENTS );
+//					IndexImp index=new IndexImp(Constants.INDEX_FILE_PATH,Constants.INDEX_FILE_SIZE);
+//					DocumentsDictionaryImp dicc=new DocumentsDictionaryImp();
+					DocumentsIndexer indexer=new DocumentsIndexer(new DefaultQueryEngine());
+					indexer.indexPath( Constants.FOLDER_DOCUMENTS );
 						
 				}
 			} else if (option.equals("--tree-dumper")) {
