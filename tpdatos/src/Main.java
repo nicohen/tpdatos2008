@@ -2,6 +2,7 @@ import utils.Constants;
 import api.DefaultQueryEngine;
 import api.DocumentsIndexer;
 import api.SignatureFileQueryEngine;
+import api.IQueryEngine;
 
 
 
@@ -12,6 +13,21 @@ public class Main {
 	 * @param args
 	 * @throws Exception 
 	 */
+	
+	public static IQueryEngine create( String indexType ) throws Exception {
+		
+		if (indexType.equals("signaturefile" ) ) {
+			return new SignatureFileQueryEngine();
+				
+		} else if (indexType.equals("indiceinvertido" ) ) {
+			return new DefaultQueryEngine();
+			
+		} else {
+			throw new Exception("Engine desconocido o no soportado");
+		}
+
+	}
+	
 	public static void main(String[] args) throws Exception {
 		
 		String option = "--indexer";
@@ -20,23 +36,20 @@ public class Main {
 		if ( args.length > 0) {
 			option = args[0];
 			indexType=args[1];
+			
 			if (option.equals("--indexer" ) ) {
-				if (indexType.equals("signaturefile" ) ) {
-					DocumentsIndexer indexer = 
-						new DocumentsIndexer(new SignatureFileQueryEngine());
-					indexer.indexPath( Constants.FOLDER_DOCUMENTS );
-				}
-				else if (indexType.equals("indiceinvertido" ) ) {
-//					IndexImp index=new IndexImp(Constants.INDEX_FILE_PATH,Constants.INDEX_FILE_SIZE);
-//					DocumentsDictionaryImp dicc=new DocumentsDictionaryImp();
-					DocumentsIndexer indexer=new DocumentsIndexer(new DefaultQueryEngine());
-					indexer.indexPath( Constants.FOLDER_DOCUMENTS );
-						
-				}
+				IQueryEngine engine = create (indexType);
+				
+				DocumentsIndexer indexer=new DocumentsIndexer(engine);
+				indexer.indexPath( Constants.FOLDER_DOCUMENTS );
+				
 			} else if (option.equals("--tree-dumper")) {
 				TreeDumper.main(args);
 			} else if ( option.equals("--search")) {
-				SearchEngine.main(args);
+				IQueryEngine engine = create (indexType);
+
+				SearchEngine searchEngine = new SearchEngine(engine);
+				searchEngine.main(args);
 			} else {
 				System.out.println("Opcion invalida (" + option+ ")");
 			}
