@@ -21,6 +21,7 @@ public class SearchEngine {
 	
 	public void main(String[] args) throws Exception {
 		System.out.print("Ingrese un termino a buscar: ");
+		
 		String word = null;
 		try{
 			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -34,7 +35,7 @@ public class SearchEngine {
 			return;
 		}
 		
-		
+		long c1 = System.currentTimeMillis();
 		//Inicializo diccionario de stopwords
 		StopwordsProcessor sw = new StopwordsProcessor();
 		//Inicializo diccionario de stemming
@@ -73,7 +74,11 @@ public class SearchEngine {
 				System.out.println(drDto.getDocumentOcurrences(documentResult)+" veces en el documento "+engine.getDocumentFromId(documentResult.getDocumentId()));				
 			}
 		}
-
+		long c2= System.currentTimeMillis();
+		StringBuilder sb= new StringBuilder();
+		sb.append((c2-c1)/1000);
+		sb.append(" seg.");
+		System.out.print(sb.toString());
 	}
 }
 
