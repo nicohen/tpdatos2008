@@ -1,6 +1,3 @@
-package api;
-
-
 import java.io.File;
 import java.util.Iterator;
 import java.util.List;
@@ -15,6 +12,9 @@ import processor.stopwords.StopwordsProcessor;
 import processor.utils.DigesterUtils;
 import utils.Constants;
 import utils.statistics.StatisticsGenerator;
+import api.DocumentInsert;
+import api.IQueryEngine;
+import api.SignatureFileQueryEngine;
 import app.dao.documents.DocumentsDictionaryImp;
 import dto.DocumentDto;
 import dto.StopwordsPipelineDto;
