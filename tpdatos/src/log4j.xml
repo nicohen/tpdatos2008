@@ -7,10 +7,10 @@
 		</layout>           
 	</appender>
 	<logger name="DocumentsIndexer">
-		<level value="warn"/> 
+		<level value="off"/> 
 	</logger>
 	<root> 
-		<priority value ="trace" /> 
+		<priority value ="off" /> 
 		<appender-ref ref="util" /> 
 	</root>
 </log4j:configuration>
