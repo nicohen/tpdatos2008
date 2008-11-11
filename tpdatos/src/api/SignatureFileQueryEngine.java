@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import processor.IndexedDocumentChecker;
+import processor.utils.DigesterUtils;
 import signaturefiles.utils.SignatureUtils;
 import utils.Constants;
 import api.dao.documents.DocumentsDictionary;
@@ -39,19 +40,16 @@ public class SignatureFileQueryEngine implements IQueryEngine{
 				SignatureFileDto documentSignature= this.signatureFiles.get(i);
 				if (wordSignature.equals(SignatureUtils.AND(wordSignature, documentSignature))){
 					DocumentDto dto= this.dicc.getDocument(i);
-					
+					/*
 					WordCollectorQueryEngine collector = new WordCollectorQueryEngine();
 					DocumentsIndexer indexer = new DocumentsIndexer(collector);
-					
-					
 					DocumentDto document = new DocumentDto("indexed" + java.io.File.separator + dto.getFileName() );
-					
 					indexer.indexDocument(document, "");
 					int ocurrencias = collector.getOcurrences(consulta);
-					
-/*					java.io.File input= new java.io.File(Constants.FOLDER_INDEXED,dto.getFileName());
+					*/
+					java.io.File input= new java.io.File(Constants.FOLDER_INDEXED,dto.getFileName());
 					String texto= DigesterUtils.getFormattedHtmlFile(input);
-					int ocurrencias= countMatches(texto,consulta);*/
+					int ocurrencias= countMatches(texto,consulta);
 					for (int j=0;j<ocurrencias;j++){
 						candidatos.add(dto);
 					}
