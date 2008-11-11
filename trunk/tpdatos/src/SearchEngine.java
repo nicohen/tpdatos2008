@@ -7,14 +7,19 @@ import processor.stemming.StemmingProcessor;
 import processor.stopwords.StopwordsProcessor;
 import processor.utils.DigesterUtils;
 import api.IQueryEngine;
-import api.SignatureFileQueryEngine;
 import dto.DocumentDto;
 import dto.DocumentsReportDto;
 
 
 public class SearchEngine {
 
-	public static void main(String[] args) throws Exception {
+	private IQueryEngine engine;
+	
+	public SearchEngine( IQueryEngine pEngine) {
+		this.engine = pEngine;
+	}
+	
+	public void main(String[] args) throws Exception {
 		System.out.print("Ingrese un termino a buscar: ");
 		String word = null;
 		try{
@@ -49,8 +54,6 @@ public class SearchEngine {
 		}
 		
 		//Realizo la consulta del termino
-		//IQueryEngine engine = new DefaultQueryEngine();
-		IQueryEngine engine = new SignatureFileQueryEngine();
 
 		//Muestro los documentos en los que aparece
 		List<DocumentDto> documentsFound = engine.executeQuery(stemmedWord);
