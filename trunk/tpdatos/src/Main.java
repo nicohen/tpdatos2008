@@ -31,30 +31,34 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 		
 		String option = "--indexer";
-		String indexType="signature";
+		String indexType="signaturefile";
 		
-		if ( args.length > 0) {
-			option = args[0];
-			indexType=args[1];
-			
-			if (option.equals("--indexer" ) ) {
-				IQueryEngine engine = create (indexType);
+		try {
+			if ( args.length > 0) {
+				option = args[0];
+				indexType=args[1];
 				
-				DocumentsIndexer indexer=new DocumentsIndexer(engine);
-				indexer.indexPath( Constants.FOLDER_DOCUMENTS );
-				
-			} else if (option.equals("--tree-dumper")) {
-				TreeDumper.main(args);
-			} else if ( option.equals("--search")) {
-				IQueryEngine engine = create (indexType);
-
-				SearchEngine searchEngine = new SearchEngine(engine);
-				searchEngine.main(args);
+				if (option.equals("--indexer" ) ) {
+					IQueryEngine engine = create (indexType);
+					
+					DocumentsIndexer indexer=new DocumentsIndexer(engine);
+					indexer.indexPath( Constants.FOLDER_DOCUMENTS );
+					
+				} else if (option.equals("--tree-dumper")) {
+					TreeDumper.main(args);
+				} else if ( option.equals("--search")) {
+					IQueryEngine engine = create (indexType);
+	
+					SearchEngine searchEngine = new SearchEngine(engine);
+					searchEngine.main(args);
+				} else {
+					System.out.println("Opcion invalida (" + option+ ")");
+				}
 			} else {
-				System.out.println("Opcion invalida (" + option+ ")");
+				System.out.println("Debe elegir una opcion ( --indexer o --search)");
 			}
-		} else {
-			System.out.println("Debe elegir una opcion ( --indexer o --search)");
+		} catch(Exception e) {
+			throw new Exception("Error en operacion de indexacion o busqueda");
 		}
 		
 	}

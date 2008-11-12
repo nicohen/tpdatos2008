@@ -72,8 +72,7 @@ abstract public class AbstractBPlusTreeBo implements BPlusTreeBo {
 				nodeDao.setRootNode(newRoot.getNodeKey());
 				this.root=newRoot;
 			} catch (NodeOverflowException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				throw new DataAccessException("Error por overflow en nodo al intentar insertar elemento [KEY:"+element.getKey()+"] [VALUE:"+element.getValue()+"]",e1);
 			}
 		}
 	}
