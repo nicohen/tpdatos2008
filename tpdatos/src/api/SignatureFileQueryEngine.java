@@ -28,7 +28,7 @@ public class SignatureFileQueryEngine implements IQueryEngine{
 	private File<SignatureFileDto> signatureFiles;
 	
 	public SignatureFileQueryEngine() throws DataAccessException{
-		this.dicc= new DocumentsDictionaryImp("indexed_documents.bin","document_names.txt");
+		this.dicc= new DocumentsDictionaryImp();
 		Persistor<SignatureFileDto> sfPersistor= new SignatureFilePersistor();
 		this.signatureFiles= new RelativeFile<SignatureFileDto>(Constants.SIGNATURE_FILE_PATH,sfPersistor);
 	}
@@ -41,7 +41,7 @@ public class SignatureFileQueryEngine implements IQueryEngine{
 			for(int i=0;i<size;i++){
 				SignatureFileDto documentSignature= this.signatureFiles.get(i);
 				if (wordSignature.equals(SignatureUtils.AND(wordSignature, documentSignature))){
-					DocumentDto dto= this.dicc.getDocument(i);
+					DocumentDto dto= this.dicc.getDocument(documentSignature.getDocumentId());
 					/*
 					WordCollectorQueryEngine collector = new WordCollectorQueryEngine();
 					DocumentsIndexer indexer = new DocumentsIndexer(collector);
@@ -85,7 +85,7 @@ public class SignatureFileQueryEngine implements IQueryEngine{
 		public SignatureFileDocumentInsert (Integer docid,File<SignatureFileDto> signatureFiles ) {
 			this.docid = docid;
 			this.signatureFiles= signatureFiles;
-			this.documentSignature= SignatureUtils.getEmptySignature();
+			this.documentSignature= SignatureUtils.getEmptySignature(docid);
 		}
 		
 		public void insertWord(String word) {

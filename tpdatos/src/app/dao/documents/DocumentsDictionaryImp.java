@@ -21,12 +21,12 @@ public class DocumentsDictionaryImp implements DocumentsDictionary {
 	
 	RelativeFile<DocumentDto> relativeFile = null;
 	SecuentialFile<String> nameFile;
-	public DocumentsDictionaryImp( String relativeFileName, String namesFileName) throws DataAccessException {
+	public DocumentsDictionaryImp() throws DataAccessException {
 
-		relativeFile = new RelativeFile<DocumentDto>(relativeFileName,new DocumentInfoPersistor());
-		nameFile=new SecuentialFile<String>(namesFileName,new DocumentDataPersistor());
+		relativeFile = new RelativeFile<DocumentDto>("indexed_documents.bin",new DocumentInfoPersistor());
+		nameFile=new SecuentialFile<String>("document_names.txt",new DocumentDataPersistor());
 	}
-	
+
 	@Override
 	public DocumentDto getDocument(Integer id) throws BusinessException {
 		try {
