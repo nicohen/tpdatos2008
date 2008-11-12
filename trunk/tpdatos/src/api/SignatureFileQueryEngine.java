@@ -95,7 +95,7 @@ public class SignatureFileQueryEngine implements IQueryEngine{
 
 		public void flush() throws BusinessException {
 			try {
-				this.signatureFiles.add(this.documentSignature);
+				this.signatureFiles.update(this.docid,this.documentSignature);
 			} catch (Exception e) {
 				throw new BusinessException("Error al Indexar el documento Id: "+docid,e);
 			}
