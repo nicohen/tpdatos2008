@@ -1,0 +1,56 @@
+<html>
+<head>
+
+[head sin script]
+<script>
+[head con script]
+</script>
+al fin y al cabo
+</head>
+<body>
+<script>
+[este es el body pero con el script]
+al fin y al cabo
+</script>
+<script language="Javascript" type="text/javascript">
+<!--
+ var VersionMinima1222770895 = 8;
+var ArchivoFlash1222770895 = "banestodepruedas17sep728.swf"/*tpa=http://cache.elmundo.es/banners-hashed/71/34/ibanesto-oct08/todomundo730/banestodepruedas17sep728.swf*/;
+var ClickTag1222770895 = "?clickTag=" + escape('http://193.110.128.104/anaredir?ibanesto%2Doct08%2Ftodomundo730%2Fult%5Feconomia730%2Fbanestodepruedas17sep728%5Fcabecera730%2Ehtml%2Fflash%2Bhttp%3A%2F%2Fwww.banestodepositosobreruedas.com%2F%3Fidm%3D2z-y8yk%2B123.123.123.123.ZZ');
+var Ancho1222770895 = 728;
+var Alto1222770895 = 90;
+var Wmode1222770895 = "window";
+var JSIncludePubli;
+if ((typeof JSIncludePubli != "undefined") && (getFlashVersion() >= VersionMinima1222770895))
+{
+//caso de tener flash
+EscribeBloquePublicidadFlash(ArchivoFlash1222770895, ClickTag1222770895, Ancho1222770895, Alto1222770895, Wmode1222770895);
+document.write('<!-- INICIO PIXELCOUNTER --><div style="position:absolute;top:0px;left:0px;width:1px;height:1px;visibility:hidden;z-Index:2"><img sr' + 'c="http://anapixel.elmundo.es/banner.gif?campaign=ibanesto%2Doct08&group=todomundo730&page=ult%5Feconomia730&creativity=banestodepruedas17sep728%5Fcabecera730%2Ehtml&endpartialtimestamp=48e938d1&sign=72370397D468B29585C983FC8988A88E&type=flash&rnd=12232329403673649542" width="1" height="1" border="0" alt="anapixel" /></div><!-- FIN PIXELCOUNTER -->');
+}
+else
+{
+//Caso de no soportar flash
+document.write('<a href="javascript:void(0)" onClick="javascript:clickAnunciante(\'http://193.110.128.104/anaredir?ibanesto%2Doct08%2Ftodomundo730%2Fult%5Feconomia730%2Fbanestodepruedas17sep728%5Fcabecera730%2Ehtml%2Fgif+http%3A%2F%2Fwww.banestodepositosobreruedas.com%2F%3Fidm%3D2z-y8yk+123.123.123.123.ZZ/')" style="cursor:pointer;"><img src="banestodepruedas17sep728.gif"/*tpa=http://cache.elmundo.es/banners-hashed/71/34/ibanesto-oct08/todomundo730/banestodepruedas17sep728.gif*/ width="728" height="90" border="0" alt="Haz Click" /></a>');
+document.write('<!-- INICIO PIXELCOUNTER --><div style="position:absolute;top:0px;left:0px;width:1px;height:1px;visibility:hidden;z-Index:2"><img sr' + 'c="http://anapixel.elmundo.es/banner.gif?campaign=ibanesto%2Doct08&group=todomundo730&page=ult%5Feconomia730&creativity=banestodepruedas17sep728%5Fcabecera730%2Ehtml&endpartialtimestamp=48e938d1&sign=72370397D468B29585C983FC8988A88E&type=gif&rnd=12232329403673649542" width="1" height="1" border="0" alt="anapixel" /></div><!-- FIN PIXELCOUNTER -->');
+}
+//-->
+</script>
+al FIN y al cab&oacute;
+[este es el body sin scripts version 1]
+&eacute;&nbsp;&nbsp
+mirador
+mirando
+mirante
+almirancia
+admiracion
+programacion
+programativo
+programador
+programaste
+programa
+programadores
+[este es el body sin scripts version 2]
+<a href="/diario/2008/09/09/index_ei.html">Edici&oacute;n Impresa</a></li><li><a href="http://www.videos.clarin.com/">Videos</a></li><li><a title="Clarin Blogs" href="/weblogs/">Blogs</a></li><li><a title="Clarin Widgets" href="http://widgets.clarin.com/">Widgets</a></li><li><a title="Clarin Moviles" href="http://www.clarin.com/shared/v9/moviles/">M&oacute;viles</a></li><li class="Ult"><a title="Clarin Mapas" href="http://mapas.clarin.com/">Mapas</a>
+perros
+</body>
+</html>
