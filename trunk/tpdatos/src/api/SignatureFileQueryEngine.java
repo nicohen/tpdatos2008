@@ -26,7 +26,7 @@ public class SignatureFileQueryEngine implements IQueryEngine{
 	private File<SignatureFileDto> signatureFiles;
 	
 	public SignatureFileQueryEngine() throws DataAccessException{
-		this.dicc= new DocumentsDictionaryImp();
+		this.dicc= new DocumentsDictionaryImp("indexed_documents.bin","document_names.txt");
 		Persistor<SignatureFileDto> sfPersistor= new SignatureFilePersistor();
 		this.signatureFiles= new RelativeFile<SignatureFileDto>(Constants.SIGNATURE_FILE_PATH,sfPersistor);
 	}

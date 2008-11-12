@@ -14,7 +14,7 @@ public class DefaultQueryEngine extends QueryEngine {
 		super(	
 				new IndexImp(Constants.INDEX_FILE_PATH, Constants.INDEX_FILE_SIZE)
 				,
-				new DocumentsDictionaryImp()
+				new DocumentsDictionaryImp("indexed_documents.bin","document_names.txt")
 				);
 	}
 
