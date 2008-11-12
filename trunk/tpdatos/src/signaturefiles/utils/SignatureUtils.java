@@ -88,7 +88,7 @@ public class SignatureUtils {
 		for (int i=0;i<Constants.SIGNATURE_SIZE;i++){
 			firma[i]=signature1[i]|signature2[i];
 		}
-		return new SignatureFileDto(sfDTO1.getDocumentId(),firma);
+		return new SignatureFileDto(firma);
 	}
 	
 	public static SignatureFileDto AND(SignatureFileDto sfDTO1, SignatureFileDto sfDTO2) {
@@ -98,7 +98,7 @@ public class SignatureUtils {
 		for (int i=0;i<Constants.SIGNATURE_SIZE;i++){
 			firma[i]=signature1[i]&signature2[i];
 		}
-		return new SignatureFileDto(sfDTO1.getDocumentId(),firma);
+		return new SignatureFileDto(firma);
 	}
 
 
@@ -193,7 +193,7 @@ public class SignatureUtils {
    }
 
 	
-   	public static SignatureFileDto getEmptySignature(Integer docId) {
+   	public static SignatureFileDto getEmptySignature() {
 		long[] firma= new long[Constants.SIGNATURE_SIZE];
 		firma[0]=0;
 		firma[1]=0;
@@ -207,6 +207,6 @@ public class SignatureUtils {
 		firma[9]=0;
 		firma[10]=0;
 		
-		return new SignatureFileDto(docId,firma);
+		return new SignatureFileDto(firma);
 	}
 }

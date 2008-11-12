@@ -1,15 +1,9 @@
 package dto;
 
 public class SignatureFileDto {
-	private int documentId;
-	private long[] signature;
+	long[] signature;
 	
 	public SignatureFileDto(long[] signatureHash) {
-		this(0,signatureHash);
-	}
-	
-	public SignatureFileDto(int docId,long[] signatureHash) {
-		this.documentId= docId;
 		signature=signatureHash;
 	}
 
@@ -21,14 +15,6 @@ public class SignatureFileDto {
 		this.signature = signatures;
 	}
 	
-	public int getDocumentId() {
-		return documentId;
-	}
-
-	public void setDocumentId(int documentId) {
-		this.documentId = documentId;
-	}
-		
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof SignatureFileDto) {
@@ -53,4 +39,5 @@ public class SignatureFileDto {
 		}
 		return sb.toString();
 	}
+	
 }

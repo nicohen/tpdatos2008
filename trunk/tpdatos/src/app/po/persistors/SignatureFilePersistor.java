@@ -11,7 +11,6 @@ import exceptions.PersistanceException;
 public class SignatureFilePersistor implements Persistor<SignatureFileDto> {
 
 	LongPersistor longPersistor = new LongPersistor();
-	IntegerPersistor intPersistor = new IntegerPersistor();
 	
 	public SignatureFilePersistor() {
 		super();
@@ -19,7 +18,7 @@ public class SignatureFilePersistor implements Persistor<SignatureFileDto> {
 	
 	@Override
 	public int getDataSize() {
-		return (longPersistor.getDataSize()*Constants.SIGNATURE_SIZE)+intPersistor.getDataSize();
+		return longPersistor.getDataSize()*Constants.SIGNATURE_SIZE;
 	}
 
 	@Override
@@ -30,18 +29,16 @@ public class SignatureFilePersistor implements Persistor<SignatureFileDto> {
 	@Override
 	public SignatureFileDto read(DataInputStream stream)
 			throws PersistanceException {
-		int docId= intPersistor.read(stream);
 		long[] firma= new long[Constants.SIGNATURE_SIZE];
 		for(int i=0;i<Constants.SIGNATURE_SIZE;i++){
 			firma[i]=longPersistor.read(stream);	
 		}
-		return new SignatureFileDto(docId,firma);	
+		return new SignatureFileDto(firma);	
 	}
 
 	@Override
 	public void write(SignatureFileDto element, DataOutputStream stream)
 			throws PersistanceException {
-		intPersistor.write(element.getDocumentId(), stream);
 		for(int i=0;i<Constants.SIGNATURE_SIZE;i++){
 			longPersistor.write(element.getSignature()[i], stream);	
 		}
