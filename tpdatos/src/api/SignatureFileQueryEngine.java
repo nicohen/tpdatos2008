@@ -3,8 +3,10 @@ package api;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import processor.IndexedDocumentChecker;
+import processor.stemming.StemmingProcessor;
 import processor.utils.DigesterUtils;
 import signaturefiles.utils.SignatureUtils;
 import utils.Constants;
@@ -106,15 +108,21 @@ public class SignatureFileQueryEngine implements IQueryEngine{
 	}
 
 	private static int countMatches(String str, String sub) {
+		StemmingProcessor stemmer = new StemmingProcessor();
 		if (isEmpty(str) || isEmpty(sub)) {
 			return 0;
 		}
 		int count = 0;
-		int idx = 0;
-		while ((idx = str.indexOf(sub, idx)) != -1) {
-			count++;
-			idx += sub.length();
+		String nextWord;
+		StringTokenizer strTok = new StringTokenizer(str, " \t\n\r\f");
+		while(strTok.hasMoreTokens()) {
+			nextWord = strTok.nextToken(); 
+			nextWord = stemmer.stem(nextWord);
+			if(sub.equals(nextWord)) {
+				count++;
+			}
 		}
+
 		return count;
 	}
 }
