@@ -1,6 +1,6 @@
 package exceptions;
 
-public class DataAccessException extends Exception {
+public class DataAccessException extends BusinessException {
 	
 	private static final long serialVersionUID = 1L;
 	
