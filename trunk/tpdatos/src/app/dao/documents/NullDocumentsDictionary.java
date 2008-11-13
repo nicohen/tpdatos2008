@@ -1,9 +1,9 @@
 package app.dao.documents;
 
 import processor.IndexedDocumentChecker;
+import api.dao.documents.DocumentsDictionary;
 import dto.DocumentDto;
 import exceptions.BusinessException;
-import api.dao.documents.DocumentsDictionary;
 
 public class NullDocumentsDictionary implements DocumentsDictionary {
 
