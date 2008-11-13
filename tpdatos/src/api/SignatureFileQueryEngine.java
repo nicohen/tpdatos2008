@@ -41,7 +41,7 @@ public class SignatureFileQueryEngine implements IQueryEngine{
 			for(int i=0;i<size;i++){
 				SignatureFileDto documentSignature= this.signatureFiles.get(i);
 				if (wordSignature.equals(SignatureUtils.AND(wordSignature, documentSignature))){
-					DocumentDto dto= this.dicc.getDocument(i);
+					DocumentDto dto= this.dicc.getDocument(documentSignature.getDocumentId());
 					/*
 					WordCollectorQueryEngine collector = new WordCollectorQueryEngine();
 					DocumentsIndexer indexer = new DocumentsIndexer(collector);
@@ -85,7 +85,7 @@ public class SignatureFileQueryEngine implements IQueryEngine{
 		public SignatureFileDocumentInsert (Integer docid,File<SignatureFileDto> signatureFiles ) {
 			this.docid = docid;
 			this.signatureFiles= signatureFiles;
-			this.documentSignature= SignatureUtils.getEmptySignature();
+			this.documentSignature= SignatureUtils.getEmptySignature(docid);
 		}
 		
 		public void insertWord(String word) {
@@ -95,7 +95,7 @@ public class SignatureFileQueryEngine implements IQueryEngine{
 
 		public void flush() throws BusinessException {
 			try {
-				this.signatureFiles.update(this.docid,this.documentSignature);
+				this.signatureFiles.add(this.documentSignature);
 			} catch (Exception e) {
 				throw new BusinessException("Error al Indexar el documento Id: "+docid,e);
 			}
