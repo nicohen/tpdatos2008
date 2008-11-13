@@ -90,12 +90,12 @@ public class DocumentsDictionaryImp implements DocumentsDictionary {
 
 	}
 	
-	public static File[] prepareNewDocuments(String documentsPath) {
+	public static File[] prepareNewDocuments(String documentsPath) throws DataAccessException {
 	    File dir = new File(documentsPath);
 	    
 	    String[] children = dir.list();
 	    if (children == null) {
-	    	System.out.println("Directorio inexistente ["+dir.getPath()+"]");
+	    	throw new DataAccessException("Directorio inexistente ["+dir.getPath()+"]");
 	    }
 	    
 	    // Este filtro solamente retorna archivos

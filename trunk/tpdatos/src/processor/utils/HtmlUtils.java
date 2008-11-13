@@ -48,7 +48,6 @@ public final class HtmlUtils {
 	
 	public static String readHtmlFile(String fileName) throws IOException {
 	    File file = new File(fileName);
-	    System.out.println(file.getAbsolutePath());
 	    StringBuilder html = new StringBuilder();
 	    FileReader fr = null;
 	    BufferedReader br = null;
