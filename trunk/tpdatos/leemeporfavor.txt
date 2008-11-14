@@ -13,11 +13,13 @@ INSTRUCCIONES DE USO
 
 	Ejecutar el programa mediante la orden
 
-	java -jar bombita.jar --indexer
+	java -jar bombita.jar --indexer enginetype
 
 	Eso inicialize al proceso de indexacion, para ejecutar una busqueda en el indice, utilize el siguiente comando
 
-	java -jar bombita.jar --search
+	java -jar bombita.jar --search enginetype
+
+	Donde enginetype, tanto en caso de busqueda e indexacion, es el tipo de motor utilizado como indice, las opciones validas soportadas hasta el momento son "indiceinvertido" y "signaturefile"
 
 	NOTA: para la correcta ejecucion del programa, son necesarios los siguientes archivos en la ruta de trabajo en la que se ejecute la aplicacion (vienen con el paquete de codigo fuente) :
 
