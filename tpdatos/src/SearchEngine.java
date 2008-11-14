@@ -76,9 +76,9 @@ public class SearchEngine {
 		}
 		long c2= System.currentTimeMillis();
 		StringBuilder sb= new StringBuilder();
-		sb.append("Tiempo de busqueda aproximado: ").append((c2-c1)/1000);
-		sb.append(" seg.");
-		System.out.print(sb.toString());
+		sb.append("Tiempo de busqueda aproximado: ").append((c2-c1) );
+		sb.append(" mseg.");
+		System.out.println(sb.toString());
 	}
 }
 
