@@ -1,3 +1,5 @@
+import org.apache.log4j.Logger;
+
 import utils.Constants;
 import api.DefaultQueryEngine;
 import api.DocumentsIndexer;
@@ -58,7 +60,8 @@ public class Main {
 				System.out.println("Debe elegir una opcion ( --indexer o --search)");
 			}
 		} catch(Exception e) {
-			throw new Exception("Error en operacion de indexacion o busqueda",e);
+			Logger log=	Logger.getLogger("ARCHIVO");
+			log.error("Error en operacion de indexacion o busqueda",e);
 		}
 		
 	}
