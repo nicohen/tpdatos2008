@@ -24,28 +24,30 @@ public class BPlusNodeDaoImp implements BPlusNodeDao {
 	public BPlusNodeDaoImp( String filename,int nodeSize ) throws DataAccessException {		
 		Persistor<BPlusNode> persistor;
 		Persistor<Integer> integerPersistor = new IntegerPersistor();
-		metaFile= new RelativeFile<Integer>(filename+".meta",integerPersistor);
-		if(metaFile.getSize()==0){
-			persistor = new BPlusNodePersistor(nodeSize);
-			this.rootNode=new BPlusNodeKey(0);
-			try {
-				metaFile.add(0);
-				metaFile.add(nodeSize);
-			} catch (PersistanceException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		try {
+			metaFile= new RelativeFile<Integer>(filename+".meta",integerPersistor);
+			if(metaFile.getSize()==0){
+				persistor = new BPlusNodePersistor(nodeSize);
+				this.rootNode=new BPlusNodeKey(0);
+				try {
+					metaFile.add(0);
+					metaFile.add(nodeSize);
+				} catch (PersistanceException e) {
+					throw new DataAccessException("Error inicializando archivos para el árbol.",e);
+				}
+				file = new RelativeFile<BPlusNode>( filename, persistor );
+				try {
+					this.rootNode= this.insertNode(new BPlusLeafNode());
+				} catch (NodeOverflowException e) {
+					throw new DataAccessException("Error inicializando archivos para el árbol.",e);
+				}
+			}else{
+				persistor = new BPlusNodePersistor(metaFile.get(NODE_SIZE_POSITION));
+				file = new RelativeFile<BPlusNode>( filename, persistor );
+				this.rootNode= new BPlusNodeKey(this.metaFile.get(TREE_ROOT_POSITION));
 			}
-			file = new RelativeFile<BPlusNode>( filename, persistor );
-			try {
-				this.rootNode= this.insertNode(new BPlusLeafNode());
-			} catch (NodeOverflowException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}else{
-			persistor = new BPlusNodePersistor(metaFile.get(NODE_SIZE_POSITION));
-			file = new RelativeFile<BPlusNode>( filename, persistor );
-			this.rootNode= new BPlusNodeKey(this.metaFile.get(TREE_ROOT_POSITION));
+		} catch (PersistanceException e) {
+			throw new DataAccessException("Error inicializando archivos para el árbol.",e);
 		}		
 	}
 
@@ -73,7 +75,6 @@ public class BPlusNodeDaoImp implements BPlusNodeDao {
 			node.setNodeKey(index);
 			return index;
 		} catch (PersistanceException e) {
-			// TODO Auto-generated catch block
 			throw new NodeOverflowException(e);
 		}
 	}
@@ -105,8 +106,7 @@ public class BPlusNodeDaoImp implements BPlusNodeDao {
 		try {
 			this.metaFile.update(TREE_ROOT_POSITION, this.rootNode.getValue());
 		} catch (PersistanceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new DataAccessException("Error actualizando archivos del árbol.",e);
 		}
 	}
 }

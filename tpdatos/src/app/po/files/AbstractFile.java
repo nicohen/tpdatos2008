@@ -59,8 +59,6 @@ public abstract class AbstractFile<E> implements api.po.files.File<E> {
 		try {
 			this.dataFile.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 }

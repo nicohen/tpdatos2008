@@ -13,7 +13,7 @@ import exceptions.PersistanceException;
 public class RelativeFile<E> extends AbstractBloquedFile<E> {
 
 	public RelativeFile(String fileName, Persistor<E> persistor)
-			throws DataAccessException {
+			throws DataAccessException, PersistanceException {
 		super(fileName,persistor.getDataSize(),persistor);
 	}
 
@@ -37,7 +37,7 @@ public class RelativeFile<E> extends AbstractBloquedFile<E> {
 				throw new DataAccessException("Error insertando elemento",e);
 			}
 		}else{
-			throw new PersistanceException("El tama�o del elemento supera la del bloque.");
+			throw new PersistanceException("El tamano del elemento supera la del bloque.");
 		}
 	}
 
@@ -79,7 +79,7 @@ public class RelativeFile<E> extends AbstractBloquedFile<E> {
 				throw new DataAccessException("Error modificando elemento: "+newElement.toString(),e);
 			}
 		}else{
-			throw new PersistanceException("El tama�o del elemento supera la del bloque.");
+			throw new PersistanceException("El tamano del elemento supera la del bloque.");
 		}
 	}
 

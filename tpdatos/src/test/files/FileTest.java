@@ -12,16 +12,13 @@ public class FileTest {
 		//read();
 		BytePersistor persistor= new BytePersistor();
 
+		try {	
 			File<Byte> file= new SecuencialFile<Byte>("datos.bin",persistor);
-			try {
-				file.add(new Byte((byte)7));
-				file.add(new Byte((byte)8));
-				file.add(new Byte((byte)9));
-				file.add(new Byte((byte)10));
-			} catch (PersistanceException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			file.add(new Byte((byte)7));
+			file.add(new Byte((byte)8));
+			file.add(new Byte((byte)9));
+			file.add(new Byte((byte)10));
+		
 			Byte aux= file.get(0);
 			if (aux.equals(new Byte((byte)7))){
 				System.out.println("1 comparacion correcta");
@@ -53,17 +50,16 @@ public class FileTest {
 			}else{
 				System.out.println("5 comparacion fallo");
 			}			
-			try {
-				file.add(new Byte((byte)15));
-			} catch (PersistanceException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			file.add(new Byte((byte)15));
 			aux= file.get(1);
 			if (aux.equals(new Byte((byte)15))){
 				System.out.println("6 comparacion correcta");
 			}else{
 				System.out.println("6 comparacion fallo");
-			}			
+			}
+		} catch (PersistanceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

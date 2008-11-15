@@ -68,8 +68,6 @@ public class StackFile<E> implements Stack<E>{
 		try {
 			this.dataFile.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 }

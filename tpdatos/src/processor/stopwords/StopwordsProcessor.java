@@ -13,18 +13,19 @@ import java.util.List;
 import processor.utils.DigesterUtils;
 import utils.Constants;
 import dto.WordDto;
+import exceptions.BusinessException;
 
 public class StopwordsProcessor {
 
 	List<WordDto> stopwords = null;
 	
-	public StopwordsProcessor() {
+	public StopwordsProcessor() throws BusinessException {
 		prepareStopwords();
 		Collections.sort(stopwords);
 	}
 	
 	@SuppressWarnings("deprecation")
-	public void prepareStopwords()  {
+	public void prepareStopwords() throws BusinessException  {
 		stopwords = new ArrayList<WordDto>();
 		
 	    File file = new File(Constants.FILE_STOPWORDS);
@@ -53,9 +54,9 @@ public class StopwordsProcessor {
 			dis.close();
 
 		} catch (FileNotFoundException e) {
-		  e.printStackTrace();
+			throw new BusinessException("Error cargando lista de stopwords.");
 		} catch (IOException e) {
-		  e.printStackTrace();
+			throw new BusinessException("Error cargando lista de stopwords.");
 		}		
 		
 	}

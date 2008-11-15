@@ -38,8 +38,6 @@ public class search extends HttpServlet {
 		try {
 			out.println(doHtmlBody(request,response));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		out.println(doHtmlFooter(request,response));
 		out.println("</body>");

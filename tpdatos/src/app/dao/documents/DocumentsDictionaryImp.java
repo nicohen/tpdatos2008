@@ -22,9 +22,12 @@ public class DocumentsDictionaryImp implements DocumentsDictionary {
 	RelativeFile<DocumentDto> relativeFile = null;
 	SecuentialFile<String> nameFile;
 	public DocumentsDictionaryImp( String relativeFileName, String namesFileName) throws DataAccessException {
-
-		relativeFile = new RelativeFile<DocumentDto>(relativeFileName,new DocumentInfoPersistor());
-		nameFile=new SecuentialFile<String>(namesFileName,new DocumentDataPersistor());
+		try {
+			relativeFile = new RelativeFile<DocumentDto>(relativeFileName,new DocumentInfoPersistor());
+			nameFile=new SecuentialFile<String>(namesFileName,new DocumentDataPersistor());
+		} catch (PersistanceException e) {
+			throw new DataAccessException("Error inicializando archivos para el diccionario.",e);
+		}
 	}
 	
 	@Override

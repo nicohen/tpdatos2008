@@ -20,7 +20,11 @@ public class BufferedRelativeFile<E> implements File<E> {
 	
 	public BufferedRelativeFile(String fileName,Persistor<E> persistor,int bufferSize) throws DataAccessException {
 		super();
-		this.file= new RelativeFile<E>(fileName,persistor);
+		try {
+			this.file= new RelativeFile<E>(fileName,persistor);
+		} catch (PersistanceException e) {
+			throw new DataAccessException("",e);
+		}
 		this.bufferSize=bufferSize;
 		this.bufferLength=bufferSize/persistor.getDataSize();
 		if (this.bufferSize<1){
@@ -39,7 +43,6 @@ public class BufferedRelativeFile<E> implements File<E> {
 
 	@Override
 	public void delete() {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
@@ -75,19 +78,15 @@ public class BufferedRelativeFile<E> implements File<E> {
 		}
 	}
 
-	private void ajustBuffer(int bufferLength2){
+	private void ajustBuffer(int bufferLength2) throws DataAccessException{
 		try {
 			BufferBlock<E> block= this.buffer.get(this.bufferLength);
 			if (block.isDirty()){
 				this.file.update(block.getPosition(),block.getElement());
 			}
 			this.buffer.remove(this.bufferLength);
-		} catch (DataAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (PersistanceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new DataAccessException("Error desalojando del buffer.",e);
 		}
 	}
 
@@ -111,8 +110,6 @@ public class BufferedRelativeFile<E> implements File<E> {
 
 	@Override
 	public void remove(int elementId) throws DataAccessException {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -146,11 +143,7 @@ public class BufferedRelativeFile<E> implements File<E> {
 				try {
 					this.file.update(block.getPosition(),block.getElement());
 				} catch (DataAccessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				} catch (PersistanceException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}
 			}
 		}
