@@ -121,7 +121,6 @@ public class IndexImp implements Index {
 						lastGammaBlock.encodeDistance(diferencia);
 						manager.add(lastGammaBlock,docBlockId.getValue());
 					} catch (PersistanceException e1) {
-						
 						throw new BusinessException("Codigo gamma demasiado grande",e1);
 					}
 				}
@@ -176,7 +175,6 @@ public class IndexImp implements Index {
 		try {
 			index = manager.add(new GammaDistancesBlock(blockSize-4));
 		} catch (PersistanceException e) {
-			// TODO Auto-generated catch block
 			throw new DataAccessException("Error al instanciar GammaDistancesBlock",e);
 		}
 		DocumentIndexKey newBlockId=new DocumentIndexKey(index);

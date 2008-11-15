@@ -39,7 +39,7 @@ public class DocumentsIndexer {
 	private StopwordsProcessor stopwordsProcessor;
 	private StemmingProcessor stemmingProcessor;
 
-	public DocumentsIndexer(IQueryEngine pqueryEngine) {
+	public DocumentsIndexer(IQueryEngine pqueryEngine) throws BusinessException {
 		//queryEngine = new DefaultQueryEngine();
 		this.queryEngine = pqueryEngine;
 		//Inicializo las stopwords y las ordeno alfabeticamente y por cantidad de palabras ascendente

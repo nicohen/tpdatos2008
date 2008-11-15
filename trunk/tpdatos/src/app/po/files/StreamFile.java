@@ -14,7 +14,11 @@ public class StreamFile {
 	
 	public StreamFile( String path, Persistor<Byte> persistor , Byte separator ) throws DataAccessException {
 		this.separator = separator;
-		relativo = new RelativeFile<Byte>(path,persistor);
+		try {
+			relativo = new RelativeFile<Byte>(path,persistor);
+		} catch (PersistanceException e) {
+			throw new DataAccessException("",e);
+		}
 	}
 	
 	// devuelve la direccion a donde agrego la secuencia
@@ -40,7 +44,6 @@ public class StreamFile {
 			relativo.add(this.separator);
 
 		} catch (PersistanceException e1) {
-			// TODO Auto-generated catch block
 			throw new DataAccessException();
 		}
 		

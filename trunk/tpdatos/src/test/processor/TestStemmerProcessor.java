@@ -2,10 +2,11 @@ package test.processor;
 
 import junit.framework.TestCase;
 import processor.stemming.StemmingProcessor;
+import exceptions.BusinessException;
 
 
 public class TestStemmerProcessor extends TestCase {
-	private StemmingProcessor stemmer = new StemmingProcessor();
+	private StemmingProcessor stemmer;
 	
 	public TestStemmerProcessor() {
 		stemmer.addSuffix("ando");
@@ -14,6 +15,11 @@ public class TestStemmerProcessor extends TestCase {
 		stemmer.addSuffix("emo");
 		stemmer.addSuffix("aras");
 		stemmer.addSuffix("emos");
+		try {
+			stemmer = new StemmingProcessor();
+		} catch (BusinessException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private void eq( String str1, String str2 ) {

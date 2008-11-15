@@ -14,9 +14,8 @@ public class TreeDumper {
 			BPlusTreeBo bo= new BPlusTreeBoImp(Constants.BPLUS_FILE_PATH,0);
 			bo.dump();
 		} catch (DataAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("/n Error al intentar mostra el Arbol.");
 		}
-}
+	}
 
 }

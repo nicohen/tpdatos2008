@@ -17,7 +17,7 @@ public class SecuencialFile<E> extends AbstractBloquedFile<E> {
 	private static final byte REMOVED_ELEMENT= (byte) 0xFF;
 	private static final byte VALID_ELEMENT= (byte) 0x00;
 	
-	public SecuencialFile(String fileName, Persistor<E> persistor) throws DataAccessException{
+	public SecuencialFile(String fileName, Persistor<E> persistor) throws DataAccessException, PersistanceException{
 		super(fileName,persistor.getDataSize()+1,persistor);
 		freeSpacesStack= new StackFile<Integer>(fileName+".fss",new IntegerPersistor());
 	}

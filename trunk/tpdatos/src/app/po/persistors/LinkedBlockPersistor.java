@@ -44,7 +44,6 @@ public class LinkedBlockPersistor<E> extends MaxSizeAbstractPersistor<LinkedBloc
 		try {
 			stream.writeInt(element.getNextBlock());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			throw new PersistanceException();
 		}
 		

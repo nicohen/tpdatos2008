@@ -13,18 +13,19 @@ import java.util.List;
 import processor.utils.DigesterUtils;
 import utils.Constants;
 import dto.SuffixDto;
+import exceptions.BusinessException;
 
 public class StemmingProcessor {
 	
 	List<SuffixDto> suffixList = new ArrayList<SuffixDto>();;
 	
-	public StemmingProcessor() {
+	public StemmingProcessor() throws BusinessException {
 		prepareSuffixes();
 		Collections.sort(suffixList);
 	}
 	
 	@SuppressWarnings("deprecation")
-	private void prepareSuffixes() {
+	private void prepareSuffixes() throws BusinessException {
 		
 	    File file = new File(Constants.FILE_STEMMING);
 	    FileInputStream fis = null;
@@ -49,9 +50,9 @@ public class StemmingProcessor {
 			dis.close();
 
 		} catch (FileNotFoundException e) {
-		  e.printStackTrace();
+			throw new BusinessException("Error cargando lista de sufijos para stemming.");
 		} catch (IOException e) {
-		  e.printStackTrace();
+			throw new BusinessException("Error cargando lista de sufijos para stemming.");
 		}		
 	}
 

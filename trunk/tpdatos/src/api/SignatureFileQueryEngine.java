@@ -20,6 +20,7 @@ import dto.DocumentDto;
 import dto.SignatureFileDto;
 import exceptions.BusinessException;
 import exceptions.DataAccessException;
+import exceptions.PersistanceException;
 
 
 public class SignatureFileQueryEngine implements IQueryEngine{
@@ -30,7 +31,11 @@ public class SignatureFileQueryEngine implements IQueryEngine{
 	public SignatureFileQueryEngine() throws DataAccessException{
 		this.dicc= new DocumentsDictionaryImp(Constants.FILE_SIGNATURE_FILES_INDEXED_DOCS,"document_signature_names.txt");
 		Persistor<SignatureFileDto> sfPersistor= new SignatureFilePersistor();
-		this.signatureFiles= new RelativeFile<SignatureFileDto>(Constants.SIGNATURE_FILE_PATH,sfPersistor);
+		try {
+			this.signatureFiles= new RelativeFile<SignatureFileDto>(Constants.SIGNATURE_FILE_PATH,sfPersistor);
+		} catch (PersistanceException e) {
+			throw new DataAccessException("",e);
+		}
 	}
 	
 	public List<DocumentDto> executeQuery(String consulta) throws BusinessException {
@@ -107,7 +112,7 @@ public class SignatureFileQueryEngine implements IQueryEngine{
 		return str == null || str.length() == 0;
 	}
 
-	private static int countMatches(String str, String sub) {
+	private static int countMatches(String str, String sub) throws BusinessException {
 		StemmingProcessor stemmer = new StemmingProcessor();
 		if (isEmpty(str) || isEmpty(sub)) {
 			return 0;

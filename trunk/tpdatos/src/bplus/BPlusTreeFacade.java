@@ -35,7 +35,7 @@ public class BPlusTreeFacade {
 		try {
 			bo.dump();
 		} catch(DataAccessException e) {
-			throw new BusinessException("",e);
+			throw new BusinessException("Error al recorrer el arbol.",e);
 		}
 	}
 	

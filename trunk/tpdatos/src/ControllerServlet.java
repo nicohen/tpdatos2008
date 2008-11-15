@@ -36,8 +36,6 @@ public class ControllerServlet extends HttpServlet {
 		try {
 			out.println(doContent(request,response));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		out.println(doHtmlFooter(request,response));
 		out.println("</body>");

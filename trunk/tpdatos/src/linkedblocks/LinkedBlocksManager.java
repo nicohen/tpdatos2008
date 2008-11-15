@@ -16,29 +16,27 @@ public class LinkedBlocksManager<E> {
 	
 	
 	public LinkedBlocksManager(String path,Persistor<LinkedBlock<E>> persistor) throws DataAccessException{
-		archivo=new RelativeFile<LinkedBlock<E>>(path, persistor );
+		try {
+			archivo=new RelativeFile<LinkedBlock<E>>(path, persistor );
+		} catch (PersistanceException e) {
+			throw new DataAccessException("Error inicializando LinkedBlocksManager.",e);
+		}
 	}
 	
 	// obtiene toda la lista de linked blocks
-	public Iterator<E> get(int blockId){
+	public Iterator<E> get(int blockId) throws DataAccessException{
 		
 		LinkedBlock<E> reg;
 		//Iterator<E> it;
 	
 		ArrayList<E> listaRet=new ArrayList<E>();
-		try {
-			reg=archivo.get(blockId);
-			listaRet.add(reg.getElem());
+		reg=archivo.get(blockId);
+		listaRet.add(reg.getElem());
 
-			while (reg.getNextBlock()!=0){
-				reg=archivo.get(reg.getNextBlock());
-				listaRet.add(reg.getElem());
-			}
-		} catch (DataAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		while (reg.getNextBlock()!=0){
+			reg=archivo.get(reg.getNextBlock());
+			listaRet.add(reg.getElem());
 		}
-		
 		return listaRet.iterator();
 	}
 	
@@ -49,7 +47,6 @@ public class LinkedBlocksManager<E> {
 		try {
 			return archivo.add(regAux);
 		} catch (DataAccessException e) {
-			// TODO Auto-generated catch block
 			throw new PersistanceException( "",e);
 		}
 	}
@@ -105,8 +102,7 @@ public class LinkedBlocksManager<E> {
 			
 			
 		} catch (DataAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new PersistanceException("",e);
 		}
 		
 	}
