@@ -55,17 +55,17 @@ public class StatisticsGenerator {
 		strB.append("----------").append("\n");
 		for(Entry<DocumentDto,DocumentStatisticsDto> documentEntry : stats.getDocumentsStatistics().entrySet()) {
 			DocumentStatisticsDto statistic = documentEntry.getValue();
-			strB.append("[DOCUMENT: ").append(documentEntry.getKey().getFileName()).append(", WORDS: ").append(statistic.getWordsQuantity()).append(", INDEX TIME: ").append(statistic.getIndexTime()/1000).append(" seg.]\n");
+			strB.append("[DOCUMENT: ").append(documentEntry.getKey().getFileName()).append(", WORDS: ").append(statistic.getWordsQuantity()).append(", INDEX TIME: ").append(statistic.getIndexTime()).append(" mseg.]\n");
 			totalTime+=statistic.getIndexTime();
 			totalWords+=statistic.getWordsQuantity();
 		}
 		strB.append("\n");
 		strB.append("Estadisticas generales").append("\n");
 		strB.append("----------------------").append("\n");
-		strB.append("Cantidad total de Bytes leidos............ ").append(stats.getReadedBytes()/1024).append(" KB\n");
-		strB.append("Cantidad total de Bytes escritos.......... ").append(stats.getWrittenBytes()/1024).append(" KB\n");
+		strB.append("Cantidad total de Bytes leidos............ ").append(stats.getReadedBytes()).append(" bytes\n");
+		strB.append("Cantidad total de Bytes escritos.......... ").append(stats.getWrittenBytes()).append(" bytes\n");
 		strB.append("Cantidad total de terminos................ ").append(totalWords).append("\n");
-		strB.append("Cantidad total de tiempo de indexacion.... ").append(totalTime/1000).append(" seg.");
+		strB.append("Cantidad total de tiempo de indexacion.... ").append(totalTime).append(" mseg.");
 		
 		return strB.toString(); 
 	}
