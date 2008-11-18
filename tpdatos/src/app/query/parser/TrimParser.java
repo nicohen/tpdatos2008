@@ -1,10 +1,15 @@
 package app.query.parser;
 
+import api.query.parser.Parser;
 import api.query.tree.Query;
 import app.query.parser.exception.CantDigestException;
 import app.query.parser.exception.ParserException;
 
 public class TrimParser extends RecursiveParser {
+
+	public TrimParser(Parser recur) {
+		super(recur);
+	}
 
 	public Query parse(String str) throws ParserException {
 		
