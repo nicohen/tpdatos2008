@@ -8,10 +8,10 @@ import api.query.tree.Query;
 
 public class QueryWord implements Query {
 
-	private WordDto word;
+	private String word;
 	
-	public QueryWord( WordDto dto ) {
-		this.word = dto; 
+	public QueryWord( String str ) {
+		this.word = str; 
 	}
 	
 	public Iterator<Integer> execute() {
