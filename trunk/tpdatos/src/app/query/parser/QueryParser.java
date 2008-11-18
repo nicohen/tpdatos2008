@@ -3,6 +3,8 @@ package app.query.parser;
 public class QueryParser extends CompositeParser {
 
 	public QueryParser() {
+		this.add(new ParentesisParser(this) );
+		this.add(new TrimParser(this) );
 		this.add(new QueryWordParser() );
 	}
 
