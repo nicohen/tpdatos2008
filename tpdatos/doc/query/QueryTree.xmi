@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<XMI xmlns:UML="http://schema.omg.org/spec/UML/1.3" verified="false" timestamp="2008-11-17T22:33:07" xmi.version="1.2" >
+<XMI xmlns:UML="http://schema.omg.org/spec/UML/1.3" verified="false" timestamp="2008-11-17T22:40:09" xmi.version="1.2" >
  <XMI.header>
   <XMI.documentation>
    <XMI.exporter>umbrello uml modeller http://uml.sf.net</XMI.exporter>
@@ -61,22 +61,43 @@
       <UML:Abstraction isSpecification="false" visibility="public" namespace="Logical View" xmi.id="CDZHjq6hCw8g" client="hRgLAfGlU40T" name="" supplier="iClQzgk0LHfO" />
       <UML:Association isSpecification="false" visibility="public" namespace="Logical View" xmi.id="Fu0Rp66w518K" name="" >
        <UML:Association.connection>
-        <UML:AssociationEnd isSpecification="false" visibility="public" changeability="changeable" isNavigable="true" xmi.id="tmjhbtSnigzy" aggregation="aggregate" type="hqKKWuMtwU1e" name="" />
-        <UML:AssociationEnd isSpecification="false" visibility="public" changeability="changeable" isNavigable="true" xmi.id="JJQKjhnIgxEu" aggregation="none" type="iClQzgk0LHfO" name="" multiplicity="0.*" />
+        <UML:AssociationEnd isSpecification="false" visibility="public" changeability="changeable" isNavigable="true" xmi.id="ws4mdXGMJQFb" aggregation="aggregate" type="hqKKWuMtwU1e" name="" />
+        <UML:AssociationEnd isSpecification="false" visibility="public" changeability="changeable" isNavigable="true" xmi.id="zMfgIGFm9JTw" aggregation="none" type="iClQzgk0LHfO" name="" multiplicity="0.*" />
        </UML:Association.connection>
       </UML:Association>
+      <UML:Class isSpecification="false" isLeaf="false" visibility="public" namespace="Logical View" xmi.id="ozejhJaNFlRV" isRoot="false" isAbstract="false" name="AndOperatorQuery" >
+       <UML:GeneralizableElement.generalization>
+        <UML:Generalization xmi.idref="ZD3pgthQbdwH" />
+       </UML:GeneralizableElement.generalization>
+       <UML:Classifier.feature>
+        <UML:Operation isSpecification="false" isLeaf="false" visibility="public" xmi.id="bAXjZW4srGLF" isRoot="false" isAbstract="false" isQuery="false" name="execute" />
+       </UML:Classifier.feature>
+      </UML:Class>
+      <UML:Class isSpecification="false" isLeaf="false" visibility="public" namespace="Logical View" xmi.id="woxtdfWl0U61" isRoot="false" isAbstract="false" name="OrOperatorQuery" >
+       <UML:GeneralizableElement.generalization>
+        <UML:Generalization xmi.idref="bZ3ADyPMLGs6" />
+       </UML:GeneralizableElement.generalization>
+       <UML:Classifier.feature>
+        <UML:Operation isSpecification="false" isLeaf="false" visibility="public" xmi.id="tvcPHwV7ITps" isRoot="false" isAbstract="false" isQuery="false" name="execute" />
+       </UML:Classifier.feature>
+      </UML:Class>
+      <UML:Generalization isSpecification="false" child="ozejhJaNFlRV" visibility="public" namespace="Logical View" xmi.id="ZD3pgthQbdwH" parent="hqKKWuMtwU1e" discriminator="" name="" />
+      <UML:Generalization isSpecification="false" child="woxtdfWl0U61" visibility="public" namespace="Logical View" xmi.id="bZ3ADyPMLGs6" parent="hqKKWuMtwU1e" discriminator="" name="" />
      </UML:Namespace.ownedElement>
      <XMI.extension xmi.extender="umbrello" >
       <diagrams>
-       <diagram snapgrid="0" showattsig="1" fillcolor="#ffffc0" linewidth="0" zoom="100" showgrid="0" showopsig="1" usefillcolor="1" snapx="10" canvaswidth="657" snapy="10" showatts="1" xmi.id="gAfHCgKIds7X" documentation="" type="1" showops="1" showpackage="0" name="Main Tree" localid="" showstereotype="0" showscope="1" snapcsgrid="0" font="Sans Serif,10,-1,0,50,0,0,0,0,0" linecolor="#ff0000" canvasheight="574" >
+       <diagram snapgrid="0" showattsig="1" fillcolor="#ffffc0" linewidth="0" zoom="100" showgrid="0" showopsig="1" usefillcolor="1" snapx="10" canvaswidth="700" snapy="10" showatts="1" xmi.id="gAfHCgKIds7X" documentation="" type="1" showops="1" showpackage="0" name="Main Tree" localid="" showstereotype="0" showscope="1" snapcsgrid="0" font="Sans Serif,10,-1,0,50,0,0,0,0,0" linecolor="#ff0000" canvasheight="558" >
         <widgets>
-         <interfacewidget usesdiagramfillcolor="0" width="170" x="202" fillcolor="#ffffc0" y="84" drawascircle="0" showopsigs="601" linewidth="none" height="63" usefillcolor="1" showpubliconly="0" isinstance="0" xmi.id="iClQzgk0LHfO" showoperations="1" showpackage="0" showscope="1" showstereotype="1" usesdiagramusefillcolor="0" font="Sans Serif,10,-1,5,75,1,0,0,0,0" linecolor="#ff0000" />
+         <interfacewidget usesdiagramfillcolor="0" width="170" x="202" fillcolor="#ffffc0" y="84" drawascircle="0" showopsigs="601" linewidth="none" height="63" usefillcolor="1" showpubliconly="0" isinstance="0" xmi.id="iClQzgk0LHfO" showoperations="1" showpackage="0" showscope="1" showstereotype="1" usesdiagramusefillcolor="0" font="Sans Serif,10,-1,5,50,0,0,0,0,0" linecolor="#ff0000" />
          <notewidget usesdiagramfillcolor="1" width="250" x="389" fillcolor="none" y="47" linewidth="none" height="95" usefillcolor="1" isinstance="0" xmi.id="YtIu8vGzAuNT" text="el metodo execute devuelve
 un Iterator para recorrido
 secuencial de los resultados
 de la consulta" usesdiagramusefillcolor="1" font="Sans Serif,10,-1,0,50,0,0,0,0,0" linecolor="none" />
          <classwidget usesdiagramfillcolor="1" width="149" showattsigs="601" x="77" fillcolor="none" y="226" showopsigs="601" linewidth="none" height="63" usefillcolor="1" showpubliconly="0" showattributes="1" isinstance="0" xmi.id="hqKKWuMtwU1e" showoperations="1" showpackage="0" showscope="1" usesdiagramusefillcolor="1" font="Sans Serif,10,-1,0,50,0,0,0,0,0" linecolor="none" />
-         <classwidget usesdiagramfillcolor="1" width="211" showattsigs="601" x="349" fillcolor="none" y="222" showopsigs="601" linewidth="none" height="63" usefillcolor="1" showpubliconly="0" showattributes="1" isinstance="0" xmi.id="hRgLAfGlU40T" showoperations="1" showpackage="0" showscope="1" usesdiagramusefillcolor="1" font="Sans Serif,10,-1,0,50,0,0,0,0,0" linecolor="none" />
+         <classwidget usesdiagramfillcolor="1" width="211" showattsigs="601" x="485" fillcolor="none" y="223" showopsigs="601" linewidth="none" height="63" usefillcolor="1" showpubliconly="0" showattributes="1" isinstance="0" xmi.id="hRgLAfGlU40T" showoperations="1" showpackage="0" showscope="1" usesdiagramusefillcolor="1" font="Sans Serif,10,-1,0,50,0,0,0,0,0" linecolor="none" />
+         <classwidget usesdiagramfillcolor="0" width="148" showattsigs="601" x="174" fillcolor="#ffffc0" y="394" showopsigs="601" linewidth="none" height="45" usefillcolor="1" showpubliconly="0" showattributes="1" isinstance="0" xmi.id="ozejhJaNFlRV" showoperations="1" showpackage="0" showscope="1" usesdiagramusefillcolor="0" font="Sans Serif,10,-1,5,75,0,0,0,0,0" linecolor="#ff0000" />
+         <classwidget usesdiagramfillcolor="0" width="137" showattsigs="601" x="18" fillcolor="#ffffc0" y="395" showopsigs="601" linewidth="none" height="45" usefillcolor="1" showpubliconly="0" showattributes="1" isinstance="0" xmi.id="woxtdfWl0U61" showoperations="1" showpackage="0" showscope="1" usesdiagramusefillcolor="0" font="Sans Serif,10,-1,5,75,0,0,0,0,0" linecolor="#ff0000" />
+         <notewidget usesdiagramfillcolor="1" width="330" x="38" fillcolor="none" y="457" linewidth="none" height="83" usefillcolor="1" isinstance="0" xmi.id="PMA5ER6O9M9o" text="Los operadores And y Or son composites, que solo difieren en la manera en que se ejecutan las querys con esos operadores en medio" usesdiagramusefillcolor="1" font="Sans Serif,10,-1,0,50,0,0,0,0,0" linecolor="none" />
         </widgets>
         <messages/>
         <associations>
@@ -88,7 +109,7 @@ de la consulta" usesdiagramusefillcolor="1" font="Sans Serif,10,-1,0,50,0,0,0,0,
          </assocwidget>
          <assocwidget totalcounta="2" indexa="1" totalcountb="4" indexb="3" linewidth="none" widgetbid="iClQzgk0LHfO" widgetaid="hRgLAfGlU40T" xmi.id="CDZHjq6hCw8g" type="511" linecolor="none" >
           <linepath>
-           <startpoint startx="454" starty="222" />
+           <startpoint startx="590" starty="223" />
            <endpoint endx="329" endy="147" />
           </linepath>
          </assocwidget>
@@ -97,7 +118,19 @@ de la consulta" usesdiagramusefillcolor="1" font="Sans Serif,10,-1,0,50,0,0,0,0,
            <startpoint startx="176" starty="226" />
            <endpoint endx="287" endy="147" />
           </linepath>
-          <floatingtext usesdiagramfillcolor="1" width="27" x="279" fillcolor="none" y="151" linewidth="none" posttext="" role="702" height="22" usefillcolor="1" pretext="" isinstance="0" xmi.id="20uietgyA4Gs" text="0.*" usesdiagramusefillcolor="1" font="Sans Serif,10,-1,0,50,0,0,0,0,0" linecolor="none" />
+          <floatingtext usesdiagramfillcolor="1" width="27" x="279" fillcolor="none" y="151" linewidth="none" posttext="" role="702" height="22" usefillcolor="1" pretext="" isinstance="0" xmi.id="gYgnr9kvVBip" text="0.*" usesdiagramusefillcolor="1" font="Sans Serif,10,-1,0,50,0,0,0,0,0" linecolor="none" />
+         </assocwidget>
+         <assocwidget totalcounta="2" indexa="1" totalcountb="3" indexb="2" linewidth="none" widgetbid="hqKKWuMtwU1e" widgetaid="ozejhJaNFlRV" xmi.id="ZD3pgthQbdwH" type="500" linecolor="none" >
+          <linepath>
+           <startpoint startx="248" starty="394" />
+           <endpoint endx="176" endy="289" />
+          </linepath>
+         </assocwidget>
+         <assocwidget totalcounta="2" indexa="1" totalcountb="3" indexb="1" linewidth="none" widgetbid="hqKKWuMtwU1e" widgetaid="woxtdfWl0U61" xmi.id="bZ3ADyPMLGs6" type="500" linecolor="none" >
+          <linepath>
+           <startpoint startx="86" starty="395" />
+           <endpoint endx="126" endy="289" />
+          </linepath>
          </assocwidget>
         </associations>
        </diagram>
@@ -125,15 +158,21 @@ de la consulta" usesdiagramusefillcolor="1" font="Sans Serif,10,-1,0,50,0,0,0,0,
   </UML:Model>
  </XMI.content>
  <XMI.extensions xmi.extender="umbrello" >
-  <docsettings viewid="gAfHCgKIds7X" documentation="" uniqueid="20uietgyA4Gs" />
+  <docsettings viewid="gAfHCgKIds7X" documentation="" uniqueid="PMA5ER6O9M9o" />
   <listview>
    <listitem open="1" type="800" label="Views" >
     <listitem open="1" type="801" id="Logical View" >
      <listitem open="0" type="807" id="C0pslZDRgU6o" label="Iterator" />
      <listitem open="0" type="807" id="gAfHCgKIds7X" label="Main Tree" />
+     <listitem open="1" type="813" id="ozejhJaNFlRV" >
+      <listitem open="0" type="815" id="bAXjZW4srGLF" />
+     </listitem>
      <listitem open="1" type="813" id="hqKKWuMtwU1e" >
       <listitem open="0" type="815" id="ptn7SgNKpJYm" />
       <listitem open="0" type="815" id="2b4w63atwOzO" />
+     </listitem>
+     <listitem open="1" type="813" id="woxtdfWl0U61" >
+      <listitem open="0" type="815" id="tvcPHwV7ITps" />
      </listitem>
      <listitem open="1" type="813" id="hRgLAfGlU40T" >
       <listitem open="0" type="815" id="msPVNu6nohbk" />
