@@ -18,6 +18,15 @@ abstract public class CompositeQueryParser extends RecursiveParser {
 		
 		this.separator = separator; 
 	}
+	
+	private boolean acceptablePrevious( char caracter ) {
+		if (caracter == ' ' || caracter == ')') return true;
+		return false;
+	}
+	private boolean acceptableNext( char caracter ) {
+		if (caracter == ' ' || caracter == '(') return true;
+		return false;
+	}
 
 	public Query parse(String str) throws ParserException {
 		// TODO dividir la cadena por tokens, y parsear
@@ -40,12 +49,12 @@ abstract public class CompositeQueryParser extends RecursiveParser {
 					
 					int anterior = i-1;
 					int posterior = i+separator.length();
-					if (str.charAt(anterior)==' ' && str.charAt(posterior)==' ') {
+					if (acceptablePrevious( str.charAt(anterior) ) && acceptableNext( str.charAt(posterior) ) ) {
 						// agregar los dos tokens y salir
 						
 						String newtoken;
 						
-						newtoken = str.substring(0,i-1);
+						newtoken = str.substring(0,i);
 						tokens.add(newtoken);
 						
 						newtoken = str.substring(i+separator.length()+1,str.length());
