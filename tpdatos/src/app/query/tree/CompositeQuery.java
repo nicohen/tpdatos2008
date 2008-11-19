@@ -24,6 +24,10 @@ public abstract class CompositeQuery extends AbstractQuery {
 	public void dump(int ntabs) {
 		for (int i=0;i<ntabs;i++) System.out.print("\t");
 		System.out.println( operatorName() );
+		
+		for ( Query query : getQuerys() ) {
+			query.dump(ntabs+1);
+		}
 	}
 	abstract String operatorName() ;
 }
