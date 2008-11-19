@@ -24,31 +24,35 @@ abstract public class CompositeQueryParser extends RecursiveParser {
 		// recursivamente
 
 		List<String> tokens = new LinkedList<String>();
+
+		int parentesis = 0;
 		
-		for (int i=1; i<str.length()-separator.length()-1; i++) {
+		for (int i=0; i<str.length()-separator.length(); i++) {
 			
 			// TODO: ignorar el separator si esta entre parentesis
+			if (str.charAt(i)=='(') parentesis ++;
+			if (str.charAt(i)==')') parentesis --;
 			
-			// si el substring tiene el token
-			if (str.substring(i,i+separator.length() ).equals(separator) ) {
-				// y si ademas , esta rodeado por espacios
-				
-/*				System.out.println("caracter anterior: '" + str.charAt(i-1) + "'");
-				System.out.println("caracter posterior: '" + str.charAt(i+separator.length()) + "'");*/
-				int anterior = i-1;
-				int posterior = i+separator.length();
-				if (str.charAt(anterior)==' ' && str.charAt(posterior)==' ') {
-					// agregar los dos tokens y salir
+			if ( parentesis == 0 ) { 
+				// si el substring tiene el token
+				if (str.substring(i,i+separator.length() ).equals(separator) ) {
+					// y si ademas , esta rodeado por espacios
 					
-					String newtoken;
-					
-					newtoken = str.substring(0,i-1);
-					tokens.add(newtoken);
-					
-					newtoken = str.substring(i+separator.length()+1,str.length());
-					tokens.add(newtoken);
-					
-					break;
+					int anterior = i-1;
+					int posterior = i+separator.length();
+					if (str.charAt(anterior)==' ' && str.charAt(posterior)==' ') {
+						// agregar los dos tokens y salir
+						
+						String newtoken;
+						
+						newtoken = str.substring(0,i-1);
+						tokens.add(newtoken);
+						
+						newtoken = str.substring(i+separator.length()+1,str.length());
+						tokens.add(newtoken);
+						
+						break;
+					}
 				}
 			}
 		}
