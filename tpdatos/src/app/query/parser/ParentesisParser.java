@@ -12,7 +12,7 @@ public class ParentesisParser extends RecursiveParser {
 	}
 
 	public Query parse(String str) throws ParserException {
-		if (str.charAt(0) == '(' && str.charAt(str.length() ) == ')' ){
+		if (str.charAt(0) == '(' && str.charAt(str.length()-1 ) == ')' ){
 			String substr = str.substring(1, str.length()-1 ); 
 			return this.internalParse(substr);
 		}
