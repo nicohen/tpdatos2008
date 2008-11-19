@@ -36,7 +36,7 @@ public class ParserTest extends TestCase {
 		
 		parser.parse("hola and (como or estan)").dump(0);
 		
-		parser.parse("(hola and como) or estan").dump(0);
+		parser.parse("(hola and como)or estan").dump(0);
 
 	}
 }
