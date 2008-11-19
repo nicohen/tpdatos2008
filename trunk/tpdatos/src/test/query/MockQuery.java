@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import api.query.tree.Query;
+import app.query.tree.AbstractQuery;
 
-public class MockQuery implements Query {
+public class MockQuery extends AbstractQuery {
 
 	private List<Integer> lista;
 	
