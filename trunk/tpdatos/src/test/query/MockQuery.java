@@ -23,4 +23,8 @@ public class MockQuery extends AbstractQuery {
 		return lista.iterator();
 	}
 
+
+	public void dump(int ntabs) {
+	}
+
 }

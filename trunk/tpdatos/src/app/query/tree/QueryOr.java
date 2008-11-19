@@ -9,4 +9,9 @@ public class QueryOr extends CompositeQuery {
 		return null;
 	}
 
+	@Override
+	String operatorName() {
+		return "or";
+	}
+
 }
