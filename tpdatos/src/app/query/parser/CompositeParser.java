@@ -8,7 +8,7 @@ import api.query.tree.Query;
 import app.query.parser.exception.CantDigestException;
 import app.query.parser.exception.ParserException;
 
-public class CompositeParser<T> implements Parser {
+public class CompositeParser implements Parser {
 
 	private List<Parser > lista = new ArrayList<Parser>() ;
 	
