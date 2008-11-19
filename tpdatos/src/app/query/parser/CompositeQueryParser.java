@@ -32,7 +32,12 @@ abstract public class CompositeQueryParser extends RecursiveParser {
 			// si el substring tiene el token
 			if (str.substring(i,i+separator.length() ).equals(separator) ) {
 				// y si ademas , esta rodeado por espacios
-				if (str.charAt(i-1)==' ' && str.charAt(i+separator.length()+1)==' ') {
+				
+/*				System.out.println("caracter anterior: '" + str.charAt(i-1) + "'");
+				System.out.println("caracter posterior: '" + str.charAt(i+separator.length()) + "'");*/
+				int anterior = i-1;
+				int posterior = i+separator.length();
+				if (str.charAt(anterior)==' ' && str.charAt(posterior)==' ') {
 					// agregar los dos tokens y salir
 					
 					String newtoken;
