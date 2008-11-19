@@ -5,7 +5,7 @@ import java.util.List;
 
 import api.query.tree.Query;
 
-public abstract class CompositeQuery implements Query {
+public abstract class CompositeQuery extends AbstractQuery {
 	private List<Query> querys;
 
 	

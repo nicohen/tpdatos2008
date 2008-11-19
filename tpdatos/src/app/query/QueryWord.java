@@ -2,11 +2,9 @@ package app.query;
 
 import java.util.Iterator;
 
-import dto.WordDto;
+import app.query.tree.AbstractQuery;
 
-import api.query.tree.Query;
-
-public class QueryWord implements Query {
+public class QueryWord extends AbstractQuery {
 
 	private String word;
 	
