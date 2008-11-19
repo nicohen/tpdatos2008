@@ -17,4 +17,9 @@ public class QueryWord extends AbstractQuery {
 		return null;
 	}
 
+	public void dump(int ntabs) {
+		for (int i=0;i<ntabs;i++) System.out.print("\t");
+		System.out.println("Word:"+word);
+	}
+
 }

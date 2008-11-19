@@ -11,4 +11,8 @@ public interface Query {
 	
 	// ejecuta la query , pero esta vez devolviendo una lista
 	public List<Integer> executeGetList();
+	
+	
+	// metodo para debugging, hace un dump de la query en forma de tree
+	public void dump(int ntabs);
 }

@@ -9,4 +9,10 @@ public class QueryAnd extends CompositeQuery {
 		return null;
 	}
 
+	@Override
+	String operatorName() {
+		return "and";
+	}
+
+
 }
