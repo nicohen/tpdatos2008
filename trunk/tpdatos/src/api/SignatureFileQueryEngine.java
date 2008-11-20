@@ -27,10 +27,12 @@ public class SignatureFileQueryEngine implements IQueryEngine{
 
 	private DocumentsDictionary dicc;
 	private File<SignatureFileDto> signatureFiles;
+	private int firmSize;
 	
-	public SignatureFileQueryEngine() throws DataAccessException{
+	public SignatureFileQueryEngine(int firmSize) throws DataAccessException{
 		this.dicc= new DocumentsDictionaryImp(Constants.FILE_SIGNATURE_FILES_INDEXED_DOCS,"document_signature_names.txt");
 		Persistor<SignatureFileDto> sfPersistor= new SignatureFilePersistor();
+		this.firmSize=firmSize;
 		try {
 			this.signatureFiles= new RelativeFile<SignatureFileDto>(Constants.SIGNATURE_FILE_PATH,sfPersistor);
 		} catch (PersistanceException e) {
@@ -40,7 +42,7 @@ public class SignatureFileQueryEngine implements IQueryEngine{
 	
 	public List<DocumentDto> executeQuery(String consulta) throws BusinessException {
 		List<DocumentDto> candidatos= new ArrayList<DocumentDto>();
-		SignatureFileDto wordSignature= SignatureUtils.getSignature(consulta);
+		SignatureFileDto wordSignature= SignatureUtils.getSignature(consulta,this.firmSize);
 		int size= this.signatureFiles.getSize();
 		try {
 			for(int i=0;i<size;i++){
@@ -79,22 +81,24 @@ public class SignatureFileQueryEngine implements IQueryEngine{
 	public DocumentInsert prepareDocumentInsert(String documento) throws BusinessException {
 		// TODO Auto-generated method stub
 		Integer id = dicc.insertDocument(new DocumentDto(documento));
-		return new SignatureFileDocumentInsert(id,signatureFiles);
+		return new SignatureFileDocumentInsert(id,signatureFiles,firmSize);
 	}
 	
 	class SignatureFileDocumentInsert implements DocumentInsert {
 		private Integer docid;
 		private File<SignatureFileDto> signatureFiles;
 		private SignatureFileDto documentSignature;
+		private int firmSize;
 		
-		public SignatureFileDocumentInsert (Integer docid,File<SignatureFileDto> signatureFiles ) {
+		public SignatureFileDocumentInsert (Integer docid,File<SignatureFileDto> signatureFiles, int firmSize ) {
 			this.docid = docid;
 			this.signatureFiles= signatureFiles;
-			this.documentSignature= SignatureUtils.getEmptySignature(docid);
+			this.documentSignature= SignatureUtils.getEmptySignature(docid,firmSize);
+			this.firmSize= firmSize;
 		}
 		
 		public void insertWord(String word) {
-			SignatureFileDto wordSignature= SignatureUtils.getSignature(word);
+			SignatureFileDto wordSignature= SignatureUtils.getSignature(word,firmSize);
 			this.documentSignature= SignatureUtils.OR(documentSignature,wordSignature);
 		}
 
@@ -127,7 +131,6 @@ public class SignatureFileQueryEngine implements IQueryEngine{
 				count++;
 			}
 		}
-
 		return count;
 	}
 }

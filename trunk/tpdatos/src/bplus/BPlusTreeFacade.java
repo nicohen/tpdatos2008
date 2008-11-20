@@ -14,8 +14,8 @@ public class BPlusTreeFacade {
 
 	private BPlusTreeBo bo;
 	
-	public BPlusTreeFacade() throws DataAccessException {
-		bo = this.createBo();
+	public BPlusTreeFacade(int nodeSize) throws DataAccessException {
+		bo = this.createBo(nodeSize);
 	}
 	
 	public DocumentIndexKey getElement( String key ) throws KeyNotFoundException, DataAccessException {
@@ -39,7 +39,7 @@ public class BPlusTreeFacade {
 		}
 	}
 	
-	protected BPlusTreeBo createBo() throws DataAccessException{
-		return new BPlusTreeBoImp(Constants.BPLUS_FILE_PATH,Constants.BPLUS_FILE_SIZE);
+	protected BPlusTreeBo createBo(int nodeSize) throws DataAccessException{
+		return new BPlusTreeBoImp(Constants.BPLUS_FILE_PATH,nodeSize);
 	}
 }
