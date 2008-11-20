@@ -5,15 +5,19 @@ import java.util.Iterator;
 import java.util.List;
 
 import processor.IndexedDocumentChecker;
+import processor.stemming.StemmingProcessor;
 import api.dao.documents.DocumentsDictionary;
 import api.query.tree.Query;
 import app.query.QueryWord;
 import app.query.parser.QueryParser;
 import app.query.parser.QueryWordParser;
 import app.query.parser.exception.ParserException;
-import app.query.tree.AbstractQuery;
 import dto.DocumentDto;
 import exceptions.BusinessException;
+
+import processor.stemming.StemmingProcessor;
+import processor.stopwords.StopwordsProcessor;
+import processor.utils.DigesterUtils;
 
 public class QueryEngine implements IQueryEngine {
 
@@ -58,8 +62,37 @@ public class QueryEngine implements IQueryEngine {
 	
 	class DefaultQueryWordParser extends QueryWordParser {
 
+		private StemmingProcessor sp;
+		private StopwordsProcessor sw;
+		
+		public DefaultQueryWordParser()  {
+			try {
+				this.sp = new StemmingProcessor();
+				//Inicializo diccionario de stopwords
+				this.sw = new StopwordsProcessor();
+			} catch (BusinessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
 		@Override
-		public QueryWord create(String word) {
+		public QueryWord create(String unProcessedWord) {
+			
+			// procesar la palabra con DigesterUtils
+			String word = DigesterUtils.formatText(unProcessedWord).trim();
+			
+			if (sw != null) {
+				if ( sw.isStopword(word )) {
+					// FIXME: que hacer si es un stopword ??
+				}
+			}
+			
+			if (sp != null) {
+				// TODO: controlar este error
+				word = sp.stem(word);
+			}
+			
 			return new DefaultQueryWord(word);
 		}
 		
