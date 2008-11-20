@@ -6,13 +6,15 @@ import app.query.QueryWord;
 import app.query.parser.exception.ParserException;
 import app.query.parser.exception.CantDigestException;
 
-public class QueryWordParser implements Parser {
+abstract public class QueryWordParser implements Parser {
 
 	public Query parse(String str) throws ParserException {
 		
 		if (str.equals("") ) throw new CantDigestException();
 		// todo es un word, para este parser
-		return new QueryWord( str );
+		return create(str);
 	}
+	
+	abstract public QueryWord create(String word); 
 
 }
