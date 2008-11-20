@@ -39,16 +39,7 @@ public class SearchEngine {
 		//Inicializo diccionario de stopwords
 		StopwordsProcessor sw = new StopwordsProcessor();
 		//Inicializo diccionario de stemming
-		StemmingProcessor sp = new StemmingProcessor();
-
-		//Normalizo el termino de busqueda (Case Folding, stopwords, stemming, etc)
-		word = DigesterUtils.formatText(word).trim();
-
-		String stemmedWord;
-		//Chequeo que el termino ingresado no sea un stopword
 		if(!sw.isStopword(word)) {
-			//Aplico stemming al termino
-			stemmedWord = sp.stem(word);
 		} else {
 			System.out.println("El termino ingresado ["+word+"] es un stopword, ingreselo nuevamente");
 			return;
@@ -57,7 +48,7 @@ public class SearchEngine {
 		//Realizo la consulta del termino
 
 		//Muestro los documentos en los que aparece
-		List<DocumentDto> documentsFound = engine.executeQuery(stemmedWord);
+		List<DocumentDto> documentsFound = engine.executeQuery(word);
 		int size = documentsFound.size();
 		if(size==0) {
 			System.out.println("El termino ["+word+"] no corresponde a ningun documento.");
