@@ -21,5 +21,9 @@ public class QueryWord extends AbstractQuery {
 		for (int i=0;i<ntabs;i++) System.out.print("\t");
 		System.out.println("Word:"+word);
 	}
+	
+	public String getWord() {
+		return word;
+	}
 
 }
