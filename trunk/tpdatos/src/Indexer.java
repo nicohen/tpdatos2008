@@ -23,6 +23,7 @@ import dto.StopwordsPipelineDto;
 import dto.WordDto;
 
 import exceptions.BusinessException;
+import exceptions.DataAccessException;
 import exceptions.PipelineOverflowException;
 
 import api.DefaultQueryEngine;
@@ -63,8 +64,13 @@ public class Indexer extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String method= request.getParameter("method");
 		String size= request.getParameter("size");
-		IQueryEngine engine = getQueryEngine(method, size);
-		Statistics stats=indexPath(Constants.FOLDER_DOCUMENTS, engine);
+		try {
+			IQueryEngine engine = getQueryEngine(method, size);
+			Statistics stats=indexPath(Constants.FOLDER_DOCUMENTS, engine);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	
@@ -188,12 +194,12 @@ public class Indexer extends HttpServlet {
 		return statistics.getStatistics();
 	}
 	
-	private IQueryEngine getQueryEngine(String method, String size){
+	private IQueryEngine getQueryEngine(String method, String size) throws BusinessException{
 		int blockSize= Integer.parseInt(size);
 		if(SIGNATURE_FILE.equals(method)){
-			return new SignatureFileQueryEngine(blockSize);
+			return new SignatureFileQueryEngine();
 		}else if(INDICE_INVERTIDO.equals(method)){
-			return new DefaultQueryEngine(blockSize);
+			return new DefaultQueryEngine();
 		}
 		throw new BusinessException("Tipo de methodo ("+ method +") desconocido.");
 	}
