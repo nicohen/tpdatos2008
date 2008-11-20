@@ -1,5 +1,6 @@
 package test.index;
 
+import utils.Constants;
 import app.bo.IndexImp;
 import exceptions.BusinessException;
 
@@ -11,7 +12,7 @@ public class TestIndexImp extends TestIndex {
 
 	@Override
 	protected IndexImp createTestObject() throws BusinessException {
-		return new IndexImp("index.bin", 4096) ;
+		return new IndexImp("index.bin", 4096,Constants.BPLUS_FILE_SIZE) ;
 	}
 
 
