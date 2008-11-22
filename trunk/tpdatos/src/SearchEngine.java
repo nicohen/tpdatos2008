@@ -3,9 +3,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
-import processor.stemming.StemmingProcessor;
 import processor.stopwords.StopwordsProcessor;
-import processor.utils.DigesterUtils;
+import utils.Constants;
 import api.IQueryEngine;
 import dto.DocumentDto;
 import dto.DocumentsReportDto;
@@ -37,7 +36,7 @@ public class SearchEngine {
 		
 		long c1 = System.currentTimeMillis();
 		//Inicializo diccionario de stopwords
-		StopwordsProcessor sw = new StopwordsProcessor();
+		StopwordsProcessor sw = new StopwordsProcessor(Constants.FILE_STOPWORDS);
 		//Inicializo diccionario de stemming
 		if(!sw.isStopword(word)) {
 		} else {

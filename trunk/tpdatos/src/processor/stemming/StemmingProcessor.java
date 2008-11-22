@@ -11,7 +11,6 @@ import java.util.Collections;
 import java.util.List;
 
 import processor.utils.DigesterUtils;
-import utils.Constants;
 import dto.SuffixDto;
 import exceptions.BusinessException;
 
@@ -19,15 +18,15 @@ public class StemmingProcessor {
 	
 	List<SuffixDto> suffixList = new ArrayList<SuffixDto>();;
 	
-	public StemmingProcessor() throws BusinessException {
-		prepareSuffixes();
+	public StemmingProcessor(String listPath) throws BusinessException {
+		prepareSuffixes(listPath);
 		Collections.sort(suffixList);
 	}
 	
 	@SuppressWarnings("deprecation")
-	private void prepareSuffixes() throws BusinessException {
+	private void prepareSuffixes(String listPath) throws BusinessException {
 		
-	    File file = new File(Constants.FILE_STEMMING);
+	    File file = new File(listPath);
 	    FileInputStream fis = null;
 	    BufferedInputStream bis = null;
 	    DataInputStream dis = null;

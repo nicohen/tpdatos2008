@@ -117,7 +117,7 @@ public class SignatureFileQueryEngine implements IQueryEngine{
 	}
 
 	private static int countMatches(String str, String sub) throws BusinessException {
-		StemmingProcessor stemmer = new StemmingProcessor();
+		StemmingProcessor stemmer = new StemmingProcessor(Constants.FILE_STEMMING);
 		if (isEmpty(str) || isEmpty(sub)) {
 			return 0;
 		}
