@@ -78,6 +78,9 @@ public class ParserTest extends TestCase {
 	
 	private void processLine () throws IOException, ExitException {
 
+		
+		System.out.print("Ingrese consulta booleana (ingrese exit para salir): ");
+		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String strquery = br.readLine();
 
@@ -92,6 +95,8 @@ public class ParserTest extends TestCase {
 			System.out.println("Error en el parseo, sintaxis invalida");
 	
 		}
+		
+		System.out.println();
 		
 		
 		
