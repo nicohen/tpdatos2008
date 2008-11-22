@@ -15,7 +15,6 @@ import app.query.parser.exception.ParserException;
 import dto.DocumentDto;
 import exceptions.BusinessException;
 
-import processor.stemming.StemmingProcessor;
 import processor.stopwords.StopwordsProcessor;
 import processor.utils.DigesterUtils;
 
@@ -49,13 +48,15 @@ public class QueryEngine implements IQueryEngine {
 		public DefaultQueryWord(String str) {
 			super(str);
 		}
-		public List<Integer> execute() {
+
+		public Iterator<Integer> iterator() {
 			try {
 				return QueryEngine.this.queryWord( this.getWord() );
 			} catch (BusinessException e) {
+					// TODO: tratar mejor la excepcion
 			}
 			List<Integer> lista=new ArrayList<Integer>();
-			return lista;
+			return lista.iterator();
 		}
 		
 	}
@@ -98,8 +99,8 @@ public class QueryEngine implements IQueryEngine {
 		
 	}
 	
-	private List<Integer> queryWord( String word ) throws BusinessException {
-		return indice.getDocuments(word);
+	private Iterator<Integer> queryWord( String word ) throws BusinessException {
+		return indice.getDocuments(word).iterator();
 				
 	}
 
@@ -119,7 +120,7 @@ public class QueryEngine implements IQueryEngine {
 			Query query = queryParser.parse(consulta);
 			
 			List<DocumentDto> listaRet=new ArrayList<DocumentDto>();
-			Iterator<Integer> documentos = query.getIterator();
+			Iterator<Integer> documentos = query.iterator();
 			
 			while (documentos.hasNext() ) { 
 				Integer docId = documentos.next();

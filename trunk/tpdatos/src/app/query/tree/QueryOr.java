@@ -5,14 +5,14 @@ import java.util.List;
 
 public class QueryOr extends CompositeQuery {
 
-	public List<Integer> execute() {
-		// TODO
-		return null;
-	}
-
 	@Override
 	String operatorName() {
 		return "or";
+	}
+
+	public Iterator<Integer> iterator() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

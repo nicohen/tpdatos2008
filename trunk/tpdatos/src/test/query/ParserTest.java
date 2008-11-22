@@ -3,8 +3,7 @@ package test.query;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.List;
-
+import java.util.Iterator;
 import api.query.tree.Query;
 import app.query.QueryWord;
 import app.query.parser.QueryParser;
@@ -22,7 +21,7 @@ public class ParserTest extends TestCase {
 			super(str);
 		}
 
-		public List<Integer> execute() {
+		public Iterator<Integer> iterator() {
 			return null;
 		}
 		

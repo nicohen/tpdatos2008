@@ -1,11 +1,8 @@
 package app.query;
 
-import java.util.Iterator;
-import java.util.List;
+import api.query.tree.Query;
 
-import app.query.tree.AbstractQuery;
-
-public abstract class QueryWord extends AbstractQuery {
+public abstract class QueryWord implements Query {
 
 	private String word;
 	
