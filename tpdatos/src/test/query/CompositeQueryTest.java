@@ -2,8 +2,8 @@ package test.query;
 
 import java.util.Iterator;
 
-import app.query.tree.CompositeQuery;
 import junit.framework.TestCase;
+import app.query.tree.CompositeQuery;
 
 public abstract class CompositeQueryTest extends TestCase {
 	

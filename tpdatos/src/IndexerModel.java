@@ -30,13 +30,15 @@ public class IndexerModel {
 	private static String SIGNATURE_FILE="SF";
 	private static String INDICE_INVERTIDO="II";
 	private IQueryEngine queryEngine;
+	private String path;
 	
-	public IndexerModel(String method, String size) {
+	public IndexerModel(String path, String method, String size) {
+		this.path=path;
 		try {
 			//Inicializo las stopwords y las ordeno alfabeticamente y por cantidad de palabras ascendente
-			stopwordsProcessor = new StopwordsProcessor();
+			stopwordsProcessor = new StopwordsProcessor(path+Constants.FILE_STOPWORDS);
 			//Inicializo el stemmer
-			stemmingProcessor = new StemmingProcessor();
+			stemmingProcessor = new StemmingProcessor(path+Constants.FILE_STEMMING);
 			queryEngine= getQueryEngine(method, size);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -44,6 +46,8 @@ public class IndexerModel {
 	}
 	
 	private IQueryEngine getQueryEngine(String method, String size) throws BusinessException{
+		size="8";
+		method=SIGNATURE_FILE;
 		int blockSize= Integer.parseInt(size);
 		try {
 			if(SIGNATURE_FILE.equals(method)){
@@ -57,10 +61,10 @@ public class IndexerModel {
 		throw new BusinessException("Tipo de methodo ("+ method +") desconocido.");
 	}
 	
-	public Statistics indexPath(String path) throws Exception {
+	public Statistics indexPath(String documentsPath) throws Exception {
 		StatisticsGenerator statistics = StatisticsGenerator.getInstance();
 		//Preparo los nuevos documentos a indexar
-		File[] newDocuments = DocumentsDictionaryImp.prepareNewDocuments(path);
+		File[] newDocuments = DocumentsDictionaryImp.prepareNewDocuments(this.path+documentsPath);
 
 		//Preparo los documentos que ya fueron indexados
 		IndexedDocumentChecker indexedDocuments;
@@ -95,7 +99,7 @@ public class IndexerModel {
 		try {		
 			DocumentInsert docInsert = queryEngine.prepareDocumentInsert(document.getFileName() ); 
 			//Elimino tags y caracteres que no correspondan
-			inputFile = new File(Constants.FOLDER_DOCUMENTS + File.separator + document.getFileName());
+			inputFile = new File(this.path+Constants.FOLDER_DOCUMENTS + File.separator + document.getFileName());
 			String documentText = DigesterUtils.getFormattedHtmlFile(inputFile);
 			//Inicializo el pipeline para encolar terminos 
 			StopwordsPipelineDto stopwordsPipeline = new StopwordsPipelineDto();
