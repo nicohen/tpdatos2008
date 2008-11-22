@@ -10,7 +10,7 @@ public class QueryAnd extends CompositeQuery {
 		return "and";
 	}
 
-	public List<Integer> execute() {
+	public Iterator<Integer> iterator() {
 		// TODO Auto-generated method stub
 		return null;
 	}
