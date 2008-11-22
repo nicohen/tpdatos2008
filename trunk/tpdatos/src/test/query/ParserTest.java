@@ -69,6 +69,11 @@ public class ParserTest extends TestCase {
 	}
 	
 	class ExitException extends Exception {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 	}
 	
 	private void processLine () throws IOException, ExitException {
