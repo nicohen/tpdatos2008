@@ -6,12 +6,12 @@ import app.query.parser.exception.CantDigestException;
 import app.query.parser.exception.ParserException;
 import app.query.tree.QueryNot;
 
-public class QueryNotParser extends RecursiveParser {
+public abstract class QueryNotParser extends RecursiveParser {
 
 	public QueryNotParser(Parser recur) {
 		super(recur);
 	}
-
+	abstract protected Query createQueryNot(Query consulta);
 	@Override
 	public Query parse(String str) throws ParserException {
 		// TODO Auto-generated method stub
@@ -22,7 +22,7 @@ public class QueryNotParser extends RecursiveParser {
 		String substr = str.substring(4);
 		Query subQuery = this.internalParse(substr);
 		
-		return new QueryNot(subQuery);
+		return createQueryNot(subQuery);
 	}
 	
 }
