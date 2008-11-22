@@ -23,6 +23,11 @@ public class SearchView extends View {
 		String html = "";
 		try {
 			html = HtmlUtils.readHtmlFile(file.getPath());
+			if(!"".equals(model.getSearchWord())) {
+				html = html.replace("##SEARCH_WORD##", model.getSearchWord());
+			} else {
+				html = html.replace("##SEARCH_WORD##", "");
+			}
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
