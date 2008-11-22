@@ -25,6 +25,8 @@ public class Constants {
 		public static final String FILE_DEFAULT_CONTENT = File.separator+FOLDER_HTML+File.separator+"default.html";
 		// /html/javascript.html
 		public static final String FILE_JAVASCRIPT = File.separator+FOLDER_HTML+File.separator+"javascript.html";
+		// /html/search.html
+		public static final String FILE_SEARCH_CONTENT = File.separator+FOLDER_HTML+File.separator+"search.html";
 				
 	public static final String INDEX_FILE_PATH = "index.bin";
 	public static final int    INDEX_FILE_SIZE = 512;

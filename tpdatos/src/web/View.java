@@ -22,11 +22,11 @@ public abstract class View {
 		
 		strBuf.append("<html>");
 		strBuf.append("<head>");
-		strBuf.append(doHtmlHeader());
+		strBuf.append(doHtmlHeader(basePath));
 		strBuf.append("</head>");
 		strBuf.append("<body>");
-		strBuf.append(html.replace("##CONTENT##", doHtmlBody()));
-		strBuf.append(doHtmlFooter());
+		strBuf.append(html.replace("##CONTENT##", doHtmlBody(basePath)));
+		strBuf.append(doHtmlFooter(basePath));
 		strBuf.append("</body>");
 		strBuf.append("</html>");
 		
@@ -34,7 +34,23 @@ public abstract class View {
 
 	}
 
-	protected String doHtmlFooter() {return "";}
-	protected abstract String doHtmlBody();
-	protected String doHtmlHeader() {return "";}
+	protected String doHtmlFooter(String basePath) {
+		return "";
+	}
+	
+	protected abstract String doHtmlBody(String basePath);
+	
+	protected String doHtmlHeader(String basePath) {
+		File file = new File(basePath+Constants.FILE_JAVASCRIPT);
+
+		String html = "";
+		try {
+			html = HtmlUtils.readHtmlFile(file.getPath());
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+
+		return html;
+	
+	}
 }

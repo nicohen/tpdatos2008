@@ -1,0 +1,40 @@
+
+div.top {
+	height:28px; 
+	background-image:url(img/top_line.gif); 
+	background-repeat: repeat-x; 
+	margin:1em 0 0 0;}
+	
+img.esquina_sup_izq { float:left; }
+img.esquina_sup_der { float:right; }
+
+div.content { 
+	background-image:url(img/left_line.gif); 
+	background-repeat:repeat-y; 
+	background-color: #a9d974; }
+	
+div.boxcontrol { padding:0 5% 0 5%; 
+	background-image:url(img/right_line.gif); 
+	background-position:right; 
+	background-repeat:repeat-y; }
+	
+div.bottom { height:28px; 
+	background-image:url(img/btm_line.gif); 
+	background-repeat:repeat-x; 
+	border:0;
+	padding:0;
+	margin:0;}
+	
+img.esquina_inf_izq { float:left; }
+img.esquina_inf_der { float:right; }
+
+h1 { margin:0; border-bottom:1px dashed #996;}
+
+p.autor { padding-right:8px; 
+	border-right:1px dashed #996;
+	text-align:right;
+	margin:-.1em 0 0 0; }
+	
+/* IE 5.5 box model hack para posicionar correctamente las imagenes de esquina */
+* html img.esquina_sup_izq, * html img.esquina_inf_izq  { \margin-left:-.2em;  margin-left:0; }
+* html img.esquina_inf_der, * html img.esquina_sup_der { \margin-left:.2em; } 

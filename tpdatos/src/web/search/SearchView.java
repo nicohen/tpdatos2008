@@ -1,5 +1,10 @@
 package web.search;
 
+import java.io.File;
+import java.io.IOException;
+
+import processor.utils.HtmlUtils;
+import utils.Constants;
 import web.View;
 
 
@@ -12,8 +17,17 @@ public class SearchView extends View {
 	}
 	
 	@Override
-	protected String doHtmlBody() {
-		return "search";
+	protected String doHtmlBody(String basePath) {
+		File file = new File(basePath+Constants.FILE_SEARCH_CONTENT);
+
+		String html = "";
+		try {
+			html = HtmlUtils.readHtmlFile(file.getPath());
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+
+		return html;
 	}
 
 
