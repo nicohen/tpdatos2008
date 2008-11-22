@@ -5,23 +5,8 @@
 	id="WebApp_ID" version="2.5">
 	<display-name>tpdatos</display-name>
 	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
-		<welcome-file>index.htm</welcome-file>
-		<welcome-file>index.jsp</welcome-file>
-		<welcome-file>default.html</welcome-file>
-		<welcome-file>default.htm</welcome-file>
-		<welcome-file>default.jsp</welcome-file>
+		<welcome-file>/search</welcome-file>
 	</welcome-file-list>
-	<servlet>
-		<description></description>
-		<display-name>ControllerServlet</display-name>
-		<servlet-name>ControllerServlet</servlet-name>
-		<servlet-class>ControllerServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>ControllerServlet</servlet-name>
-		<url-pattern>/ControllerServlet</url-pattern>
-	</servlet-mapping>
 	<servlet>
 		<description></description>
 		<display-name>search</display-name>
@@ -34,12 +19,12 @@
 	</servlet-mapping>
 	<servlet>
 		<description></description>
-		<display-name>Indexer</display-name>
-		<servlet-name>Indexer</servlet-name>
-		<servlet-class>Indexer</servlet-class>
+		<display-name>index</display-name>
+		<servlet-name>index</servlet-name>
+		<servlet-class>index</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>Indexer</servlet-name>
-		<url-pattern>/indexer</url-pattern>
+		<servlet-name>index</servlet-name>
+		<url-pattern>/index</url-pattern>
 	</servlet-mapping>
 </web-app>

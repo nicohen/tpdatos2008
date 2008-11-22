@@ -21,8 +21,8 @@ public class Constants {
 
 	// /html
 	public static final String FOLDER_HTML = "html";
-		// /html/search.html
-		public static final String FILE_SEARCH_CONTENT = File.separator+FOLDER_HTML+File.separator+"search.html";
+		// /html/default.html
+		public static final String FILE_DEFAULT_CONTENT = File.separator+FOLDER_HTML+File.separator+"default.html";
 		// /html/javascript.html
 		public static final String FILE_JAVASCRIPT = File.separator+FOLDER_HTML+File.separator+"javascript.html";
 				
