@@ -10,13 +10,23 @@
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
   <servlet>
-    <description></description>
-    <display-name>search</display-name>
-    <servlet-name>search</servlet-name>
-    <servlet-class>search</servlet-class>
+	<description></description>
+	<display-name>ControllerServlet</display-name>
+	<servlet-name>ControllerServlet</servlet-name>
+	<servlet-class>ControllerServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>search</servlet-name>
-    <url-pattern>/search</url-pattern>
+	<servlet-name>ControllerServlet</servlet-name>
+	<url-pattern>/ControllerServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+	<description></description>
+	<display-name>search</display-name>
+	<servlet-name>search</servlet-name>
+	<servlet-class>search</servlet-class>
+  </servlet>
+  <servlet-mapping>
+	<servlet-name>search</servlet-name>
+	<url-pattern>/search</url-pattern>
   </servlet-mapping>
 </web-app>
