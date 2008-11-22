@@ -145,8 +145,12 @@ public class QueryEngine implements IQueryEngine {
 	}
 	
 	private int getDocumentsCount() {
-		// TODO
-		return 0;
+		try {
+			return dicc.getDocumentsCount();
+		} catch (BusinessException e) {
+			// TODO Auto-generated catch block
+			return 0;
+		}
 	}
 	
 	public List<DocumentDto> executeQuery(String consulta) throws BusinessException{
