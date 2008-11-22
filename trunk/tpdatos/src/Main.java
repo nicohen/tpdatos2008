@@ -38,9 +38,9 @@ public class Main {
 		try {
 			if ( args.length > 0) {
 				option = args[0];
-				indexType=args[1];
 				
 				if (option.equals("--indexer" ) ) {
+					indexType=args[1];
 					IQueryEngine engine = create (indexType);
 					
 					DocumentsIndexer indexer=new DocumentsIndexer(engine);
@@ -49,10 +49,13 @@ public class Main {
 				} else if (option.equals("--tree-dumper")) {
 					TreeDumper.main(args);
 				} else if ( option.equals("--search")) {
+					indexType=args[1];
 					IQueryEngine engine = create (indexType);
 	
 					SearchEngine searchEngine = new SearchEngine(engine);
 					searchEngine.main(args);
+				} else if ( option.equals("--queryparser-test")) {
+					new test.query.ParserTest().interactiveTest();
 				} else {
 					System.out.println("Opcion invalida (" + option+ ")");
 				}
