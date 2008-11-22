@@ -39,4 +39,7 @@ public class Constants {
 	public static final int    SIGNATURE_SIZE = 11;
 	
 	public static final String BPLUS_TEST_FILE_PATH = "bplus-test.dat";
+	
+	public static final String INDEX = "I";
+	public static final String SEARCH = "S";
 }

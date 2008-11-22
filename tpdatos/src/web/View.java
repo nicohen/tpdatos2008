@@ -8,7 +8,7 @@ import utils.Constants;
 
 public abstract class View {
 
-	public String doContent(String basePath) {
+	public String doContent(String basePath, String mode) {
 		File file = new File(basePath+Constants.FILE_DEFAULT_CONTENT);
 
 		String html = "";
@@ -25,7 +25,18 @@ public abstract class View {
 		strBuf.append(doHtmlHeader(basePath));
 		strBuf.append("</head>");
 		strBuf.append("<body>");
-		strBuf.append(html.replace("##CONTENT##", doHtmlBody(basePath)));
+		html = html.replace("##CONTENT##", doHtmlBody(basePath));
+		if(mode.equals(Constants.INDEX)) {
+			html = html.replace("##BUSCAR##", "<a href='search'>Buscar</a>");
+			html = html.replace("##INDEXAR##", "<b>Indexar</b>");
+		} else if (mode.equals(Constants.SEARCH)) {
+			html = html.replace("##BUSCAR##", "<b>Buscar</b>");
+			html = html.replace("##INDEXAR##", "<a href='index'>Indexar</a>");
+		} else {
+			html = html.replace("##BUSCAR##", "<a href='search'>Buscar</a>");
+			html = html.replace("##INDEXAR##", "<a href='index'>Indexar</a>");
+		}
+		strBuf.append(html);
 		strBuf.append(doHtmlFooter(basePath));
 		strBuf.append("</body>");
 		strBuf.append("</html>");

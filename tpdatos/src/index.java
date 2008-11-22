@@ -3,6 +3,7 @@ import java.io.File;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import utils.Constants;
 import web.indexer.IndexerModel;
 import web.indexer.IndexerView;
 import exceptions.BusinessException;
@@ -20,6 +21,6 @@ public class index extends Servlet {
 		String size= request.getParameter("size");
 		IndexerModel model= new IndexerModel(getServletContext().getRealPath(File.separator),method,size);
 		IndexerView view= new IndexerView(model);
-		return view.doContent(getServletContext().getRealPath(File.separator));
+		return view.doContent(getServletContext().getRealPath(File.separator),Constants.INDEX);
 	}
 }
