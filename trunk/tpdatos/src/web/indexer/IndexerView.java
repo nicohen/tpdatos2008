@@ -13,7 +13,7 @@ public class IndexerView extends View {
 	}
 
 	@Override
-	protected String doHtmlBody() {
+	protected String doHtmlBody(String basePath) {
 		try {
 			Statistics stats= model.indexPath(Constants.FOLDER_DOCUMENTS);
 			return stats.toString();
