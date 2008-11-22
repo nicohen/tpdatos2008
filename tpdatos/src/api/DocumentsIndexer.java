@@ -43,10 +43,10 @@ public class DocumentsIndexer {
 		//queryEngine = new DefaultQueryEngine();
 		this.queryEngine = pqueryEngine;
 		//Inicializo las stopwords y las ordeno alfabeticamente y por cantidad de palabras ascendente
-		stopwordsProcessor = new StopwordsProcessor();
+		stopwordsProcessor = new StopwordsProcessor(Constants.FILE_STOPWORDS);
 
 		//Inicializo el stemmer
-		stemmingProcessor = new StemmingProcessor();
+		stemmingProcessor = new StemmingProcessor(Constants.FILE_STEMMING);
 	}
 	
 	

@@ -2,6 +2,7 @@ package test.processor;
 
 import junit.framework.TestCase;
 import processor.stemming.StemmingProcessor;
+import utils.Constants;
 import exceptions.BusinessException;
 
 
@@ -16,7 +17,7 @@ public class TestStemmerProcessor extends TestCase {
 		stemmer.addSuffix("aras");
 		stemmer.addSuffix("emos");
 		try {
-			stemmer = new StemmingProcessor();
+			stemmer = new StemmingProcessor(Constants.FILE_STEMMING);
 		} catch (BusinessException e) {
 			e.printStackTrace();
 		}

@@ -6,6 +6,9 @@ import java.util.List;
 
 import processor.IndexedDocumentChecker;
 import processor.stemming.StemmingProcessor;
+import processor.stopwords.StopwordsProcessor;
+import processor.utils.DigesterUtils;
+import utils.Constants;
 import api.dao.documents.DocumentsDictionary;
 import api.query.parser.Parser;
 import api.query.tree.Query;
@@ -17,9 +20,6 @@ import app.query.parser.exception.ParserException;
 import app.query.tree.QueryNot;
 import dto.DocumentDto;
 import exceptions.BusinessException;
-
-import processor.stopwords.StopwordsProcessor;
-import processor.utils.DigesterUtils;
 
 public class QueryEngine implements IQueryEngine {
 
@@ -71,9 +71,9 @@ public class QueryEngine implements IQueryEngine {
 		
 		public DefaultQueryWordParser()  {
 			try {
-				this.sp = new StemmingProcessor();
+				this.sp = new StemmingProcessor(Constants.FILE_STEMMING);
 				//Inicializo diccionario de stopwords
-				this.sw = new StopwordsProcessor();
+				this.sw = new StopwordsProcessor(Constants.FILE_STOPWORDS);
 			} catch (BusinessException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -19,13 +19,13 @@ public class StopwordsProcessor {
 
 	List<WordDto> stopwords = null;
 	
-	public StopwordsProcessor() throws BusinessException {
-		prepareStopwords();
+	public StopwordsProcessor(String listPath) throws BusinessException {
+		prepareStopwords(listPath);
 		Collections.sort(stopwords);
 	}
 	
 	@SuppressWarnings("deprecation")
-	public void prepareStopwords() throws BusinessException  {
+	public void prepareStopwords(String listPath) throws BusinessException  {
 		stopwords = new ArrayList<WordDto>();
 		
 	    File file = new File(Constants.FILE_STOPWORDS);
