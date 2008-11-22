@@ -110,8 +110,7 @@ public class QueryEngine implements IQueryEngine {
 
 		@Override
 		public int getDocumentsCount() {
-			// TODO Auto-generated method stub
-			return 0;
+			return QueryEngine.this.getDocumentsCount() ;
 		}
 		
 	}
@@ -143,6 +142,11 @@ public class QueryEngine implements IQueryEngine {
 		queryParser.addCustomParser(new DefaultQueryWordParser() );
 		queryParser.addCustomParser(new DefaultQueryNotParser(queryParser) );
 		
+	}
+	
+	private int getDocumentsCount() {
+		// TODO
+		return 0;
 	}
 	
 	public List<DocumentDto> executeQuery(String consulta) throws BusinessException{
