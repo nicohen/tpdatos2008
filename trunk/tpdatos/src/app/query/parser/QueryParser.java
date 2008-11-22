@@ -9,7 +9,7 @@ public class QueryParser extends CompositeParser {
 		this.add(new TrimParser(this) );
 		this.add(new QueryOrParser(this) );
 		this.add(new QueryAndParser(this) );
-		this.add(new QueryNotParser(this) );
+		//this.add(new QueryNotParser(this) );
 	}
 	
 	public void addCustomParser( Parser parser ) {
