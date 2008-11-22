@@ -114,7 +114,7 @@ public class DocumentsDictionaryImp implements DocumentsDictionary {
 	@Override
 	public int getDocumentsCount() throws BusinessException {
 		// TODO Auto-generated method stub
-		return 0;
+		return relativeFile.getLength();
 	}
 
 	
