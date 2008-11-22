@@ -69,8 +69,8 @@ public class ParserTest extends TestCase {
 		
 	public ParserTest() {
 		parser = new QueryParser();
-		parser.addCustomParser(new TestQueryWordParser() );
 		parser.addCustomParser(new TestQueryNotParser(parser) );
+		parser.addCustomParser(new TestQueryWordParser() );
 	}
 	
 	public void test() throws ParserException {
