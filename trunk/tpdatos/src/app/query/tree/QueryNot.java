@@ -16,6 +16,72 @@ public abstract class QueryNot implements Query {
 	abstract public int getDocumentsCount();		
 	
 	public Iterator<Integer> iterator() {
+		return iteratorWithHighMemoryUsage();
+	}
+	private class QueryNotIterator implements Iterator<Integer> {
+
+		// FIXME, hacer el algoritmo de manera que no use el hashset
+		private HashSet<Integer> setAux;
+		private Integer nextDocument = 0;
+		private boolean hasNext = false;
+		private Integer idActual;
+		private int numDocs;
+		
+		public QueryNotIterator(Iterator<Integer> iterator, int numDocs) {
+			
+			setAux = new HashSet<Integer>();
+			
+			while(iterator.hasNext()){
+				setAux.add(iterator.next());
+			}
+			
+			this.idActual = 0;
+			this.numDocs = numDocs;
+			
+			searchNext();
+						
+		}
+		
+		private void searchNext() {
+			for ( ; this.idActual < this.numDocs ; this.idActual++ ) {
+				
+				if (setAux.contains(this.idActual )) {
+					// no sirve , esta en el set que estamos negando
+				} else {
+					hasNext = true;
+					return;
+					
+				}
+			}
+			
+			this.hasNext = false;
+		}
+
+		@Override
+		public boolean hasNext() {
+			return hasNext;
+		}
+
+		@Override
+		public Integer next() {
+			return this.idActual;
+		}
+
+		@Override
+		public void remove() {
+			// NOTE: no hay que hacer nada
+			
+		}
+		
+	}
+	
+	private Iterator<Integer> iteratorWithoutMemoryUsage() {
+
+		return new QueryNotIterator( subQuery.iterator(), this.getDocumentsCount() );
+			
+	}
+	
+	private Iterator<Integer> iteratorWithHighMemoryUsage() {
 		// TODO
 		int cantDocs=this.getDocumentsCount();
 		List<Integer> listaRet = new ArrayList<Integer> ();
