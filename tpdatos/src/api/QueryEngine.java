@@ -139,8 +139,8 @@ public class QueryEngine implements IQueryEngine {
 		indice=index;
 		
 		queryParser = new QueryParser();
-		queryParser.addCustomParser(new DefaultQueryWordParser() );
 		queryParser.addCustomParser(new DefaultQueryNotParser(queryParser) );
+		queryParser.addCustomParser(new DefaultQueryWordParser() );
 		
 	}
 	
