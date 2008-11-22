@@ -7,11 +7,14 @@ import java.util.List;
 import processor.IndexedDocumentChecker;
 import processor.stemming.StemmingProcessor;
 import api.dao.documents.DocumentsDictionary;
+import api.query.parser.Parser;
 import api.query.tree.Query;
 import app.query.QueryWord;
 import app.query.parser.QueryParser;
+import app.query.parser.QueryNotParser;
 import app.query.parser.QueryWordParser;
 import app.query.parser.exception.ParserException;
+import app.query.tree.QueryNot;
 import dto.DocumentDto;
 import exceptions.BusinessException;
 
@@ -99,6 +102,33 @@ public class QueryEngine implements IQueryEngine {
 		
 	}
 	
+	class DefaultQueryNot extends QueryNot {
+
+		public DefaultQueryNot(Query subQuery) {
+			super(subQuery);
+		}
+
+		@Override
+		public int getDocumentsCount() {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+		
+	}
+	
+	class DefaultQueryNotParser extends QueryNotParser {
+
+		public DefaultQueryNotParser(Parser recur) {
+			super(recur);
+		}
+
+		@Override
+		protected Query createQueryNot(Query consulta) {
+			return new DefaultQueryNot(consulta);
+		}
+		
+	}
+	
 	private Iterator<Integer> queryWord( String word ) throws BusinessException {
 		return indice.getDocuments(word).iterator();
 				
@@ -111,6 +141,7 @@ public class QueryEngine implements IQueryEngine {
 		
 		queryParser = new QueryParser();
 		queryParser.addCustomParser(new DefaultQueryWordParser() );
+		queryParser.addCustomParser(new DefaultQueryNotParser(queryParser) );
 		
 	}
 	
