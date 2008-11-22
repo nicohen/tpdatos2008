@@ -2,6 +2,7 @@ package processor.utils;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -52,7 +53,11 @@ public final class HtmlUtils {
 	    FileReader fr = null;
 	    BufferedReader br = null;
 
-    	fr = new FileReader(file);
+	    try {
+	    	fr = new FileReader(file);
+	    } catch(FileNotFoundException e) {
+	    	throw new IOException("El archivo "+file.getAbsolutePath()+" no se ha encontrado",e);
+	    }
 
     	br = new BufferedReader(fr);
 
