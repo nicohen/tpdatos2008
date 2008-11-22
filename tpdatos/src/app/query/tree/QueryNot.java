@@ -22,8 +22,10 @@ public abstract class QueryNot implements Query {
 		int i;
 		HashSet<Integer> setAux = new HashSet<Integer>();
 		
-		while(subQuery.iterator().hasNext()){
-			setAux.add(subQuery.iterator().next());
+		Iterator<Integer> it = subQuery.iterator();
+		
+		while(it.hasNext()){
+			setAux.add(it.next());
 		}
 		
 		for (i=0;i<cantDocs;i++){
