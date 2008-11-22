@@ -111,5 +111,11 @@ public class DocumentsDictionaryImp implements DocumentsDictionary {
 	    return dir.listFiles(fileFilter);
 	}
 
+	@Override
+	public int getDocumentsCount() throws BusinessException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 	
 }

@@ -18,5 +18,10 @@ public class NullDocumentsDictionary implements DocumentsDictionary {
 	public Integer insertDocument(DocumentDto document) throws BusinessException {
 		return 1;
 	}
+
+	@Override
+	public int getDocumentsCount() throws BusinessException {
+		return 0;
+	}
 		
 }

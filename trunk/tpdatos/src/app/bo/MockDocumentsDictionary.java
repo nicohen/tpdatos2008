@@ -45,4 +45,10 @@ public class MockDocumentsDictionary implements DocumentsDictionary {
 		return null;
 	}
 
+	@Override
+	public int getDocumentsCount() throws BusinessException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }
