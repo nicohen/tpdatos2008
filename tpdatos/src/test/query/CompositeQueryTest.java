@@ -1,11 +1,8 @@
 package test.query;
 
-import java.util.Iterator;
-
-import junit.framework.TestCase;
 import app.query.tree.CompositeQuery;
 
-public abstract class CompositeQueryTest extends TestCase {
+public abstract class CompositeQueryTest extends QueryTestCase {
 	
 	void _test( int[][] a) {
 		// construir la query
@@ -28,19 +25,6 @@ public abstract class CompositeQueryTest extends TestCase {
 		this.assertResultSet(query.iterator() , expected );
 	}
 
-	public void assertResultSet( Iterator<Integer> result1, int[] result2 ) {
-		int i = 0;
-			
-		while (result1.hasNext() ) {
-			assertEquals(result1.next().intValue(), result2[i] );
-			i++;
-		}
-
-		// si result1 tiene mas elementos de los que deberia...
-		if (result1.hasNext() ) {
-			assertTrue(false);
-		}
-	}
 	
 	public abstract CompositeQuery createComposite() ;
 }
