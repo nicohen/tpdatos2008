@@ -19,12 +19,13 @@ public class MockQuery extends AbstractQuery {
 		lista.add(id);
 	}
 	
-	public Iterator<Integer> execute() {
-		return lista.iterator();
+
+	public void dump(int ntabs) {
 	}
 
 
-	public void dump(int ntabs) {
+	public List<Integer> execute() {
+		return lista;
 	}
 
 }

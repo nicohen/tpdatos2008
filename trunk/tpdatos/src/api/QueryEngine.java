@@ -49,13 +49,13 @@ public class QueryEngine implements IQueryEngine {
 		public DefaultQueryWord(String str) {
 			super(str);
 		}
-		public Iterator<Integer> execute() {
+		public List<Integer> execute() {
 			try {
 				return QueryEngine.this.queryWord( this.getWord() );
 			} catch (BusinessException e) {
 			}
 			List<Integer> lista=new ArrayList<Integer>();
-			return lista.iterator();
+			return lista;
 		}
 		
 	}
@@ -98,11 +98,11 @@ public class QueryEngine implements IQueryEngine {
 		
 	}
 	
-	private Iterator<Integer> queryWord( String word ) throws BusinessException {
-		return indice.getDocuments(word).iterator();
+	private List<Integer> queryWord( String word ) throws BusinessException {
+		return indice.getDocuments(word);
 				
 	}
-	
+
 
 	protected QueryEngine(Index index,DocumentsDictionary dictionary){
 		dicc=dictionary;
@@ -119,7 +119,7 @@ public class QueryEngine implements IQueryEngine {
 			Query query = queryParser.parse(consulta);
 			
 			List<DocumentDto> listaRet=new ArrayList<DocumentDto>();
-			Iterator<Integer> documentos = query.execute();
+			Iterator<Integer> documentos = query.getIterator();
 			
 			while (documentos.hasNext() ) { 
 				Integer docId = documentos.next();

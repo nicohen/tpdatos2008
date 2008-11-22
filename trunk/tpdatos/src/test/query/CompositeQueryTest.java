@@ -25,7 +25,7 @@ public abstract class CompositeQueryTest extends TestCase {
 			mock2.add( new Integer( result1[i] ) );
 		}
 		
-		this.assertResultSet(query.execute() , expected );
+		this.assertResultSet(query.getIterator() , expected );
 	}
 
 	public void assertResultSet( Iterator<Integer> result1, int[] result2 ) {
