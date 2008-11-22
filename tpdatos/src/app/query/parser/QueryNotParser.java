@@ -19,7 +19,7 @@ public class QueryNotParser extends RecursiveParser {
 			throw new CantDigestException();
 		}
 		
-		String substr = str.substring(5);
+		String substr = str.substring(4);
 		Query subQuery = this.internalParse(substr);
 		
 		return new QueryNot(subQuery);

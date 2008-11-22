@@ -6,8 +6,9 @@ import api.query.tree.Query;
 
 public class QueryNot implements Query {
 
+	private Query subQuery;
 	public QueryNot(Query subQuery) {
-		// TODO Auto-generated constructor stub
+		this.subQuery = subQuery;
 	}
 	public Iterator<Integer> iterator() {
 		// TODO
@@ -17,5 +18,6 @@ public class QueryNot implements Query {
 	public void dump(int ntabs) {
 		for (int i=0;i<ntabs;i++) System.out.print("\t");
 		System.out.println("not ");
+		this.subQuery.dump(ntabs+1);
 	}
 }
