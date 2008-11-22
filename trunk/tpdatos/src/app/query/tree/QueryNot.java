@@ -1,5 +1,7 @@
 package app.query.tree;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
@@ -15,8 +17,20 @@ public abstract class QueryNot implements Query {
 	
 	public Iterator<Integer> iterator() {
 		// TODO
+		int cantDocs=this.getDocumentsCount();
+		List<Integer> listaRet = new ArrayList<Integer> ();
+		int i;
+		HashSet<Integer> setAux = new HashSet<Integer>();
 		
-		return null;
+		while(subQuery.iterator().hasNext()){
+			setAux.add(subQuery.iterator().next());
+		}
+		
+		for (i=0;i<cantDocs;i++){
+			if (setAux.add(i)) //si pudo insertar en el set entonces va en la lista
+			listaRet.add(i);
+		}
+		return listaRet.iterator();
 	}
 	@Override
 	public void dump(int ntabs) {
