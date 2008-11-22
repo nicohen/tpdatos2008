@@ -10,4 +10,5 @@ public interface DocumentsDictionary {
 	public Integer insertDocument( DocumentDto document ) throws BusinessException;
 	public DocumentDto getDocument( Integer id ) throws BusinessException ;
 	public IndexedDocumentChecker getDocuments() throws BusinessException;
+	public int getDocumentsCount() throws BusinessException;
 }
