@@ -28,7 +28,7 @@ public class StopwordsProcessor {
 	public void prepareStopwords(String listPath) throws BusinessException  {
 		stopwords = new ArrayList<WordDto>();
 		
-	    File file = new File(Constants.FILE_STOPWORDS);
+	    File file = new File(listPath);
 	    FileInputStream fis = null;
 	    BufferedInputStream bis = null;
 	    DataInputStream dis = null;

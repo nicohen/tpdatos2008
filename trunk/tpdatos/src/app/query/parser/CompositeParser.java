@@ -1,7 +1,7 @@
 package app.query.parser;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 import api.query.parser.Parser;
 import api.query.tree.Query;

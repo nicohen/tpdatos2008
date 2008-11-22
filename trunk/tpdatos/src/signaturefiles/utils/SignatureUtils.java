@@ -15,7 +15,6 @@ import signaturefiles.hash.JSHash;
 import signaturefiles.hash.PJWHash;
 import signaturefiles.hash.RSHash;
 import signaturefiles.hash.SDBMHash;
-import utils.Constants;
 import dto.SignatureFileDto;
 
 public class SignatureUtils {
@@ -30,20 +29,20 @@ public class SignatureUtils {
 	}
 
 	public static SignatureFileDto OR(SignatureFileDto sfDTO1, SignatureFileDto sfDTO2) {
-		long[] firma= new long[11];
 		long[] signature1=sfDTO1.getSignature();
-		long[] signature2=sfDTO2.getSignature();    
-		for (int i=0;i<Constants.SIGNATURE_SIZE;i++){
+		long[] signature2=sfDTO2.getSignature();
+		long[] firma= new long[signature1.length];
+		for (int i=0;i<signature1.length;i++){
 			firma[i]=signature1[i]|signature2[i];
 		}
 		return new SignatureFileDto(sfDTO1.getDocumentId(),firma);
 	}
 	
 	public static SignatureFileDto AND(SignatureFileDto sfDTO1, SignatureFileDto sfDTO2) {
-		long[] firma= new long[11];
 		long[] signature1=sfDTO1.getSignature();
 		long[] signature2=sfDTO2.getSignature();    
-		for (int i=0;i<Constants.SIGNATURE_SIZE;i++){
+		long[] firma= new long[signature1.length];
+		for (int i=0;i<signature1.length;i++){
 			firma[i]=signature1[i]&signature2[i];
 		}
 		return new SignatureFileDto(sfDTO1.getDocumentId(),firma);
