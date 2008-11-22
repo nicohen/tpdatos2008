@@ -20,7 +20,7 @@ public class QueryAnd extends CompositeQuery {
 		
 		List<Query> querys = this.getQuerys();
 		
-		if (querys.size() == 0) return new ArrayList().iterator();
+		if (querys.size() == 0) return new ArrayList<Integer>().iterator();
 		if (querys.size() == 1) return querys.get(0).iterator();
 		
 		List<HashSet<Integer> > hashsets = 
