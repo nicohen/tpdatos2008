@@ -3,6 +3,7 @@ package test.query;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 
 import api.query.tree.Query;
 import app.query.QueryWord;
@@ -19,6 +20,10 @@ public class ParserTest extends TestCase {
 
 		public TestQueryWord(String str) {
 			super(str);
+		}
+
+		public List<Integer> execute() {
+			return null;
 		}
 		
 	}
@@ -41,8 +46,8 @@ public class ParserTest extends TestCase {
 		
 		QueryAnd queryAnd = new QueryAnd();
 		
-		queryAnd.add(new QueryWord("hola"));
-		queryAnd.add(new QueryWord("mundo"));
+		queryAnd.add(new TestQueryWord("hola"));
+		queryAnd.add(new TestQueryWord("mundo"));
 		
 		// salida esperada:
 		// and
