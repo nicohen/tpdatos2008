@@ -27,7 +27,11 @@ public class Constants {
 		public static final String FILE_JAVASCRIPT = File.separator+FOLDER_HTML+File.separator+"javascript.html";
 		// /html/search.html
 		public static final String FILE_SEARCH_CONTENT = File.separator+FOLDER_HTML+File.separator+"search.html";
-				
+		// /html/doc_result_row.html
+		public static final String FILE_DOCUMENT_RESULT_ROW = File.separator+FOLDER_HTML+File.separator+"doc_result_row.html";
+		// /html/docs_result.html
+		public static final String FILE_DOCUMENTS_RESULT = File.separator+FOLDER_HTML+File.separator+"docs_result.html";
+		
 	public static final String INDEX_FILE_PATH = "index.bin";
 	public static final int    INDEX_FILE_SIZE = 512;
 
@@ -40,6 +44,12 @@ public class Constants {
 	
 	public static final String BPLUS_TEST_FILE_PATH = "bplus-test.dat";
 	
+	//Acciones
 	public static final String INDEX = "I";
 	public static final String SEARCH = "S";
+	
+	//Engines
+	public static final String MODE_INDICE_INVERTIDO = "indiceinvertido";
+	public static final String MODE_SIGNATURE_FILES = "signaturefile";
+	
 }
