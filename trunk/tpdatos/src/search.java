@@ -18,7 +18,8 @@ public class search extends Servlet {
 	@Override
 	protected String getHtml(HttpServletRequest request,HttpServletResponse response) throws BusinessException {
 		String searchWord = request.getParameter("as_word");
-		SearchModel model= new SearchModel(searchWord);
+		String searchEngine = request.getParameter("as_engine");
+		SearchModel model= new SearchModel(getServletContext().getRealPath(File.separator),searchWord,searchEngine);
 		SearchView view= new SearchView(model);
 		return view.doContent(getServletContext().getRealPath(File.separator),Constants.SEARCH);
 	}
