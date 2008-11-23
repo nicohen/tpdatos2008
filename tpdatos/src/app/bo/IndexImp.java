@@ -21,6 +21,60 @@ public class IndexImp implements Index {
 	private BPlusTreeFacade btree;
 	private LinkedBlocksManager<GammaDistancesBlock> manager;
 	private int blockSize;
+	
+	class IndexImpIterator implements Iterator<Integer> {
+
+		private Iterator<GammaDistancesBlock> it;
+		private Iterator<Integer> it_distances;
+		private GammaDistancesBlock block = null;
+		private Integer idNext = 0;
+		private boolean hasNext = false;
+		
+		public IndexImpIterator(Iterator<GammaDistancesBlock> it) {
+			this.it = it;
+			
+			if (it.hasNext() ) {
+				block = it.next();
+				it_distances = block.decodeDistances();
+				searchNext();
+			} 
+		}
+		
+		private void searchNext() {
+			
+			while (true) {
+				
+				if (it_distances.hasNext() ) {
+					hasNext = true;
+					idNext += it_distances.next();
+					return;
+				} else {
+					if (this.it.hasNext() ) {
+						block = this.it.next();
+						it_distances = block.decodeDistances();
+					} else {
+						hasNext = false;
+						return;
+					}
+				}
+			}
+			
+		}
+
+		public boolean hasNext() {
+			return hasNext;
+		}
+
+		public Integer next() {
+			Integer aux = idNext;
+			searchNext();
+			return aux;
+		}
+
+		public void remove() {
+			// NOTE no hay que usar nada
+		}
+	}
 
 	public IndexImp(String path,int blockSize, int treeNodeSize) throws BusinessException {
 		try {
@@ -34,7 +88,19 @@ public class IndexImp implements Index {
 			throw new BusinessException("Error creando el btree",e);
 		}
 	}
+	
+	public Iterator<Integer> getDocumentsIterator(String word) throws BusinessException {
+		DocumentIndexKey docBlockId;
+		docBlockId=this.searchDocIndex(word);
+		if (docBlockId.getValue()!=-1){
+			return getDocumentsIterator(docBlockId);
+		}
+		return new ArrayList<Integer>().iterator();
+	}
 
+	private Iterator<Integer> getDocumentsIterator(DocumentIndexKey docBlockId) throws BusinessException {
+		return new IndexImpIterator( manager.get(docBlockId.getValue() ) );
+	}
 	private List<Integer> getDocuments(DocumentIndexKey docBlockId) throws BusinessException {
 		ArrayList<Integer> listaRet=new ArrayList<Integer>();
 
@@ -188,7 +254,4 @@ public class IndexImp implements Index {
 		btree.dump();
 	}
 
-	public Iterator<Integer> getDocumentsIterator(String word) throws BusinessException {
-		return getDocuments(word).iterator();
-	}
 }
