@@ -187,4 +187,8 @@ public class IndexImp implements Index {
 	public void dump() throws BusinessException {
 		btree.dump();
 	}
+
+	public Iterator<Integer> getDocumentsIterator(String word) throws BusinessException {
+		return getDocuments(word).iterator();
+	}
 }
