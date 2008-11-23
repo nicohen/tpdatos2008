@@ -2,6 +2,7 @@ package app.bo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +31,10 @@ public class WordCollectorIndex implements Index {
 		Integer cantidad = words.get(word);
 		if (cantidad == null) return 0;
 		return cantidad;
+	}
+
+	public Iterator<Integer> getDocumentsIterator(String word) throws BusinessException {
+		return this.getDocuments(word).iterator();
 	}
 
 }

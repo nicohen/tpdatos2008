@@ -129,7 +129,7 @@ public class QueryEngine implements IQueryEngine {
 	}
 	
 	private Iterator<Integer> queryWord( String word ) throws BusinessException {
-		return indice.getDocuments(word).iterator();
+		return indice.getDocumentsIterator(word);
 				
 	}
 

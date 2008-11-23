@@ -2,6 +2,7 @@ package app.bo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +34,10 @@ public class MockIndex implements Index {
 		if (map.get(word)==null) {
 			map.put(word, new ArrayList<Integer>() );
 		}
+	}
+
+	public Iterator<Integer> getDocumentsIterator(String word) throws BusinessException {
+		return this.getDocuments(word).iterator();
 	}
 
 }
