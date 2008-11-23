@@ -23,21 +23,59 @@ public class LinkedBlocksManager<E> {
 		}
 	}
 	
+	private class LinkedBlocksManagerIterator implements Iterator<E> {
+
+		private int blockId;
+		private LinkedBlock<E> reg;
+		private E nextElement;
+		private boolean hasNext;
+		
+		public LinkedBlocksManagerIterator(int blockId) throws DataAccessException {
+			this.blockId = blockId;
+
+			reg=LinkedBlocksManager.this.archivo.get(blockId);
+			nextElement = reg.getElem();
+			hasNext = true;
+		}
+		
+		private void searchNext() {
+			blockId = reg.getNextBlock();
+			
+			if (blockId == 0) {
+				this.hasNext = false;
+			} else {
+				try {
+					reg=LinkedBlocksManager.this.archivo.get(blockId);
+					nextElement = reg.getElem();
+					this.hasNext = true;
+				} catch (DataAccessException e) {
+					nextElement = null;
+					this.hasNext = false;
+				}
+			}
+		}
+
+		public boolean hasNext() {
+			return this.hasNext ;
+		}
+
+		public E next() {
+			E aux = this.nextElement;
+			searchNext();
+			return aux;
+		}
+
+		public void remove() {
+			// NOTE: no hay que hacer nada
+			
+		}
+		
+	}
+	
 	// obtiene toda la lista de linked blocks
 	public Iterator<E> get(int blockId) throws DataAccessException{
 		
-		LinkedBlock<E> reg;
-		//Iterator<E> it;
-	
-		ArrayList<E> listaRet=new ArrayList<E>();
-		reg=archivo.get(blockId);
-		listaRet.add(reg.getElem());
-
-		while (reg.getNextBlock()!=0){
-			reg=archivo.get(reg.getNextBlock());
-			listaRet.add(reg.getElem());
-		}
-		return listaRet.iterator();
+		return new LinkedBlocksManagerIterator(blockId); 
 	}
 	
 	public int add( E element ) throws PersistanceException {
