@@ -1,10 +1,7 @@
 package app.query.tree;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
-
 import api.query.tree.Query;
 
 public abstract class QueryNot implements Query {
@@ -16,13 +13,12 @@ public abstract class QueryNot implements Query {
 	abstract public int getDocumentsCount();		
 	
 	public Iterator<Integer> iterator() {
-		return iteratorWithHighMemoryUsage();
+		return new QueryNotIterator( subQuery.iterator(), this.getDocumentsCount() );
 	}
 	private class QueryNotIterator implements Iterator<Integer> {
 
 		// FIXME, hacer el algoritmo de manera que no use el hashset
 		private HashSet<Integer> setAux;
-		private Integer nextDocument = 0;
 		private boolean hasNext = false;
 		private Integer idActual;
 		private int numDocs;
@@ -35,7 +31,7 @@ public abstract class QueryNot implements Query {
 				setAux.add(iterator.next());
 			}
 			
-			this.idActual = 0;
+			this.idActual = -1;
 			this.numDocs = numDocs;
 			
 			searchNext();
@@ -43,6 +39,8 @@ public abstract class QueryNot implements Query {
 		}
 		
 		private void searchNext() {
+			
+			this.idActual++;
 			for ( ; this.idActual < this.numDocs ; this.idActual++ ) {
 				
 				if (setAux.contains(this.idActual )) {
@@ -64,7 +62,9 @@ public abstract class QueryNot implements Query {
 
 		@Override
 		public Integer next() {
-			return this.idActual;
+			Integer aux = this.idActual;
+			searchNext();
+			return aux;
 		}
 
 		@Override
@@ -75,31 +75,6 @@ public abstract class QueryNot implements Query {
 		
 	}
 	
-	private Iterator<Integer> iteratorWithoutMemoryUsage() {
-
-		return new QueryNotIterator( subQuery.iterator(), this.getDocumentsCount() );
-			
-	}
-	
-	private Iterator<Integer> iteratorWithHighMemoryUsage() {
-		// TODO
-		int cantDocs=this.getDocumentsCount();
-		List<Integer> listaRet = new ArrayList<Integer> ();
-		int i;
-		HashSet<Integer> setAux = new HashSet<Integer>();
-		
-		Iterator<Integer> it = subQuery.iterator();
-		
-		while(it.hasNext()){
-			setAux.add(it.next());
-		}
-		
-		for (i=0;i<cantDocs;i++){
-			if (setAux.add(i)) //si pudo insertar en el set entonces va en la lista
-			listaRet.add(i);
-		}
-		return listaRet.iterator();
-	}
 	@Override
 	public void dump(int ntabs) {
 		for (int i=0;i<ntabs;i++) System.out.print("\t");
