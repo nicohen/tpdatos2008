@@ -1,7 +1,7 @@
 package app.query.tree;
 
-import java.util.HashSet;
 import java.util.Iterator;
+
 import api.query.tree.Query;
 
 public abstract class QueryNot implements Query {
@@ -17,22 +17,19 @@ public abstract class QueryNot implements Query {
 	}
 	private class QueryNotIterator implements Iterator<Integer> {
 
-		// FIXME, hacer el algoritmo de manera que no use el hashset
-		private HashSet<Integer> setAux;
 		private boolean hasNext = false;
 		private Integer idActual;
 		private int numDocs;
+		private int lastDoc;
+		private Iterator<Integer> iterator;
 		
 		public QueryNotIterator(Iterator<Integer> iterator, int numDocs) {
 			
-			setAux = new HashSet<Integer>();
-			
-			while(iterator.hasNext()){
-				setAux.add(iterator.next());
-			}
-			
 			this.idActual = -1;
 			this.numDocs = numDocs;
+			
+			this.iterator = iterator;
+			this.lastDoc = 0;
 			
 			searchNext();
 						
@@ -40,19 +37,27 @@ public abstract class QueryNot implements Query {
 		
 		private void searchNext() {
 			
-			this.idActual++;
-			for ( ; this.idActual < this.numDocs ; this.idActual++ ) {
+			while (true) {
+				this.idActual++;
 				
-				if (setAux.contains(this.idActual )) {
-					// no sirve , esta en el set que estamos negando
-				} else {
-					hasNext = true;
+				if (this.idActual >= this.lastDoc ) {
+					this.hasNext = false;
 					return;
+				}
+				
+				if (this.idActual < this.lastDoc ) {
+					this.hasNext = true;
+					return;
+				} else {
 					
+					if (iterator.hasNext() ) {
+						this.lastDoc = iterator.next();
+					} else {
+						this.lastDoc = this.numDocs; 
+					}
 				}
 			}
 			
-			this.hasNext = false;
 		}
 
 		@Override
