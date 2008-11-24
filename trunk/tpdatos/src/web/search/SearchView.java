@@ -26,36 +26,50 @@ public class SearchView extends View {
 		DocumentsReportDto drDto;
 		List<DocumentDto> documentsFound;
 		int size = 0;
-		
-		if(!"".equals(model.getSearchWord())) {
-			try {
-				documentsFound = model.searchWord(model.getSearchWord());
-				
-				if(documentsFound!=null) {
-					size = documentsFound.size();
-					if(size>0) {
-				
-						drDto = new DocumentsReportDto();
-						
-						for (DocumentDto document : documentsFound) {
-							drDto.setOcurrence(document);
-						}
-						for(DocumentDto documentResult : drDto.getOcurrences().keySet()) {
-							strB.append(drDto.getDocumentOcurrences(documentResult)+" veces en el documento "+model.getEngine().getDocumentFromId(documentResult.getDocumentId()));				
-						}
-				
-					}
-				}
-			} catch(BusinessException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		File file = new File(basePath+Constants.FILE_SEARCH_CONTENT);
-
 		String html = "";
+
 		try {
+		
+			if(!"".equals(model.getSearchWord())) {
+				try {
+					documentsFound = model.searchWord(model.getSearchWord());
+					
+					if(documentsFound!=null) {
+						size = documentsFound.size();
+						if(size>0) {
+					
+							drDto = new DocumentsReportDto();
+							
+							for (DocumentDto document : documentsFound) {
+								drDto.setOcurrence(document);
+							}
+							
+							File documentsResultRowFile = new File(basePath+Constants.FILE_DOCUMENT_RESULT_ROW);
+							String documentsResultRowHtml = HtmlUtils.readHtmlFile(documentsResultRowFile.getPath());
+							
+							for(DocumentDto documentResult : drDto.getOcurrences().keySet()) {
+								String otherDocumentsResultRowHtml = documentsResultRowHtml;
+								int ocurrQty = drDto.getOcurrences().get(model.getEngine().getDocumentFromId(documentResult.getDocumentId()));
+								otherDocumentsResultRowHtml = otherDocumentsResultRowHtml.replace("##TITLE##", ocurrQty+" "+((ocurrQty>1)?"ocurrencias":"ocurrencia")+" en "+documentResult.getFileName());
+								otherDocumentsResultRowHtml = otherDocumentsResultRowHtml.replace("##BODY##", "");
+								strB.append(otherDocumentsResultRowHtml);				
+							}
+					
+						}
+					}
+				} catch(BusinessException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			File documentsResultFile = new File(basePath+Constants.FILE_DOCUMENTS_RESULT);
+			String documentsResultHtml = HtmlUtils.readHtmlFile(documentsResultFile.getPath());
+
+			File file = new File(basePath+Constants.FILE_SEARCH_CONTENT);
 			html = HtmlUtils.readHtmlFile(file.getPath());
+
+			html = html.replace("##RESULTADOS##", documentsResultHtml.replace("##RESULTADOS##", strB.toString()));
+			
 			if(!"".equals(model.getSearchWord())) {
 				html = html.replace("##SEARCH_WORD##", model.getSearchWord());
 			} else {
