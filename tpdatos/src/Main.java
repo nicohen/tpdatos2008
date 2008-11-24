@@ -19,10 +19,10 @@ public class Main {
 	public static IQueryEngine create( String indexType ) throws Exception {
 		
 		if (indexType.equals("signaturefile" ) ) {
-			return new SignatureFileQueryEngine(Constants.SIGNATURE_SIZE);
+			return new SignatureFileQueryEngine(Constants.SIGNATURE_SIZE,"");
 				
 		} else if (indexType.equals("indiceinvertido" ) ) {
-			return new DefaultQueryEngine(2048);
+			return new DefaultQueryEngine(2048,"");
 			
 		} else {
 			throw new Exception("Engine desconocido o no soportado");

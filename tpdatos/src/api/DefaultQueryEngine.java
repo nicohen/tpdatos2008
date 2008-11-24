@@ -10,11 +10,11 @@ import exceptions.DataAccessException;
 
 public class DefaultQueryEngine extends QueryEngine {
 
-	public DefaultQueryEngine(int treeNodeSize) throws BusinessException, DataAccessException {
+	public DefaultQueryEngine(int treeNodeSize, String basePath) throws BusinessException, DataAccessException {
 		super(	
-				new IndexImp(Constants.INDEX_FILE_PATH, Constants.INDEX_FILE_SIZE, treeNodeSize)
+				new IndexImp(basePath,basePath+Constants.INDEX_FILE_PATH, Constants.INDEX_FILE_SIZE, treeNodeSize)
 				,
-				new DocumentsDictionaryImp(Constants.FILE_INDICE_INVERTIDO_INDEXED_DOCS,"document_invertido_names.txt")
+				new DocumentsDictionaryImp(basePath+Constants.FILE_INDICE_INVERTIDO_INDEXED_DOCS,basePath+"document_invertido_names.txt")
 				);
 	}
 

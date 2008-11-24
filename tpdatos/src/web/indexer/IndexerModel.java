@@ -33,8 +33,8 @@ public class IndexerModel {
 	private IQueryEngine queryEngine;
 	private String path;
 	
-	public IndexerModel(String path, String method, String size) {
-		this.path=path;
+	public IndexerModel(String basePath, String method, String size) {
+		this.path=basePath;
 		try {
 			//Inicializo las stopwords y las ordeno alfabeticamente y por cantidad de palabras ascendente
 			stopwordsProcessor = new StopwordsProcessor(path+Constants.FILE_STOPWORDS);
@@ -52,9 +52,9 @@ public class IndexerModel {
 		int blockSize= Integer.parseInt(size);
 		try {
 			if(SIGNATURE_FILE.equals(method)){
-				return new SignatureFileQueryEngine(blockSize);
+				return new SignatureFileQueryEngine(blockSize,path);
 			}else if(INDICE_INVERTIDO.equals(method)){
-				return new DefaultQueryEngine(blockSize);
+				return new DefaultQueryEngine(blockSize,path);
 			}
 		} catch (BusinessException e) {
 			throw new BusinessException("Error inicialisando motor ("+ method +").");

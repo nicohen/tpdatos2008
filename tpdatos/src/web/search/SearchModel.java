@@ -37,7 +37,7 @@ public class SearchModel {
 	public SearchModel(String basePath, String word, String searchEngine) throws BusinessException {
 		if(searchEngine!=null && !"".equals(searchEngine)) {
 			try {
-				this.engine = create(searchEngine);
+				this.engine = create(searchEngine,basePath);
 			} catch(Exception e) {
 				throw new BusinessException("Error creando la engine para obtener documentos",e);
 			}
@@ -78,13 +78,13 @@ public class SearchModel {
 		}
 	}
 	
-	public static IQueryEngine create( String indexType ) throws Exception {
+	public static IQueryEngine create( String indexType, String basePath ) throws Exception {
 		
 		if (indexType.equals("signaturefile" ) ) {
-			return new SignatureFileQueryEngine(Constants.SIGNATURE_SIZE);
+			return new SignatureFileQueryEngine(Constants.SIGNATURE_SIZE,basePath);
 				
 		} else if (indexType.equals("indiceinvertido" ) ) {
-			return new DefaultQueryEngine(2048);
+			return new DefaultQueryEngine(2048,basePath);
 			
 		} else {
 			throw new Exception("Engine desconocido o no soportado");

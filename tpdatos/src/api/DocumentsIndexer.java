@@ -202,7 +202,7 @@ public class DocumentsIndexer {
 	}
 
 	public static void main(String[] args) throws Exception {
-			DocumentsIndexer indexer = new DocumentsIndexer(new SignatureFileQueryEngine(Constants.SIGNATURE_SIZE) );
+			DocumentsIndexer indexer = new DocumentsIndexer(new SignatureFileQueryEngine(Constants.SIGNATURE_SIZE,""));
 			indexer.indexPath( Constants.FOLDER_DOCUMENTS );
 	}
 

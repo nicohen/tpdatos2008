@@ -2,7 +2,6 @@ package app.query.tree;
 
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 
 import api.query.tree.Query;
 

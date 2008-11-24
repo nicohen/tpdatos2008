@@ -39,18 +39,20 @@ public class SignatureFileQueryEngine implements IQueryEngine{
 	private File<SignatureFileDto> signatureFiles;
 	private int firmSize;
 	private QueryParser queryParser;
+	private String basePath;
 		
-	public SignatureFileQueryEngine(int firmSize) throws DataAccessException{
-		this.dicc= new DocumentsDictionaryImp(Constants.FILE_SIGNATURE_FILES_INDEXED_DOCS,"document_signature_names.txt");
+	public SignatureFileQueryEngine(int firmSize, String basePath) throws DataAccessException{
+		this.basePath= basePath;
+		this.dicc= new DocumentsDictionaryImp(basePath+Constants.FILE_SIGNATURE_FILES_INDEXED_DOCS,basePath+"document_signature_names.txt");
 		Persistor<SignatureFileDto> sfPersistor= new SignatureFilePersistor();
 		this.firmSize=firmSize;
 		
 		queryParser = new QueryParser();
 		queryParser.addCustomParser(new DefaultQueryNotParser(queryParser) );
-		queryParser.addCustomParser(new DefaultQueryWordParser() );
+		queryParser.addCustomParser(new DefaultQueryWordParser(basePath) );
 		
 		try {
-			this.signatureFiles= new RelativeFile<SignatureFileDto>(Constants.SIGNATURE_FILE_PATH,sfPersistor);
+			this.signatureFiles= new RelativeFile<SignatureFileDto>(basePath+Constants.SIGNATURE_FILE_PATH,sfPersistor);
 		} catch (PersistanceException e) {
 			throw new DataAccessException("",e);
 		}
@@ -80,11 +82,11 @@ public class SignatureFileQueryEngine implements IQueryEngine{
 		private StemmingProcessor sp;
 		private StopwordsProcessor sw;
 		
-		public DefaultQueryWordParser()  {
+		public DefaultQueryWordParser(String basePath)  {
 			try {
-				this.sp = new StemmingProcessor(Constants.FILE_STEMMING);
+				this.sp = new StemmingProcessor(basePath+Constants.FILE_STEMMING);
 				//Inicializo diccionario de stopwords
-				this.sw = new StopwordsProcessor(Constants.FILE_STOPWORDS);
+				this.sw = new StopwordsProcessor(basePath+Constants.FILE_STOPWORDS);
 			} catch (BusinessException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
