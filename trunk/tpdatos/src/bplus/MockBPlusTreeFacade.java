@@ -8,7 +8,7 @@ import exceptions.DataAccessException;
 public class MockBPlusTreeFacade extends BPlusTreeFacade {
 
 	public MockBPlusTreeFacade() throws DataAccessException {
-		super(Constants.BPLUS_FILE_SIZE);
+		super("",Constants.BPLUS_FILE_SIZE);
 	}
 
 	

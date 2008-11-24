@@ -1,7 +1,6 @@
 package api.query.tree;
 
 import java.util.Iterator;
-import java.util.List;
 
 public interface Query {
 	

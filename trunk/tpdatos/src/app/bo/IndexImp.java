@@ -76,14 +76,14 @@ public class IndexImp implements Index {
 		}
 	}
 
-	public IndexImp(String path,int blockSize, int treeNodeSize) throws BusinessException {
+	public IndexImp(String basePath,String gammaFile,int blockSize, int treeNodeSize) throws BusinessException {
 		try {
 			
 			GammaDistancesBlockPersistor subpersistor = new GammaDistancesBlockPersistor(blockSize-4);
 			LinkedBlockPersistor<GammaDistancesBlock> persistor=new LinkedBlockPersistor<GammaDistancesBlock>(subpersistor);
-			manager=new LinkedBlocksManager<GammaDistancesBlock>(path, persistor);
+			manager=new LinkedBlocksManager<GammaDistancesBlock>(gammaFile, persistor);
 			this.blockSize = blockSize;
-			this.btree = this.createBTree(treeNodeSize);
+			this.btree = this.createBTree(basePath,treeNodeSize);
 		} catch (DataAccessException e) {
 			throw new BusinessException("Error creando el btree",e);
 		}
@@ -246,8 +246,8 @@ public class IndexImp implements Index {
 		DocumentIndexKey newBlockId=new DocumentIndexKey(index);
 		return newBlockId;
 	}
-	protected BPlusTreeFacade createBTree(int nodeSize) throws DataAccessException {
-		return new BPlusTreeFacade(nodeSize);
+	protected BPlusTreeFacade createBTree(String basePath,int nodeSize) throws DataAccessException {
+		return new BPlusTreeFacade(basePath,nodeSize);
 	}
 
 	public void dump() throws BusinessException {

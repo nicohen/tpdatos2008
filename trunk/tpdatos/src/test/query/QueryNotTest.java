@@ -2,7 +2,6 @@ package test.query;
 
 import api.query.tree.Query;
 import app.query.tree.QueryNot;
-import junit.framework.TestCase;
 
 public class QueryNotTest extends QueryTestCase {
 	private class QueryNotTested extends QueryNot {

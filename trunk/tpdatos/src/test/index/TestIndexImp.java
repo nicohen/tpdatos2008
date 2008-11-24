@@ -12,7 +12,7 @@ public class TestIndexImp extends TestIndex {
 
 	@Override
 	protected IndexImp createTestObject() throws BusinessException {
-		return new IndexImp("index.bin", 4096,Constants.BPLUS_FILE_SIZE) ;
+		return new IndexImp("","index.bin", 4096,Constants.BPLUS_FILE_SIZE) ;
 	}
 
 

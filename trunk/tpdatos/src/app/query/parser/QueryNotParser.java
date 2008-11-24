@@ -4,7 +4,6 @@ import api.query.parser.Parser;
 import api.query.tree.Query;
 import app.query.parser.exception.CantDigestException;
 import app.query.parser.exception.ParserException;
-import app.query.tree.QueryNot;
 
 public abstract class QueryNotParser extends RecursiveParser {
 
