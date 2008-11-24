@@ -183,9 +183,9 @@ public class SignatureFileQueryEngine implements IQueryEngine{
 				if (wordSignature.equals(SignatureUtils.AND(wordSignature, documentSignature))){
 					DocumentDto dto= this.dicc.getDocument(documentSignature.getDocumentId());
 
-					java.io.File input= new java.io.File(Constants.FOLDER_INDEXED,dto.getFileName());
+					java.io.File input= new java.io.File(basePath+Constants.FOLDER_INDEXED,dto.getFileName());
 					String texto= DigesterUtils.getFormattedHtmlFile(input);
-					int ocurrencias= countMatches(texto,word);
+					int ocurrencias= countMatches(texto,word,basePath);
 					for (int j=0;j<ocurrencias;j++){
 						candidatos.add( new Integer( dto.getDocumentId() ) );
 					}
@@ -243,8 +243,8 @@ public class SignatureFileQueryEngine implements IQueryEngine{
 		return str == null || str.length() == 0;
 	}
 
-	private static int countMatches(String str, String sub) throws BusinessException {
-		StemmingProcessor stemmer = new StemmingProcessor(Constants.FILE_STEMMING);
+	private static int countMatches(String str, String sub, String path) throws BusinessException {
+		StemmingProcessor stemmer = new StemmingProcessor(path+Constants.FILE_STEMMING);
 		if (isEmpty(str) || isEmpty(sub)) {
 			return 0;
 		}
