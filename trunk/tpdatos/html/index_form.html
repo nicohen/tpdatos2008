@@ -1,0 +1,24 @@
+<form action='index' method='get'>
+<input type='hidden' name='action' value='index'>
+	<table border="0" cellpadding="0" cellspacing="3" class="contenido">
+		<tr>
+			<td colspan='4' align='center'>Indexacion</td>
+		</tr>
+		<tr>
+			<td>Motor:</td>
+			<td>
+				<input type="radio" name="method" id='indiceinvertido' value="indiceinvertido" onchange='setSizes(this.value);'> Indice Invertido<br/>
+				<input type="radio" name="method" id='signaturefile' value="signaturefile" onchange='setSizes(this.value);'> Signature Files
+			</td>
+			<td>Tamaño:</td>
+			<td>
+				<select name='size' id='size'>
+					<option value='0'>--- Seleccione un Motor ---<option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td colspan='4' align='center'><input type='submit' value='Indexar' onclick='return validate();'></input></td>
+		</tr>
+	</table>
+</form>

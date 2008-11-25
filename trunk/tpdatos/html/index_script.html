@@ -1,0 +1,118 @@
+<script>
+	function validate(){
+		var combo= document.getElementById("size");
+		var signature= document.getElementById("signaturefile");
+		var invertido= document.getElementById("indiceinvertido");
+		if(signature.checked==false && invertido.checked==false){
+			alert("Seleccione un motor para la indexacion.");
+			return false;
+		}
+		if(combo.value=="0"){
+			alert("Seleccione un tamaño para la indexacion.");
+			return false;
+		}
+	}
+
+	function setSizes(type){
+		var combo= document.getElementById("size");
+		if("indiceinvertido"==type){
+			var option= document.createElement("option");
+			option.value="0";
+			option.text="Seleccione un tamaño de nodo";
+			combo.options[0] = option;
+			option= document.createElement("option");
+			option.value="1024";
+			option.text="1 Kbytes";
+			combo.options[1] = option;
+			option= document.createElement("option");
+			option.value="2048";
+			option.text="2 Kbytes";
+			combo.options[2] = option;
+			option= document.createElement("option");
+			option.value="4096";
+			option.text="4 Kbytes";
+			combo.options[3] = option;
+			option= document.createElement("option");
+			option.value="8192";
+			option.text="8 Kbytes";
+			combo.options[4] = option;
+			option= document.createElement("option");
+			option.value="16384";
+			option.text="16 Kbytes";
+			combo.options[5] = option;
+			option= document.createElement("option");
+			option.value="32768";
+			option.text="32 Kbytes";
+			combo.options[6] = option;
+			option= document.createElement("option");
+			option.value="65536";
+			option.text="64 Kbytes";
+			combo.options[7] = option;
+			option= document.createElement("option");
+			option.value="131072";
+			option.text="128 Kbytes";
+			combo.options[8] = option;
+			option= document.createElement("option");
+			option.value="262144";
+			option.text="256 Kbytes";
+			combo.options[9] = option;
+			option= document.createElement("option");
+			option.value="524288";
+			option.text="512 Kbytes";
+			combo.options[10] = option;
+			option= document.createElement("option");
+			option.value="1048576";
+			option.text="1024 Kbytes";
+			combo.options[11] = option;
+		}else{
+			var option= document.createElement("option");
+			option.value="0";
+			option.text="Seleccione tañano de la firma";
+			combo.options[0] = option;
+			option= document.createElement("option");
+			option.value="1";
+			option.text="8 bytes";
+			combo.options[1] = option;
+			option= document.createElement("option");
+			option.value="2";
+			option.text="16 bytes";
+			combo.options[2] = option;
+			option= document.createElement("option");
+			option.value="3";
+			option.text="24 bytes";
+			combo.options[3] = option;
+			option= document.createElement("option");
+			option.value="4";
+			option.text="32 bytes";
+			combo.options[4] = option;
+			option= document.createElement("option");
+			option.value="5";
+			option.text="40 bytes";
+			combo.options[5] = option;
+			option= document.createElement("option");
+			option.value="6";
+			option.text="48 bytes";
+			combo.options[6] = option;
+			option= document.createElement("option");
+			option.value="7";
+			option.text="52 bytes";
+			combo.options[7] = option;
+			option= document.createElement("option");
+			option.value="8";
+			option.text="64 bytes";
+			combo.options[8] = option;
+			option= document.createElement("option");
+			option.value="9";
+			option.text="72 bytes";
+			combo.options[9] = option;
+			option= document.createElement("option");
+			option.value="10";
+			option.text="80 bytes";
+			combo.options[10] = option;
+			option= document.createElement("option");
+			option.value="11";
+			option.text="88 bytes";
+			combo.options[11] = option;
+		}
+	}
+</script>
