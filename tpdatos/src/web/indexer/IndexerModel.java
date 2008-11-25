@@ -28,8 +28,8 @@ import exceptions.PipelineOverflowException;
 public class IndexerModel {
 	private StopwordsProcessor stopwordsProcessor;
 	private StemmingProcessor stemmingProcessor;
-	private static String SIGNATURE_FILE="SF";
-	private static String INDICE_INVERTIDO="II";
+	private static String SIGNATURE_FILE="signaturefile";
+	private static String INDICE_INVERTIDO="indiceinvertido";
 	private IQueryEngine queryEngine;
 	private String path;
 	
@@ -47,8 +47,6 @@ public class IndexerModel {
 	}
 	
 	private IQueryEngine getQueryEngine(String method, String size) throws BusinessException{
-		size="8";
-		method=SIGNATURE_FILE;
 		int blockSize= Integer.parseInt(size);
 		try {
 			if(SIGNATURE_FILE.equals(method)){
