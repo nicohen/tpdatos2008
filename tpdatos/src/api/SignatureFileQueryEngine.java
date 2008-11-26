@@ -36,6 +36,7 @@ public class SignatureFileQueryEngine extends AbstractQueryEngine{
 	private String basePath;
 		
 	public SignatureFileQueryEngine(int firmSize, String basePath) throws DataAccessException{
+		super(basePath);
 		this.basePath= basePath;
 		this.dicc= new DocumentsDictionaryImp(basePath+Constants.FILE_SIGNATURE_FILES_INDEXED_DOCS,basePath+"document_signature_names.txt");
 		Persistor<SignatureFileDto> sfPersistor= new SignatureFilePersistor();
@@ -169,5 +170,10 @@ public class SignatureFileQueryEngine extends AbstractQueryEngine{
 			}
 		}
 		return count;
+	}
+
+	@Override
+	protected DocumentDto getDocument(Integer id) throws BusinessException {
+		return dicc.getDocument(id);
 	}
 }

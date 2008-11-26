@@ -8,9 +8,12 @@ import exceptions.BusinessException;
 
 public interface IQueryEngine {
 
-	public abstract List<DocumentDto> executeQuery(String consulta)
+	public abstract List<DocumentDto> executeQuery(String consulta, int offset, int limit)
 			throws BusinessException;
 
+	public abstract List<DocumentDto> executeQuery(String consulta)
+			throws BusinessException;
+	
 	public abstract DocumentInsert prepareDocumentInsert(String documento)
 			throws BusinessException;
 
