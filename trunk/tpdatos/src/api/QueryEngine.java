@@ -25,7 +25,6 @@ public class QueryEngine extends AbstractQueryEngine {
 
 	private Index indice;
 	private DocumentsDictionary dicc;
-	private QueryParser queryParser;
 	private String basePath;
 	
 	class NewDocumentInsert implements DocumentInsert {
@@ -54,13 +53,13 @@ public class QueryEngine extends AbstractQueryEngine {
 
 
 	protected QueryEngine(Index index,DocumentsDictionary dictionary, String path){
+		
+		super(path);
 		dicc=dictionary;
 		indice=index;
 		basePath=path;
 		
-		queryParser = new QueryParser();
-		queryParser.addCustomParser(new DefaultQueryNotParser(queryParser) );
-		queryParser.addCustomParser(new DefaultQueryWordParser(this.basePath));
+
 		
 	}
 	
@@ -71,28 +70,6 @@ public class QueryEngine extends AbstractQueryEngine {
 			// TODO Auto-generated catch block
 			return 0;
 		}
-	}
-	
-	public List<DocumentDto> executeQuery(String consulta) throws BusinessException{
-		
-		try {
-			Query query = queryParser.parse(consulta);
-			
-			List<DocumentDto> listaRet=new ArrayList<DocumentDto>();
-			Iterator<Integer> documentos = query.iterator();
-			
-			while (documentos.hasNext() ) { 
-				Integer docId = documentos.next();
-				DocumentDto dtoAux=dicc.getDocument(docId);
-				dtoAux.setDocumentId(docId);
-				listaRet.add(dtoAux);
-			}
-			
-			return listaRet;
-		} catch (ParserException e) {
-			throw new BusinessException("Error al parsear la query", e);
-		}
-		
 	}
 	
 
@@ -124,5 +101,12 @@ public class QueryEngine extends AbstractQueryEngine {
 	protected Index getIndex() {
 		return indice;
 	}
+
+
+	@Override
+	protected DocumentDto getDocument(Integer id) throws BusinessException {
+		return dicc.getDocument(id);
+	}
+
 	
 }

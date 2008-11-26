@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import dto.DocumentDto;
+
 import processor.stemming.StemmingProcessor;
 import processor.stopwords.StopwordsProcessor;
 import processor.utils.DigesterUtils;
@@ -12,13 +14,16 @@ import api.query.parser.Parser;
 import api.query.tree.Query;
 import app.query.QueryWord;
 import app.query.parser.QueryNotParser;
+import app.query.parser.QueryParser;
 import app.query.parser.QueryWordParser;
+import app.query.parser.exception.ParserException;
 import app.query.tree.QueryNot;
 import exceptions.BusinessException;
 
 
 public abstract class AbstractQueryEngine implements IQueryEngine {
 
+	private QueryParser queryParser;
 	
 	class DefaultQueryWord extends QueryWord {
 
@@ -102,8 +107,45 @@ public abstract class AbstractQueryEngine implements IQueryEngine {
 		
 	}
 	
+	public AbstractQueryEngine(String basePath) {
+		queryParser = new QueryParser();
+		queryParser.addCustomParser(new DefaultQueryNotParser(queryParser) );
+		queryParser.addCustomParser(new DefaultQueryWordParser(basePath));
+	}
+	
 	protected abstract int getDocumentsCount(); 
 	protected abstract Iterator<Integer> queryWord(String word) throws BusinessException; 
+	
+	protected abstract DocumentDto getDocument(Integer id ) throws BusinessException;
+	
+	public List<DocumentDto> executeQuery(String consulta) throws BusinessException {
+		return executeQuery(consulta,0,0x7fffffff);
+	}
+
+	public List<DocumentDto> executeQuery(String consulta, int offset, int limit) throws BusinessException {
+		try {
+			Query query = queryParser.parse(consulta);
+			
+			List<DocumentDto> listaRet=new ArrayList<DocumentDto>();
+			Iterator<Integer> documentos = query.iterator();
+			
+			for (int i=0; i<offset; i++) documentos.next();
+			
+			int count = 0;
+			while (documentos.hasNext() && count < limit ) { 
+				Integer docId = documentos.next();
+				DocumentDto dtoAux=getDocument(docId);
+				dtoAux.setDocumentId(docId);
+				listaRet.add(dtoAux);
+				
+				count ++;
+			}
+			
+			return listaRet;
+		} catch (ParserException e) {
+			throw new BusinessException("Error al parsear la query", e);
+		}
+	}
 	
 	
 	
