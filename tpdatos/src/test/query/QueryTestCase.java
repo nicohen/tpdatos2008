@@ -9,10 +9,14 @@ public class QueryTestCase extends TestCase {
 		int i = 0;
 			
 		while (result1.hasNext() ) {
-			assertEquals(result1.next().intValue(), result2[i] );
+			
+			assertEquals(result2[i], result1.next().intValue() );
 			i++;
 		}
 
+		if (result2.length > i) {
+			assertTrue(false);
+		}
 		// si result1 tiene mas elementos de los que deberia...
 		if (result1.hasNext() ) {
 			assertTrue(false);
