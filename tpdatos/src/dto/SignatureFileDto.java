@@ -33,7 +33,7 @@ public class SignatureFileDto {
 	public boolean equals(Object obj) {
 		if (obj instanceof SignatureFileDto) {
 			SignatureFileDto sf = (SignatureFileDto) obj;
-			int length= this.signature.length;
+			int length= this.signature.length<sf.signature.length?this.signature.length:sf.signature.length;
 			int i=1;
 			boolean equal=this.signature[0]==sf.signature[0];
 			while(equal&&i<length){

@@ -9,12 +9,10 @@ import exceptions.DataAccessException;
 
 public abstract class AbstractFile<E> implements api.po.files.File<E> {
 
-	private StatisticsGenerator statistics;
 	private java.io.File file;
 	private RandomAccessFile dataFile;
 	
 	public AbstractFile(String fileName) throws DataAccessException {
-		this.statistics= StatisticsGenerator.getInstance();
 		try {
 			this.file= new java.io.File(fileName);
 			this.dataFile = new RandomAccessFile(this.file,"rw");
@@ -46,12 +44,12 @@ public abstract class AbstractFile<E> implements api.po.files.File<E> {
 	}
 
 	protected void write( byte[] bytes ) throws IOException{
-		statistics.addWrittenBytes(bytes.length);
+		StatisticsGenerator.getInstance().addWrittenBytes(bytes.length);
 		this.dataFile.write(bytes);
 	}
 	
 	protected int read( byte[] bytes) throws IOException {
-		statistics.addReadedBytes(bytes.length);
+		StatisticsGenerator.getInstance().addReadedBytes(bytes.length);
 		return this.dataFile.read(bytes);
 	}
 	

@@ -45,6 +45,10 @@ public class StatisticsGenerator {
 		return stats;
 	}
 	
+	public static void reset(){
+		sGenerator= new StatisticsGenerator();
+	}
+	
 	@Override
 	public String toString() {
 		long totalWords=0;
@@ -69,5 +73,4 @@ public class StatisticsGenerator {
 		
 		return strB.toString(); 
 	}
-	
 }
