@@ -38,7 +38,8 @@ public class QueryAnd extends CompositeQuery {
 				
 				Iterator<Integer> it = q.iterator();
 				while (it.hasNext() ) {
-					new_hashset.add(it.next() );
+					Integer id = it.next() ;
+					new_hashset.add(id);
 				}
 				
 				hashsets.add(new_hashset);
