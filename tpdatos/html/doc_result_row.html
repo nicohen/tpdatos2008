@@ -1,8 +1,12 @@
-<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<table border="0" cellpadding="0" cellspacing="1" width="100%">
 	<tr>
 		<td><div onClick="javascript:switch_docbody('##DOC_ID##');" style="cursor: pointer;">##TITLE##</div></td>
 	</tr>
 	<tr id="##DOC_ID##" style="display:none;">
-		<td bgcolor="#CCFFCC">##BODY##Aca van las 3 primeras lineas del documento...</td>
+		<td bgcolor="#CCFFCC">
+			<iframe src="##IFR_SRC##" width="670" scrolling="auto" frameborder="0" style="background-color:#a9d974;" transparency>
+				  <p>Texto alternativo para navegadores que no aceptan iframes.</p>
+			</iframe>		
+		</td>
 	</tr>
 </table>
