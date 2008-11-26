@@ -19,7 +19,7 @@ public abstract class CompositeQueryTest extends QueryTestCase {
 			mock1.add( new Integer( result1[i] ) );
 		}
 		for (int i=0; i<result2.length; i++) {
-			mock2.add( new Integer( result1[i] ) );
+			mock2.add( new Integer( result2[i] ) );
 		}
 		
 		query.add(mock1);
