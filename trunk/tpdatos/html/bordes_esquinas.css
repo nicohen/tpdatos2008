@@ -3,7 +3,7 @@ div.top {
 	height:28px; 
 	background-image:url(img/top_line.gif); 
 	background-repeat: repeat-x; 
-	margin:1em 0 0 0;}
+	margin:0em 0 0 0;}
 	
 img.esquina_sup_izq { float:left; }
 img.esquina_sup_der { float:right; }

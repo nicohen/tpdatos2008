@@ -51,6 +51,7 @@ public class SearchView extends View {
 								String otherDocumentsResultRowHtml = documentsResultRowHtml;
 								int ocurrQty = drDto.getOcurrences().get(model.getEngine().getDocumentFromId(documentResult.getDocumentId()));
 								otherDocumentsResultRowHtml = otherDocumentsResultRowHtml.replace("##TITLE##", ocurrQty+" "+((ocurrQty>1)?"ocurrencias":"ocurrencia")+" en "+documentResult.getFileName());
+								otherDocumentsResultRowHtml = otherDocumentsResultRowHtml.replaceAll("##DOC_ID##", ""+documentResult.getDocumentId());
 								otherDocumentsResultRowHtml = otherDocumentsResultRowHtml.replace("##BODY##", "");
 								strB.append(otherDocumentsResultRowHtml);				
 							}
@@ -68,15 +69,13 @@ public class SearchView extends View {
 			File file = new File(basePath+Constants.FILE_SEARCH_CONTENT);
 			html = HtmlUtils.readHtmlFile(file.getPath());
 
-			html = html.replace("##RESULTADOS##", documentsResultHtml.replace("##RESULTADOS##", strB.toString()));
-			
 			if(!"".equals(model.getSearchWord())) {
 				html = html.replace("##SEARCH_WORD##", model.getSearchWord());
 			} else {
 				html = html.replace("##SEARCH_WORD##", "");
 			}
 			if(size>0) {
-				html = html.replace("##RESULTADOS##", strB.toString());
+				html = html.replace("##RESULTADOS##", documentsResultHtml.replace("##RESULTADOS##", strB.toString()));
 			} else if (!"".equals(model.getSearchWord())) {
 				html = html.replace("##RESULTADOS##", "No se han encontrado documentos");
 			} else {
@@ -90,7 +89,7 @@ public class SearchView extends View {
 				html = html.replace("##SF_SELECTED##", "checked");
 			} else {
 				html = html.replace("##II_SELECTED##", "");
-				html = html.replace("##SF_SELECTED##", "");
+				html = html.replace("##SF_SELECTED##", "checked");
 			}
 		} catch(IOException e) {
 			e.printStackTrace();
