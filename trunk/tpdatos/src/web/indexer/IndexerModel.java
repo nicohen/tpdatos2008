@@ -41,6 +41,7 @@ public class IndexerModel {
 			//Inicializo el stemmer
 			stemmingProcessor = new StemmingProcessor(path+Constants.FILE_STEMMING);
 			queryEngine= getQueryEngine(method, size);
+			StatisticsGenerator.reset();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

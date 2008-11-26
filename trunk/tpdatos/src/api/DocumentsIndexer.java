@@ -30,9 +30,6 @@ public class DocumentsIndexer {
 	
 	private Logger log = Logger.getLogger(DocumentsIndexer.class);
 	
-	//Inicializo las estadisticas
-	private StatisticsGenerator statistics = StatisticsGenerator.getInstance();
-	
 	//Me instancio la QueryEngine para consultar los documentos existentes y nuevos
 	private IQueryEngine queryEngine;
 	
@@ -187,7 +184,7 @@ public class DocumentsIndexer {
 				long c2 = System.currentTimeMillis();
 				
 				//Manejo de estadisticas por documento, seteo total de terminos y tiempos de indexacion
-				statistics.addDocumentStatistics(document, totalIndexed, c2-c1);
+				StatisticsGenerator.getInstance().addDocumentStatistics(document, totalIndexed, c2-c1);
 				
 				log.info("Fin de indexacion del documento ["+document.getFileName()+"]");
 			} else {
@@ -197,7 +194,7 @@ public class DocumentsIndexer {
 		
 		log.info("\n<<< Fin de indexacion de documentos >>>");
 		
-		System.out.println(statistics.toString());
+		System.out.println(StatisticsGenerator.getInstance().toString());
 		
 	}
 

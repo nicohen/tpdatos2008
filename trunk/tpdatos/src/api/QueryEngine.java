@@ -5,19 +5,10 @@ import java.util.Iterator;
 import java.util.List;
 
 import processor.IndexedDocumentChecker;
-import processor.stemming.StemmingProcessor;
-import processor.stopwords.StopwordsProcessor;
-import processor.utils.DigesterUtils;
-import utils.Constants;
 import api.dao.documents.DocumentsDictionary;
-import api.query.parser.Parser;
 import api.query.tree.Query;
-import app.query.QueryWord;
-import app.query.parser.QueryNotParser;
 import app.query.parser.QueryParser;
-import app.query.parser.QueryWordParser;
 import app.query.parser.exception.ParserException;
-import app.query.tree.QueryNot;
 import dto.DocumentDto;
 import exceptions.BusinessException;
 

@@ -41,8 +41,9 @@ public class SignatureUtils {
 	public static SignatureFileDto AND(SignatureFileDto sfDTO1, SignatureFileDto sfDTO2) {
 		long[] signature1=sfDTO1.getSignature();
 		long[] signature2=sfDTO2.getSignature();    
-		long[] firma= new long[signature1.length];
-		for (int i=0;i<signature1.length;i++){
+		int length=signature1.length<signature2.length?signature1.length:signature2.length;
+		long[] firma= new long[length];
+		for (int i=0;i<length;i++){
 			firma[i]=signature1[i]&signature2[i];
 		}
 		return new SignatureFileDto(sfDTO1.getDocumentId(),firma);
