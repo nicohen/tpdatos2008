@@ -10,7 +10,7 @@ public class WordCollectorQueryEngine extends QueryEngine {
 	public WordCollectorQueryEngine() {
 		super(
 				new WordCollectorIndex(), 
-				new NullDocumentsDictionary()
+				new NullDocumentsDictionary(),""
 				);
 		
 		this.index = (WordCollectorIndex)this.getIndex();

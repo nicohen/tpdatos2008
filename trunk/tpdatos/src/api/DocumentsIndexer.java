@@ -182,7 +182,7 @@ public class DocumentsIndexer {
 				
 				int totalIndexed = this.indexDocument(document,"["+(i+1)+"/"+newDocuments.length);
 				//Muevo el documento indexado a la carpeta de documentos indexados
-				DocumentsDictionaryImp.moveFileToIndexedFolder(newDocuments[i]);
+				DocumentsDictionaryImp.moveFileToIndexedFolder(newDocuments[i],Constants.FOLDER_INDEXED);
 
 				long c2 = System.currentTimeMillis();
 				

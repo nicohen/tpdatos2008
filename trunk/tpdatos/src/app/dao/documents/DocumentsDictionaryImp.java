@@ -6,7 +6,6 @@ import java.io.FileFilter;
 import org.apache.log4j.Logger;
 
 import processor.IndexedDocumentChecker;
-import utils.Constants;
 import api.dao.documents.DocumentsDictionary;
 import app.po.files.RelativeFile;
 import app.po.files.SecuentialFile;
@@ -70,12 +69,12 @@ public class DocumentsDictionaryImp implements DocumentsDictionary {
 		return checker;
 	}
 	
-	public static void moveFileToIndexedFolder(File file) {
+	public static void moveFileToIndexedFolder(File file,String indexedFolder) {
 
 		Logger log = Logger.getLogger(DocumentsDictionaryImp.class);
 		
 		// Destination directory
-	    File dir = new File(Constants.FOLDER_INDEXED);
+	    File dir = new File(indexedFolder);
 	    
 	    // Crea el directorio en caso de que no exista
 	    if (!dir.isDirectory()) {
