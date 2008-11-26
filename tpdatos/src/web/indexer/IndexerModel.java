@@ -81,7 +81,7 @@ public class IndexerModel {
 			if (!indexedDocuments.documentIsIndexed(document.getFileName())) {
 				int totalIndexed = this.indexDocument(document);
 				//Muevo el documento indexado a la carpeta de documentos indexados
-				DocumentsDictionaryImp.moveFileToIndexedFolder(newDocuments[i]);
+				DocumentsDictionaryImp.moveFileToIndexedFolder(newDocuments[i],path+"documents/indexed");
 				long c2 = System.currentTimeMillis();
 				//Manejo de estadisticas por documento, seteo total de terminos y tiempos de indexacion
 				statistics.addDocumentStatistics(document, totalIndexed, c2-c1);

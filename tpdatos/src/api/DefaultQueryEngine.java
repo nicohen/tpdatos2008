@@ -15,6 +15,8 @@ public class DefaultQueryEngine extends QueryEngine {
 				new IndexImp(basePath,basePath+Constants.INDEX_FILE_PATH, Constants.INDEX_FILE_SIZE, treeNodeSize)
 				,
 				new DocumentsDictionaryImp(basePath+Constants.FILE_INDICE_INVERTIDO_INDEXED_DOCS,basePath+"document_invertido_names.txt")
+				,
+				basePath
 				);
 	}
 

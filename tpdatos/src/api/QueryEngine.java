@@ -26,6 +26,7 @@ public class QueryEngine implements IQueryEngine {
 	private Index indice;
 	private DocumentsDictionary dicc;
 	private QueryParser queryParser;
+	private String basePath;
 	
 	class NewDocumentInsert implements DocumentInsert {
 		private Integer docid;
@@ -69,11 +70,11 @@ public class QueryEngine implements IQueryEngine {
 		private StemmingProcessor sp;
 		private StopwordsProcessor sw;
 		
-		public DefaultQueryWordParser()  {
+		public DefaultQueryWordParser(String basePath)  {
 			try {
-				this.sp = new StemmingProcessor(Constants.FILE_STEMMING);
+				this.sp = new StemmingProcessor(basePath+Constants.FILE_STEMMING);
 				//Inicializo diccionario de stopwords
-				this.sw = new StopwordsProcessor(Constants.FILE_STOPWORDS);
+				this.sw = new StopwordsProcessor(basePath+Constants.FILE_STOPWORDS);
 			} catch (BusinessException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -134,13 +135,14 @@ public class QueryEngine implements IQueryEngine {
 	}
 
 
-	protected QueryEngine(Index index,DocumentsDictionary dictionary){
+	protected QueryEngine(Index index,DocumentsDictionary dictionary, String path){
 		dicc=dictionary;
 		indice=index;
+		basePath=path;
 		
 		queryParser = new QueryParser();
 		queryParser.addCustomParser(new DefaultQueryNotParser(queryParser) );
-		queryParser.addCustomParser(new DefaultQueryWordParser() );
+		queryParser.addCustomParser(new DefaultQueryWordParser(this.basePath));
 		
 	}
 	
