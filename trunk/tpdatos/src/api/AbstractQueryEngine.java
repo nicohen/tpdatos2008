@@ -147,6 +147,26 @@ public abstract class AbstractQueryEngine implements IQueryEngine {
 		}
 	}
 	
+	public int countQuery( String consulta ) throws BusinessException {
+		Query query;
+		try {
+			query = queryParser.parse(consulta);
+			Iterator<Integer> documentos = query.iterator();
+		
+			int count = 0;
+		
+			while (documentos.hasNext()) { 
+				count ++;
+			}
+		
+			return count;
+		} catch (ParserException e) {
+			throw new BusinessException("Error al parsear la query", e);
+		}
+	}
+	
+	
+	
 	
 	
 }
