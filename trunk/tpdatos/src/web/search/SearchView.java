@@ -27,6 +27,7 @@ public class SearchView extends View {
 		List<DocumentDto> documentsFound;
 		int size = 0;
 		String html = "";
+		int totalOcurrences = 0;
 
 		try {
 		
@@ -50,9 +51,11 @@ public class SearchView extends View {
 							for(DocumentDto documentResult : drDto.getOcurrences().keySet()) {
 								String otherDocumentsResultRowHtml = documentsResultRowHtml;
 								int ocurrQty = drDto.getOcurrences().get(model.getEngine().getDocumentFromId(documentResult.getDocumentId()));
+								totalOcurrences+=ocurrQty;
 								otherDocumentsResultRowHtml = otherDocumentsResultRowHtml.replace("##TITLE##", ocurrQty+" "+((ocurrQty>1)?"ocurrencias":"ocurrencia")+" en "+documentResult.getFileName());
 								otherDocumentsResultRowHtml = otherDocumentsResultRowHtml.replaceAll("##DOC_ID##", ""+documentResult.getDocumentId());
-								otherDocumentsResultRowHtml = otherDocumentsResultRowHtml.replace("##BODY##", "");
+
+								otherDocumentsResultRowHtml = otherDocumentsResultRowHtml.replace("##IFR_SRC##", Constants.FOLDER_INDEXED+File.separator+documentResult.getFileName());
 								strB.append(otherDocumentsResultRowHtml);				
 							}
 					
@@ -74,8 +77,11 @@ public class SearchView extends View {
 			} else {
 				html = html.replace("##SEARCH_WORD##", "");
 			}
+
+			String resultReplacement = documentsResultHtml.replace("##RESULTADOS##", strB.toString());
+			resultReplacement = resultReplacement.replace("##RES_QTY##", ""+totalOcurrences);
 			if(size>0) {
-				html = html.replace("##RESULTADOS##", documentsResultHtml.replace("##RESULTADOS##", strB.toString()));
+				html = html.replace("##RESULTADOS##", resultReplacement);
 			} else if (!"".equals(model.getSearchWord())) {
 				html = html.replace("##RESULTADOS##", "No se han encontrado documentos");
 			} else {
