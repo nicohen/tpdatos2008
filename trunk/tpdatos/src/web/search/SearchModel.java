@@ -1,6 +1,9 @@
 package web.search;
 
+import java.io.File;
 import java.util.List;
+
+import javax.servlet.ServletContext;
 
 import processor.stopwords.StopwordsProcessor;
 import utils.Constants;
@@ -17,6 +20,8 @@ public class SearchModel {
 	private long searchTime;
 	private String searchEngine;
 	private String basePath;
+	private String contextPath;
+	
 	
 	public String getSearchEngine() {
 		return searchEngine;
@@ -34,17 +39,22 @@ public class SearchModel {
 		this.searchTime = searchTime;
 	}
 
-	public SearchModel(String basePath, String word, String searchEngine) throws BusinessException {
+	public SearchModel(ServletContext servletContext, String word, String searchEngine) throws BusinessException {
 		if(searchEngine!=null && !"".equals(searchEngine)) {
 			try {
-				this.engine = create(searchEngine,basePath);
+				this.engine = create(searchEngine,servletContext.getRealPath(File.separator));
 			} catch(Exception e) {
 				throw new BusinessException("Error creando la engine para obtener documentos",e);
 			}
 		}
 		this.searchWord = word;
 		this.searchEngine = searchEngine;
-		this.basePath = basePath;
+		this.basePath = servletContext.getRealPath(File.separator);
+		this.contextPath = servletContext.getContextPath();
+	}
+
+	public String getContextPath() {
+		return contextPath;
 	}
 
 	public String getSearchWord() {

@@ -54,8 +54,7 @@ public class SearchView extends View {
 								totalOcurrences+=ocurrQty;
 								otherDocumentsResultRowHtml = otherDocumentsResultRowHtml.replace("##TITLE##", ocurrQty+" "+((ocurrQty>1)?"ocurrencias":"ocurrencia")+" en "+documentResult.getFileName());
 								otherDocumentsResultRowHtml = otherDocumentsResultRowHtml.replaceAll("##DOC_ID##", ""+documentResult.getDocumentId());
-
-								otherDocumentsResultRowHtml = otherDocumentsResultRowHtml.replace("##IFR_SRC##", Constants.FOLDER_INDEXED+File.separator+documentResult.getFileName());
+								otherDocumentsResultRowHtml = otherDocumentsResultRowHtml.replace("##IFR_SRC##", (model.getContextPath()+File.separator+Constants.FOLDER_INDEXED+File.separator+documentResult.getFileName()).replace("\\", "/"));
 								strB.append(otherDocumentsResultRowHtml);				
 							}
 					
