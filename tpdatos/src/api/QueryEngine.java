@@ -21,7 +21,7 @@ import app.query.tree.QueryNot;
 import dto.DocumentDto;
 import exceptions.BusinessException;
 
-public class QueryEngine implements IQueryEngine {
+public class QueryEngine extends AbstractQueryEngine {
 
 	private Index indice;
 	private DocumentsDictionary dicc;
@@ -47,89 +47,7 @@ public class QueryEngine implements IQueryEngine {
 		
 	}
 	
-	class DefaultQueryWord extends QueryWord {
-
-		public DefaultQueryWord(String str) {
-			super(str);
-		}
-
-		public Iterator<Integer> iterator() {
-			try {
-				return QueryEngine.this.queryWord( this.getWord() );
-			} catch (BusinessException e) {
-					// TODO: tratar mejor la excepcion
-			}
-			List<Integer> lista=new ArrayList<Integer>();
-			return lista.iterator();
-		}
-		
-	}
-	
-	class DefaultQueryWordParser extends QueryWordParser {
-
-		private StemmingProcessor sp;
-		private StopwordsProcessor sw;
-		
-		public DefaultQueryWordParser(String basePath)  {
-			try {
-				this.sp = new StemmingProcessor(basePath+Constants.FILE_STEMMING);
-				//Inicializo diccionario de stopwords
-				this.sw = new StopwordsProcessor(basePath+Constants.FILE_STOPWORDS);
-			} catch (BusinessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		@Override
-		public QueryWord create(String unProcessedWord) {
-			
-			// procesar la palabra con DigesterUtils
-			String word = DigesterUtils.formatText(unProcessedWord).trim();
-			
-			if (sw != null) {
-				if ( sw.isStopword(word )) {
-					// FIXME: que hacer si es un stopword ??
-				}
-			}
-			
-			if (sp != null) {
-				// TODO: controlar este error
-				word = sp.stem(word);
-			}
-			
-			return new DefaultQueryWord(word);
-		}
-		
-	}
-	
-	class DefaultQueryNot extends QueryNot {
-
-		public DefaultQueryNot(Query subQuery) {
-			super(subQuery);
-		}
-
-		@Override
-		public int getDocumentsCount() {
-			return QueryEngine.this.getDocumentsCount() ;
-		}
-		
-	}
-	
-	class DefaultQueryNotParser extends QueryNotParser {
-
-		public DefaultQueryNotParser(Parser recur) {
-			super(recur);
-		}
-
-		@Override
-		protected Query createQueryNot(Query consulta) {
-			return new DefaultQueryNot(consulta);
-		}
-		
-	}
-	
-	private Iterator<Integer> queryWord( String word ) throws BusinessException {
+	protected Iterator<Integer> queryWord( String word ) throws BusinessException {
 		return indice.getDocumentsIterator(word);
 				
 	}
@@ -146,7 +64,7 @@ public class QueryEngine implements IQueryEngine {
 		
 	}
 	
-	private int getDocumentsCount() {
+	protected int getDocumentsCount() {
 		try {
 			return dicc.getDocumentsCount();
 		} catch (BusinessException e) {
