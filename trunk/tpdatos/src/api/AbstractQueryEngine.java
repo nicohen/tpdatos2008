@@ -24,6 +24,9 @@ import exceptions.BusinessException;
 public abstract class AbstractQueryEngine implements IQueryEngine {
 
 	private QueryParser queryParser;
+	private StemmingProcessor sp;
+	private StopwordsProcessor sw;
+		
 	
 	class DefaultQueryWord extends QueryWord {
 
@@ -45,18 +48,7 @@ public abstract class AbstractQueryEngine implements IQueryEngine {
 	
 	class DefaultQueryWordParser extends QueryWordParser {
 
-		private StemmingProcessor sp;
-		private StopwordsProcessor sw;
-		
 		public DefaultQueryWordParser(String basePath)  {
-			try {
-				this.sp = new StemmingProcessor(basePath+Constants.FILE_STEMMING);
-				//Inicializo diccionario de stopwords
-				this.sw = new StopwordsProcessor(basePath+Constants.FILE_STOPWORDS);
-			} catch (BusinessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 
 		@Override
@@ -111,6 +103,14 @@ public abstract class AbstractQueryEngine implements IQueryEngine {
 		queryParser = new QueryParser();
 		queryParser.addCustomParser(new DefaultQueryNotParser(queryParser) );
 		queryParser.addCustomParser(new DefaultQueryWordParser(basePath));
+		try {
+			this.sp = new StemmingProcessor(basePath+Constants.FILE_STEMMING);
+			//Inicializo diccionario de stopwords
+			this.sw = new StopwordsProcessor(basePath+Constants.FILE_STOPWORDS);
+		} catch (BusinessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	protected abstract int getDocumentsCount(); 
@@ -165,7 +165,24 @@ public abstract class AbstractQueryEngine implements IQueryEngine {
 		}
 	}
 	
-	
+
+	protected String processWord(String unProcessedWord) {
+		String word = DigesterUtils.formatText(unProcessedWord).trim();
+			
+		if (sw != null) {
+			if ( sw.isStopword(word )) {
+				// FIXME: que hacer si es un stopword ??
+			}
+		}
+			
+		if (sp != null) {
+			// TODO: controlar este error
+			word = sp.stem(word);
+		}
+
+		return word;
+
+	}	
 	
 	
 	
