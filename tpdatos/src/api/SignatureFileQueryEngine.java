@@ -87,6 +87,8 @@ public class SignatureFileQueryEngine extends AbstractQueryEngine{
 	protected Iterator<Integer> queryWord(String word) throws BusinessException {
 		List<Integer> candidatos= new ArrayList<Integer>();
 
+		word = processWord(word);
+
 		SignatureFileDto wordSignature= SignatureUtils.getSignature(word,this.firmSize);
 		int size= this.signatureFiles.getSize();
 		try {
