@@ -4,7 +4,7 @@
 
 BINNAME=mrt
 
-echo 'CLASSPATHS=src:lib/htmlparser.jar:lib/servlet-api.jar:lib/junit-4.5.jar:lib/log4j-1.2.15.jar' > makefile
+echo 'CLASSPATHS=src:WEB-INF/lib/htmlparser.jar:WEB-INF/lib/servlet-api.jar:WEB-INF/lib/junit-4.5.jar:WEB-INF/lib/log4j-1.2.15.jar' > makefile
 
 echo >> makefile
 
@@ -33,7 +33,7 @@ echo 'jar:
 	cd src && jar cfm ../bombita.jar ../manifesto.txt log4j.xml *'>> makefile
 
 echo 'dist:
-	tar -c '$( find -name "*.java" )' leemeporfavor.txt manifesto.txt src/log4j.xml words/stemming.txt words/stopwords.txt makefile '$(find lib/ -name '*.jar')' > bombita-src.tar 
+	tar -c '$( find -name "*.java" )' leemeporfavor.txt manifesto.txt src/log4j.xml words/stemming.txt words/stopwords.txt makefile '$(find WEB-INF/lib/ -name '*.jar')' > bombita-src.tar 
 	gzip --force bombita-src.tar 
 	@echo "*************************************************"
 	@echo "* 	bombita-src.tar.gz generated	       *"
