@@ -8,7 +8,7 @@ echo 'CLASSPATHS=src:lib/htmlparser.jar:lib/servlet-api.jar:lib/junit-4.5.jar:li
 
 echo >> makefile
 
-echo 'JFLAGS = -g -classpath $(CLASSPATHS)' >> makefile
+echo 'JFLAGS = -g -classpath $(CLASSPATHS) -source 6.0 -target 1.6' >> makefile
 echo 'JC = javac' >> makefile
 
 #echo .SUFFIXES: .java .class >> makefile
