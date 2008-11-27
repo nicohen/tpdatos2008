@@ -63,7 +63,7 @@ public abstract class AbstractQueryEngine implements IQueryEngine {
 		public QueryWord create(String unProcessedWord) {
 			
 			// procesar la palabra con DigesterUtils
-			String word = DigesterUtils.formatText(unProcessedWord).trim();
+/*			String word = DigesterUtils.formatText(unProcessedWord).trim();
 			
 			if (sw != null) {
 				if ( sw.isStopword(word )) {
@@ -75,8 +75,8 @@ public abstract class AbstractQueryEngine implements IQueryEngine {
 				// TODO: controlar este error
 				word = sp.stem(word);
 			}
-			
-			return new DefaultQueryWord(word);
+*/			
+			return new DefaultQueryWord(unProcessedWord);
 		}
 		
 	}
