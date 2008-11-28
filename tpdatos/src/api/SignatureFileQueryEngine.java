@@ -95,14 +95,30 @@ public class SignatureFileQueryEngine extends AbstractQueryEngine{
 			for(int i=0;i<size;i++){
 				SignatureFileDto documentSignature= this.signatureFiles.get(i);
 				if (wordSignature.equals(SignatureUtils.AND(wordSignature, documentSignature))){
-					DocumentDto dto= this.dicc.getDocument(documentSignature.getDocumentId());
 
-					java.io.File input= new java.io.File(basePath+Constants.FOLDER_INDEXED,dto.getFileName());
-					String texto= DigesterUtils.getFormattedHtmlFile(input);
-					int ocurrencias= countMatches(texto,word,basePath);
+					DocumentDto dto= this.dicc.getDocument(i);
+					
+					WordCollectorQueryEngine collector = new WordCollectorQueryEngine();
+					DocumentsIndexer indexer = new DocumentsIndexer(collector);
+					
+					
+					DocumentDto document = new DocumentDto(basePath+Constants.FOLDER_INDEXED + java.io.File.separator + dto.getFileName() );
+					
+					indexer.indexDocument(document, "");
+					int ocurrencias = collector.getOcurrences(word);
+
 					for (int j=0;j<ocurrencias;j++){
 						candidatos.add( new Integer( dto.getDocumentId() ) );
 					}
+
+					
+/*					java.io.File input= new java.io.File(Constants.FOLDER_INDEXED,dto.getFileName());
+>>>>>>> .merge-right.r881
+					String texto= DigesterUtils.getFormattedHtmlFile(input);
+<<<<<<< .working
+					int ocurrencias= countMatches(texto,word,basePath);
+=======
+					int ocurrencias= countMatches(texto,consulta);*/
 				}
 			}
 		} catch (Exception e) {
