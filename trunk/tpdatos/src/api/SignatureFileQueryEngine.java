@@ -98,14 +98,14 @@ public class SignatureFileQueryEngine extends AbstractQueryEngine{
 
 					DocumentDto dto= this.dicc.getDocument(i);
 					
-					WordCollectorQueryEngine collector = new WordCollectorQueryEngine();
+					WordCollectorQueryEngine collector = new WordCollectorQueryEngine(word);
 					DocumentsIndexer indexer = new DocumentsIndexer(collector);
 					
 					
-					DocumentDto document = new DocumentDto(basePath+Constants.FOLDER_INDEXED + java.io.File.separator + dto.getFileName() );
+					DocumentDto document = new DocumentDto(basePath+Constants.SUBFOLDER_INDEXED + java.io.File.separator + dto.getFileName() );
 					
 					indexer.indexDocument(document, "");
-					int ocurrencias = collector.getOcurrences(word);
+					int ocurrencias = collector.getOcurrences();
 
 					for (int j=0;j<ocurrencias;j++){
 						candidatos.add( new Integer( dto.getDocumentId() ) );

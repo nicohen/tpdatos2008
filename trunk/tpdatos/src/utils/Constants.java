@@ -5,8 +5,10 @@ import java.io.File;
 public class Constants {
 	// /documents
 	public static final String FOLDER_DOCUMENTS = "documents";
-		// /documents/indexed
-		public static final String FOLDER_INDEXED = FOLDER_DOCUMENTS+File.separator+"indexed";
+	
+	public static final String SUBFOLDER_INDEXED = "indexed";
+	// /documents/indexed
+	public static final String FOLDER_INDEXED = FOLDER_DOCUMENTS+File.separator+SUBFOLDER_INDEXED;
 	
 	//Indexed documents por signature files
 	public static final String FILE_SIGNATURE_FILES_INDEXED_DOCS = "indexed_signature_documents.bin";
