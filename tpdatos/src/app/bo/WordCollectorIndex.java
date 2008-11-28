@@ -13,7 +13,13 @@ import exceptions.BusinessException;
 
 public class WordCollectorIndex implements Index {
 
-	private Map<String,Integer> words = new HashMap<String,Integer>();
+	int ocurrencias;
+	private String word;
+	
+	public WordCollectorIndex(String word ) {
+		this.word = word;
+		this.ocurrencias = 0;
+	}
 	
 	public List<Integer> getDocuments(String word) throws BusinessException {
 		return new ArrayList<Integer>();
@@ -22,15 +28,13 @@ public class WordCollectorIndex implements Index {
 	public void insertWord(String word, Integer documento)
 			throws BusinessException {
 
-		Integer cantidad = words.get(word);
-		if (cantidad == null) cantidad = 0;
-		words.put(word, cantidad+1);
+		if (word.equals(this.word)) {
+			ocurrencias++;
+		}
 	}
 
-	public int getOcurrences(String word) {
-		Integer cantidad = words.get(word);
-		if (cantidad == null) return 0;
-		return cantidad;
+	public int getOcurrences() {
+		return ocurrencias;
 	}
 
 	public Iterator<Integer> getDocumentsIterator(String word) throws BusinessException {

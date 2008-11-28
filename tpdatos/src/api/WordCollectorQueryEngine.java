@@ -7,17 +7,17 @@ public class WordCollectorQueryEngine extends QueryEngine {
 
 	private WordCollectorIndex index;
 	
-	public WordCollectorQueryEngine() {
+	public WordCollectorQueryEngine(String word) {
 		super(
-				new WordCollectorIndex(), 
+				new WordCollectorIndex(word), 
 				new NullDocumentsDictionary(),""
 				);
 		
 		this.index = (WordCollectorIndex)this.getIndex();
 	}
 	
-	public int getOcurrences(String word) {
-		return index.getOcurrences(word);
+	public int getOcurrences() {
+		return index.getOcurrences();
 	}
 
 }
