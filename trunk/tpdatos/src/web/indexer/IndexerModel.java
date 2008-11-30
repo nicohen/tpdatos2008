@@ -64,7 +64,7 @@ public class IndexerModel {
 	public Statistics indexPath(String documentsPath) throws Exception {
 		StatisticsGenerator statistics = StatisticsGenerator.getInstance();
 		//Preparo los nuevos documentos a indexar
-		File[] newDocuments = DocumentsDictionaryImp.prepareNewDocuments(this.path+documentsPath);
+		File[] newDocuments = DocumentsDictionaryImp.prepareNewDocuments(this.path+File.separator+documentsPath);
 
 		//Preparo los documentos que ya fueron indexados
 		IndexedDocumentChecker indexedDocuments;
