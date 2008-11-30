@@ -38,7 +38,7 @@ public class QueryEngine extends AbstractQueryEngine {
 	}
 	
 	protected Iterator<Integer> queryWord( String word ) throws BusinessException {
-		return indice.getDocumentsIterator( processWord(word) );
+		return indice.getDocumentsIterator(word);
 				
 	}
 

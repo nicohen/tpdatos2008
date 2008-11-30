@@ -56,6 +56,8 @@ public class DocumentsIndexer {
 		
 			DocumentInsert docInsert = queryEngine.prepareDocumentInsert(document.getFileName() ); 
 			
+			System.out.println("Indexando documento ["+document.getFileName()+"]");
+			
 			//Elimino tags y caracteres que no correspondan
 			inputFile = new File(Constants.FOLDER_DOCUMENTS + File.separator + document.getFileName());
 			
