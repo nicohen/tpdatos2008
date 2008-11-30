@@ -4,11 +4,10 @@
 
 BINNAME=mrt
 
-echo 'CLASSPATHS=src:lib/htmlparser.jar:lib/servlet-api.jar:lib/junit-4.5.jar:lib/log4j-1.2.15.jar' > makefile
+echo 'CLASSPATHS=src:WEB-INF/lib/htmlparser.jar:WEB-INF/lib/servlet-api.jar:WEB-INF/lib/junit-4.5.jar:WEB-INF/lib/log4j-1.2.15.jar' > makefile
 
 echo >> makefile
-
-echo 'JFLAGS = -g -classpath $(CLASSPATHS)' >> makefile
+echo 'JFLAGS = -g -classpath $(CLASSPATHS) -d WEB-INF/classes/ -source 1.6 -target 1.6' >> makefile
 echo 'JC = javac' >> makefile
 
 #echo .SUFFIXES: .java .class >> makefile
@@ -30,10 +29,11 @@ echo "classes: "$CLASSES >> makefile
 echo 'clean:
 	   rm $(CLASSES:.java=.class)'  >> makefile
 echo 'jar:
-	cd src && jar cfm ../bombita.jar ../manifesto.txt log4j.xml *'>> makefile
+	cp src/log4j.xml WEB-INF/classes/
+	jar cfm bombita.war manifesto.txt words/ html/ documents/ WEB-INF/'>> makefile
 
 echo 'dist:
-	tar -c '$( find -name "*.java" )' leemeporfavor.txt manifesto.txt src/log4j.xml words/stemming.txt words/stopwords.txt makefile '$(find lib/ -name '*.jar')' > bombita-src.tar 
+	tar -c '$( find -name "*.java" )' leemeporfavor.txt manifesto.txt src/log4j.xml words/stemming.txt words/stopwords.txt makefile '$(find WEB-INF/lib/ -name '*.jar')' > bombita-src.tar 
 	gzip --force bombita-src.tar 
 	@echo "*************************************************"
 	@echo "* 	bombita-src.tar.gz generated	       *"
