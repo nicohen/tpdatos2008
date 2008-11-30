@@ -17,7 +17,7 @@ echo 'JC = javac' >> makefile
 echo >> makefile
 echo >> makefile
 
-CLASSES=$(find -name '*.java'  | sed -e 's/\.java$/\.class/')
+CLASSES=$(find -name '*.java'  | sed -e 's/\.java$/\.class/' | sed -e 's/\.\/src/WEB-INF\/classes/' )
 CLASSESSRC=$(find -name '*.java'  | sed -e 's/src\///' -e 's/\.java$/\.class/')
 CLASSESBIN=$(find -name '*.java'  | sed -e 's/\.\/src\///' -e 's/\.java$/\.class/')
 
@@ -44,7 +44,7 @@ echo >> makefile
 cd src
 
 #find -name '*.java'| sed 's/\.\///' | sed -e 's/\.java//' | awk '{ print  "bin/" $1 ".class: src/" $1 ".java\n\t\t$(JC) $(JFLAGS) src/" $1 ".java && mv src/" $1 ".class bin/" $1 ".class " }' >> ../makefile
-find -name '*.java'| sed 's/\.\///' | sed -e 's/\.java//' | awk '{ print  "src/" $1 ".class: src/" $1 ".java\n\t\t$(JC) $(JFLAGS) src/" $1 ".java" }' >> ../makefile
+find -name '*.java'| sed 's/\.\///' | sed -e 's/\.java//' | awk '{ print  "WEB-INF/classes/" $1 ".class: src/" $1 ".java\n\t\t$(JC) $(JFLAGS) src/" $1 ".java" }' >> ../makefile
 
 cd ..
 
