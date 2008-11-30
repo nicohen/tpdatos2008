@@ -34,7 +34,7 @@ public class IndexerModel {
 	private String path;
 	
 	public IndexerModel(String basePath, String method, String size) {
-		this.path=basePath;
+		this.path=basePath + File.separator;
 		try {
 			//Inicializo las stopwords y las ordeno alfabeticamente y por cantidad de palabras ascendente
 			stopwordsProcessor = new StopwordsProcessor(path+Constants.FILE_STOPWORDS);
