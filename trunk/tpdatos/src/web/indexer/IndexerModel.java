@@ -37,9 +37,9 @@ public class IndexerModel {
 		this.path=basePath;
 		try {
 			//Inicializo las stopwords y las ordeno alfabeticamente y por cantidad de palabras ascendente
-			stopwordsProcessor = new StopwordsProcessor(path+File.separator+Constants.FILE_STOPWORDS);
+			stopwordsProcessor = new StopwordsProcessor(path+Constants.FILE_STOPWORDS);
 			//Inicializo el stemmer
-			stemmingProcessor = new StemmingProcessor(path+File.separator+Constants.FILE_STEMMING);
+			stemmingProcessor = new StemmingProcessor(path+Constants.FILE_STEMMING);
 			queryEngine= getQueryEngine(method, size);
 			StatisticsGenerator.reset();
 		} catch (Exception e) {
@@ -64,7 +64,7 @@ public class IndexerModel {
 	public Statistics indexPath(String documentsPath) throws Exception {
 		StatisticsGenerator statistics = StatisticsGenerator.getInstance();
 		//Preparo los nuevos documentos a indexar
-		File[] newDocuments = DocumentsDictionaryImp.prepareNewDocuments(this.path+File.separator+documentsPath);
+		File[] newDocuments = DocumentsDictionaryImp.prepareNewDocuments(this.path+documentsPath);
 
 		//Preparo los documentos que ya fueron indexados
 		IndexedDocumentChecker indexedDocuments;
