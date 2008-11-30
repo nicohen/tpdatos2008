@@ -37,9 +37,9 @@ public class IndexerModel {
 		this.path=basePath;
 		try {
 			//Inicializo las stopwords y las ordeno alfabeticamente y por cantidad de palabras ascendente
-			stopwordsProcessor = new StopwordsProcessor(path+Constants.FILE_STOPWORDS);
+			stopwordsProcessor = new StopwordsProcessor(path+File.separator+Constants.FILE_STOPWORDS);
 			//Inicializo el stemmer
-			stemmingProcessor = new StemmingProcessor(path+Constants.FILE_STEMMING);
+			stemmingProcessor = new StemmingProcessor(path+File.separator+Constants.FILE_STEMMING);
 			queryEngine= getQueryEngine(method, size);
 			StatisticsGenerator.reset();
 		} catch (Exception e) {

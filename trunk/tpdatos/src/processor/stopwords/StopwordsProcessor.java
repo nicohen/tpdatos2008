@@ -53,9 +53,9 @@ public class StopwordsProcessor {
 			dis.close();
 
 		} catch (FileNotFoundException e) {
-			throw new BusinessException("Error cargando lista de stopwords.");
+			throw new BusinessException("Error cargando lista de stopwords de "+listPath+".");
 		} catch (IOException e) {
-			throw new BusinessException("Error cargando lista de stopwords.");
+			throw new BusinessException("Error cargando lista de stopwords de "+listPath+".");
 		}		
 		
 	}
