@@ -24,11 +24,11 @@ CLASSESBIN=$(find -name '*.java'  | sed -e 's/\.\/src\///' -e 's/\.java$/\.class
 
 echo "CLASSES = "$( find -name '*.java' ) >> makefile
 echo  >> makefile
-echo "default: classes jar"  >> makefile
+echo "default: classes war"  >> makefile
 echo "classes: "$CLASSES >> makefile
 echo 'clean:
 	   rm $(CLASSES:.java=.class)'  >> makefile
-echo 'jar:
+echo 'war:
 	cp src/log4j.xml WEB-INF/classes/
 	jar cfm bombita.war manifesto.txt words/ html/ documents/ WEB-INF/'>> makefile
 
