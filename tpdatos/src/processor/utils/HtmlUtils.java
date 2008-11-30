@@ -56,7 +56,7 @@ public final class HtmlUtils {
 	    try {
 	    	fr = new FileReader(file);
 	    } catch(FileNotFoundException e) {
-	    	throw new IOException("El archivo "+file.getAbsolutePath()+" no se ha encontrado");
+	    	throw new IOException("El archivo "+file.getAbsolutePath()+" no se ha encontrado",e);
 	    }
 
     	br = new BufferedReader(fr);

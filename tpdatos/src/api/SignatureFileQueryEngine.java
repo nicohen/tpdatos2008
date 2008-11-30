@@ -86,31 +86,17 @@ public class SignatureFileQueryEngine extends AbstractQueryEngine{
 	
 	protected Iterator<Integer> queryWord(String word) throws BusinessException {
 		List<Integer> candidatos= new ArrayList<Integer>();
-
-		word = processWord(word);
-
 		SignatureFileDto wordSignature= SignatureUtils.getSignature(word,this.firmSize);
 		int size= this.signatureFiles.getSize();
 		try {
 			for(int i=0;i<size;i++){
 				SignatureFileDto documentSignature= this.signatureFiles.get(i);
 				if (wordSignature.equals(SignatureUtils.AND(wordSignature, documentSignature))){
+					DocumentDto dto= this.dicc.getDocument(documentSignature.getDocumentId());
 
-					DocumentDto dto= this.dicc.getDocument(i);
-					
-//					WordCollectorQueryEngine collector = new WordCollectorQueryEngine(word);
-//					DocumentsIndexer indexer = new DocumentsIndexer(collector);
-//					
-//					
-//					DocumentDto document = new DocumentDto(basePath+Constants.SUBFOLDER_INDEXED + java.io.File.separator + dto.getFileName() );
-//					
-//					indexer.indexDocument(document, "");
-//					int ocurrencias = collector.getOcurrences();
-
-					java.io.File input= new java.io.File(this.basePath+Constants.FOLDER_INDEXED,dto.getFileName());
+					java.io.File input= new java.io.File(basePath+Constants.FOLDER_INDEXED,dto.getFileName());
 					String texto= DigesterUtils.getFormattedHtmlFile(input);
 					int ocurrencias= countMatches(texto,word,basePath);
-					
 					for (int j=0;j<ocurrencias;j++){
 						candidatos.add( new Integer( dto.getDocumentId() ) );
 					}
