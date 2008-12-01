@@ -42,15 +42,15 @@ public class SearchModel {
 	public SearchModel(ServletContext servletContext, String word, String searchEngine) throws BusinessException {
 		if(searchEngine!=null && !"".equals(searchEngine)) {
 			try {
-				this.engine = create(searchEngine,servletContext.getRealPath(File.separator));
+				this.engine = create(searchEngine,servletContext.getRealPath(File.separator) + File.separator );
 			} catch(Exception e) {
 				throw new BusinessException("Error creando la engine para obtener documentos",e);
 			}
 		}
 		this.searchWord = word;
 		this.searchEngine = searchEngine;
-		this.basePath = servletContext.getRealPath(File.separator);
-		this.contextPath = servletContext.getContextPath();
+		this.basePath = servletContext.getRealPath(File.separator) + File.separator;
+		this.contextPath = servletContext.getContextPath() + File.separator ;
 	}
 
 	public String getContextPath() {
