@@ -49,7 +49,7 @@ public class SearchModel {
 		}
 		this.searchWord = word;
 		this.searchEngine = searchEngine;
-		this.basePath = servletContext.getRealPath(File.separator) + File.separator;
+		this.basePath = servletContext.getRealPath(File.separator);
 		this.contextPath = servletContext.getContextPath();
 	}
 
