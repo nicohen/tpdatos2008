@@ -1,6 +1,5 @@
 package api;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -51,9 +50,9 @@ public abstract class AbstractQueryEngine implements IQueryEngine {
 		
 		public DefaultQueryWordParser(String basePath)  {
 			try {
-				this.sp = new StemmingProcessor(basePath+File.separator+ Constants.FILE_STEMMING);
+				this.sp = new StemmingProcessor(basePath+Constants.FILE_STEMMING);
 				//Inicializo diccionario de stopwords
-				this.sw = new StopwordsProcessor(basePath+File.separator + Constants.FILE_STOPWORDS);
+				this.sw = new StopwordsProcessor(basePath+Constants.FILE_STOPWORDS);
 			} catch (BusinessException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

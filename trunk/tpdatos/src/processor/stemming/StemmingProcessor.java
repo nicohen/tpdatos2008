@@ -49,9 +49,9 @@ public class StemmingProcessor {
 			dis.close();
 
 		} catch (FileNotFoundException e) {
-			throw new BusinessException("Error cargando lista de sufijos para stemming de "+listPath+".");
+			throw new BusinessException("Error cargando lista de sufijos para stemming.");
 		} catch (IOException e) {
-			throw new BusinessException("Error cargando lista de sufijos para stemming de "+listPath+".");
+			throw new BusinessException("Error cargando lista de sufijos para stemming.");
 		}		
 	}
 
