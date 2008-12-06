@@ -1,14 +1,9 @@
 package api;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import processor.IndexedDocumentChecker;
 import api.dao.documents.DocumentsDictionary;
-import api.query.tree.Query;
-import app.query.parser.QueryParser;
-import app.query.parser.exception.ParserException;
 import dto.DocumentDto;
 import exceptions.BusinessException;
 
@@ -16,7 +11,6 @@ public class QueryEngine extends AbstractQueryEngine {
 
 	private Index indice;
 	private DocumentsDictionary dicc;
-	private String basePath;
 	
 	class NewDocumentInsert implements DocumentInsert {
 		private Integer docid;
@@ -48,7 +42,6 @@ public class QueryEngine extends AbstractQueryEngine {
 		super(path);
 		dicc=dictionary;
 		indice=index;
-		basePath=path;
 		
 
 		

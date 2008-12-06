@@ -175,18 +175,6 @@ public class GammaDistancesBlock implements DistancesBlock {
 
 	}
 	
-	
-
-	private BitSet bitsetFromByteArray(byte[] bytes, int init) {
-        BitSet bits = new BitSet();
-        for (int i=init; i<bytes.length*8; i++) {
-            if ((bytes[i/8]&(1<<(i%8))) > 0) {
-                bits.set(i-init);
-            }
-        }
-        return bits;
-    }
-	
 	private byte[] bitsetToByteArray(BitSet bits, int len) {
         byte[] bytes = new byte[len];
         for (int i=0; i<bits.length(); i++) {
