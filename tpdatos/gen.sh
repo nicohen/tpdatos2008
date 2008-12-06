@@ -30,10 +30,11 @@ echo 'clean:
 	   rm '$CLASSES''  >> makefile
 echo 'war:
 	cp src/log4j.xml WEB-INF/classes/
+	mkdir documents
 	jar cfm bombita.war manifesto.txt words/ html/ documents/ WEB-INF/'>> makefile
 
 echo 'dist:
-	tar -c '$( find -name "*.java" )' leemeporfavor.txt manifesto.txt src/log4j.xml words/stemming.txt words/stopwords.txt makefile '$(find WEB-INF/lib/ -name '*.jar')' > bombita-src.tar 
+	tar -c '$( find -name "*.java" )' leemeporfavor.txt manifesto.txt html/* src/log4j.xml words/stemming.txt words/stopwords.txt makefile '$(find WEB-INF/lib/ -name '*.jar')' > bombita-src.tar 
 	gzip --force bombita-src.tar 
 	@echo "*************************************************"
 	@echo "* 	bombita-src.tar.gz generated	       *"
