@@ -27,7 +27,7 @@ echo  >> makefile
 echo "default: classes war"  >> makefile
 echo "classes: "$CLASSES >> makefile
 echo 'clean:
-	   rm $(CLASSES:.java=.class)'  >> makefile
+	   rm '$CLASSES''  >> makefile
 echo 'war:
 	cp src/log4j.xml WEB-INF/classes/
 	jar cfm bombita.war manifesto.txt words/ html/ documents/ WEB-INF/'>> makefile
