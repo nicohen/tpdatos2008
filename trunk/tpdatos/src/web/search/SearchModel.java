@@ -2,7 +2,6 @@ package web.search;
 
 import java.io.File;
 import java.util.Iterator;
-import java.util.List;
 
 import javax.servlet.ServletContext;
 
@@ -88,29 +87,6 @@ public class SearchModel {
 			return null;
 		}
 		
-	}
-	
-	public List<DocumentDto> searchWord(String word) throws BusinessException {
-		if(word!=null && !"".equals(word)) {
-			long c1 = System.currentTimeMillis();
-
-			//Inicializo diccionario de stopwords
-			StopwordsProcessor sw = new StopwordsProcessor(basePath+Constants.FILE_STOPWORDS);
-			//Inicializo diccionario de stemming
-			if(!sw.isStopword(word)) {
-			} else {
-				System.out.println("El termino ingresado ["+word+"] es un stopword, ingreselo nuevamente");
-				return null;
-			}
-			
-			//Muestro los documentos en los que aparece
-			List<DocumentDto> results = engine.executeQuery(word);
-			setSearchTime(System.currentTimeMillis()-c1);
-			
-			return results;
-		} else {
-			return null;
-		}
 	}
 	
 	public static IQueryEngine create( String indexType, String basePath ) throws Exception {

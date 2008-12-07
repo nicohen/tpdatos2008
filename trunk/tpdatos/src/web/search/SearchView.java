@@ -3,7 +3,6 @@ package web.search;
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
-import java.util.List;
 
 import processor.utils.HtmlUtils;
 import utils.Constants;
