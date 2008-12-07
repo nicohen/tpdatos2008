@@ -8,8 +8,7 @@ INSTRUCCIONES DE COMPILACION
 	Eso generara el archivo bombita.war y tambien bombita.jar
 
 
-INSTRUCCIONES DE USO
-
+INSTRUCCIONES DE INSTALACION WEB
 
 	* Instanciar el servidor de apache-tomcat
 
@@ -17,6 +16,9 @@ INSTRUCCIONES DE USO
 
 	* Accesar a la aplicacion usando un browser a la url http://127.0.0.1:8080/bombita/index
 
+USO A TRAVEZ DE WEB
+
+	Intiutivo, considerar esperar al indexador cuando se indexa
 
 USO DESDE LA LINEA DE COMANDOS (EN LINUX)
 
@@ -41,4 +43,20 @@ USO DESDE LA LINEA DE COMANDOS (EN LINUX)
 	* words/stemming.txt	(diccionario de stemming, que utiliza el indexador)
 
 	* documents		(directorio de documentos, repleto con todos los documentos que se desean indexar)
+
+
+APENDICE A: CONSULTAS BOOLEANAS
+
+
+	Para ejecutar una consulta booleana (ya sea en la linea de comandos, o en la interfaz web ), deben utilizarze los operadores booleanos "and", "or" y "not". Ejemplos
+
+	La consulta "perro" (sin las comillsa) buscara todos los documentos que simplemente contengan ese termino
+
+	La consulta "perro and not registrado" buscara todos los documentos que contengan el termino "perro" y que tambien contenga el termino "registrado" (en todos los casos se cosiderara la version stemmeada del termino )
+
+	La consulta "perro and not registrado" buscara todos los documentos que contengan el termino "perro" pero que esa vez no contenga el termino "registrado" 
+
+	Tambien se pueden usar parentesis para forzar la precedencia de los operandos, como por ej "not (perro and gato)" buscara todos aquellos documentos que no sean resultado de la consulta "perro and gato", mientras que "not perro and gato", buscara todos los documentos indexados que no tengan el termino perro y que tengan el termino gato, ya que not tiene una precedencia mayor que and, si no se especifica lo contrario usando los parentesis
+
+
 
