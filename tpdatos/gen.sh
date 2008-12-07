@@ -30,7 +30,7 @@ echo 'clean:
 	   rm '$CLASSES''  >> makefile
 echo 'war:
 	cp src/log4j.xml WEB-INF/classes/
-	mkdir documents
+	test -d documents || mkdir documents
 	jar cfm bombita.war manifesto.txt words/ html/ documents/ WEB-INF/'>> makefile
 
 echo 'dist:
