@@ -23,7 +23,7 @@ public class SearchView extends View {
 	@Override
 	protected String doHtmlBody(String basePath) {
 		StringBuilder strB = new StringBuilder();
-		DocumentsReportDto drDto;
+//		DocumentsReportDto drDto;
 		Iterator<DocumentDto> documentsFound;
 		int size = 0;
 		String html = "";
@@ -40,27 +40,43 @@ public class SearchView extends View {
 						
 						if(documentsFound.hasNext()) {
 					
-							drDto = new DocumentsReportDto();
-							
-							while (documentsFound.hasNext() ) {
-								DocumentDto document = documentsFound.next();
-								drDto.setOcurrence(document);
-								size++;
-							}
-							
 							File documentsResultRowFile = new File(basePath+Constants.FILE_DOCUMENT_RESULT_ROW);
 							String documentsResultRowHtml = HtmlUtils.readHtmlFile(documentsResultRowFile.getPath());
 							
-							for(DocumentDto documentResult : drDto.getOcurrences().keySet()) {
-								String otherDocumentsResultRowHtml = documentsResultRowHtml;
-								int ocurrQty = drDto.getOcurrences().get(model.getEngine().getDocumentFromId(documentResult.getDocumentId()));
-								totalOcurrences+=ocurrQty;
-								otherDocumentsResultRowHtml = otherDocumentsResultRowHtml.replace("##TITLE##", ocurrQty+" "+((ocurrQty>1)?"ocurrencias":"ocurrencia")+" en "+documentResult.getFileName());
-								otherDocumentsResultRowHtml = otherDocumentsResultRowHtml.replaceAll("##DOC_ID##", ""+documentResult.getDocumentId());
-								otherDocumentsResultRowHtml = otherDocumentsResultRowHtml.replace("##IFR_SRC##", (model.getContextPath()+File.separator+Constants.FOLDER_INDEXED+File.separator+documentResult.getFileName()).replace("\\", "/"));
-								strB.append(otherDocumentsResultRowHtml);				
+							int lastdocid = -1;
+							int ocurrQty = 1;
+							DocumentDto lastDocumentDto = null;
+							
+							while (documentsFound.hasNext() ) {
+								DocumentDto documentResult = documentsFound.next();
+								size++;
+								if (documentResult.getDocumentId().intValue() == lastdocid ) {
+									ocurrQty ++;
+									continue;
+								} else {
+									
+									if (lastDocumentDto != null) {
+										String otherDocumentsResultRowHtml = documentsResultRowHtml;
+										totalOcurrences+=ocurrQty;
+										otherDocumentsResultRowHtml = otherDocumentsResultRowHtml.replace("##TITLE##", ocurrQty+" "+((ocurrQty>1)?"ocurrencias":"ocurrencia")+" en "+lastDocumentDto.getFileName());
+										otherDocumentsResultRowHtml = otherDocumentsResultRowHtml.replaceAll("##DOC_ID##", ""+lastDocumentDto.getDocumentId());
+										otherDocumentsResultRowHtml = otherDocumentsResultRowHtml.replace("##IFR_SRC##", (model.getContextPath()+File.separator+Constants.FOLDER_INDEXED+File.separator+lastDocumentDto.getFileName()).replace("\\", "/"));
+										strB.append(otherDocumentsResultRowHtml);
+									}
+									
+									ocurrQty = 1;
+									lastdocid = documentResult.getDocumentId().intValue();
+									lastDocumentDto = documentResult;
+								}
 							}
-					
+							if (lastDocumentDto != null) {
+								String otherDocumentsResultRowHtml = documentsResultRowHtml;
+								totalOcurrences+=ocurrQty;
+								otherDocumentsResultRowHtml = otherDocumentsResultRowHtml.replace("##TITLE##", ocurrQty+" "+((ocurrQty>1)?"ocurrencias":"ocurrencia")+" en "+lastDocumentDto.getFileName());
+								otherDocumentsResultRowHtml = otherDocumentsResultRowHtml.replaceAll("##DOC_ID##", ""+lastDocumentDto.getDocumentId());
+								otherDocumentsResultRowHtml = otherDocumentsResultRowHtml.replace("##IFR_SRC##", (model.getContextPath()+File.separator+Constants.FOLDER_INDEXED+File.separator+lastDocumentDto.getFileName()).replace("\\", "/"));
+								strB.append(otherDocumentsResultRowHtml);
+							}					
 						}
 					}
 				} catch(BusinessException e) {
