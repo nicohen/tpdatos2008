@@ -39,7 +39,11 @@ echo 'jar:
 	cd WEB-INF/classes && jar cfm ../../bombita.jar ../../manifesto-jar.txt ../../words/ ../../html/ ../../documents/  .'>> makefile
 
 echo 'dist:
-	tar -c '$( find -name "*.java" )' leemeporfavor.txt manifesto.txt manifesto-jar.txt html/* src/log4j.xml words/stemming.txt words/stopwords.txt makefile WEB-INF/web.xml '$(find WEB-INF/lib/ -name '*.jar')' > bombita-src.tar 
+	mv WEB-INF/classes WEB-INF/classes.tmp
+	mkdir WEB-INF/classes
+	tar -c '$( find -name "*.java" )' leemeporfavor.txt manifesto.txt manifesto-jar.txt html/* src/log4j.xml words/stemming.txt words/stopwords.txt makefile WEB-INF/classes WEB-INF/web.xml '$(find WEB-INF/lib/ -name '*.jar')' > bombita-src.tar 
+	rmdir WEB-INF/classes
+	mv WEB-INF/classes.tmp WEB-INF/classes
 	gzip --force bombita-src.tar 
 	@echo "*************************************************"
 	@echo "* 	bombita-src.tar.gz generated	       *"
