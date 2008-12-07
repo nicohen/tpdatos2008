@@ -1,6 +1,7 @@
 package web.search;
 
 import java.io.File;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -63,6 +64,30 @@ public class SearchModel {
 
 	public void setSearchWord(String word) {
 		this.searchWord = word;
+	}
+	
+	public Iterator<DocumentDto> iteratorQuery(String consulta) throws BusinessException {
+		if(consulta!=null && !"".equals(consulta)) {
+			long c1 = System.currentTimeMillis();
+
+			//Inicializo diccionario de stopwords
+			StopwordsProcessor sw = new StopwordsProcessor(basePath+Constants.FILE_STOPWORDS);
+			//Inicializo diccionario de stemming
+			if(!sw.isStopword(consulta)) {
+			} else {
+				System.out.println("El termino ingresado ["+consulta+"] es un stopword, ingreselo nuevamente");
+				return null;
+			}
+			
+			//Muestro los documentos en los que aparece
+			Iterator<DocumentDto> results = engine.iteratorQuery(consulta);
+			setSearchTime(System.currentTimeMillis()-c1);
+			
+			return results;
+		} else {
+			return null;
+		}
+		
 	}
 	
 	public List<DocumentDto> searchWord(String word) throws BusinessException {
