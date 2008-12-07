@@ -24,7 +24,7 @@ CLASSESBIN=$(find -name '*.java'  | sed -e 's/\.\/src\///' -e 's/\.java$/\.class
 
 echo "CLASSES = "$( find -name '*.java' ) >> makefile
 echo  >> makefile
-echo "default: classes war"  >> makefile
+echo "default: classes war jar"  >> makefile
 echo "classes: "$CLASSES >> makefile
 echo 'clean:
 	   rm '$CLASSES''  >> makefile
@@ -33,8 +33,13 @@ echo 'war:
 	test -d documents || mkdir documents
 	jar cfm bombita.war manifesto.txt words/ html/ documents/ WEB-INF/'>> makefile
 
+echo 'jar:
+	cp src/log4j.xml WEB-INF/classes/
+	test -d documents || mkdir documents
+	cd WEB-INF/classes && jar cfm ../../bombita.jar ../../manifesto-jar.txt ../../words/ ../../html/ ../../documents/  .'>> makefile
+
 echo 'dist:
-	tar -c '$( find -name "*.java" )' leemeporfavor.txt manifesto.txt html/* src/log4j.xml words/stemming.txt words/stopwords.txt makefile '$(find WEB-INF/lib/ -name '*.jar')' > bombita-src.tar 
+	tar -c '$( find -name "*.java" )' leemeporfavor.txt manifesto.txt manifesto-jar.txt html/* src/log4j.xml words/stemming.txt words/stopwords.txt makefile '$(find WEB-INF/lib/ -name '*.jar')' > bombita-src.tar 
 	gzip --force bombita-src.tar 
 	@echo "*************************************************"
 	@echo "* 	bombita-src.tar.gz generated	       *"
