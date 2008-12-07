@@ -5,11 +5,20 @@ INSTRUCCIONES DE COMPILACION
 
 	make
 
+	Eso generara el archivo bombita.war y tambien bombita.jar
 
-	Eso generara el archivo bombita.jar
 
 INSTRUCCIONES DE USO
 
+
+	* Instanciar el servidor de apache-tomcat
+
+	* Cargar el archivo bombita.war al tomcat usando la interfaz manager
+
+	* Accesar a la aplicacion usando un browser a la url http://127.0.0.1:8080/bombita/index
+
+
+USO DESDE LA LINEA DE COMANDOS (EN LINUX)
 
 	Ejecutar el programa mediante la orden
 
@@ -23,14 +32,13 @@ INSTRUCCIONES DE USO
 
 	NOTA: para la correcta ejecucion del programa, son necesarios los siguientes archivos en la ruta de trabajo en la que se ejecute la aplicacion (vienen con el paquete de codigo fuente) :
 
-	* lib/htmlparser.jar	(libreria auxiliar)
-	* lib/junit-4.5.jar	(libreria auxiliar)
-	* lib/log4j-1.2.15.jar	(libreria auxiliar)
-	* lib/servlet-api.jar	(libreria auxiliar)
+	* WEB-INF/lib/htmlparser.jar	(libreria auxiliar)
+	* WEB-INF/lib/junit-4.5.jar	(libreria auxiliar)
+	* WEB-INF/lib/log4j-1.2.15.jar	(libreria auxiliar)
+	* WEB-INF/lib/servlet-api.jar	(libreria auxiliar)
 
 	* words/stopword.txt	(archivo con lista de stopwords)
 	* words/stemming.txt	(diccionario de stemming, que utiliza el indexador)
 
 	* documents		(directorio de documentos, repleto con todos los documentos que se desean indexar)
-
 
