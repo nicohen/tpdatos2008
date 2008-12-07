@@ -37,11 +37,6 @@ public abstract class QueryNot implements Query {
 		
 		private void searchNext() {
 			
-			if (this.idActual.intValue() == this.numDocs-1 ) {
-				this.hasNext = false;
-				return;
-			}
-			
 			while (true) {
 				
 				this.idActual++;
@@ -54,12 +49,20 @@ public abstract class QueryNot implements Query {
 					} else {
 						this.lastDoc = this.numDocs;
 						this.hasNext = true;
+						
+						if (this.idActual > this.numDocs-1 ) {
+							this.hasNext = false;
+						}
+						
 						return;
 					}
 				}
 				
 				if (this.lastDoc > this.idActual ) {
 					this.hasNext = true;
+					if (this.idActual > this.numDocs-1 ) {
+						this.hasNext = false;
+					}
 					return;
 				}
 			}
