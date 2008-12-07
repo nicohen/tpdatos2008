@@ -2,6 +2,7 @@ package web.search;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 
 import processor.utils.HtmlUtils;
@@ -24,7 +25,7 @@ public class SearchView extends View {
 	protected String doHtmlBody(String basePath) {
 		StringBuilder strB = new StringBuilder();
 		DocumentsReportDto drDto;
-		List<DocumentDto> documentsFound;
+		Iterator<DocumentDto> documentsFound;
 		int size = 0;
 		String html = "";
 		int totalOcurrences = 0;
@@ -33,16 +34,19 @@ public class SearchView extends View {
 		
 			if(!"".equals(model.getSearchWord())) {
 				try {
-					documentsFound = model.searchWord(model.getSearchWord());
+					//documentsFound = model.searchWord(model.getSearchWord());
+					documentsFound = model.iteratorQuery(model.getSearchWord());
 					
 					if(documentsFound!=null) {
-						size = documentsFound.size();
-						if(size>0) {
+						
+						if(documentsFound.hasNext()) {
 					
 							drDto = new DocumentsReportDto();
 							
-							for (DocumentDto document : documentsFound) {
+							while (documentsFound.hasNext() ) {
+								DocumentDto document = documentsFound.next();
 								drDto.setOcurrence(document);
+								size++;
 							}
 							
 							File documentsResultRowFile = new File(basePath+Constants.FILE_DOCUMENT_RESULT_ROW);

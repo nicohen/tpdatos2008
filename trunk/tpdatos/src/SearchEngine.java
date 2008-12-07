@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Iterator;
 import java.util.List;
 
 import processor.stopwords.StopwordsProcessor;
@@ -47,22 +48,25 @@ public class SearchEngine {
 		//Realizo la consulta del termino
 
 		//Muestro los documentos en los que aparece
-		List<DocumentDto> documentsFound = engine.executeQuery(word);
-		int size = documentsFound.size();
-		if(size==0) {
+		Iterator<DocumentDto> documentsFound = engine.iteratorQuery(word);
+		
+		if(!documentsFound.hasNext() ) {
 			System.out.println("El termino ["+word+"] no corresponde a ningun documento.");
 			return;
 		} else {
-			System.out.println("Se encontraron "+size+" ocurrencias:");
-			System.out.println("------------------------------");
+			int size = 0;
 			DocumentsReportDto drDto = new DocumentsReportDto();
 			
-			for (DocumentDto document : documentsFound) {
+			while (documentsFound.hasNext() ) {
+				size++;
+				DocumentDto document = documentsFound.next();
 				drDto.setOcurrence(document);
 			}
 			for(DocumentDto documentResult : drDto.getOcurrences().keySet()) {
 				System.out.println(drDto.getDocumentOcurrences(documentResult)+" veces en el documento "+engine.getDocumentFromId(documentResult.getDocumentId()));				
 			}
+			System.out.println("Se encontraron "+size+" ocurrencias:");
+			System.out.println("------------------------------");
 		}
 		long c2= System.currentTimeMillis();
 		StringBuilder sb= new StringBuilder();
