@@ -1,5 +1,6 @@
 package api;
 
+import java.util.Iterator;
 import java.util.List;
 
 import processor.IndexedDocumentChecker;
@@ -11,6 +12,8 @@ public interface IQueryEngine {
 	public abstract int countQuery(String consulta) 
 			throws BusinessException;
 	
+	public abstract Iterator<DocumentDto> iteratorQuery(String consulta) throws BusinessException;
+
 	public abstract List<DocumentDto> executeQuery(String consulta, int offset, int limit)
 			throws BusinessException;
 

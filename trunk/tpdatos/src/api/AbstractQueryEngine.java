@@ -147,6 +147,64 @@ public abstract class AbstractQueryEngine implements IQueryEngine {
 		}
 	}
 	
+	class QueryIterator implements Iterator<DocumentDto> {
+
+		private Iterator<Integer> docsid;
+		private boolean hasNext;
+		private DocumentDto next;
+		
+		public QueryIterator( Iterator<Integer> docsid ) {
+			this.docsid = docsid;
+			this.hasNext = false;
+			searchNext();
+			
+		}
+		
+		public boolean hasNext() {
+			return hasNext;
+		}
+
+		public DocumentDto next() {
+			return next;
+		}
+
+		public void remove() {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		private void searchNext() {
+			while (true) {
+				if (docsid.hasNext() ) {
+					this.hasNext = true;
+					Integer docid = docsid.next();
+					try {
+						next = AbstractQueryEngine.this.getDocument(docid);
+						break;
+					} catch (BusinessException e) {
+					}
+					
+				} else {
+					this.hasNext = false;
+					break;
+				}
+			}
+		}
+				
+	}
+	
+	public Iterator<DocumentDto> iteratorQuery(String consulta) throws BusinessException {
+		try {
+			Query query = queryParser.parse(consulta);
+			Iterator<Integer> documentos = query.iterator();
+
+			return new QueryIterator(documentos);
+		} catch (ParserException e) {
+			throw new BusinessException("Error al parsear la query", e);
+		}
+		
+	}
+	
 	public int countQuery( String consulta ) throws BusinessException {
 		Query query;
 		try {
