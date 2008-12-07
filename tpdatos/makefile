@@ -1,6 +1,6 @@
 CLASSPATHS=src:WEB-INF/lib/htmlparser.jar:WEB-INF/lib/servlet-api.jar:WEB-INF/lib/junit-4.5.jar:WEB-INF/lib/log4j-1.2.15.jar
 
-JFLAGS = -g -classpath $(CLASSPATHS) -d WEB-INF/classes/ -source 1.6 -target 1.6
+JFLAGS = -classpath $(CLASSPATHS) -d WEB-INF/classes/ -source 1.6 -target 1.6
 JC = javac
 
 
