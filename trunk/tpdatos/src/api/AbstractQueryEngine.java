@@ -165,7 +165,9 @@ public abstract class AbstractQueryEngine implements IQueryEngine {
 		}
 
 		public DocumentDto next() {
-			return next;
+			DocumentDto aux = this.next;
+			searchNext();
+			return aux;
 		}
 
 		public void remove() {
