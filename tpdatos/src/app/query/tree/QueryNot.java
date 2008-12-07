@@ -29,7 +29,7 @@ public abstract class QueryNot implements Query {
 			this.numDocs = numDocs;
 			
 			this.iterator = iterator;
-			this.lastDoc = 0;
+			this.lastDoc = -1;
 			
 			searchNext();
 						
@@ -37,27 +37,33 @@ public abstract class QueryNot implements Query {
 		
 		private void searchNext() {
 			
+			if (this.idActual.intValue() == this.numDocs-1 ) {
+				this.hasNext = false;
+				return;
+			}
+			
 			while (true) {
+				
 				this.idActual++;
+				// pedir registros hasta obtener uno mayor que el actual
 				
-				if (this.idActual >= this.lastDoc ) {
-					this.hasNext = false;
-					return;
-				}
-				
-				if (this.idActual < this.lastDoc ) {
-					this.hasNext = true;
-					return;
-				} else {
+				while (this.lastDoc < this.idActual ) {
 					
 					if (iterator.hasNext() ) {
 						this.lastDoc = iterator.next();
 					} else {
-						this.lastDoc = this.numDocs; 
+						this.lastDoc = this.numDocs;
+						this.hasNext = true;
+						return;
 					}
 				}
+				
+				if (this.lastDoc > this.idActual ) {
+					this.hasNext = true;
+					return;
+				}
 			}
-			
+				
 		}
 
 		@Override
