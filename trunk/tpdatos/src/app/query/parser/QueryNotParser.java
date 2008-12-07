@@ -13,7 +13,9 @@ public abstract class QueryNotParser extends RecursiveParser {
 	abstract protected Query createQueryNot(Query consulta);
 	@Override
 	public Query parse(String str) throws ParserException {
-		// TODO Auto-generated method stub
+		if (str.length() < 4) {
+			throw new CantDigestException();
+		}
 		if (! str.substring(0, 3).equals("not") ) {
 			throw new CantDigestException();
 		}
