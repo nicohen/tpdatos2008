@@ -1,0 +1,1 @@
+Este grupo fue conformado para organizar el desarrollo y planificacion del trabajo practico de Organizacion de Datos (75.06)
